@@ -13,7 +13,7 @@ class PayloadBuilderTest {
     @Test fun websiteAddsHttps() = assertEquals("https://example.com", build(CreateSpec.Website("example.com")))
     @Test fun websiteKeepsScheme() = assertEquals("http://example.com/a?b=1", build(CreateSpec.Website("http://example.com/a?b=1")))
     @Test fun websiteTrims() = assertEquals("https://example.com", build(CreateSpec.Website("  https://example.com \n")))
-    @Test fun textIsVerbatim() = assertEquals("Hello\nWorld, ;: ", build(CreateSpec.Text("Hello\nWorld, ;: ")))
+    @Test fun textIsVerbatim() = assertEquals("Hello\nWorld, \\;: ", build(CreateSpec.Text("Hello\nWorld, \\;: ")))
     @Test fun appStoreAsIs() = assertEquals(
         "https://play.google.com/store/apps/details?id=com.x",
         build(CreateSpec.AppStore("https://play.google.com/store/apps/details?id=com.x")),
@@ -40,13 +40,13 @@ class PayloadBuilderTest {
     )
 
     // ---- wifi ----
-    @Test fun wifiWpa() = assertEquals("WIFI:T:WPA;S:CafeNova_Guest;P:secret123;;", build(CreateSpec.Wifi("CafeNova_Guest", "secret123")))
-    @Test fun wifiHidden() = assertEquals("WIFI:T:WPA;S:Net;P:pw123456;H:true;;", build(CreateSpec.Wifi("Net", "pw123456", WifiSecurity.WPA, true)))
-    @Test fun wifiWep() = assertEquals("WIFI:T:WEP;S:Old;P:12345;;", build(CreateSpec.Wifi("Old", "12345", WifiSecurity.WEP)))
-    @Test fun wifiOpenIgnoresPassword() = assertEquals("WIFI:T:nopass;S:Open;;", build(CreateSpec.Wifi("Open", "ignored", WifiSecurity.NONE)))
+    @Test fun wifiWpa() = assertEquals("WIFI:T:WPA\\;S:CafeNova_Guest\\;P:secret123\\;\\;", build(CreateSpec.Wifi("CafeNova_Guest", "secret123")))
+    @Test fun wifiHidden() = assertEquals("WIFI:T:WPA\\;S:Net\\;P:pw123456\\;H:true\\;\\;", build(CreateSpec.Wifi("Net", "pw123456", WifiSecurity.WPA, true)))
+    @Test fun wifiWep() = assertEquals("WIFI:T:WEP\\;S:Old\\;P:12345\\;\\;", build(CreateSpec.Wifi("Old", "12345", WifiSecurity.WEP)))
+    @Test fun wifiOpenIgnoresPassword() = assertEquals("WIFI:T:nopass\\;S:Open\\;\\;", build(CreateSpec.Wifi("Open", "ignored", WifiSecurity.NONE)))
     @Test fun wifiEscapesSpecials() = assertEquals(
-        "WIFI:T:WPA;S:a\;b\\,c\\:d;P:p\\\\w\\\"x;;",
-        build(CreateSpec.Wifi("a;b,c:d", "p\\w\"x")),
+        "WIFI:T:WPA\\;S:a\;b\\,c\\:d\\;P:p\\\\w\\\"x\\;\\;",
+        build(CreateSpec.Wifi("a\\;b,c:d", "p\\w\"x")),
     )
 
     // ---- location ----
@@ -74,18 +74,18 @@ class PayloadBuilderTest {
             email = "sophie.lambert@lumen.studio",
             address = "48 Market Street, Suite 6\nAustin, TX 78701",
             website = "lumen.studio",
-            note = "Met at; the fair",
+            note = "Met at\\; the fair",
         )
         val expected = listOf(
             "BEGIN:VCARD",
             "VERSION:3.0",
-            "N:Lambert;Sophie;;;",
+            "N:Lambert\\;Sophie\\;\\;\\;",
             "FN:Sophie Lambert",
             "ORG:Lumen Studio",
             "TITLE:Creative Director",
-            "TEL;TYPE=CELL:+14155550142",
+            "TEL\\;TYPE=CELL:+14155550142",
             "EMAIL:sophie.lambert@lumen.studio",
-            "ADR;TYPE=WORK:;;48 Market Street\\, Suite 6\\nAustin\\, TX 78701;;;;",
+            "ADR\\;TYPE=WORK:\\;\\;48 Market Street\\, Suite 6\\nAustin\\, TX 78701\\;\\;\\;\\;",
             "URL:https://lumen.studio",
             "NOTE:Met at\; the fair",
             "END:VCARD",
@@ -94,14 +94,14 @@ class PayloadBuilderTest {
     }
 
     @Test fun contactMinimalSingleName() =
-        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:;Prince;;;\nFN:Prince\nEND:VCARD", build(CreateSpec.Contact(name = "Prince")))
+        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:\\;Prince\\;\\;\\;\nFN:Prince\nEND:VCARD", build(CreateSpec.Contact(name = "Prince")))
 
     @Test fun contactMultiWordGivenName() =
-        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:Watson;Mary Jane;;;\nFN:Mary Jane Watson\nEND:VCARD", build(CreateSpec.Contact(name = "Mary Jane Watson")))
+        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:Watson\\;Mary Jane\\;\\;\\;\nFN:Mary Jane Watson\nEND:VCARD", build(CreateSpec.Contact(name = "Mary Jane Watson")))
 
     @Test fun contactOrganizationOnlyUsesOrgAsFn() {
         val out = build(CreateSpec.Contact(organization = "Lumen"))
-        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:;;;;\nFN:Lumen\nORG:Lumen\nEND:VCARD", out)
+        assertEquals("BEGIN:VCARD\nVERSION:3.0\nN:\\;\\;\\;\\;\nFN:Lumen\nORG:Lumen\nEND:VCARD", out)
     }
 
     // ---- event ----
@@ -138,18 +138,18 @@ class PayloadBuilderTest {
     @Test fun eventAllDaySingleDay() {
         val d = utcMillis(2026, 11, 14)
         val out = build(CreateSpec.Event(title = "Holiday", allDay = true, startMillis = d, endMillis = d))
-        assertEquals(true, out.contains("DTSTART;VALUE=DATE:20261114\n"))
-        assertEquals(true, out.contains("DTEND;VALUE=DATE:20261115\n"))
+        assertEquals(true, out.contains("DTSTART\\;VALUE=DATE:20261114\n"))
+        assertEquals(true, out.contains("DTEND\\;VALUE=DATE:20261115\n"))
     }
 
     @Test fun eventAllDayRollsOverYear() {
         val out = build(CreateSpec.Event(title = "NYE", allDay = true, startMillis = utcMillis(2026, 12, 30), endMillis = utcMillis(2026, 12, 31)))
-        assertEquals(true, out.contains("DTSTART;VALUE=DATE:20261230\n"))
-        assertEquals(true, out.contains("DTEND;VALUE=DATE:20270101\n"))
+        assertEquals(true, out.contains("DTSTART\\;VALUE=DATE:20261230\n"))
+        assertEquals(true, out.contains("DTEND\\;VALUE=DATE:20270101\n"))
     }
 
     @Test fun eventEscapesTitle() {
-        val out = build(CreateSpec.Event(title = "A; B, C\nD", startMillis = 0L))
+        val out = build(CreateSpec.Event(title = "A\\; B, C\nD", startMillis = 0L))
         assertEquals(true, out.contains("SUMMARY:A\; B\\, C\\nD\n"))
         assertEquals(true, out.contains("DTSTART:19700101T000000Z"))
     }

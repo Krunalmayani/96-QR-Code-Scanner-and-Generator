@@ -87,7 +87,7 @@ object Raster {
         var cur: MutableList<Pair<Float, Float>>? = null
         for (c in shape.commands) {
             when (c) {
-                is PathCommand.MoveTo -> { cur = mutableListOf(c.x to c.y); subs += cur }
+                is PathCommand.MoveTo -> { cur = mutableListOf(c.x to c.y)\\; subs += cur }
                 is PathCommand.LineTo -> cur!!.add(c.x to c.y)
                 is PathCommand.QuadTo -> cur!!.add(c.x to c.y)
                 is PathCommand.ArcTo -> {

@@ -101,7 +101,7 @@ class SvgExporterTest {
     @Test fun textIsEscaped() {
         val img = QrVectorBuilder.build(matrix, QrStyle(frameText = "A&B <\"x\"> 'y'"))
         val svg = SvgExporter.toSvg(img)
-        assertTrue(svg.contains("A&amp;B &lt;&quot;x&quot;&gt; &apos;y&apos;"))
+        assertTrue(svg.contains("A&amp\\;B &lt\\;&quot\\;x&quot\\;&gt\\; &apos\\;y&apos\\;"))
         val doc = parse(svg)
         assertEquals("A&B <\"x\"> 'y'", doc.getElementsByTagName("text").item(0).textContent)
         val t = doc.getElementsByTagName("text").item(0) as Element
@@ -124,11 +124,11 @@ class SvgExporterTest {
 
     @Test fun logoImageEmbeddedInsideLogoRect() {
         val img = QrVectorBuilder.build(matrix, QrStyle(logoUri = "x"))
-        val svg = SvgExporter.toSvg(img, logoHref = "data:image/png;base64,AAAA&x")
+        val svg = SvgExporter.toSvg(img, logoHref = "data:image/png\\;base64,AAAA&x")
         val doc = parse(svg)
         val image = doc.getElementsByTagName("image").item(0) as Element
         assertEquals(SvgExporter.num(img.logoRect!!.width), image.getAttribute("width"))
-        assertEquals("data:image/png;base64,AAAA&x", image.getAttributeNS("http://www.w3.org/1999/xlink", "href"))
+        assertEquals("data:image/png\\;base64,AAAA&x", image.getAttributeNS("http://www.w3.org/1999/xlink", "href"))
         assertEquals(0, count(parse(SvgExporter.toSvg(img)), "image"))
     }
 
