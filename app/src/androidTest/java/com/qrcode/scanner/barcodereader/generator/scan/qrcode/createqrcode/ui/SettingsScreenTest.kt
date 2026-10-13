@@ -1,6 +1,7 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -11,6 +12,7 @@ import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.LocalBottomBarInset
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.AppSettings
@@ -21,8 +23,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.featu
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.Res
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.ThemedComposeTest
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.rememberTestSnackbarHost
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.unit.dp
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

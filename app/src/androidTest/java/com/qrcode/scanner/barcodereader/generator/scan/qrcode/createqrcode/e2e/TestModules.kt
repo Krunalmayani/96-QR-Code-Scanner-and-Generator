@@ -3,10 +3,6 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.e2e
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.components.SingletonComponent
-import dagger.hilt.testing.TestInstallIn
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.AdContentSource
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.AdController
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.AdManager
@@ -23,6 +19,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.fakes
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.system.InAppUpdater
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.system.SystemModule
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.system.UpdateStatus
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Singleton

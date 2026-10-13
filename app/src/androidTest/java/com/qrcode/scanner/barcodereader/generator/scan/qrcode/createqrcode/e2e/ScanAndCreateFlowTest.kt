@@ -15,8 +15,6 @@ import androidx.compose.ui.test.performTextInput
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.HiltTestActivity
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.navigation.Result
@@ -27,6 +25,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.fakes.FakeHistoryRepository
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.fakes.FakeSettingsRepository
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.Res
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

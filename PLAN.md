@@ -15,3 +15,10 @@
 | 11 | Hardening | tests, R8, baseline profile |
 | 12 | Design parity | per-artboard pass |
 | 13 | Release prep | icon, `PLAY_STORE.md`, signing via env |
+
+## Status (all milestones implemented)
+Milestones 1-13 are implemented. Verified without an Android SDK: every main, unit-test and androidTest source type-checks
+against a harness (real Kotlin/Compose/Dagger/ZXing/Android-framework artifacts + stubs for Google-Maven-only libraries),
+1097 JVM tests pass, and static audits for DI, navigation, Room SQL, resources, packages and manifest are clean.
+NOT verified (needs a machine with the Android SDK): the real Gradle/AGP/KSP/Hilt/Room build, R8 release build, lint,
+any on-device behaviour (camera, ML Kit, Wi-Fi connect, ads SDK 1.5.0 call shapes), instrumented tests, screenshot tests.

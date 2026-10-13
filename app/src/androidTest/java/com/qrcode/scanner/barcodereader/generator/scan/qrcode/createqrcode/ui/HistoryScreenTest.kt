@@ -1,5 +1,6 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.ui
 
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.longClick
@@ -10,6 +11,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTouchInput
 import androidx.compose.ui.test.swipeLeft
+import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.LocalBottomBarInset
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.HistoryChip
@@ -27,8 +29,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.featu
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.Res
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.ThemedComposeTest
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.rememberTestSnackbarHost
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.unit.dp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test

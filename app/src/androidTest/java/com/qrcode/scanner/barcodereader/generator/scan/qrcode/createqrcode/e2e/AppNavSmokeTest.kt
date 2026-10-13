@@ -1,21 +1,20 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.e2e
 
 import androidx.compose.ui.test.SemanticsMatcher
-import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.HiltTestActivity
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.navigation.AppNav
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.fakes.FakeSettingsRepository
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.Res
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule

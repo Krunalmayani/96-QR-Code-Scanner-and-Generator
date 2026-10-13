@@ -9,8 +9,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result.ResultEvent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result.ResultScreen
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result.ResultUiState
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.ResultStates
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.Res
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.ResultStates
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.ThemedComposeTest
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testutil.rememberTestSnackbarHost
 import org.junit.Assert.assertEquals
