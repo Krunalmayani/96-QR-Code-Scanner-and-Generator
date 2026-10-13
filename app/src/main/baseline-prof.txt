@@ -1,0 +1,14 @@
+# Baseline profile (startup + main screens). Regenerate with Macrobenchmark before a major release.
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/App;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/MainActivity;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/core/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/designsystem/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/scan/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/result/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/history/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/create/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/settings/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/feature/onboarding/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/domain/parser/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/domain/model/**;->**(**)**
+HSPLcom/qrcode/scanner/barcodereader/generator/scan/qrcode/createqrcode/data/**;->**(**)**

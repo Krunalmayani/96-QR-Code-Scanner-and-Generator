@@ -1,5 +1,8 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
 import androidx.annotation.StringRes
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
@@ -25,11 +28,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.BannerAd
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.isPrivacyOptionsRequired
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.showPrivacyOptionsForm
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppDivider
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppScaffold
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSnackbarHost
@@ -339,8 +346,31 @@ private fun PrivacySection(settings: AppSettings, onEvent: (SettingsEvent) -> Un
             icon = AppIcons.Lock,
             onClick = actions.onPrivacyPolicyWeb,
         )
+        AdPrivacyOptionsRow()
     }
 }
+
+/** UMP "Privacy options" entry; only shown where the consent SDK says users must be able to revisit their choice. */
+@Composable
+private fun AdPrivacyOptionsRow() {
+    if (LocalInspectionMode.current) return
+    val context = LocalContext.current
+    if (!isPrivacyOptionsRequired(context)) return
+    AppDivider()
+    SettingsNavRow(
+        title = stringResource(R.string.ads_privacy_options_title),
+        subtitle = stringResource(R.string.ads_privacy_options_summary),
+        onClick = { context.findHostActivity()?.let { showPrivacyOptionsForm(it) } },
+        icon = AppIcons.Shield,
+    )
+}
+
+private tailrec fun Context.findHostActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findHostActivity()
+        else -> null
+    }
 
 @Composable
 private fun PrivacyBanner() {

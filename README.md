@@ -1,48 +1,47 @@
-# Android Template (com.app.vv)
+# QR Code Scanner and Generator
 
-Kotlin + Jetpack Compose + Material 3 + Hilt + Firebase (Analytics, Crashlytics, Remote Config) + Google Mobile Ads Next Gen SDK.
-Package: `com.app.vv.template` (renamed per app by `scripts/rename.sh`).
+Offline-first Android app: scan QR codes and barcodes with the camera or from an image, act on the result by type
+(links, Wi-Fi, contacts, calendar events, phone, email, SMS, locations, products), create styled QR codes and
+barcodes, and keep a searchable history with favorites. No account, no backend. Free, supported by ads.
 
-## One-time setup (do this once, then never again)
+Package: `com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode` · min SDK 24 · target/compile SDK 35.
 
-1. Open this folder in Android Studio and let Gradle sync.
-   - If there is no `gradlew`, run `gradle wrapper --gradle-version 8.10.2` in this folder
-     (or let Android Studio create it), then commit `gradlew`, `gradlew.bat`, `gradle/wrapper/`.
-   - Bump versions in `gradle/libs.versions.toml` to the latest stable if Studio suggests it.
-2. Fill in the Next Gen ads calls in `ads/AdManager.kt` once, using Google's Next Gen docs.
-3. Run the app on a device/emulator and confirm it builds.
-4. Push to GitHub as `android-template`, then: Settings -> check **Template repository**.
+## Stack
+Kotlin, Jetpack Compose + Material 3, single Activity, Navigation Compose (type-safe routes), MVVM with
+`StateFlow<UiState>` + one-shot effects, Hilt, Room, Preferences DataStore, CameraX + ML Kit Barcode Scanning,
+ZXing (encoding), kotlinx.serialization, Firebase (Analytics, Crashlytics, Remote Config), Google Mobile Ads
+Next Gen SDK + UMP consent, Play In-App Review / Updates.
 
-## Every new app (about 30 seconds)
-
-Install GitHub CLI (`gh`) and run `gh auth login` once. Then:
-
+## Layout
 ```
-./new-app.sh quiz-cash com.app.vv.quizcash "Quiz Cash"
+app/src/main/java/<package>/
+  core/           navigation (Routes, AppNav), ads, analytics, config, billing scaffold, permissions UI, DI
+  designsystem/   theme (tokens, Inter), components, icons, debug Component Gallery
+  domain/         PURE Kotlin: models, parser, link safety, create (payloads, validators, encoders, vector renderer),
+                  history/scan/result/system/settings/ads logic, repositories (interfaces), use cases
+  data/           Room (history), DataStore (settings), repository implementations
+  feature/        onboarding, scan, result, create, history, settings, system (rate/update prompts)
 ```
+Design source of truth: the "QR Code Scanner and Generator" Design artifact (77 phone artboards). Product spec: `PRD.md`.
+Repo conventions: `CLAUDE.md`. Non-obvious choices: `DECISIONS.md`. Store listing: `PLAY_STORE.md`. Ads setup: `docs/ADS_SETUP.md`.
 
-This creates the GitHub repo from the template, clones it, renames the package and app name,
-commits and pushes. Open the new folder in Android Studio.
-
-Or manually: click **Use this template** on GitHub, clone, run `./scripts/rename.sh <package> "<App Name>"`.
-
-## Going live checklist (per app)
-
-- Replace `app/google-services.json` with the real file from Firebase (package must match).
-- Replace the AdMob **test** ids in `app/build.gradle.kts` (`admob_app_id`, `AD_*_ID`) with real ones.
-- Set `privacy_policy_url` in `strings.xml`.
-- Copy `keystore.properties.example` to `keystore.properties` and point it at your upload keystore.
-  Never commit the keystore or `keystore.properties` (already in `.gitignore`).
-- Replace the launcher icon and splash.
-- Bump `versionCode` / `versionName` for each release.
-
-## Structure
-
+## Build
 ```
-app/src/main/java/com/app/vv/template/
-  App.kt, MainActivity.kt
-  ads/AdManager.kt          single place for all ads
-  analytics/Analytics.kt    Firebase event helper
-  data/SettingsRepository   DataStore preferences
-  ui/{theme,navigation,home,settings}
+./gradlew assembleDebug          # debug APK (applicationId has a .debug suffix)
+./gradlew testDebugUnitTest      # JVM unit tests (parsers, validators, ViewModels, ...)
+./gradlew ktlintCheck detekt lintDebug
+./gradlew bundleRelease          # R8 + (optionally signed) release bundle
 ```
+Requires JDK 17 and the Android SDK (API 35). The Gradle wrapper is 8.10.2 with AGP 8.7.3.
+
+## Before publishing
+- Replace `app/google-services.json` with the file from your Firebase project (package must match, plus `.debug`).
+- Real AdMob ids: `local.properties` keys `ads.appId`, `ads.bannerId`, `ads.interstitialId`, `ads.appOpenId`, `ads.nativeId`
+  (or `QR_ADS_*` environment variables). Without them release builds use Google's TEST ids. See `docs/ADS_SETUP.md`.
+- Hosted privacy policy URL in `privacy_policy_url`; support e-mail and terms URL in `strings_settings.xml`.
+- Signing: `keystore.properties` (see `keystore.properties.example`) or `QR_KEYSTORE_FILE`, `QR_KEYSTORE_PASSWORD`,
+  `QR_KEY_ALIAS`, `QR_KEY_PASSWORD`. Never commit keystores.
+- Complete the checklist in `PLAY_STORE.md` (Data safety, content rating, screenshots).
+
+## Languages
+English, Hindi, Spanish, Portuguese (BR), French, German, Indonesian, Arabic (per-app language picker, `locales_config.xml`).
