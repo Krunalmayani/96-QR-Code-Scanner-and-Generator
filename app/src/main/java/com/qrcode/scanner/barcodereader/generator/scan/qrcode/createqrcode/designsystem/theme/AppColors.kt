@@ -86,6 +86,9 @@ object CameraColors {
     val sheetHandle = Color(0x66FFFFFF)
     val scanLine = Color(0xFF8F88FF)
     val hit = ScanHitColor
+
+    /** Text colour on the teal detection pill. */
+    val onHit = Color(0xFF06312B)
     val dim = Color(0x8C05060C)
 }
 

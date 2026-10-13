@@ -13,7 +13,7 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -278,7 +278,7 @@ internal fun LocationContent(content: ScanContent.Location) {
 @Composable
 internal fun UnknownContent(content: ScanContent.Unknown) {
     val context = LocalContext.current
-    var view by rememberSaveable { mutableIntStateOf(VIEW_TEXT) }
+    var view by rememberSaveable { mutableStateOf(VIEW_TEXT) }
     val hex = remember(content.rawValue) { HexDump.of(content.rawValue) }
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         AppCard(Modifier.fillMaxWidth()) {

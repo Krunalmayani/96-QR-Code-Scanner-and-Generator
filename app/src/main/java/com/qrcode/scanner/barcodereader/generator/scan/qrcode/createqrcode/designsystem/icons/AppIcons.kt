@@ -37,6 +37,7 @@ import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.NoPhotography
 import androidx.compose.material.icons.rounded.Notes
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Palette
@@ -114,6 +115,7 @@ object AppIcons {
     val Image: ImageVector = Icons.Rounded.Image
     val Camera: ImageVector = Icons.Rounded.CameraAlt
     val Zoom: ImageVector = Icons.Rounded.ZoomIn
+    val NoCamera: ImageVector = Icons.Rounded.NoPhotography
 
     // Content types
     val QrCode: ImageVector = Icons.Rounded.QrCode2
