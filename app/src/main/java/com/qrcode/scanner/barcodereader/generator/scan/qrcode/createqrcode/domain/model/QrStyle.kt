@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 enum class DotShape { SQUARE, ROUNDED, DOTS, CLASSY }
 
 @Serializable
-enum class EyeShape { SQUARE, ROUNDED, CIRCLE }
+enum class EyeShape { SQUARE, ROUNDED, CIRCLE, LEAF }
 
 @Serializable
 enum class ErrorCorrection { L, M, Q, H }

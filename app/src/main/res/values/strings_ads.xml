@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Attribution label on native ads (required by AdMob policy). -->
+    <string name="ads_label_ad">Ad</string>
+    <string name="ads_native_content_description">Advertisement</string>
+
+    <!-- For the Settings screen: row that opens the UMP privacy options form (shown only where required). -->
+    <string name="ads_privacy_options_title">Ad privacy options</string>
+    <string name="ads_privacy_options_summary">Review or change your ad consent choices</string>
+
+    <!--
+        Debug builds only. Comma separated hashed test device ids from logcat ("Use
+        RequestConfiguration.Builder().setTestDeviceIds(...)"). Leave empty in the repo and override locally
+        in app/src/debug/res/values/ads_test_devices.xml (see docs/ADS_SETUP.md).
+    -->
+    <string name="ads_test_device_ids" translatable="false"></string>
+    <!-- Debug builds only. "", "EEA" or "NOT_EEA" forces the UMP geography to test the consent form. -->
+    <string name="ads_debug_geography" translatable="false"></string>
+</resources>

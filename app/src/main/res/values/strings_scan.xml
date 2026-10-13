@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Live camera (s06, s07, s73) -->
+    <string name="scan_title">Scan</string>
+    <string name="scan_flash_on">Flash on</string>
+    <string name="scan_flash_off">Flash off</string>
+    <string name="scan_switch_camera">Switch camera</string>
+    <string name="scan_settings">Settings</string>
+    <string name="scan_hint_qr">Align the code inside the frame</string>
+    <string name="scan_hint_barcode">Hold steady and fit the barcode in the frame</string>
+    <string name="scan_mode_qr">QR Code</string>
+    <string name="scan_mode_barcode">Barcode</string>
+    <string name="scan_mode_all">All</string>
+    <string name="scan_zoom">Zoom</string>
+    <string name="scan_zoom_min">1x</string>
+    <string name="scan_zoom_max">%1$dx</string>
+    <string name="scan_from_gallery">Scan from gallery</string>
+
+    <!-- Batch scan (s10) -->
+    <string name="scan_batch_chip">Batch</string>
+    <string name="scan_batch_title">Batch scan</string>
+    <string name="scan_batch_close">Close batch scan</string>
+    <string name="scan_batch_sheet_title">This batch</string>
+    <string name="scan_batch_newest_first">Newest first</string>
+    <string name="scan_batch_empty">Scanned codes will appear here.</string>
+    <string name="scan_batch_finish">Finish batch</string>
+    <plurals name="scan_batch_count">
+        <item quantity="one">%1$d code scanned</item>
+        <item quantity="other">%1$d codes scanned</item>
+    </plurals>
+
+    <!-- Quick result sheet (s08) -->
+    <string name="scan_quick_just_now">Just now</string>
+    <string name="scan_quick_open_result">Open result</string>
+    <string name="scan_quick_keep_scanning">Keep scanning</string>
+    <string name="scan_quick_check_address">Check the address before you open it.</string>
+    <string name="scan_row_subtitle">%1$s · %2$s</string>
+
+    <!-- Content type labels -->
+    <string name="scan_type_website">Website</string>
+    <string name="scan_type_text">Text</string>
+    <string name="scan_type_contact">Contact</string>
+    <string name="scan_type_phone">Phone</string>
+    <string name="scan_type_email">Email</string>
+    <string name="scan_type_sms">SMS</string>
+    <string name="scan_type_location">Location</string>
+    <string name="scan_type_event">Event</string>
+    <string name="scan_type_wifi">Wi-Fi</string>
+    <string name="scan_type_product">Product</string>
+    <string name="scan_type_unknown">Unknown</string>
+
+    <!-- Camera blocked (s09) -->
+    <string name="scan_denied_title">Camera access is off</string>
+    <string name="scan_denied_message_request">Allow camera access to scan live codes. You can still scan codes from saved images.</string>
+    <string name="scan_denied_message_settings">Turn on the camera permission in Android settings to scan live codes. You can still scan codes from saved images.</string>
+    <string name="scan_request_again">Request again</string>
+    <string name="scan_open_settings">Open settings</string>
+    <string name="scan_denied_steps">Settings, then Permissions, then Camera, then Allow only while using the app.</string>
+    <string name="scan_unavailable_title">Camera not available</string>
+    <string name="scan_unavailable_message">We could not start the camera. Close other apps that use it, then try again.</string>
+
+    <!-- Scan from image (s11 to s14) -->
+    <string name="scan_image_choose_title">Choose an image</string>
+    <string name="scan_image_choose_message">Pick a screenshot or photo that contains a QR code or barcode.</string>
+    <string name="scan_image_choose_button">Choose image</string>
+    <string name="scan_image_preview">Selected image</string>
+    <string name="scan_image_reading_title">Reading image</string>
+    <string name="scan_image_cancel">Cancel</string>
+    <string name="scan_image_processing_title">Looking for codes</string>
+    <string name="scan_image_processing_message">Checking the image for QR codes and barcodes. This takes a moment.</string>
+    <string name="scan_image_result_title">Scan result</string>
+    <string name="scan_image_from_image">From image · Just now</string>
+    <string name="scan_image_pick_one">Pick the code you want to open.</string>
+    <string name="scan_image_open_result">Open result</string>
+    <plurals name="scan_image_codes_found">
+        <item quantity="one">%1$d code found</item>
+        <item quantity="other">%1$d codes found</item>
+    </plurals>
+    <string name="scan_nocode_title">No QR code or barcode found</string>
+    <string name="scan_nocode_message">We could not read a code in this image. A few quick checks can help.</string>
+    <string name="scan_nocode_tip_visible">Make sure the whole code is visible, with its white border.</string>
+    <string name="scan_nocode_tip_quality">Avoid glare, blur and heavy cropping.</string>
+    <string name="scan_nocode_tip_resolution">Try a higher-resolution original or a screenshot.</string>
+    <string name="scan_nocode_try_another">Try another image</string>
+    <string name="scan_nocode_use_camera">Use camera instead</string>
+    <string name="scan_unreadable_title">This image could not be opened</string>
+    <string name="scan_unreadable_message">The file may be damaged or in a format we do not support. Try another image.</string>
+</resources>

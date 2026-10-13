@@ -125,6 +125,21 @@ internal object PathShapes {
         PathCommand.Close,
     )
 
+    /**
+     * A "leaf": a rectangle whose top-left and bottom-right corners are rounded with radius [r] while the other two
+     * stay sharp. [r] must not exceed half of the smaller side.
+     */
+    fun leaf(x: Float, y: Float, w: Float, h: Float, r: Float): List<PathCommand> = listOf(
+        PathCommand.MoveTo(x + r, y),
+        PathCommand.LineTo(x + w, y),
+        PathCommand.LineTo(x + w, y + h - r),
+        PathCommand.ArcTo(x + w - r, y + h - r, r, 0f, 90f),
+        PathCommand.LineTo(x, y + h),
+        PathCommand.LineTo(x, y + r),
+        PathCommand.ArcTo(x + r, y + r, r, 180f, 90f),
+        PathCommand.Close,
+    )
+
     fun circle(cx: Float, cy: Float, r: Float): List<PathCommand> = listOf(
         PathCommand.MoveTo(cx + r, cy),
         PathCommand.ArcTo(cx, cy, r, 0f, 180f),

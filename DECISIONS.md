@@ -11,3 +11,7 @@ Non-obvious choices made while building (append new entries at the end).
 7. **Per-feature string files** (`strings_<feature>.xml`, prefixed names) to avoid merge conflicts while features were built in parallel.
 8. **Icons**: Material Symbols Rounded equivalents from `material-icons-extended` (`Icons.Rounded.*`) rather than hand-converted SVG; the app launcher icon is a hand-written vector based on the Brand artboard.
 9. **Per-app language** uses `AppCompatDelegate.setApplicationLocales` (works on API 24+ via AppCompat) with `res/xml/locales_config.xml` for the Android 13 system picker; `MainActivity` extends `AppCompatActivity`.
+10. **System prompts host** hides all prompts on Result, Onboarding, CameraRationaleOnboarding and Feedback; the rate sheet always goes before the update dialog, and the update dialog is held back while scanning. Prompts appear after a 1.5 s settle delay.
+11. **Play review/update** use the Java `Task` APIs (not the ktx extensions) to avoid depending on extension package names that could not be verified offline.
+12. **Parser choices**: map links become `Location` only when the coordinates are the point; unusual schemes (`javascript:`, `data:`) parse as Text (no Open action) while the safety checker still flags them UNSAFE; a valid IANA `TZID` in iCalendar is honoured; all-day `DTEND` is treated as exclusive.
+13. **Link-safety brand matching** is stricter than a plain edit distance of 2 for short brand names (0 typos up to 3 letters, 1 up to 6) to avoid false positives such as `finance.com`.

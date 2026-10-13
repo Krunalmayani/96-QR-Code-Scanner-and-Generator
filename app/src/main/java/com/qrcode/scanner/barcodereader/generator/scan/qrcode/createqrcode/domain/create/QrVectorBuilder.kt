@@ -90,6 +90,13 @@ object QrVectorBuilder {
                 )
                 items += StyledShape(VectorShape.Rect(x + 2, y + 2, 3f, 3f, 0.9f), paint)
             }
+            EyeShape.LEAF -> {
+                items += StyledShape(
+                    VectorShape.Path(PathShapes.leaf(x, y, 7f, 7f, 3f) + PathShapes.leaf(x + 1, y + 1, 5f, 5f, 2f), evenOdd = true),
+                    paint,
+                )
+                items += StyledShape(VectorShape.Path(PathShapes.leaf(x + 2, y + 2, 3f, 3f, 1.2f)), paint)
+            }
             EyeShape.CIRCLE -> {
                 items += StyledShape(
                     VectorShape.Path(PathShapes.circle(x + 3.5f, y + 3.5f, 3.5f) + PathShapes.circle(x + 3.5f, y + 3.5f, 2.5f), evenOdd = true),

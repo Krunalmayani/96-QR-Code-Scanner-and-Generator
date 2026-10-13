@@ -2,6 +2,7 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core
 
 import dagger.Binds
 import dagger.Module
+import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -9,5 +10,15 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class AdModule {
     @Binds
-    abstract fun bindAdManager(impl: NoOpAdManager): AdManager
+    abstract fun bindAdManager(impl: GoogleAdManager): AdManager
+
+    @Binds
+    abstract fun bindAdContentSource(impl: GoogleAdManager): AdContentSource
+}
+
+/** Lets the ad composables reach the singleton without a ViewModel. */
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface AdsEntryPoint {
+    fun adContentSource(): AdContentSource
 }

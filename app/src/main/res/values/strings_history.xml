@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen -->
+    <string name="hist_title">History</string>
+    <string name="hist_tab_scanned">Scanned</string>
+    <string name="hist_tab_created">Created</string>
+    <string name="hist_search_placeholder">Search history</string>
+
+    <!-- Filter chips -->
+    <string name="hist_chip_all">All</string>
+    <string name="hist_chip_favorites">Favorites</string>
+    <string name="hist_chip_favorites_count">Favorites · %1$d</string>
+    <string name="hist_chip_links">Links</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">Contacts</string>
+    <string name="hist_chip_text">Text</string>
+    <string name="hist_chip_phone">Phone</string>
+    <string name="hist_chip_email">Email</string>
+    <string name="hist_chip_location">Location</string>
+    <string name="hist_chip_events">Events</string>
+    <string name="hist_chip_products">Products</string>
+
+    <!-- Day headers and rows -->
+    <string name="hist_day_today">Today</string>
+    <string name="hist_day_yesterday">Yesterday</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">Website</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">Contact</string>
+    <string name="hist_type_text">Text</string>
+    <string name="hist_type_phone">Phone</string>
+    <string name="hist_type_email">Email</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">Location</string>
+    <string name="hist_type_event">Event</string>
+    <string name="hist_type_product">Product</string>
+    <string name="hist_type_unknown">Other</string>
+    <plurals name="hist_search_results">
+        <item quantity="one">%d result</item>
+        <item quantity="other">%d results</item>
+    </plurals>
+
+    <!-- Top bar and multi-select -->
+    <string name="hist_cd_select_items">Select items</string>
+    <string name="hist_cd_exit_selection">Exit selection</string>
+    <string name="hist_cd_select_all">Select all</string>
+    <string name="hist_cd_favorite_selected">Favorite selected</string>
+    <string name="hist_cd_close_search">Close search</string>
+    <string name="hist_cd_select_row">Select</string>
+    <string name="hist_cd_open_row">Open</string>
+    <string name="hist_menu_export_history">Export history</string>
+    <string name="hist_menu_export_selected">Export as CSV</string>
+    <plurals name="hist_selected_count">
+        <item quantity="one">%d selected</item>
+        <item quantity="other">%d selected</item>
+    </plurals>
+
+    <!-- Delete and undo -->
+    <plurals name="hist_deleted_scans">
+        <item quantity="one">Scan deleted</item>
+        <item quantity="other">%d scans deleted</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="one">Code deleted</item>
+        <item quantity="other">%d codes deleted</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="one">Item deleted</item>
+        <item quantity="other">%d items deleted</item>
+    </plurals>
+
+    <!-- Share and export -->
+    <string name="hist_share_chooser_title">Share history</string>
+    <string name="hist_export_chooser_title">Export history</string>
+    <string name="hist_share_failed">Couldn\'t share these items</string>
+    <string name="hist_export_failed">Couldn\'t export these items</string>
+
+    <!-- Empty states -->
+    <string name="hist_empty_scanned_title">No scans yet</string>
+    <string name="hist_empty_scanned_message">Codes you scan show up here, saved only on this device.</string>
+    <string name="hist_empty_scanned_action">Start scanning</string>
+    <string name="hist_empty_created_title">Nothing created yet</string>
+    <string name="hist_empty_created_message">Codes you create show up here, saved only on this device.</string>
+    <string name="hist_empty_created_action">Create a code</string>
+    <string name="hist_empty_favorites_title">No favorites yet</string>
+    <string name="hist_empty_favorites_message">Tap the star on any scan or created code to keep it one tap away.</string>
+    <string name="hist_empty_favorites_action">Browse history</string>
+    <string name="hist_empty_filter_title">Nothing of this type</string>
+    <string name="hist_empty_filter_message">Codes of this type show up here once you scan or create one.</string>
+    <string name="hist_empty_filter_action">Show everything</string>
+    <string name="hist_empty_search_title">No results</string>
+    <string name="hist_empty_search_message">Nothing matches “%1$s”. Try a different word.</string>
+</resources>

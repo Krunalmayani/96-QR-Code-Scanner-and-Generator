@@ -58,7 +58,8 @@ class ImageScanPlanTest {
         assertEquals(1, ImageSampling.sampleSize(1000, 800, 2048))
         assertEquals(1, ImageSampling.sampleSize(2048, 1000, 2048))
         assertEquals(2, ImageSampling.sampleSize(4096, 3000, 2048))
-        assertEquals(4, ImageSampling.sampleSize(8000, 6000, 2048))
+        assertEquals(2, ImageSampling.sampleSize(8000, 6000, 2048))
+        assertEquals(4, ImageSampling.sampleSize(16000, 12000, 2048))
     }
 
     @Test
