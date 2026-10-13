@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_label_ad">Anuncio</string>
+    <string name="ads_native_content_description">Publicidad</string>
+
+    <string name="ads_privacy_options_title">Opciones de privacidad de anuncios</string>
+    <string name="ads_privacy_options_summary">Revisa o cambia tus opciones de consentimiento de anuncios</string>
+</resources>

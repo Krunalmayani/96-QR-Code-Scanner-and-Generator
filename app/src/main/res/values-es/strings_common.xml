@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_back">Atrás</string>
+    <string name="common_close">Cerrar</string>
+    <string name="common_clear">Borrar</string>
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_done">Listo</string>
+    <string name="common_next">Siguiente</string>
+    <string name="common_skip">Omitir</string>
+    <string name="common_save">Guardar</string>
+    <string name="common_copy">Copiar</string>
+    <string name="common_share">Compartir</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="common_edit">Editar</string>
+    <string name="common_open">Abrir</string>
+    <string name="common_undo">Deshacer</string>
+    <string name="common_retry">Reintentar</string>
+    <string name="common_search">Buscar</string>
+    <string name="common_more">Más opciones</string>
+    <string name="common_favorite">Añadir a favoritos</string>
+    <string name="common_unfavorite">Quitar de favoritos</string>
+    <string name="common_loading">Cargando</string>
+    <string name="common_yes">Sí</string>
+    <string name="common_no">No</string>
+    <string name="common_copied">Copiado</string>
+    <string name="common_something_went_wrong">Algo salió mal</string>
+    <string name="common_nav_create">Crear</string>
+    <string name="common_nav_scan">Escanear</string>
+    <string name="common_nav_history">Historial</string>
+    <string name="common_nav_settings">Ajustes</string>
+    <string name="common_show_password">Mostrar contraseña</string>
+    <string name="common_hide_password">Ocultar contraseña</string>
+</resources>

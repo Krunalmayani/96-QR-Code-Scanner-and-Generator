@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_section_scanning">Escaneo</string>
+    <string name="settings_section_appearance">Apariencia</string>
+    <string name="settings_section_privacy">Privacidad y datos</string>
+    <string name="settings_section_about">Información y soporte</string>
+
+    <string name="settings_vibrate">Vibrar al escanear</string>
+    <string name="settings_beep">Sonido de pitido</string>
+    <string name="settings_flash_on_start">Flash al iniciar</string>
+    <string name="settings_auto_open">Abrir enlaces automáticamente</string>
+    <string name="settings_auto_open_hint">Desactivado por defecto. Los enlaces solo se abren al tocarlos.</string>
+    <string name="settings_continuous">Modo de escaneo continuo</string>
+    <string name="settings_continuous_hint">Sigue escaneando tras cada código.</string>
+    <string name="settings_scan_area">Área de escaneo</string>
+    <string name="settings_scan_area_hint">Lee códigos solo dentro del marco o en cualquier parte de la pantalla.</string>
+    <string name="settings_scan_area_frame">Solo el marco</string>
+    <string name="settings_scan_area_full">Pantalla completa</string>
+
+    <string name="settings_sites_title">Orden de búsqueda de productos</string>
+    <string name="settings_sites_hint">Los sitios se ofrecen en este orden al buscar un código de barras.</string>
+    <string name="settings_site_move_up">Subir %1$s</string>
+    <string name="settings_site_move_down">Bajar %1$s</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Predeterminado del sistema</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_system">Predeterminado del sistema</string>
+
+    <string name="settings_privacy_banner_title">El historial se guarda solo en tu dispositivo</string>
+    <string name="settings_privacy_banner_text">Puedes eliminar un elemento o todo en cualquier momento.</string>
+    <string name="settings_perm_camera">Cámara</string>
+    <string name="settings_perm_camera_hint">Leer códigos QR y de barras</string>
+    <string name="settings_perm_photos">Fotos</string>
+    <string name="settings_perm_photos_hint">Escanear códigos desde imágenes guardadas</string>
+    <string name="settings_perm_location">Ubicación</string>
+    <string name="settings_perm_location_hint">Solo si Android lo pide al conectarse a un código Wi-Fi</string>
+    <string name="settings_perm_internet">Internet</string>
+    <string name="settings_perm_internet_hint">Abrir sitios web y búsquedas en tu navegador</string>
+    <string name="settings_manage_android">Gestionar en los ajustes de Android</string>
+    <string name="settings_save_history">Guardar historial de escaneos</string>
+    <string name="settings_save_history_hint">Desactívalo para que los nuevos escaneos no se guarden en el historial.</string>
+    <string name="settings_analytics">Compartir datos de uso anónimos</string>
+    <string name="settings_analytics_hint">Ayuda a mejorar la app. Nunca incluye tus códigos.</string>
+    <string name="settings_clear_history">Borrar historial</string>
+    <string name="settings_export_history">Exportar historial</string>
+    <string name="settings_privacy_summary">Resumen de privacidad</string>
+    <string name="settings_privacy_policy_web">Política de privacidad completa</string>
+
+    <string name="settings_help">Ayuda y preguntas frecuentes</string>
+    <string name="settings_feedback">Enviar comentarios</string>
+    <string name="settings_rate">Valorar en Google Play</string>
+    <string name="settings_share_app">Compartir esta app</string>
+    <string name="settings_about">Acerca de</string>
+
+    <string name="settings_history_empty">El historial ya está vacío</string>
+    <plurals name="settings_history_cleared">
+        <item quantity="one">Se borró %d elemento</item>
+        <item quantity="many">Se borraron %d de elementos</item>
+        <item quantity="other">Se borraron %d elementos</item>
+    </plurals>
+    <string name="settings_no_app_found">No se encontró ninguna app para abrirlo</string>
+    <string name="settings_play_unavailable">No se pudo abrir Google Play</string>
+
+    <string name="settings_clear_title">¿Borrar todo el historial?</string>
+    <string name="settings_clear_message">Esto elimina lo siguiente de este dispositivo. No se puede deshacer.</string>
+    <plurals name="settings_clear_scanned">
+        <item quantity="one">%d código escaneado</item>
+        <item quantity="many">%d de códigos escaneados</item>
+        <item quantity="other">%d códigos escaneados</item>
+    </plurals>
+    <plurals name="settings_clear_created">
+        <item quantity="one">%d código creado</item>
+        <item quantity="many">%d de códigos creados</item>
+        <item quantity="other">%d códigos creados</item>
+    </plurals>
+    <string name="settings_clear_keep_favorites">Conservar mis favoritos</string>
+    <string name="settings_clear_confirm">Borrar todo</string>
+
+    <string name="settings_language_search">Buscar idiomas</string>
+    <string name="settings_language_no_match">Ningún idioma coincide</string>
+
+    <string name="settings_help_title">Ayuda y preguntas frecuentes</string>
+    <string name="settings_contact_support">Contactar con soporte</string>
+    <string name="settings_faq_expanded">Expandido</string>
+    <string name="settings_faq_collapsed">Contraído</string>
+    <string name="settings_faq_wont_scan_q">¿Por qué no se escanea mi código?</string>
+    <string name="settings_faq_wont_scan_a">Sujeta el teléfono a 15-30 cm, añade luz con el flash y mantén el código plano dentro del marco. Los códigos dañados pueden necesitar un segundo intento.</string>
+    <string name="settings_faq_offline_q">¿Puedo escanear sin internet?</string>
+    <string name="settings_faq_offline_a">Sí. Escanear y crear códigos funciona sin conexión. Solo necesitas conexión para abrir un enlace o buscar un producto.</string>
+    <string name="settings_faq_colors_q">¿Cómo cambio los colores del código?</string>
+    <string name="settings_faq_colors_a">Después de crear un código, toca Personalizar y elige los colores en la pestaña Colores. Mantén un buen contraste para que el código se escanee fácilmente.</string>
+    <string name="settings_faq_history_q">¿Dónde se guarda mi historial?</string>
+    <string name="settings_faq_history_a">Solo en tu teléfono. No se sube nada. Puedes eliminar un elemento o borrar todo en Ajustes.</string>
+    <string name="settings_faq_photo_q">¿Cómo escaneo desde una foto?</string>
+    <string name="settings_faq_photo_a">En la pantalla Escanear, toca el botón de galería y elige una imagen. La app lee cualquier código que contenga. Las fotos nunca salen de tu teléfono.</string>
+    <string name="settings_faq_auto_open_q">¿Por qué un enlace no se abre solo?</string>
+    <string name="settings_faq_auto_open_a">Por tu seguridad, los enlaces solo se abren cuando los tocas. Puedes activar Abrir enlaces automáticamente en Ajustes, pero revisa antes la dirección.</string>
+    <string name="settings_faq_wifi_q">¿Cómo me uno a una red Wi-Fi desde un código?</string>
+    <string name="settings_faq_wifi_a">Escanea el código Wi-Fi y toca Conectar. Android puede pedir el permiso de ubicación antes de unirse a una red. También puedes copiar la contraseña.</string>
+    <string name="settings_faq_types_q">¿Qué códigos puedo escanear?</string>
+    <string name="settings_faq_types_a">Códigos QR y códigos de barras comunes como EAN, UPC, Code 128, Code 39, Data Matrix, PDF417 y Aztec.</string>
+    <string name="settings_faq_export_q">¿Cómo exporto mi historial?</string>
+    <string name="settings_faq_export_a">Abre Ajustes y luego Exportar historial. Elige CSV, JSON o Texto, y guarda el archivo o compártelo.</string>
+    <string name="settings_faq_language_q">¿Cómo cambio el idioma?</string>
+    <string name="settings_faq_language_a">Abre Ajustes, luego Idioma, y elige uno. La app cambia al instante.</string>
+
+    <string name="settings_privacy_title">Privacidad</string>
+    <string name="settings_privacy_hero_title">Tus escaneos se quedan en tu teléfono</string>
+    <string name="settings_privacy_hero_text">No subimos códigos, fotos ni historial.</string>
+    <string name="settings_privacy_camera">Solo mientras escaneas</string>
+    <string name="settings_privacy_photos">Solo las imágenes que elijas</string>
+    <string name="settings_privacy_history">Guardado en local, se puede borrar</string>
+    <string name="settings_privacy_history_title">Historial</string>
+    <string name="settings_privacy_note">Las búsquedas de productos envían solo el número del código de barras a un sitio de búsqueda, y solo cuando tocas Buscar. Los anuncios, si se muestran, pueden usar un ID de publicidad que puedes restablecer en los ajustes de Android.</string>
+    <string name="settings_privacy_read_full">Leer la política completa</string>
+
+    <string name="settings_feedback_title">Enviar comentarios</string>
+    <string name="settings_feedback_rating_label">¿Cómo valoras la app?</string>
+    <string name="settings_feedback_star">Valorar con %1$d de 5</string>
+    <string name="settings_feedback_topic_scanning">Escaneo</string>
+    <string name="settings_feedback_topic_creating">Creación</string>
+    <string name="settings_feedback_topic_design">Diseño</string>
+    <string name="settings_feedback_topic_other">Otro</string>
+    <string name="settings_feedback_message_label">¿Qué podemos mejorar?</string>
+    <string name="settings_feedback_email_label">Correo electrónico (opcional)</string>
+    <string name="settings_feedback_email_error">Introduce un correo electrónico válido</string>
+    <string name="settings_feedback_send">Enviar comentarios</string>
+    <string name="settings_feedback_no_mail_app">No se encontró ninguna app de correo. Escribe a %1$s.</string>
+
+    <string name="settings_about_title">Acerca de</string>
+    <string name="settings_about_version">Versión %1$s (compilación %2$d)</string>
+    <string name="settings_about_licenses">Licencias de código abierto</string>
+    <string name="settings_about_terms">Términos de uso</string>
+    <string name="settings_about_disclaimer">Esta app es una utilidad para escanear y crear códigos QR y de barras. No ofrece servicios de pago, bancarios ni financieros.</string>
+    <string name="settings_share_text">Prueba %1$s: %2$s</string>
+
+    <string name="settings_export_title">Exportar historial</string>
+    <string name="settings_export_include">Incluir</string>
+    <string name="settings_export_scanned">Códigos escaneados (%1$d)</string>
+    <string name="settings_export_created">Códigos creados (%1$d)</string>
+    <string name="settings_export_favorites">Solo favoritos</string>
+    <string name="settings_export_format">Formato</string>
+    <string name="settings_export_format_csv">CSV</string>
+    <string name="settings_export_format_json">JSON</string>
+    <string name="settings_export_format_text">Texto</string>
+    <string name="settings_export_note">El archivo se guarda donde elijas o se comparte con una app que elijas. No se sube a ningún sitio.</string>
+    <string name="settings_export_nothing">Nada que exportar</string>
+    <plurals name="settings_export_summary">
+        <item quantity="one">Se exportará %d elemento</item>
+        <item quantity="many">Se exportarán %d de elementos</item>
+        <item quantity="other">Se exportarán %d elementos</item>
+    </plurals>
+    <string name="settings_export_save">Guardar archivo</string>
+    <string name="settings_export_share">Compartir</string>
+    <string name="settings_export_share_title">Compartir historial</string>
+    <string name="settings_export_saved">Archivo guardado</string>
+    <string name="settings_export_failed">No se pudo exportar el archivo</string>
+</resources>

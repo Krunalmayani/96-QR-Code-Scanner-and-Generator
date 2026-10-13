@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">¿Te gusta el escáner?</string>
+    <string name="system_rate_body">Una valoración rápida ayuda a otras personas a encontrar la app.</string>
+    <string name="system_rate_action_play">Valorar en Google Play</string>
+    <string name="system_rate_action_feedback">Enviar comentarios</string>
+    <string name="system_rate_later">Quizás más tarde</string>
+    <string name="system_rate_stars_group">Valoración</string>
+    <plurals name="system_rate_star">
+        <item quantity="one">%d estrella</item>
+        <item quantity="many">%d de estrellas</item>
+        <item quantity="other">%d estrellas</item>
+    </plurals>
+    <string name="system_update_title">Actualización disponible</string>
+    <string name="system_update_body">Hay una nueva versión con mejoras y correcciones.</string>
+    <string name="system_update_action">Actualizar</string>
+    <string name="system_update_later">Más tarde</string>
+    <string name="system_update_ready_title">Actualización descargada</string>
+    <string name="system_update_ready_body">Reinicia la app para terminar de instalar la nueva versión.</string>
+    <string name="system_update_ready_action">Reiniciar</string>
+</resources>

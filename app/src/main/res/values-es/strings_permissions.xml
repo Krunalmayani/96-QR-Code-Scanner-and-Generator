@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">Permitir acceso a la cámara</string>
+    <string name="perm_camera_screen_body">La cámara se usa solo para leer códigos QR y de barras mientras la pantalla de escaneo está abierta.</string>
+    <string name="perm_camera_point1_title">Escanea con un toque</string>
+    <string name="perm_camera_point1_body">Los códigos se leen en cuanto entran en el encuadre.</string>
+    <string name="perm_camera_point2_title">¿Sin cámara? No hay problema</string>
+    <string name="perm_camera_point2_body">Aún puedes escanear códigos desde imágenes guardadas.</string>
+    <string name="perm_camera_point3_title">Cámbialo cuando quieras</string>
+    <string name="perm_camera_point3_body">Gestiona el acceso en los ajustes de Android.</string>
+    <string name="perm_camera_allow">Permitir cámara</string>
+    <string name="perm_not_now">Ahora no</string>
+    <string name="perm_camera_dialog_title">Se necesita acceso a la cámara</string>
+    <string name="perm_camera_dialog_body">Para leer un código QR o de barras, la app necesita tu cámara. Solo se usa mientras la pantalla de escaneo está abierta.</string>
+    <string name="perm_continue">Continuar</string>
+    <string name="perm_photos_title">Permitir acceso a las fotos</string>
+    <string name="perm_photos_body">Para leer un código de una imagen guardada, elige una foto de tu galería. Solo se lee la imagen que elijas.</string>
+    <string name="perm_photos_choose">Elegir foto</string>
+    <string name="perm_photos_cancel">Cancelar</string>
+    <string name="perm_location_title">¿Por qué la ubicación?</string>
+    <string name="perm_location_body">En algunas versiones de Android, conectarse a una red Wi-Fi desde un código requiere el permiso de ubicación. Lo exige Android para las conexiones Wi-Fi, no esta app.</string>
+    <string name="perm_location_point1">Se usa solo para permitir la conexión</string>
+    <string name="perm_location_point2">Aún puedes copiar la contraseña</string>
+</resources>
