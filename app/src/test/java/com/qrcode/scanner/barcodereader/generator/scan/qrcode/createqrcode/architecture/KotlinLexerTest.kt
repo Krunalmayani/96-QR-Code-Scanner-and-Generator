@@ -24,7 +24,8 @@ class KotlinLexerTest {
     @Test
     fun blockCommentsNestAndKeepNewlines() {
         val src = "a /* x /* y */ z */ b\n/* one\ntwo */ c"
-        assertEquals("a                  b\n      \n       c", blank(src))
+        // "/* x /* y */ z */" is 17 characters, plus one space on each side of it.
+        assertEquals("a" + " ".repeat(19) + "b\n" + " ".repeat(6) + "\n" + " ".repeat(7) + "c", blank(src))
     }
 
     @Test

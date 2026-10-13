@@ -39,6 +39,64 @@ jobs:
           name: app-debug
           path: app/build/outputs/apk/debug/*.apk
 
+  instrumented:
+    # Instrumented tests (app/src/androidTest) on API 24 and 35 emulators. Advisory: continue-on-error keeps a failing or
+    # flaky emulator run from blocking the pull request. See docs/TESTING.md.
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    continue-on-error: true
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        api-level: [24, 35]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Cache AVD snapshot
+        id: avd-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}-x86_64
+      - name: Create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
+      - name: Run instrumented tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          disable-animations: true
+          script: ./gradlew connectedDebugAndroidTest
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: instrumented-reports-api${{ matrix.api-level }}
+          path: |
+            app/build/reports/androidTests/**
+            app/build/outputs/androidTest-results/**
+
   release:
     # R8 build to catch shrinker problems early. Signing is optional and comes from environment variables.
     runs-on: ubuntu-latest

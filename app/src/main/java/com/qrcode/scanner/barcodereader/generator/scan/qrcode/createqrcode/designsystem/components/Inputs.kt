@@ -144,12 +144,20 @@ fun AppTextField(
         }
         val supporting = error ?: helper
         if (supporting != null) {
-            Text(
-                supporting,
-                style = AppTheme.type.caption,
-                color = if (error != null) c.error else c.inkSecondary,
+            Row(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp),
-            )
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.Top,
+            ) {
+                if (error != null) {
+                    Icon(AppIcons.Info, contentDescription = null, tint = c.error, modifier = Modifier.size(16.dp))
+                }
+                Text(
+                    supporting,
+                    style = AppTheme.type.caption,
+                    color = if (error != null) c.error else c.inkSecondary,
+                )
+            }
         }
     }
 }
@@ -422,8 +430,8 @@ fun AppSlider(
                 thumbColor = active,
                 activeTrackColor = active,
                 inactiveTrackColor = inactive,
-                activeTickColor = Color.Transparent,
-                inactiveTickColor = Color.Transparent,
+                activeTickColor = if (onCamera) Color.White.copy(alpha = 0.7f) else c.onPrimary.copy(alpha = 0.7f),
+                inactiveTickColor = if (onCamera) Color.White.copy(alpha = 0.5f) else c.inkSecondary.copy(alpha = 0.5f),
             ),
     )
 }

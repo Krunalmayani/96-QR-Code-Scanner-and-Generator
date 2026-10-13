@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
@@ -63,7 +63,7 @@ fun AppChip(
     Row(
         modifier =
             modifier
-                .height(36.dp)
+                .heightIn(min = 36.dp)
                 .clip(shape)
                 .background(bg)
                 .then(if (!selected && !onCamera) Modifier.border(1.dp, c.outline, shape) else Modifier)
@@ -118,7 +118,7 @@ fun AppBadge(
     Row(
         modifier =
             modifier
-                .height(24.dp)
+                .heightIn(min = 24.dp)
                 .clip(RoundedCornerShape(12.dp))
                 .background(c.containerOf(tone))
                 .padding(horizontal = 10.dp),
@@ -145,7 +145,7 @@ fun SegmentedControl(
         modifier =
             modifier
                 .fillMaxWidth()
-                .height(40.dp)
+                .heightIn(min = 40.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .background(track)
                 .padding(4.dp),
@@ -169,7 +169,7 @@ fun SegmentedControl(
                 modifier =
                     Modifier
                         .weight(1f)
-                        .height(32.dp)
+                        .heightIn(min = 32.dp)
                         .then(if (selected && !onCamera) Modifier.shadow(1.dp, RoundedCornerShape(16.dp)) else Modifier)
                         .clip(RoundedCornerShape(16.dp))
                         .background(thumb)

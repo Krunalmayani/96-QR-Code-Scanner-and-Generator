@@ -191,8 +191,13 @@ fun IconTile(
         modifier =
             modifier
                 .size(size)
-                .clip(if (size >= 56.dp) RoundedCornerShape(20.dp) else AppTheme.shapes.tile)
-                .background(c.containerOf(tone)),
+                .clip(
+                    when {
+                        size >= 56.dp -> RoundedCornerShape(20.dp)
+                        size <= 32.dp -> RoundedCornerShape(10.dp)
+                        else -> AppTheme.shapes.tile
+                    },
+                ).background(c.containerOf(tone)),
         contentAlignment = Alignment.Center,
     ) {
         Icon(icon, contentDescription, tint = c.contentOf(tone), modifier = Modifier.size(iconSize))
@@ -315,7 +320,7 @@ fun QuickAction(
                 modifier = Modifier.size(24.dp),
             )
         }
-        Text(label, style = AppTheme.type.captionStrong, color = c.ink, textAlign = TextAlign.Center, maxLines = 1)
+        Text(label, style = AppTheme.type.captionStrong, color = c.ink, textAlign = TextAlign.Center, maxLines = 2)
     }
 }
 

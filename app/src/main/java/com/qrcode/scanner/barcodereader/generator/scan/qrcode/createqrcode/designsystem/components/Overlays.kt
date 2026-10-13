@@ -11,11 +11,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,6 +48,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.ScanHitColor
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.containerOf
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.contentOf
 import kotlinx.coroutines.delay
 
 /**
@@ -108,14 +112,22 @@ fun ConfirmDialog(
                     .fillMaxWidth()
                     .background(c.surface, AppTheme.shapes.dialog)
                     .padding(24.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            if (icon != null) IconTile(icon, tone = iconTone, size = 48.dp)
-            Text(title, style = AppTheme.type.titleLarge, color = c.ink)
+            if (icon != null) {
+                Box(
+                    Modifier.size(56.dp).background(c.containerOf(iconTone), CircleShape),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(icon, contentDescription = null, tint = c.contentOf(iconTone), modifier = Modifier.size(28.dp))
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+            Text(title, style = AppTheme.type.headline, color = c.ink)
             if (message != null) Text(message, style = AppTheme.type.body, color = c.inkSecondary)
             content?.invoke(this)
             Row(
-                Modifier.fillMaxWidth().padding(top = 8.dp),
+                Modifier.fillMaxWidth().padding(top = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
             ) {
                 AppTextButton(dismissText, onDismiss)

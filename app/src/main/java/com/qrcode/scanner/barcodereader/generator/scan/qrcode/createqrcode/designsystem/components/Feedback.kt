@@ -130,14 +130,14 @@ fun InfoBanner(
     Row(
         modifier =
             modifier
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(20.dp))
                 .background(c.containerOf(tone))
-                .padding(12.dp),
+                .padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.Top,
     ) {
         Icon(icon, contentDescription = null, tint = c.contentOf(tone), modifier = Modifier.size(24.dp))
-        Text(text, style = AppTheme.type.body, color = c.contentOf(tone), modifier = Modifier.weight(1f))
+        Text(text, style = AppTheme.type.bodySmall, color = c.contentOf(tone), modifier = Modifier.weight(1f))
     }
 }
 
