@@ -46,7 +46,11 @@ fun ScanRoute(
         permission.status != CameraPermissionStatus.GRANTED -> {
             CameraBlockedScreen(
                 block = blockFor(permission.status),
-                onPrimary = if (permission.status == CameraPermissionStatus.PERMANENTLY_DENIED) permission.openSettings else permission.request,
+                onPrimary = if (permission.status == CameraPermissionStatus.PERMANENTLY_DENIED) {
+                    permission.openSettings
+                } else {
+                    permission.request
+                },
                 onPickImage = onOpenGallery,
                 onOpenSettings = onOpenSettings,
                 modifier = modifier,

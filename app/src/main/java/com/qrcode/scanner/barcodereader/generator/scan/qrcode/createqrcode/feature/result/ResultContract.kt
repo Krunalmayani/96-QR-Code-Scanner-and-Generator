@@ -107,6 +107,9 @@ sealed interface ResultEvent {
 
     data object WifiDone : ResultEvent
 
+    /** The "Why Location?" link: shows the explainer sheet without starting a connection. */
+    data object WhyLocationClicked : ResultEvent
+
     data object LocationRationaleContinue : ResultEvent
 
     data object LocationRationaleDismissed : ResultEvent

@@ -33,13 +33,15 @@ import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdLoaderCallba
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdRequest
 import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAdView
 import timber.log.Timber
-import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd as SdkBannerAd
 
 /*
  * The ONLY file that touches the Google Mobile Ads Next Gen SDK (com.google.android.libraries.ads.mobile.sdk).
  * Everything else in the app talks to the small wrapper types and functions below, so an SDK API change is
  * fixed here and nowhere else. Call shapes follow Google's official samples (googleads/gma-next-gen-sdk-android-examples).
  */
+
+/** The SDK's banner type; the composable of the same name in this package is [BannerAd]. */
+internal typealias SdkBannerAd = com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 /** A loaded banner. Opaque outside this file. */
 class LoadedBanner internal constructor(internal val ad: SdkBannerAd) {

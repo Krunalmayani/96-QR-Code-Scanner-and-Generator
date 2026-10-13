@@ -95,7 +95,13 @@ private fun IdleContent(onBack: () -> Unit, onChooseImage: () -> Unit, modifier:
                 icon = AppIcons.Image,
                 title = stringResource(R.string.scan_image_choose_title),
                 message = stringResource(R.string.scan_image_choose_message),
-                action = { PrimaryButton(stringResource(R.string.scan_image_choose_button), onChooseImage, leadingIcon = AppIcons.Gallery) },
+                action = {
+                    PrimaryButton(
+                        stringResource(R.string.scan_image_choose_button),
+                        onChooseImage,
+                        leadingIcon = AppIcons.Gallery,
+                    )
+                },
             )
         }
     }
@@ -128,8 +134,18 @@ private fun ProcessingContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                Text(stringResource(R.string.scan_image_processing_title), style = AppTheme.type.headline, color = AppTheme.colors.ink, textAlign = TextAlign.Center)
-                Text(stringResource(R.string.scan_image_processing_message), style = AppTheme.type.body, color = AppTheme.colors.inkSecondary, textAlign = TextAlign.Center)
+                Text(
+                    stringResource(R.string.scan_image_processing_title),
+                    style = AppTheme.type.headline,
+                    color = AppTheme.colors.ink,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    stringResource(R.string.scan_image_processing_message),
+                    style = AppTheme.type.body,
+                    color = AppTheme.colors.inkSecondary,
+                    textAlign = TextAlign.Center,
+                )
             }
             Box(Modifier.weight(1f))
             AppOutlinedButton(stringResource(R.string.scan_image_cancel), onCancel, Modifier.fillMaxWidth().padding(bottom = 16.dp))
@@ -184,7 +200,12 @@ private fun FoundBadge(count: Int, modifier: Modifier) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(AppIcons.Check, contentDescription = null, tint = OnHitColor, modifier = Modifier.size(16.dp))
-        Text(pluralStringResource(R.plurals.scan_image_codes_found, count, count), style = AppTheme.type.captionStrong, color = OnHitColor, maxLines = 1)
+        Text(
+            pluralStringResource(R.plurals.scan_image_codes_found, count, count),
+            style = AppTheme.type.captionStrong,
+            color = OnHitColor,
+            maxLines = 1,
+        )
     }
 }
 
@@ -193,7 +214,12 @@ private fun SingleFound(code: FoundCode, onOpen: () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         FoundHeader(code)
         Text(code.title, style = AppTheme.type.headline, color = AppTheme.colors.ink, maxLines = 3)
-        PrimaryButton(stringResource(R.string.scan_image_open_result), onOpen, Modifier.fillMaxWidth().padding(top = 4.dp), leadingIcon = AppIcons.OpenInNew)
+        PrimaryButton(
+            stringResource(R.string.scan_image_open_result),
+            onOpen,
+            Modifier.fillMaxWidth().padding(top = 4.dp),
+            leadingIcon = AppIcons.OpenInNew,
+        )
     }
 }
 
@@ -248,8 +274,16 @@ private fun NoCodeContent(
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(20.dp)) {
                 ImageCard(state.imageUri, image, height = 200.dp) {
                     Box(Modifier.matchParentSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.Center) {
-                        Box(Modifier.size(72.dp).clip(CircleShape).background(AppTheme.colors.surface), contentAlignment = Alignment.Center) {
-                            Icon(AppIcons.Search, contentDescription = null, tint = AppTheme.colors.warning, modifier = Modifier.size(32.dp))
+                        Box(
+                            Modifier.size(72.dp).clip(CircleShape).background(AppTheme.colors.surface),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Icon(
+                                AppIcons.Search,
+                                contentDescription = null,
+                                tint = AppTheme.colors.warning,
+                                modifier = Modifier.size(32.dp),
+                            )
                         }
                     }
                 }
@@ -257,8 +291,18 @@ private fun NoCodeContent(
                 if (!state.unreadable) NoCodeTips()
             }
             Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                PrimaryButton(stringResource(R.string.scan_nocode_try_another), onTryAnother, Modifier.fillMaxWidth(), leadingIcon = AppIcons.Gallery)
-                AppTextButton(stringResource(R.string.scan_nocode_use_camera), onUseCamera, Modifier.fillMaxWidth(), leadingIcon = AppIcons.Camera)
+                PrimaryButton(
+                    stringResource(R.string.scan_nocode_try_another),
+                    onTryAnother,
+                    Modifier.fillMaxWidth(),
+                    leadingIcon = AppIcons.Gallery,
+                )
+                AppTextButton(
+                    stringResource(R.string.scan_nocode_use_camera),
+                    onUseCamera,
+                    Modifier.fillMaxWidth(),
+                    leadingIcon = AppIcons.Camera,
+                )
             }
         }
     }
@@ -269,7 +313,13 @@ private fun NoCodeText(unreadable: Boolean) {
     val title = if (unreadable) R.string.scan_unreadable_title else R.string.scan_nocode_title
     val message = if (unreadable) R.string.scan_unreadable_message else R.string.scan_nocode_message
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(stringResource(title), style = AppTheme.type.headline, color = AppTheme.colors.ink, textAlign = TextAlign.Center, modifier = Modifier.semantics { heading() })
+        Text(
+            stringResource(title),
+            style = AppTheme.type.headline,
+            color = AppTheme.colors.ink,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.semantics { heading() },
+        )
         Text(stringResource(message), style = AppTheme.type.body, color = AppTheme.colors.inkSecondary, textAlign = TextAlign.Center)
     }
 }

@@ -200,7 +200,12 @@ private fun buildPreview(view: PreviewView): Preview {
 private fun buildAnalysis(): ImageAnalysis {
     val selector = ResolutionSelector.Builder()
         .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
-        .setResolutionStrategy(ResolutionStrategy(Size(ANALYSIS_WIDTH, ANALYSIS_HEIGHT), ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER))
+        .setResolutionStrategy(
+            ResolutionStrategy(
+                Size(ANALYSIS_WIDTH, ANALYSIS_HEIGHT),
+                ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
+            ),
+        )
         .build()
     return ImageAnalysis.Builder()
         .setResolutionSelector(selector)

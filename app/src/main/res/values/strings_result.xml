@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Screen titles (top bar), one per result type -->
+    <string name="result_title_website">Website link</string>
+    <string name="result_title_text">Text</string>
+    <string name="result_title_contact">Contact</string>
+    <string name="result_title_wifi">Wi-Fi network</string>
+    <string name="result_title_event">Event</string>
+    <string name="result_title_phone">Phone number</string>
+    <string name="result_title_email">Email</string>
+    <string name="result_title_sms">SMS</string>
+    <string name="result_title_location">Location</string>
+    <string name="result_title_product">Product</string>
+    <string name="result_title_unknown">Scanned data</string>
+    <string name="result_title_product_search">Search product</string>
+
+    <!-- Type badges -->
+    <string name="result_badge_website">Website</string>
+    <string name="result_badge_text">Text</string>
+    <string name="result_badge_contact">Contact</string>
+    <string name="result_badge_phone">Phone</string>
+    <string name="result_badge_email">Email</string>
+    <string name="result_badge_sms">SMS</string>
+    <string name="result_badge_location">Location</string>
+    <string name="result_badge_event">Event</string>
+    <string name="result_badge_wifi">Wi-Fi</string>
+    <string name="result_badge_product">Product</string>
+    <string name="result_badge_unknown">Other</string>
+    <string name="result_badge_created">Created</string>
+
+    <!-- Header caption: "Today, 4:36 PM · QR code" -->
+    <string name="result_when_today">Today, %1$s</string>
+    <string name="result_when_yesterday">Yesterday, %1$s</string>
+    <string name="result_when_date">%1$s · %2$s</string>
+    <string name="result_caption">%1$s · %2$s</string>
+    <string name="result_kind_qr">QR code</string>
+    <string name="result_kind_barcode">Barcode</string>
+
+    <!-- Shared labels -->
+    <string name="result_label_type">Type</string>
+    <string name="result_label_format">Format</string>
+    <string name="result_label_source">Source</string>
+    <string name="result_source_camera">Camera</string>
+    <string name="result_source_image">Image</string>
+    <string name="result_source_created">Created</string>
+    <string name="result_favorite">Favorite</string>
+    <string name="result_favorited">Favorited</string>
+    <string name="result_not_found_title">Nothing to show</string>
+    <string name="result_not_found_message">This item is no longer in your history.</string>
+
+    <!-- s15 / s74 Website -->
+    <string name="result_website_opens">Opens</string>
+    <string name="result_website_https">https</string>
+    <string name="result_website_http">http</string>
+    <string name="result_website_secure">Secure connection</string>
+    <string name="result_website_not_secure">Not secure</string>
+    <string name="result_website_check_title">Check the link before opening</string>
+    <string name="result_website_check_body">Make sure the address matches who gave you the code. Be careful with login pages.</string>
+    <string name="result_website_type_value">Web address (URL)</string>
+    <string name="result_website_full_link">Full link</string>
+    <string name="result_action_open_link">Open link</string>
+
+    <!-- s16 Text -->
+    <string name="result_text_content">Content</string>
+    <plurals name="result_characters">
+        <item quantity="one">%d character</item>
+        <item quantity="other">%d characters</item>
+    </plurals>
+    <string name="result_text_stats">%1$s · long-press to select</string>
+    <string name="result_text_type_value">Plain text</string>
+    <string name="result_action_copy_text">Copy text</string>
+
+    <!-- s17 Contact -->
+    <string name="result_contact_phone">Phone</string>
+    <string name="result_contact_email">Email</string>
+    <string name="result_contact_company">Company</string>
+    <string name="result_contact_website">Website</string>
+    <string name="result_contact_address">Address</string>
+    <string name="result_contact_note">Note</string>
+    <string name="result_action_add_contact">Add to contacts</string>
+    <string name="result_call_number">Call %1$s</string>
+    <string name="result_email_to">Email %1$s</string>
+
+    <!-- s20 Phone -->
+    <string name="result_phone_label">Phone number</string>
+    <string name="result_phone_dialer_note">Calling opens the phone dialer with this number filled in. Nothing is dialed until you press call.</string>
+    <string name="result_action_call">Call</string>
+    <string name="result_action_send_sms">Send SMS</string>
+    <string name="result_action_add_contact_short">Add contact</string>
+
+    <!-- s21 Email -->
+    <string name="result_email_to_label">To</string>
+    <string name="result_email_subject">Subject</string>
+    <string name="result_email_message">Message</string>
+    <string name="result_action_compose_email">Compose email</string>
+    <string name="result_action_copy_address">Copy address</string>
+
+    <!-- s22 SMS -->
+    <string name="result_sms_to">To</string>
+    <string name="result_sms_note">Standard messaging rates from your carrier may apply when you send.</string>
+    <string name="result_action_open_messages">Open in Messages</string>
+
+    <!-- s23 Location -->
+    <string name="result_location_map_description">Map preview</string>
+    <string name="result_location_name">Name</string>
+    <string name="result_location_latitude">Latitude</string>
+    <string name="result_location_longitude">Longitude</string>
+    <string name="result_action_open_maps">Open in Maps</string>
+    <string name="result_action_copy_coordinates">Copy coordinates</string>
+
+    <!-- s19 Event -->
+    <string name="result_event_starts">Starts</string>
+    <string name="result_event_ends">Ends</string>
+    <string name="result_event_where">Where</string>
+    <string name="result_event_description">Description</string>
+    <string name="result_event_all_day">All day</string>
+    <string name="result_action_add_calendar">Add to calendar</string>
+    <string name="result_action_directions">Directions</string>
+
+    <!-- s18 / s26-s28 Wi-Fi -->
+    <string name="result_wifi_network_name">Network name</string>
+    <string name="result_wifi_security_wpa">WPA/WPA2/WPA3</string>
+    <string name="result_wifi_security_wep">WEP</string>
+    <string name="result_wifi_security_none">Open network</string>
+    <string name="result_wifi_visible">Visible network</string>
+    <string name="result_wifi_hidden">Hidden network</string>
+    <string name="result_wifi_password">Password</string>
+    <string name="result_wifi_no_password">No password needed</string>
+    <string name="result_wifi_info_title">Connecting uses an Android prompt</string>
+    <string name="result_wifi_info_body">You confirm the connection in the system dialog. Some devices ask for Location permission first.</string>
+    <string name="result_wifi_why_location">Why Location?</string>
+    <string name="result_action_copy_password">Copy password</string>
+    <string name="result_action_connect">Connect</string>
+    <string name="result_wifi_connecting_title">Connecting to %1$s</string>
+    <string name="result_wifi_connecting_body">This usually takes a few seconds</string>
+    <string name="result_wifi_connected_title">Connected</string>
+    <string name="result_wifi_connected_body">You are now on %1$s</string>
+    <string name="result_wifi_saved_title">Network saved</string>
+    <string name="result_wifi_saved_body">Your phone will join %1$s when it is in range.</string>
+    <string name="result_wifi_saved_to">Saved to</string>
+    <string name="result_wifi_saved_to_history">History</string>
+    <string name="result_wifi_network">Network</string>
+    <string name="result_wifi_security">Security</string>
+    <string name="result_wifi_failed_title">Could not connect</string>
+    <string name="result_wifi_failed_unavailable">The password may be wrong, or the network is out of range.</string>
+    <string name="result_wifi_failed_permission">Location permission was not granted, so Android could not start the connection. You can still copy the password.</string>
+    <string name="result_wifi_failed_unsupported">This security type cannot be joined from an app on this version of Android. You can still copy the password.</string>
+    <string name="result_wifi_failed_invalid_password">The password is not valid for this type of network.</string>
+    <string name="result_wifi_failed_disabled">Wi-Fi is turned off. Turn it on and try again.</string>
+    <string name="result_wifi_failed_error">Something went wrong while connecting.</string>
+
+    <!-- s24 / s30 / s70 Product -->
+    <string name="result_product_barcode">Barcode</string>
+    <string name="result_product_number">Number</string>
+    <string name="result_product_scanned">Scanned</string>
+    <string name="result_product_disclaimer">Results come from external websites. Prices, reviews and details may vary by region and time, and this app is not affiliated with them.</string>
+    <string name="result_action_search_product">Search product online</string>
+    <string name="result_product_search_on">Search on</string>
+    <string name="result_product_google">Google</string>
+    <string name="result_product_google_hint">Web results</string>
+    <string name="result_product_off">Open Food Facts</string>
+    <string name="result_product_off_hint">Ingredients and nutrition</string>
+    <string name="result_product_amazon">Amazon</string>
+    <string name="result_product_amazon_hint">Prices and reviews</string>
+    <string name="result_product_search_note">Results come from external websites. Only the barcode number is sent, and only when you pick a site.</string>
+    <string name="result_product_offline_title">You are offline</string>
+    <string name="result_product_offline_body">Product details need an internet connection. Scanning and creating codes still work without one.</string>
+    <string name="result_action_copy_number">Copy number</string>
+
+    <!-- s25 Unknown -->
+    <string name="result_unknown_raw">Raw data</string>
+    <string name="result_unknown_view_text">Text</string>
+    <string name="result_unknown_view_hex">Hex</string>
+    <string name="result_unknown_not_recognized">%1$s · we could not recognize a specific type</string>
+    <string name="result_unknown_encoding">Encoding</string>
+    <string name="result_unknown_encoding_value">UTF-8 text</string>
+    <string name="result_unknown_hex_truncated">Showing the first %1$d of %2$d bytes</string>
+    <string name="result_action_copy_data">Copy data</string>
+
+    <!-- s69 Unsafe link sheet -->
+    <string name="result_unsafe_title_unsafe">This link may be unsafe</string>
+    <string name="result_unsafe_title_caution">Check this link first</string>
+    <string name="result_unsafe_body_unsafe">The offline checks found signs that this address may be trying to trick you. Nothing was sent anywhere.</string>
+    <string name="result_unsafe_body_caution">A few things about this address are worth a second look. Nothing was sent anywhere.</string>
+    <string name="result_unsafe_go_back">Go back to safety</string>
+    <string name="result_unsafe_copy">Copy link instead</string>
+    <string name="result_unsafe_open_anyway">Open anyway</string>
+    <string name="result_risk_not_https">Not secure</string>
+    <string name="result_risk_not_https_detail">Uses http, not https</string>
+    <string name="result_risk_lookalike">Look-alike</string>
+    <string name="result_risk_lookalike_detail">Resembles %1$s</string>
+    <string name="result_risk_punycode">Odd characters</string>
+    <string name="result_risk_punycode_detail">The address uses unusual characters that can imitate other letters</string>
+    <string name="result_risk_tld">Risky ending</string>
+    <string name="result_risk_tld_detail">Addresses ending in .%1$s are often used for scams</string>
+    <string name="result_risk_shortener">Short link</string>
+    <string name="result_risk_shortener_detail">%1$s hides the real destination</string>
+    <string name="result_risk_ip">IP address</string>
+    <string name="result_risk_ip_detail">Goes to a number instead of a website name</string>
+    <string name="result_risk_userinfo">Hidden login</string>
+    <string name="result_risk_userinfo_detail">The text before the @ is a decoy; the real site comes after it</string>
+    <string name="result_risk_subdomains">Long address</string>
+    <string name="result_risk_subdomains_detail">The address has %1$s parts, which is unusual</string>
+    <string name="result_risk_scheme">Not a web link</string>
+    <string name="result_risk_scheme_detail">Uses %1$s instead of http or https</string>
+    <string name="result_risk_long">Very long</string>
+    <string name="result_risk_long_detail">The link is %1$s characters long</string>
+
+    <!-- s29 Share sheet -->
+    <string name="result_share_title">Share</string>
+    <string name="result_share_as_text">Share as text</string>
+    <string name="result_share_as_image">Share as image</string>
+    <string name="result_action_share_text">Share</string>
+
+    <!-- s50 History detail, s67 delete -->
+    <string name="result_note_label">Note</string>
+    <string name="result_note_placeholder">Add a note or label</string>
+    <string name="result_note_helper">Saved on this device only</string>
+    <string name="result_action_edit_style">Edit style</string>
+    <string name="result_delete_title_scan">Delete this scan?</string>
+    <string name="result_delete_title_created">Delete this code?</string>
+    <string name="result_delete_message">\"%1$s\" will be removed from your history on this device.</string>
+
+    <!-- Snackbar messages -->
+    <string name="result_msg_no_app">No app found to open this</string>
+    <string name="result_msg_cannot_open">This can\'t be opened</string>
+    <string name="result_msg_still_offline">Still offline. Check your connection and try again.</string>
+</resources>

@@ -83,6 +83,18 @@ object EventTimes {
         }
     }
 
+    /** Moves the start to [newStart] and the end by the same distance, so the duration is kept. */
+    fun withStart(event: CreateSpec.Event, newStart: Long): CreateSpec.Event {
+        val oldStart = event.startMillis
+        val end = event.endMillis
+        val newEnd = when {
+            end == null -> null
+            oldStart == null -> maxOf(end, newStart)
+            else -> end + (newStart - oldStart)
+        }
+        return event.copy(startMillis = newStart, endMillis = newEnd)
+    }
+
     /** A new blank event starting at the next full hour and lasting one hour. */
     fun blankEvent(nowMillis: Long, zone: TimeZone): CreateSpec.Event {
         val start = defaultStart(nowMillis, zone)

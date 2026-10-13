@@ -14,6 +14,15 @@ plugins {
     alias(libs.plugins.ktlint)
 }
 
+val localProps = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
+/** Real ad ids come from local.properties (ads.*) or environment (QR_ADS_*); otherwise Google's test ids. */
+fun adId(key: String, env: String, testId: String): String =
+    (localProps.getProperty(key) ?: System.getenv(env))?.takeIf { it.isNotBlank() } ?: testId
+
 val keystoreProps = Properties().apply {
     val f = rootProject.file("keystore.properties")
     if (f.exists()) f.inputStream().use { load(it) }
@@ -64,6 +73,12 @@ android {
 
     buildTypes {
         release {
+            // Release uses real ids when provided (see docs/ADS_SETUP.md); test ids otherwise.
+            resValue("string", "admob_app_id", adId("ads.appId", "QR_ADS_APP_ID", "ca-app-pub-3940256099942544~3347511713"))
+            buildConfigField("String", "AD_BANNER_ID", "\"${adId("ads.bannerId", "QR_ADS_BANNER_ID", "ca-app-pub-3940256099942544/9214589741")}\"")
+            buildConfigField("String", "AD_INTERSTITIAL_ID", "\"${adId("ads.interstitialId", "QR_ADS_INTERSTITIAL_ID", "ca-app-pub-3940256099942544/1033173712")}\"")
+            buildConfigField("String", "AD_APP_OPEN_ID", "\"${adId("ads.appOpenId", "QR_ADS_APP_OPEN_ID", "ca-app-pub-3940256099942544/9257395921")}\"")
+            buildConfigField("String", "AD_NATIVE_ID", "\"${adId("ads.nativeId", "QR_ADS_NATIVE_ID", "ca-app-pub-3940256099942544/2247696110")}\"")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")

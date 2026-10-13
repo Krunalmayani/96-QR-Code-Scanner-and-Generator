@@ -70,7 +70,12 @@ fun BatchSheetContent(
         } else {
             BatchRows(rows, onRowClick)
         }
-        PrimaryButton(stringResource(R.string.scan_batch_finish), onFinish, Modifier.fillMaxWidth().padding(top = 4.dp), leadingIcon = AppIcons.Check)
+        PrimaryButton(
+            stringResource(R.string.scan_batch_finish),
+            onFinish,
+            Modifier.fillMaxWidth().padding(top = 4.dp),
+            leadingIcon = AppIcons.Check,
+        )
         AppTextButton(stringResource(R.string.scan_quick_keep_scanning), onKeepScanning, Modifier.fillMaxWidth())
     }
 }

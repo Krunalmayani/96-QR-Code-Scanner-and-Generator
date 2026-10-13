@@ -91,6 +91,21 @@ class EventTimesTest {
         assertEquals(utcMillis(2026, 11, 14, 10, 0), timed.endMillis)
     }
 
+    @Test fun movingTheStartKeepsTheDuration() {
+        val e = CreateSpec.Event(title = "x", startMillis = utcMillis(2026, 11, 14, 18, 0), endMillis = utcMillis(2026, 11, 14, 20, 30))
+        val moved = EventTimes.withStart(e, utcMillis(2026, 11, 16, 9, 0))
+        assertEquals(utcMillis(2026, 11, 16, 9, 0), moved.startMillis)
+        assertEquals(utcMillis(2026, 11, 16, 11, 30), moved.endMillis)
+        assertTrue(Validators.isValid(moved))
+    }
+
+    @Test fun movingTheStartWithoutEndOrOldStart() {
+        val noEnd = EventTimes.withStart(CreateSpec.Event(title = "x", startMillis = 100L), 500L)
+        assertNull(noEnd.endMillis)
+        val noStart = EventTimes.withStart(CreateSpec.Event(title = "x", endMillis = 300L), 500L)
+        assertEquals(500L, noStart.endMillis)
+    }
+
     @Test fun sameModeIsANoOp() {
         val e = CreateSpec.Event(title = "x", startMillis = 5L, endMillis = 6L)
         assertEquals(e, EventTimes.withAllDay(e, false, utc))

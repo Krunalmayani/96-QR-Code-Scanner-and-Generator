@@ -141,15 +141,15 @@ internal class FullScreenAds(
 
     // ---- App open ----------------------------------------------------------------------------------------
 
+    /** Always evaluates, even while ads are unavailable, so the background mark is consumed exactly once. */
     fun onAppForegrounded(activity: Activity?) {
-        if (!adsAvailable()) return
         scope.launch { evaluateAppOpen(activity) }
     }
 
     private suspend fun evaluateAppOpen(activity: Activity?) {
         val settings = settingsRepository.current()
         // MainActivity reports every STARTED, also after an ad or a dialog; consume the background mark once.
-        if (settings.lastBackgroundAt != 0L) settingsRepository.update { it.copy(lastBackgroundAt = 0L) }
+        if (settings.lastBackgroundAt != 0L) consumeBackgroundMark(settings.lastBackgroundAt)
         val now = nowMs()
         val input = AppOpenInput(
             adsAllowed = adsAvailable(),
@@ -160,6 +160,11 @@ internal class FullScreenAds(
             fullScreenAdShowing = isFullScreenShowing(),
         )
         if (AppOpenPolicy(remoteFlags.config.value).shouldShow(input)) showAppOpen(activity) else preloadAppOpen()
+    }
+
+    /** Clears the mark only if it was not replaced by a newer background event in the meantime. */
+    private suspend fun consumeBackgroundMark(seenAt: Long) {
+        settingsRepository.update { if (it.lastBackgroundAt == seenAt) it.copy(lastBackgroundAt = 0L) else it }
     }
 
     private suspend fun showAppOpen(activity: Activity?) {

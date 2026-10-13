@@ -178,7 +178,11 @@ internal fun ZoomRow(
     modifier: Modifier = Modifier,
 ) {
     val description = stringResource(R.string.scan_zoom)
-    Row(modifier.fillMaxWidth().height(48.dp), horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier.fillMaxWidth().height(48.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
         Text(stringResource(R.string.scan_zoom_min), style = AppTheme.type.captionStrong, color = Color.White)
         AppSlider(
             value = zoom,
@@ -187,7 +191,11 @@ internal fun ZoomRow(
             enabled = enabled,
             onCamera = true,
         )
-        Text(stringResource(R.string.scan_zoom_max, ZoomMath.maxRatioLabel(maxZoomRatio)), style = AppTheme.type.captionStrong, color = Color.White)
+        Text(
+            stringResource(R.string.scan_zoom_max, ZoomMath.maxRatioLabel(maxZoomRatio)),
+            style = AppTheme.type.captionStrong,
+            color = Color.White,
+        )
     }
 }
 

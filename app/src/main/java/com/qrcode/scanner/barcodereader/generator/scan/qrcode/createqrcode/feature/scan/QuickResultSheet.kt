@@ -90,7 +90,12 @@ fun QuickResultContent(
         PrimaryButton(openLabel, onOpen, Modifier.fillMaxWidth().padding(top = 4.dp), leadingIcon = AppIcons.OpenInNew)
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
             TonalButton(stringResource(R.string.common_copy), { onCopy(record.rawValue) }, Modifier.weight(1f), leadingIcon = AppIcons.Copy)
-            TonalButton(stringResource(R.string.common_share), { onShare(record.rawValue) }, Modifier.weight(1f), leadingIcon = AppIcons.Share)
+            TonalButton(
+                stringResource(R.string.common_share),
+                { onShare(record.rawValue) },
+                Modifier.weight(1f),
+                leadingIcon = AppIcons.Share,
+            )
         }
         AppTextButton(stringResource(R.string.scan_quick_keep_scanning), onKeepScanning, Modifier.fillMaxWidth())
     }
