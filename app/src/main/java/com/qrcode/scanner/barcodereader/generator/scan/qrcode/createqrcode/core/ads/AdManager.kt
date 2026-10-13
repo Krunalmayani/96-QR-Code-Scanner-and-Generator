@@ -2,13 +2,13 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core
 
 import android.app.Activity
 import android.app.Application
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
-import androidx.compose.ui.Modifier
 
 /**
  * Screens never touch the ads SDK. They use only: [BannerAd], [NativeAdCard] and [LocalAdController].
- * The real implementation (Next Gen SDK, UMP consent, frequency caps, remote kill-switch) lives in this package.
+ * The real implementation ([GoogleAdManager]: Next Gen SDK, UMP consent, frequency caps, remote kill-switch)
+ * lives in this package; [BannerAd] and [NativeAdCard] are in AdComposables.kt. Settings can offer the
+ * privacy options form through [isPrivacyOptionsRequired] and [showPrivacyOptionsForm] (AdsPrivacy.kt).
  */
 interface AdManager {
     /** Called once from Application.onCreate. */
@@ -34,15 +34,3 @@ object NoOpAdController : AdController {
 }
 
 val LocalAdController = staticCompositionLocalOf<AdController> { NoOpAdController }
-
-/** Adaptive banner for History and Settings. Renders nothing when ads are disabled or not loaded. */
-@Composable
-fun BannerAd(modifier: Modifier = Modifier) {
-    // Replaced by the real implementation in the monetization milestone.
-}
-
-/** Native ad row shown every 8 history items. Renders nothing when ads are disabled or not loaded. */
-@Composable
-fun NativeAdCard(modifier: Modifier = Modifier) {
-    // Replaced by the real implementation in the monetization milestone.
-}

@@ -128,7 +128,11 @@ fun AboutScreen(
                 AppDivider()
                 SettingsNavRow(title = stringResource(R.string.settings_share_app), onClick = actions.onShare, icon = AppIcons.Share)
                 AppDivider()
-                SettingsNavRow(title = stringResource(R.string.settings_about_licenses), onClick = actions.onLicenses, icon = AppIcons.Document)
+                SettingsNavRow(
+                    title = stringResource(R.string.settings_about_licenses),
+                    onClick = actions.onLicenses,
+                    icon = AppIcons.Document,
+                )
                 AppDivider()
                 SettingsNavRow(title = stringResource(R.string.settings_about_terms), onClick = actions.onTerms, icon = AppIcons.Info)
             }

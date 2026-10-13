@@ -17,6 +17,7 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -93,9 +94,17 @@ class GoogleAdManager @Inject constructor(
 
     override suspend fun loadBanner(context: Context, widthDp: Int): LoadedBanner? {
         if (!adsAvailable.value || widthDp <= 0) return null
-        return withContext(Dispatchers.Main) {
-            NextGenAdsGateway.loadBanner(context, BuildConfig.AD_BANNER_ID, widthDp)
+        var loaded: LoadedBanner? = null
+        try {
+            withContext(Dispatchers.Main) {
+                loaded = NextGenAdsGateway.loadBanner(context, BuildConfig.AD_BANNER_ID, widthDp)
+            }
+        } catch (cancelled: CancellationException) {
+            // The banner was destroyed by its screen while loading; free the ad that just arrived.
+            loaded?.let { orphan -> scope.launch(Dispatchers.Main) { orphan.destroy() } }
+            throw cancelled
         }
+        return loaded
     }
 
     override suspend fun takeNative(): LoadedNative? = if (adsAvailable.value) natives.take() else null

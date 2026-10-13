@@ -85,7 +85,7 @@ class SettingsViewModel @Inject constructor(
             is SettingsEvent.SetScanAreaOnly -> update { it.copy(scanAreaOnly = event.on) }
             is SettingsEvent.MoveSite -> update { it.copy(productSiteOrder = reorder(it.productSiteOrder, event)) }
             is SettingsEvent.SetSaveHistory -> update { it.copy(saveHistory = event.on) }
-            is SettingsEvent.SetAnalytics -> setAnalytics(event.on)
+            is SettingsEvent.SetAnalytics -> update { it.copy(analyticsEnabled = event.on) }
             SettingsEvent.ClearHistoryClicked -> openClearDialog()
             is SettingsEvent.ClearKeepFavoritesChanged ->
                 clearDialog.value = clearDialog.value?.copy(keepFavorites = event.keep)
@@ -109,11 +109,6 @@ class SettingsViewModel @Inject constructor(
                 effectChannel.send(SettingsEffect.Failed)
             }
         }
-    }
-
-    private fun setAnalytics(enabled: Boolean) {
-        analytics.setEnabled(enabled)
-        update { it.copy(analyticsEnabled = enabled) }
     }
 
     private fun openClearDialog() {

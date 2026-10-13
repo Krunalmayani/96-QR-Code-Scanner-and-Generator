@@ -63,14 +63,12 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `analytics toggle updates the setting and the analytics collection switch`() {
+    fun `analytics toggle is stored (the app class applies it to Analytics)`() {
         val vm = viewModel()
         vm.onEvent(SettingsEvent.SetAnalytics(false))
         assertFalse(settings.value.analyticsEnabled)
-        verify { analytics.setEnabled(false) }
         vm.onEvent(SettingsEvent.SetAnalytics(true))
         assertTrue(settings.value.analyticsEnabled)
-        verify { analytics.setEnabled(true) }
     }
 
     @Test

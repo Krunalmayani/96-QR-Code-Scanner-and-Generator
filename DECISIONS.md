@@ -15,3 +15,4 @@ Non-obvious choices made while building (append new entries at the end).
 11. **Play review/update** use the Java `Task` APIs (not the ktx extensions) to avoid depending on extension package names that could not be verified offline.
 12. **Parser choices**: map links become `Location` only when the coordinates are the point; unusual schemes (`javascript:`, `data:`) parse as Text (no Open action) while the safety checker still flags them UNSAFE; a valid IANA `TZID` in iCalendar is honoured; all-day `DTEND` is treated as exclusive.
 13. **Link-safety brand matching** is stricter than a plain edit distance of 2 for short brand names (0 typos up to 3 letters, 1 up to 6) to avoid false positives such as `finance.com`.
+14. **Core library desugaring** is enabled (desugar_jdk_libs 2.1.3) so java.time works on minSdk 24.
