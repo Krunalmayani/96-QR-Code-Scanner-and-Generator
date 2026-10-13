@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="result_title_website">Link do site</string>
+    <string name="result_title_text">Texto</string>
+    <string name="result_title_contact">Contato</string>
+    <string name="result_title_wifi">Rede Wi-Fi</string>
+    <string name="result_title_event">Evento</string>
+    <string name="result_title_phone">Número de telefone</string>
+    <string name="result_title_email">E-mail</string>
+    <string name="result_title_sms">SMS</string>
+    <string name="result_title_location">Local</string>
+    <string name="result_title_product">Produto</string>
+    <string name="result_title_unknown">Dados escaneados</string>
+    <string name="result_title_product_search">Pesquisar produto</string>
+
+    <string name="result_badge_website">Site</string>
+    <string name="result_badge_text">Texto</string>
+    <string name="result_badge_contact">Contato</string>
+    <string name="result_badge_phone">Telefone</string>
+    <string name="result_badge_email">E-mail</string>
+    <string name="result_badge_sms">SMS</string>
+    <string name="result_badge_location">Local</string>
+    <string name="result_badge_event">Evento</string>
+    <string name="result_badge_wifi">Wi-Fi</string>
+    <string name="result_badge_product">Produto</string>
+    <string name="result_badge_unknown">Outro</string>
+    <string name="result_badge_created">Criado</string>
+
+    <string name="result_when_today">Hoje, %1$s</string>
+    <string name="result_when_yesterday">Ontem, %1$s</string>
+    <string name="result_when_date">%1$s · %2$s</string>
+    <string name="result_caption">%1$s · %2$s</string>
+    <string name="result_kind_qr">Código QR</string>
+    <string name="result_kind_barcode">Código de barras</string>
+
+    <string name="result_label_type">Tipo</string>
+    <string name="result_label_format">Formato</string>
+    <string name="result_label_source">Origem</string>
+    <string name="result_source_camera">Câmera</string>
+    <string name="result_source_image">Imagem</string>
+    <string name="result_source_created">Criado</string>
+    <string name="result_favorite">Favorito</string>
+    <string name="result_favorited">Favoritado</string>
+    <string name="result_not_found_title">Nada para mostrar</string>
+    <string name="result_not_found_message">Este item não está mais no seu histórico.</string>
+
+    <string name="result_website_opens">Abre</string>
+    <string name="result_website_https">https</string>
+    <string name="result_website_http">http</string>
+    <string name="result_website_secure">Conexão segura</string>
+    <string name="result_website_not_secure">Não segura</string>
+    <string name="result_website_check_title">Verifique o link antes de abrir</string>
+    <string name="result_website_check_body">Confirme se o endereço corresponde a quem lhe deu o código. Cuidado com páginas de login.</string>
+    <string name="result_website_type_value">Endereço web (URL)</string>
+    <string name="result_website_full_link">Link completo</string>
+    <string name="result_action_open_link">Abrir link</string>
+
+    <string name="result_text_content">Conteúdo</string>
+    <plurals name="result_characters">
+        <item quantity="one">%d caractere</item>
+        <item quantity="many">%d de caracteres</item>
+        <item quantity="other">%d caracteres</item>
+    </plurals>
+    <string name="result_text_stats">%1$s · toque e segure para selecionar</string>
+    <string name="result_text_type_value">Texto simples</string>
+    <string name="result_action_copy_text">Copiar texto</string>
+
+    <string name="result_contact_phone">Telefone</string>
+    <string name="result_contact_email">E-mail</string>
+    <string name="result_contact_company">Empresa</string>
+    <string name="result_contact_website">Site</string>
+    <string name="result_contact_address">Endereço</string>
+    <string name="result_contact_note">Nota</string>
+    <string name="result_action_add_contact">Adicionar aos contatos</string>
+
+    <string name="result_phone_label">Número de telefone</string>
+    <string name="result_phone_dialer_note">Ao ligar, o discador abre com este número já preenchido. Nada é discado até você tocar em ligar.</string>
+    <string name="result_action_call">Ligar</string>
+    <string name="result_action_send_sms">Enviar SMS</string>
+    <string name="result_action_add_contact_short">Adicionar contato</string>
+
+    <string name="result_email_to_label">Para</string>
+    <string name="result_email_subject">Assunto</string>
+    <string name="result_email_message">Mensagem</string>
+    <string name="result_action_compose_email">Escrever e-mail</string>
+    <string name="result_action_copy_address">Copiar endereço</string>
+
+    <string name="result_sms_to">Para</string>
+    <string name="result_sms_note">Podem ser cobradas as tarifas padrão de mensagens da sua operadora ao enviar.</string>
+    <string name="result_action_open_messages">Abrir em Mensagens</string>
+
+    <string name="result_location_map_description">Prévia do mapa</string>
+    <string name="result_location_name">Nome</string>
+    <string name="result_location_latitude">Latitude</string>
+    <string name="result_location_longitude">Longitude</string>
+    <string name="result_action_open_maps">Abrir no Maps</string>
+    <string name="result_action_copy_coordinates">Copiar coordenadas</string>
+
+    <string name="result_event_starts">Início</string>
+    <string name="result_event_ends">Término</string>
+    <string name="result_event_where">Onde</string>
+    <string name="result_event_description">Descrição</string>
+    <string name="result_event_all_day">Dia inteiro</string>
+    <string name="result_action_add_calendar">Adicionar à agenda</string>
+    <string name="result_action_directions">Como chegar</string>
+
+    <string name="result_wifi_network_name">Nome da rede</string>
+    <string name="result_wifi_security_wpa">WPA/WPA2/WPA3</string>
+    <string name="result_wifi_security_wep">WEP</string>
+    <string name="result_wifi_security_none">Rede aberta</string>
+    <string name="result_wifi_visible">Rede visível</string>
+    <string name="result_wifi_hidden">Rede oculta</string>
+    <string name="result_wifi_password">Senha</string>
+    <string name="result_wifi_no_password">Não precisa de senha</string>
+    <string name="result_wifi_info_title">A conexão usa um aviso do Android</string>
+    <string name="result_wifi_info_body">Você confirma a conexão na caixa de diálogo do sistema. Alguns dispositivos pedem antes a permissão de localização.</string>
+    <string name="result_wifi_why_location">Por que a localização?</string>
+    <string name="result_action_copy_password">Copiar senha</string>
+    <string name="result_action_connect">Conectar</string>
+    <string name="result_wifi_connecting_title">Conectando a %1$s</string>
+    <string name="result_wifi_connecting_body">Isso costuma levar alguns segundos</string>
+    <string name="result_wifi_connected_title">Conectado</string>
+    <string name="result_wifi_connected_body">Você agora está em %1$s</string>
+    <string name="result_wifi_saved_title">Rede salva</string>
+    <string name="result_wifi_saved_body">Seu celular vai entrar em %1$s quando estiver ao alcance.</string>
+    <string name="result_wifi_saved_to">Salvo em</string>
+    <string name="result_wifi_saved_to_history">Histórico</string>
+    <string name="result_wifi_network">Rede</string>
+    <string name="result_wifi_security">Segurança</string>
+    <string name="result_wifi_failed_title">Não foi possível conectar</string>
+    <string name="result_wifi_failed_unavailable">A senha pode estar errada ou a rede está fora de alcance.</string>
+    <string name="result_wifi_failed_permission">A permissão de localização não foi concedida, então o Android não pôde iniciar a conexão. Você ainda pode copiar a senha.</string>
+    <string name="result_wifi_failed_unsupported">Este tipo de segurança não pode ser acessado por um app nesta versão do Android. Você ainda pode copiar a senha.</string>
+    <string name="result_wifi_failed_invalid_password">A senha não é válida para este tipo de rede.</string>
+    <string name="result_wifi_failed_disabled">O Wi-Fi está desativado. Ative-o e tente de novo.</string>
+    <string name="result_wifi_failed_error">Algo deu errado durante a conexão.</string>
+
+    <string name="result_product_barcode">Código de barras</string>
+    <string name="result_product_number">Número</string>
+    <string name="result_product_scanned">Escaneado</string>
+    <string name="result_product_disclaimer">Os resultados vêm de sites externos. Preços, avaliações e detalhes podem variar por região e época, e este app não é afiliado a eles.</string>
+    <string name="result_action_search_product">Pesquisar produto online</string>
+    <string name="result_product_search_on">Pesquisar em</string>
+    <string name="result_product_google">Google</string>
+    <string name="result_product_google_hint">Resultados da web</string>
+    <string name="result_product_off">Open Food Facts</string>
+    <string name="result_product_off_hint">Ingredientes e nutrição</string>
+    <string name="result_product_amazon">Amazon</string>
+    <string name="result_product_amazon_hint">Preços e avaliações</string>
+    <string name="result_product_search_note">Os resultados vêm de sites externos. Apenas o número do código de barras é enviado, e somente quando você escolhe um site.</string>
+    <string name="result_product_offline_title">Você está offline</string>
+    <string name="result_product_offline_body">Os detalhes do produto precisam de conexão com a internet. Escanear e criar códigos continua funcionando sem ela.</string>
+    <string name="result_action_copy_number">Copiar número</string>
+
+    <string name="result_unknown_raw">Dados brutos</string>
+    <string name="result_unknown_view_text">Texto</string>
+    <string name="result_unknown_view_hex">Hex</string>
+    <string name="result_unknown_not_recognized">%1$s · não foi possível reconhecer um tipo específico</string>
+    <string name="result_unknown_encoding">Codificação</string>
+    <string name="result_unknown_encoding_value">Texto UTF-8</string>
+    <string name="result_unknown_hex_truncated">Mostrando os primeiros %1$d de %2$d bytes</string>
+    <string name="result_action_copy_data">Copiar dados</string>
+
+    <string name="result_unsafe_title_unsafe">Este link pode ser inseguro</string>
+    <string name="result_unsafe_title_caution">Verifique este link primeiro</string>
+    <string name="result_unsafe_body_unsafe">As verificações offline encontraram sinais de que este endereço pode estar tentando enganar você. Nada foi enviado para lugar nenhum.</string>
+    <string name="result_unsafe_body_caution">Alguns detalhes deste endereço merecem uma segunda olhada. Nada foi enviado para lugar nenhum.</string>
+    <string name="result_unsafe_go_back">Voltar para a segurança</string>
+    <string name="result_unsafe_copy">Copiar link em vez disso</string>
+    <string name="result_unsafe_open_anyway">Abrir mesmo assim</string>
+    <string name="result_risk_not_https">Não segura</string>
+    <string name="result_risk_not_https_detail">Usa http, não https</string>
+    <string name="result_risk_lookalike">Imitação</string>
+    <string name="result_risk_lookalike_detail">Parece com %1$s</string>
+    <string name="result_risk_punycode">Caracteres estranhos</string>
+    <string name="result_risk_punycode_detail">O endereço usa caracteres incomuns que podem imitar outras letras</string>
+    <string name="result_risk_tld">Final arriscado</string>
+    <string name="result_risk_tld_detail">Endereços terminados em .%1$s costumam ser usados em golpes</string>
+    <string name="result_risk_shortener">Link curto</string>
+    <string name="result_risk_shortener_detail">%1$s esconde o destino real</string>
+    <string name="result_risk_ip">Endereço IP</string>
+    <string name="result_risk_ip_detail">Vai para um número em vez do nome de um site</string>
+    <string name="result_risk_userinfo">Login oculto</string>
+    <string name="result_risk_userinfo_detail">O texto antes do @ é uma isca; o site real vem depois dele</string>
+    <string name="result_risk_subdomains">Endereço longo</string>
+    <string name="result_risk_subdomains_detail">O endereço tem %1$s partes, o que é incomum</string>
+    <string name="result_risk_scheme">Não é um link web</string>
+    <string name="result_risk_scheme_detail">Usa %1$s em vez de http ou https</string>
+    <string name="result_risk_long">Muito longo</string>
+    <string name="result_risk_long_detail">O link tem %1$s caracteres</string>
+
+    <string name="result_share_title">Compartilhar</string>
+    <string name="result_share_as_text">Compartilhar como texto</string>
+    <string name="result_share_as_image">Compartilhar como imagem</string>
+    <string name="result_action_share_text">Compartilhar</string>
+
+    <string name="result_note_label">Nota</string>
+    <string name="result_note_placeholder">Adicione uma nota ou rótulo</string>
+    <string name="result_note_helper">Salva somente neste dispositivo</string>
+    <string name="result_action_edit_style">Editar estilo</string>
+    <string name="result_delete_title_scan">Excluir esta leitura?</string>
+    <string name="result_delete_title_created">Excluir este código?</string>
+    <string name="result_delete_message">\"%1$s\" será removido do seu histórico neste dispositivo.</string>
+
+    <string name="result_msg_no_app">Nenhum app encontrado para abrir isto</string>
+    <string name="result_msg_cannot_open">Não é possível abrir isto</string>
+    <string name="result_msg_still_offline">Ainda offline. Verifique sua conexão e tente de novo.</string>
+</resources>

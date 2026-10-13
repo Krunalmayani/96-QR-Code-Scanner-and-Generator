@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">Escaneie qualquer código QR ou de barras na hora</string>
+    <string name="onb_slide1_body">Aponte a câmera para um código. Links, Wi-Fi, contatos, eventos e produtos são reconhecidos na hora.</string>
+    <string name="onb_slide1_chip">Código encontrado</string>
+    <string name="onb_slide2_title">Crie códigos QR para links, Wi-Fi, contatos e mais</string>
+    <string name="onb_slide2_body">Escolha um tipo, preencha os detalhes e personalize cores e formas antes de salvar ou compartilhar.</string>
+    <string name="onb_slide3_title">O histórico fica no seu dispositivo, privado por design</string>
+    <string name="onb_slide3_body">Suas leituras são salvas localmente. Adicione favoritos, exclua um item ou limpe tudo quando quiser.</string>
+    <string name="onb_slide3_chip_saved">Salvo neste dispositivo</string>
+    <string name="onb_slide3_chip_delete">Exclua quando quiser</string>
+    <string name="onb_get_started">Começar</string>
+    <string name="onb_page_indicator">Página %1$d de %2$d</string>
+</resources>

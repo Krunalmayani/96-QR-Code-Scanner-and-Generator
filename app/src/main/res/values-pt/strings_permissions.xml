@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">Permitir acesso à câmera</string>
+    <string name="perm_camera_screen_body">A câmera é usada apenas para ler códigos QR e de barras enquanto a tela de leitura está aberta.</string>
+    <string name="perm_camera_point1_title">Escaneie com um toque</string>
+    <string name="perm_camera_point1_body">Os códigos são lidos assim que entram no quadro.</string>
+    <string name="perm_camera_point2_title">Sem câmera? Sem problema</string>
+    <string name="perm_camera_point2_body">Você ainda pode escanear códigos de imagens salvas.</string>
+    <string name="perm_camera_point3_title">Mude quando quiser</string>
+    <string name="perm_camera_point3_body">Gerencie o acesso nos ajustes do Android.</string>
+    <string name="perm_camera_allow">Permitir câmera</string>
+    <string name="perm_not_now">Agora não</string>
+    <string name="perm_camera_dialog_title">Acesso à câmera necessário</string>
+    <string name="perm_camera_dialog_body">Para ler um código QR ou de barras, o app precisa da sua câmera. Ela é usada apenas enquanto a tela de leitura está aberta.</string>
+    <string name="perm_continue">Continuar</string>
+    <string name="perm_photos_title">Permitir acesso às fotos</string>
+    <string name="perm_photos_body">Para ler um código de uma imagem salva, escolha uma foto da galeria. Somente a imagem escolhida é lida.</string>
+    <string name="perm_photos_choose">Escolher foto</string>
+    <string name="perm_photos_cancel">Cancelar</string>
+    <string name="perm_location_title">Por que a localização?</string>
+    <string name="perm_location_body">Em algumas versões do Android, entrar em uma rede Wi-Fi a partir de um código exige a permissão de localização. Quem exige isso é o Android para conexões Wi-Fi, não este app.</string>
+    <string name="perm_location_point1">Usada apenas para permitir a conexão</string>
+    <string name="perm_location_point2">Você ainda pode copiar a senha</string>
+</resources>

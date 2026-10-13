@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">Gostando do leitor?</string>
+    <string name="system_rate_body">Uma avaliação rápida ajuda outras pessoas a encontrar o app.</string>
+    <string name="system_rate_action_play">Avaliar no Google Play</string>
+    <string name="system_rate_action_feedback">Enviar feedback</string>
+    <string name="system_rate_later">Talvez depois</string>
+    <string name="system_rate_stars_group">Avaliação</string>
+    <plurals name="system_rate_star">
+        <item quantity="one">%d estrela</item>
+        <item quantity="many">%d de estrelas</item>
+        <item quantity="other">%d estrelas</item>
+    </plurals>
+    <string name="system_update_title">Atualização disponível</string>
+    <string name="system_update_body">Há uma nova versão com melhorias e correções.</string>
+    <string name="system_update_action">Atualizar</string>
+    <string name="system_update_later">Depois</string>
+    <string name="system_update_ready_title">Atualização baixada</string>
+    <string name="system_update_ready_body">Reinicie o app para concluir a instalação da nova versão.</string>
+    <string name="system_update_ready_action">Reiniciar</string>
+</resources>

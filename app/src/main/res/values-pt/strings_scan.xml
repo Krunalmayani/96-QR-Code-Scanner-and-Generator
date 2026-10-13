@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_title">Escanear</string>
+    <string name="scan_flash_on">Flash ligado</string>
+    <string name="scan_flash_off">Flash desligado</string>
+    <string name="scan_switch_camera">Trocar câmera</string>
+    <string name="scan_settings">Ajustes</string>
+    <string name="scan_hint_qr">Alinhe o código dentro da moldura</string>
+    <string name="scan_hint_barcode">Mantenha firme e encaixe o código de barras na moldura</string>
+    <string name="scan_mode_qr">Código QR</string>
+    <string name="scan_mode_barcode">Código de barras</string>
+    <string name="scan_mode_all">Todos</string>
+    <string name="scan_zoom">Zoom</string>
+    <string name="scan_zoom_min">1x</string>
+    <string name="scan_zoom_max">%1$dx</string>
+    <string name="scan_from_gallery">Escanear da galeria</string>
+
+    <string name="scan_batch_chip">Lote</string>
+    <string name="scan_batch_title">Leitura em lote</string>
+    <string name="scan_batch_close">Fechar leitura em lote</string>
+    <string name="scan_batch_sheet_title">Este lote</string>
+    <string name="scan_batch_newest_first">Mais recentes primeiro</string>
+    <string name="scan_batch_empty">Os códigos escaneados aparecerão aqui.</string>
+    <string name="scan_batch_finish">Concluir lote</string>
+    <plurals name="scan_batch_count">
+        <item quantity="one">%1$d código escaneado</item>
+        <item quantity="many">%1$d de códigos escaneados</item>
+        <item quantity="other">%1$d códigos escaneados</item>
+    </plurals>
+
+    <string name="scan_quick_just_now">Agora mesmo</string>
+    <string name="scan_quick_open_result">Abrir resultado</string>
+    <string name="scan_quick_keep_scanning">Continuar escaneando</string>
+    <string name="scan_quick_check_address">Verifique o endereço antes de abri-lo.</string>
+    <string name="scan_row_subtitle">%1$s · %2$s</string>
+
+    <string name="scan_type_website">Site</string>
+    <string name="scan_type_text">Texto</string>
+    <string name="scan_type_contact">Contato</string>
+    <string name="scan_type_phone">Telefone</string>
+    <string name="scan_type_email">E-mail</string>
+    <string name="scan_type_sms">SMS</string>
+    <string name="scan_type_location">Local</string>
+    <string name="scan_type_event">Evento</string>
+    <string name="scan_type_wifi">Wi-Fi</string>
+    <string name="scan_type_product">Produto</string>
+    <string name="scan_type_unknown">Desconhecido</string>
+
+    <string name="scan_denied_title">O acesso à câmera está desativado</string>
+    <string name="scan_denied_message_request">Permita o acesso à câmera para escanear códigos ao vivo. Você ainda pode escanear códigos de imagens salvas.</string>
+    <string name="scan_denied_message_settings">Ative a permissão da câmera nos ajustes do Android para escanear códigos ao vivo. Você ainda pode escanear códigos de imagens salvas.</string>
+    <string name="scan_request_again">Solicitar de novo</string>
+    <string name="scan_open_settings">Abrir ajustes</string>
+    <string name="scan_denied_steps">Ajustes, depois Permissões, depois Câmera, depois Permitir somente durante o uso do app.</string>
+    <string name="scan_unavailable_title">Câmera indisponível</string>
+    <string name="scan_unavailable_message">Não foi possível iniciar a câmera. Feche outros apps que a usam e tente de novo.</string>
+
+    <string name="scan_image_choose_title">Escolha uma imagem</string>
+    <string name="scan_image_choose_message">Escolha uma captura de tela ou foto que contenha um código QR ou de barras.</string>
+    <string name="scan_image_choose_button">Escolher imagem</string>
+    <string name="scan_image_preview">Imagem selecionada</string>
+    <string name="scan_image_reading_title">Lendo imagem</string>
+    <string name="scan_image_cancel">Cancelar</string>
+    <string name="scan_image_processing_title">Procurando códigos</string>
+    <string name="scan_image_processing_message">Verificando a imagem em busca de códigos QR e de barras. Leva só um instante.</string>
+    <string name="scan_image_result_title">Resultado da leitura</string>
+    <string name="scan_image_from_image">De imagem · Agora mesmo</string>
+    <string name="scan_image_pick_one">Escolha o código que deseja abrir.</string>
+    <string name="scan_image_open_result">Abrir resultado</string>
+    <plurals name="scan_image_codes_found">
+        <item quantity="one">%1$d código encontrado</item>
+        <item quantity="many">%1$d de códigos encontrados</item>
+        <item quantity="other">%1$d códigos encontrados</item>
+    </plurals>
+    <string name="scan_nocode_title">Nenhum código QR ou de barras encontrado</string>
+    <string name="scan_nocode_message">Não foi possível ler um código nesta imagem. Algumas verificações rápidas podem ajudar.</string>
+    <string name="scan_nocode_tip_visible">Certifique-se de que o código inteiro esteja visível, com a borda branca.</string>
+    <string name="scan_nocode_tip_quality">Evite reflexos, desfoque e cortes excessivos.</string>
+    <string name="scan_nocode_tip_resolution">Tente um original de maior resolução ou uma captura de tela.</string>
+    <string name="scan_nocode_try_another">Tentar outra imagem</string>
+    <string name="scan_nocode_use_camera">Usar a câmera</string>
+    <string name="scan_unreadable_title">Não foi possível abrir esta imagem</string>
+    <string name="scan_unreadable_message">O arquivo pode estar danificado ou em um formato não compatível. Tente outra imagem.</string>
+</resources>
