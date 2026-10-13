@@ -2,12 +2,12 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core
 
 import android.app.Activity
 import android.content.Context
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.BuildConfig
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.google.android.ump.ConsentDebugSettings
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
 import com.google.android.ump.UserMessagingPlatform
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.BuildConfig
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -82,7 +82,8 @@ internal object UmpConsent {
 
     /** Hashed test device ids from the ads_test_device_ids resource (comma separated, may be empty). */
     fun testDeviceIds(context: Context): List<String> =
-        context.getString(R.string.ads_test_device_ids)
+        context
+            .getString(R.string.ads_test_device_ids)
             .split(',')
             .map { it.trim() }
             .filter { it.isNotEmpty() }

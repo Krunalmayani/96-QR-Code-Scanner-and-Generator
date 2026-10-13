@@ -48,7 +48,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import java.util.TimeZone
 
 /** Which picker dialog is open: the start or the end, the date or the time. */
-private data class OpenPicker(val start: Boolean, val time: Boolean)
+private data class OpenPicker(
+    val start: Boolean,
+    val time: Boolean,
+)
 
 private val TimeFieldWidth = 132.dp
 private const val DEFAULT_PICKER_HOUR = 9
@@ -64,7 +67,10 @@ internal fun EventFields(
     var picker by remember { mutableStateOf<OpenPicker?>(null) }
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         FormTextField(
-            host, FormField.TITLE, spec.title, { onSpec(spec.copy(title = it)) },
+            host,
+            FormField.TITLE,
+            spec.title,
+            { onSpec(spec.copy(title = it)) },
             stringResource(R.string.create_field_event_title),
             capitalization = KeyboardCapitalization.Sentences,
         )
@@ -86,12 +92,18 @@ internal fun EventFields(
             onPickTime = { picker = OpenPicker(start = false, time = true) },
         )
         FormTextField(
-            host, FormField.EVENT_LOCATION, spec.location, { onSpec(spec.copy(location = it)) },
+            host,
+            FormField.EVENT_LOCATION,
+            spec.location,
+            { onSpec(spec.copy(location = it)) },
             stringResource(R.string.create_field_location),
             capitalization = KeyboardCapitalization.Words,
         )
         FormTextField(
-            host, FormField.DESCRIPTION, spec.description, { onSpec(spec.copy(description = it)) },
+            host,
+            FormField.DESCRIPTION,
+            spec.description,
+            { onSpec(spec.copy(description = it)) },
             stringResource(R.string.create_field_description),
             capitalization = KeyboardCapitalization.Sentences,
             singleLine = false,
@@ -105,11 +117,12 @@ internal fun EventFields(
 @Composable
 private fun AllDayRow(checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)
-            .padding(horizontal = 4.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+                .toggleable(value = checked, role = Role.Switch, onValueChange = onCheckedChange)
+                .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -178,13 +191,14 @@ private fun PickerField(
     val colors = AppTheme.colors
     val shape = AppTheme.shapes.field
     Row(
-        modifier = modifier
-            .heightIn(min = 56.dp)
-            .clip(shape)
-            .background(colors.surface)
-            .border(1.5.dp, if (hasError) colors.error else colors.outline, shape)
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier =
+            modifier
+                .heightIn(min = 56.dp)
+                .clip(shape)
+                .background(colors.surface)
+                .border(1.5.dp, if (hasError) colors.error else colors.outline, shape)
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {

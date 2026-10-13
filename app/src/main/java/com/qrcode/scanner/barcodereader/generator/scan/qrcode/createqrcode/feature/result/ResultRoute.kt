@@ -37,17 +37,19 @@ fun ResultRoute(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val dark = AppTheme.colors.isDark
-    val locationLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        viewModel.onEvent(ResultEvent.LocationPermissionResult(granted))
-    }
+    val locationLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            viewModel.onEvent(ResultEvent.LocationPermissionResult(granted))
+        }
 
     ResultAdEffect(state)
 
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
-            val message = perform(effect, context, dark, onBack, onDone, onOpenGenerated) {
-                locationLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-            }
+            val message =
+                perform(effect, context, dark, onBack, onDone, onOpenGenerated) {
+                    locationLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
             if (message != null) {
                 val text = context.getString(message.messageRes())
                 launch {
@@ -90,26 +92,37 @@ private fun perform(
     onDone: () -> Unit,
     onOpenGenerated: (Long) -> Unit,
     requestLocation: () -> Unit,
-): ResultMessage? = when (effect) {
-    is ResultEffect.CopyText -> if (ExternalLauncher.copy(context, effect.text, effect.sensitive)) ResultMessage.COPIED else ResultMessage.CANNOT_OPEN
-    is ResultEffect.ShareText -> if (ExternalLauncher.shareText(context, effect.text)) null else ResultMessage.NO_APP_FOUND
-    is ResultEffect.OpenUrl -> if (ExternalLauncher.openCustomTab(context, effect.url, dark)) null else ResultMessage.NO_APP_FOUND
-    is ResultEffect.Launch -> if (ExternalLauncher.launch(context, effect.action)) null else ResultMessage.NO_APP_FOUND
-    is ResultEffect.ShowMessage -> effect.message
-    ResultEffect.RequestLocationPermission -> {
-        requestLocation()
-        null
+): ResultMessage? =
+    when (effect) {
+        is ResultEffect.CopyText ->
+            if (ExternalLauncher.copy(
+                    context,
+                    effect.text,
+                    effect.sensitive,
+                )
+            ) {
+                ResultMessage.COPIED
+            } else {
+                ResultMessage.CANNOT_OPEN
+            }
+        is ResultEffect.ShareText -> if (ExternalLauncher.shareText(context, effect.text)) null else ResultMessage.NO_APP_FOUND
+        is ResultEffect.OpenUrl -> if (ExternalLauncher.openCustomTab(context, effect.url, dark)) null else ResultMessage.NO_APP_FOUND
+        is ResultEffect.Launch -> if (ExternalLauncher.launch(context, effect.action)) null else ResultMessage.NO_APP_FOUND
+        is ResultEffect.ShowMessage -> effect.message
+        ResultEffect.RequestLocationPermission -> {
+            requestLocation()
+            null
+        }
+        ResultEffect.NavigateBack -> {
+            onBack()
+            null
+        }
+        ResultEffect.NavigateToScan -> {
+            onDone()
+            null
+        }
+        is ResultEffect.OpenGenerated -> {
+            onOpenGenerated(effect.recordId)
+            null
+        }
     }
-    ResultEffect.NavigateBack -> {
-        onBack()
-        null
-    }
-    ResultEffect.NavigateToScan -> {
-        onDone()
-        null
-    }
-    is ResultEffect.OpenGenerated -> {
-        onOpenGenerated(effect.recordId)
-        null
-    }
-}

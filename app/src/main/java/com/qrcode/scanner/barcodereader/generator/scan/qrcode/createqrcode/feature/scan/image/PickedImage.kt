@@ -33,9 +33,10 @@ private const val PREVIEW_MAX_SIDE_PX = 1280
 fun PickedImage(imageUri: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val bitmap by produceState<ImageBitmap?>(initialValue = null, imageUri) {
-        value = withContext(Dispatchers.IO) {
-            ImageDecoding.decode(context, Uri.parse(imageUri), PREVIEW_MAX_SIDE_PX)?.asImageBitmap()
-        }
+        value =
+            withContext(Dispatchers.IO) {
+                ImageDecoding.decode(context, Uri.parse(imageUri), PREVIEW_MAX_SIDE_PX)?.asImageBitmap()
+            }
     }
     Box(modifier.background(AppTheme.colors.surfaceVariant), contentAlignment = Alignment.Center) {
         val image = bitmap

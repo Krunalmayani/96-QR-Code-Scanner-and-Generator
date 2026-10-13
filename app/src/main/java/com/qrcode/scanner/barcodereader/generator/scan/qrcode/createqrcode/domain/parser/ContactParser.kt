@@ -66,12 +66,22 @@ internal object ContactParser {
         var note = ""
 
         fun phone(v: String) {
-            val p = v.trim().removePrefix("tel:").removePrefix("TEL:").trim()
+            val p =
+                v
+                    .trim()
+                    .removePrefix("tel:")
+                    .removePrefix("TEL:")
+                    .trim()
             if (p.isNotEmpty()) phones.add(p)
         }
 
         fun email(v: String) {
-            val e = v.trim().removePrefix("mailto:").removePrefix("MAILTO:").trim()
+            val e =
+                v
+                    .trim()
+                    .removePrefix("mailto:")
+                    .removePrefix("MAILTO:")
+                    .trim()
             if (e.isNotEmpty()) emails.add(e)
         }
 
@@ -91,8 +101,9 @@ internal object ContactParser {
         }
 
         private fun decode(line: FieldParsing.ContentLine): String {
-            val isQp = line.params["ENCODING"].equals("QUOTED-PRINTABLE", ignoreCase = true) ||
-                line.params.containsKey("QUOTED-PRINTABLE")
+            val isQp =
+                line.params["ENCODING"].equals("QUOTED-PRINTABLE", ignoreCase = true) ||
+                    line.params.containsKey("QUOTED-PRINTABLE")
             if (!isQp) return line.value
             return FieldParsing.decodeQuotedPrintable(line.value, charsetOf(line.params["CHARSET"]))
         }
@@ -107,6 +118,7 @@ internal object ContactParser {
         /** `N:Family;Given;Additional;Prefix;Suffix` -> "Prefix Given Additional Family Suffix". */
         private fun structuredName(v: String): String {
             val p = FieldParsing.splitUnescaped(v, ';').map { FieldParsing.unescapeText(it).trim() }
+
             fun at(i: Int) = p.getOrElse(i) { "" }
             return joinParts(listOf(at(3), at(1), at(2), at(0), at(4)), " ")
         }
@@ -116,8 +128,15 @@ internal object ContactParser {
 
         fun build(raw: String, format: CodeFormat): ScanContent.Contact? {
             val name = formattedName.ifBlank { nameStructured }
-            val any = name.isNotBlank() || org.isNotBlank() || title.isNotBlank() || phones.isNotEmpty() ||
-                emails.isNotEmpty() || address.isNotBlank() || url.isNotBlank() || note.isNotBlank()
+            val any =
+                name.isNotBlank() ||
+                    org.isNotBlank() ||
+                    title.isNotBlank() ||
+                    phones.isNotEmpty() ||
+                    emails.isNotEmpty() ||
+                    address.isNotBlank() ||
+                    url.isNotBlank() ||
+                    note.isNotBlank()
             if (!any) return null
             return ScanContent.Contact(
                 rawValue = raw,

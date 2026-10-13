@@ -14,43 +14,46 @@ import org.junit.jupiter.params.provider.EnumSource
 
 /** Build payload, encode, rasterise, decode with ZXing: a created code must scan back to its payload. */
 class RoundTripTest {
-    private fun sample(type: CreateType): CreateSpec = when (type) {
-        CreateType.WEBSITE -> CreateSpec.Website("brewhouse-coffee.com/menu?table=12&x=café")
-        CreateType.TEXT -> CreateSpec.Text("Meeting notes: ship v2.4 on Friday.\nGrüße 日本語 😀; done,")
-        CreateType.CONTACT -> CreateSpec.Contact(
-            name = "Sophie Lambert",
-            organization = "Lumen Studio",
-            jobTitle = "Creative Director",
-            phone = "+1 (415) 555-0142",
-            email = "sophie.lambert@lumen.studio",
-            address = "48 Market Street, Suite 6\nAustin, TX 78701",
-            website = "lumen.studio",
-            note = "Met at the fair; call back",
-        )
-        CreateType.WIFI -> CreateSpec.Wifi("Cafe;Nova:Guest", "p\"ass,w\\ord1", WifiSecurity.WPA, hidden = true)
-        CreateType.EMAIL -> CreateSpec.Email("hello@lumen.studio", "Hello & welcome", "Line 1\nLine 2 café")
-        CreateType.PHONE -> CreateSpec.Phone("(206) 555-0198")
-        CreateType.SMS -> CreateSpec.Sms("+1 415 555 0142", "Running late: see you at 6")
-        CreateType.LOCATION -> CreateSpec.Location("37.7749", "-122.4194", "Golden Gate Bridge")
-        CreateType.EVENT -> CreateSpec.Event(
-            title = "Product Launch Meetup",
-            location = "Harbor Hall, 120 Pier Ave, San Francisco",
-            description = "Meet the team and see the live demo. Doors open at 5:30 PM.",
-            startMillis = utcMillis(2026, 11, 14, 18, 0),
-            endMillis = utcMillis(2026, 11, 14, 20, 30),
-        )
-        CreateType.SOCIAL -> CreateSpec.Social(SocialPlatform.INSTAGRAM, "@lumen.studio")
-        CreateType.APP_STORE -> CreateSpec.AppStore("https://play.google.com/store/apps/details?id=com.lumen.studio")
-        CreateType.BARCODE_EAN_13 -> CreateSpec.Barcode(type, "400638133393")
-        CreateType.BARCODE_EAN_8 -> CreateSpec.Barcode(type, "9638507")
-        CreateType.BARCODE_UPC_A -> CreateSpec.Barcode(type, "03600029145")
-        CreateType.BARCODE_CODE_128 -> CreateSpec.Barcode(type, "Hello-123 abc")
-        CreateType.BARCODE_CODE_39 -> CreateSpec.Barcode(type, "code-39 ok")
-        CreateType.BARCODE_ITF -> CreateSpec.Barcode(type, "1234567890")
-        CreateType.BARCODE_PDF_417 -> CreateSpec.Barcode(type, "PDF417 sample text 1234567890")
-        CreateType.BARCODE_DATA_MATRIX -> CreateSpec.Barcode(type, "DataMatrix 2026")
-        CreateType.BARCODE_AZTEC -> CreateSpec.Barcode(type, "Aztec code sample")
-    }
+    private fun sample(type: CreateType): CreateSpec =
+        when (type) {
+            CreateType.WEBSITE -> CreateSpec.Website("brewhouse-coffee.com/menu?table=12&x=café")
+            CreateType.TEXT -> CreateSpec.Text("Meeting notes: ship v2.4 on Friday.\nGrüße 日本語 😀; done,")
+            CreateType.CONTACT ->
+                CreateSpec.Contact(
+                    name = "Sophie Lambert",
+                    organization = "Lumen Studio",
+                    jobTitle = "Creative Director",
+                    phone = "+1 (415) 555-0142",
+                    email = "sophie.lambert@lumen.studio",
+                    address = "48 Market Street, Suite 6\nAustin, TX 78701",
+                    website = "lumen.studio",
+                    note = "Met at the fair; call back",
+                )
+            CreateType.WIFI -> CreateSpec.Wifi("Cafe;Nova:Guest", "p\"ass,w\\ord1", WifiSecurity.WPA, hidden = true)
+            CreateType.EMAIL -> CreateSpec.Email("hello@lumen.studio", "Hello & welcome", "Line 1\nLine 2 café")
+            CreateType.PHONE -> CreateSpec.Phone("(206) 555-0198")
+            CreateType.SMS -> CreateSpec.Sms("+1 415 555 0142", "Running late: see you at 6")
+            CreateType.LOCATION -> CreateSpec.Location("37.7749", "-122.4194", "Golden Gate Bridge")
+            CreateType.EVENT ->
+                CreateSpec.Event(
+                    title = "Product Launch Meetup",
+                    location = "Harbor Hall, 120 Pier Ave, San Francisco",
+                    description = "Meet the team and see the live demo. Doors open at 5:30 PM.",
+                    startMillis = utcMillis(2026, 11, 14, 18, 0),
+                    endMillis = utcMillis(2026, 11, 14, 20, 30),
+                )
+            CreateType.SOCIAL -> CreateSpec.Social(SocialPlatform.INSTAGRAM, "@lumen.studio")
+            CreateType.APP_STORE -> CreateSpec.AppStore("https://play.google.com/store/apps/details?id=com.lumen.studio")
+            CreateType.BARCODE_EAN_13 -> CreateSpec.Barcode(type, "400638133393")
+            CreateType.BARCODE_EAN_8 -> CreateSpec.Barcode(type, "9638507")
+            CreateType.BARCODE_UPC_A -> CreateSpec.Barcode(type, "03600029145")
+            CreateType.BARCODE_CODE_128 -> CreateSpec.Barcode(type, "Hello-123 abc")
+            CreateType.BARCODE_CODE_39 -> CreateSpec.Barcode(type, "code-39 ok")
+            CreateType.BARCODE_ITF -> CreateSpec.Barcode(type, "1234567890")
+            CreateType.BARCODE_PDF_417 -> CreateSpec.Barcode(type, "PDF417 sample text 1234567890")
+            CreateType.BARCODE_DATA_MATRIX -> CreateSpec.Barcode(type, "DataMatrix 2026")
+            CreateType.BARCODE_AZTEC -> CreateSpec.Barcode(type, "Aztec code sample")
+        }
 
     @ParameterizedTest
     @EnumSource(CreateType::class)

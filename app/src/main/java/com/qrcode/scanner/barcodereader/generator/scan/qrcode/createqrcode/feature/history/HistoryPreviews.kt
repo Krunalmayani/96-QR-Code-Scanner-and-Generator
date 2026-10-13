@@ -31,7 +31,15 @@ import java.time.ZoneId
 private val zone: ZoneId = ZoneId.systemDefault()
 
 private fun at(daysAgo: Long, hour: Int, minute: Int): Long =
-    Instant.now().atZone(zone).toLocalDate().minusDays(daysAgo).atTime(hour, minute).atZone(zone).toInstant().toEpochMilli()
+    Instant
+        .now()
+        .atZone(zone)
+        .toLocalDate()
+        .minusDays(daysAgo)
+        .atTime(hour, minute)
+        .atZone(zone)
+        .toInstant()
+        .toEpochMilli()
 
 private fun sample(
     id: Long,
@@ -43,21 +51,34 @@ private fun sample(
 
 private val QR = CodeFormat.QR_CODE
 
-private val scannedSamples: List<ScanRecord> = listOf(
-    sample(1, ScanContent.Website("https://brewhouse-coffee.com/menu", QR, "https://brewhouse-coffee.com/menu"), at(0, 16, 36), favorite = true),
-    sample(2, ScanContent.Wifi("WIFI:S:CafeNova_Guest;;", QR, "CafeNova_Guest"), at(0, 13, 5)),
-    sample(3, ScanContent.Contact("BEGIN:VCARD", QR, name = "Sophie Lambert"), at(0, 11, 42)),
-    sample(4, ScanContent.Product("5901234123457", CodeFormat.EAN_13, "5901234123457"), at(1, 17, 18)),
-    sample(5, ScanContent.Event("BEGIN:VEVENT", QR, summary = "Product Launch Meetup"), at(1, 14, 20), favorite = true),
-    sample(6, ScanContent.Text("Meeting notes: ship v2.4 on Friday", QR), at(1, 9, 3)),
-)
+private val scannedSamples: List<ScanRecord> =
+    listOf(
+        sample(
+            1,
+            ScanContent.Website("https://brewhouse-coffee.com/menu", QR, "https://brewhouse-coffee.com/menu"),
+            at(0, 16, 36),
+            favorite = true,
+        ),
+        sample(2, ScanContent.Wifi("WIFI:S:CafeNova_Guest;;", QR, "CafeNova_Guest"), at(0, 13, 5)),
+        sample(3, ScanContent.Contact("BEGIN:VCARD", QR, name = "Sophie Lambert"), at(0, 11, 42)),
+        sample(4, ScanContent.Product("5901234123457", CodeFormat.EAN_13, "5901234123457"), at(1, 17, 18)),
+        sample(5, ScanContent.Event("BEGIN:VEVENT", QR, summary = "Product Launch Meetup"), at(1, 14, 20), favorite = true),
+        sample(6, ScanContent.Text("Meeting notes: ship v2.4 on Friday", QR), at(1, 9, 3)),
+    )
 
-private val createdSamples: List<ScanRecord> = listOf(
-    sample(11, ScanContent.Website("https://brewhouse-coffee.com/menu", QR, "https://brewhouse-coffee.com/menu"), at(0, 10, 0), ScanSource.CREATED, favorite = true),
-    sample(12, ScanContent.Wifi("WIFI:S:CafeNova;;", QR, "Guest Wi-Fi · CafeNova"), at(1, 10, 0), ScanSource.CREATED),
-    sample(13, ScanContent.Contact("BEGIN:VCARD", QR, name = "Lumen Studio contact"), at(3, 10, 0), ScanSource.CREATED),
-    sample(14, ScanContent.Phone("tel:+1555", QR, "+1 555 0100"), at(7, 10, 0), ScanSource.CREATED),
-)
+private val createdSamples: List<ScanRecord> =
+    listOf(
+        sample(
+            11,
+            ScanContent.Website("https://brewhouse-coffee.com/menu", QR, "https://brewhouse-coffee.com/menu"),
+            at(0, 10, 0),
+            ScanSource.CREATED,
+            favorite = true,
+        ),
+        sample(12, ScanContent.Wifi("WIFI:S:CafeNova;;", QR, "Guest Wi-Fi · CafeNova"), at(1, 10, 0), ScanSource.CREATED),
+        sample(13, ScanContent.Contact("BEGIN:VCARD", QR, name = "Lumen Studio contact"), at(3, 10, 0), ScanSource.CREATED),
+        sample(14, ScanContent.Phone("tel:+1555", QR, "+1 555 0100"), at(7, 10, 0), ScanSource.CREATED),
+    )
 
 private fun stateOf(
     records: List<ScanRecord>,
@@ -68,19 +89,20 @@ private fun stateOf(
     query: String = "",
     scope: SearchScope = SearchScope.ALL,
     selection: SelectionState = SelectionState(),
-): HistoryUiState = HistoryUiState(
-    tab = tab,
-    chip = chip,
-    searchActive = searchActive,
-    searchScope = scope,
-    query = query,
-    appliedQuery = query,
-    groups = HistoryGrouper.group(records, Instant.now(), zone),
-    recordCount = records.size,
-    loading = false,
-    emptyKind = emptyKind,
-    selection = selection,
-)
+): HistoryUiState =
+    HistoryUiState(
+        tab = tab,
+        chip = chip,
+        searchActive = searchActive,
+        searchScope = scope,
+        query = query,
+        appliedQuery = query,
+        groups = HistoryGrouper.group(records, Instant.now(), zone),
+        recordCount = records.size,
+        loading = false,
+        emptyKind = emptyKind,
+        selection = selection,
+    )
 
 @Composable
 private fun PreviewFrame(dark: Boolean, state: HistoryUiState, undoMessage: String? = null) {
@@ -177,11 +199,12 @@ private fun S52_HistoryFavoritesEmpty_Light() = PreviewFrame(false, favoritesEmp
 private fun S52_HistoryFavoritesEmpty_Dark() = PreviewFrame(true, favoritesEmpty)
 
 // s53 Search results
-private val searchResults = stateOf(
-    records = listOf(scannedSamples[1], createdSamples[1]),
-    searchActive = true,
-    query = "cafe",
-)
+private val searchResults =
+    stateOf(
+        records = listOf(scannedSamples[1], createdSamples[1]),
+        searchActive = true,
+        query = "cafe",
+    )
 
 @Preview(name = "S53_HistorySearch_Light", widthDp = PHONE_W, heightDp = PHONE_H)
 @Composable

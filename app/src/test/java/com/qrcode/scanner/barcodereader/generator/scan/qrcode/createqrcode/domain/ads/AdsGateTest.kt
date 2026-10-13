@@ -35,8 +35,14 @@ class AdsGateTest {
     fun `truth table has exactly one allowed row`() {
         val bools = listOf(false, true)
         var allowed = 0
-        for (a in bools) for (b in bools) for (c in bools) for (d in bools) {
-            if (AdsGate.canServeAds(a, b, c, d)) allowed++
+        for (a in bools) {
+            for (b in bools) {
+                for (c in bools) {
+                    for (d in bools) {
+                        if (AdsGate.canServeAds(a, b, c, d)) allowed++
+                    }
+                }
+            }
         }
         assertEquals(1, allowed)
     }

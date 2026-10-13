@@ -10,15 +10,15 @@ enum class SystemPrompt { NONE, RATE, UPDATE }
  * time-boxed); the update dialog is also held back while the user is scanning, to keep the camera clear.
  */
 object SystemPromptPicker {
-
     fun next(
         settings: AppSettings,
         nowMillis: Long,
         scanningInProgress: Boolean,
         updateAvailable: Boolean,
-    ): SystemPrompt = when {
-        RatePromptPolicy.shouldShow(settings, nowMillis, scanningInProgress) -> SystemPrompt.RATE
-        !scanningInProgress && UpdatePromptPolicy.shouldShow(settings, nowMillis, updateAvailable) -> SystemPrompt.UPDATE
-        else -> SystemPrompt.NONE
-    }
+    ): SystemPrompt =
+        when {
+            RatePromptPolicy.shouldShow(settings, nowMillis, scanningInProgress) -> SystemPrompt.RATE
+            !scanningInProgress && UpdatePromptPolicy.shouldShow(settings, nowMillis, updateAvailable) -> SystemPrompt.UPDATE
+            else -> SystemPrompt.NONE
+        }
 }

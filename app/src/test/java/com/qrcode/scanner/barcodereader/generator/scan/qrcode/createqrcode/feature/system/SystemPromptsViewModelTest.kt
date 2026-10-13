@@ -26,7 +26,6 @@ import org.junit.jupiter.api.extension.RegisterExtension
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SystemPromptsViewModelTest {
-
     @JvmField
     @RegisterExtension
     val main = MainDispatcherExtension()
@@ -68,248 +67,266 @@ class SystemPromptsViewModelTest {
     }
 
     @Test
-    fun `nothing is shown while prompts are suppressed`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
+    fun `nothing is shown while prompts are suppressed`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
 
-        settle()
+            settle()
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-    }
-
-    @Test
-    fun `the rate sheet appears after the settle delay and starts the 60 day timer`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-
-        viewModel.setSuppressed(false)
-        advanceTimeBy(1_000)
-        runCurrent()
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-
-        advanceTimeBy(600)
-        runCurrent()
-        assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
-        assertEquals(now, settings.value.lastRatePromptAt)
-        verify(exactly = 1) { analytics.log(Events.RATE_PROMPT_SHOWN, emptyMap()) }
-    }
-
-    @Test
-    fun `the rate sheet is cancelled when the user starts scanning during the delay`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-
-        viewModel.setSuppressed(false)
-        advanceTimeBy(1_000)
-        runCurrent()
-        viewModel.setSuppressed(true)
-        settle()
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(0L, settings.value.lastRatePromptAt)
-    }
-
-    @Test
-    fun `the rate sheet does not appear before five scans`() = runTest {
-        val settings = FakeSettingsRepository(rateReady.copy(successfulScans = 4))
-        val viewModel = viewModel(settings)
-
-        viewModel.setSuppressed(false)
-        settle()
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-    }
-
-    @Test
-    fun `four or five stars launch the in-app review and mark the app as rated`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        settle()
-        assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
-
-        viewModel.effects.test {
-            viewModel.onRateConfirmed(5)
-            assertEquals(SystemPromptsEffect.LaunchReview, awaitItem())
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
         }
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertTrue(settings.value.hasRated)
-    }
-
     @Test
-    fun `one to three stars open the feedback form and do not mark the app as rated`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        settle()
+    fun `the rate sheet appears after the settle delay and starts the 60 day timer`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
 
-        viewModel.effects.test {
-            viewModel.onRateConfirmed(2)
-            assertEquals(SystemPromptsEffect.OpenFeedback, awaitItem())
+            viewModel.setSuppressed(false)
+            advanceTimeBy(1_000)
+            runCurrent()
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+
+            advanceTimeBy(600)
+            runCurrent()
+            assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
+            assertEquals(now, settings.value.lastRatePromptAt)
+            verify(exactly = 1) { analytics.log(Events.RATE_PROMPT_SHOWN, emptyMap()) }
         }
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertFalse(settings.value.hasRated)
-    }
+    @Test
+    fun `the rate sheet is cancelled when the user starts scanning during the delay`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+
+            viewModel.setSuppressed(false)
+            advanceTimeBy(1_000)
+            runCurrent()
+            viewModel.setSuppressed(true)
+            settle()
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(0L, settings.value.lastRatePromptAt)
+        }
 
     @Test
-    fun `an invalid star count keeps the sheet open`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        settle()
+    fun `the rate sheet does not appear before five scans`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady.copy(successfulScans = 4))
+            val viewModel = viewModel(settings)
 
-        viewModel.onRateConfirmed(0)
+            viewModel.setSuppressed(false)
+            settle()
 
-        assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
-    }
-
-    @Test
-    fun `maybe later closes the sheet and it does not come back`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        settle()
-
-        viewModel.onRateDismissed()
-        settle()
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertFalse(settings.value.hasRated)
-        assertEquals(now, settings.value.lastRatePromptAt)
-    }
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+        }
 
     @Test
-    fun `the update dialog appears when an update is available`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
+    fun `four or five stars launch the in-app review and mark the app as rated`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            settle()
+            assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
 
-        viewModel.setSuppressed(false)
-        settle()
+            viewModel.effects.test {
+                viewModel.onRateConfirmed(5)
+                assertEquals(SystemPromptsEffect.LaunchReview, awaitItem())
+            }
 
-        assertEquals(ActivePrompt.UPDATE, viewModel.prompt.value)
-        verify(exactly = 1) { analytics.log(Events.UPDATE_PROMPT_SHOWN, emptyMap()) }
-    }
-
-    @Test
-    fun `nothing is shown when Play reports no update`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-
-        viewModel.setSuppressed(false)
-        settle()
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-    }
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertTrue(settings.value.hasRated)
+        }
 
     @Test
-    fun `later hides the update prompt for three days`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
-        viewModel.setSuppressed(false)
-        settle()
+    fun `one to three stars open the feedback form and do not mark the app as rated`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            settle()
 
-        viewModel.onUpdateLater()
-        settle()
+            viewModel.effects.test {
+                viewModel.onRateConfirmed(2)
+                assertEquals(SystemPromptsEffect.OpenFeedback, awaitItem())
+            }
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(now + SystemPromptTiming.UPDATE_SNOOZE_MILLIS, settings.value.updateLaterUntil)
-    }
-
-    @Test
-    fun `confirming the update without an activity just closes the dialog`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
-        viewModel.setSuppressed(false)
-        settle()
-
-        viewModel.onUpdateConfirmed(null)
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(0, updater.starts)
-    }
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertFalse(settings.value.hasRated)
+        }
 
     @Test
-    fun `confirming the update starts the flexible flow`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
-        viewModel.setSuppressed(false)
-        settle()
+    fun `an invalid star count keeps the sheet open`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            settle()
 
-        viewModel.onUpdateConfirmed(mockk<Activity>(relaxed = true))
+            viewModel.onRateConfirmed(0)
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(1, updater.starts)
-    }
-
-    @Test
-    fun `the rate sheet goes first and the update dialog follows once it is closed`() = runTest {
-        val settings = FakeSettingsRepository(rateReady)
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
-        viewModel.setSuppressed(false)
-        settle()
-        assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
-
-        viewModel.onRateDismissed()
-        settle()
-
-        assertEquals(ActivePrompt.UPDATE, viewModel.prompt.value)
-    }
+            assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
+        }
 
     @Test
-    fun `a downloaded update asks for a restart`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        updater.state.value = UpdateStatus.DOWNLOADED
-        settle()
-        assertEquals(ActivePrompt.UPDATE_READY, viewModel.prompt.value)
+    fun `maybe later closes the sheet and it does not come back`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            settle()
 
-        viewModel.onUpdateReadyConfirmed()
+            viewModel.onRateDismissed()
+            settle()
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(1, updater.completes)
-    }
-
-    @Test
-    fun `dismissing the restart prompt does not ask again`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
-        val viewModel = viewModel(settings)
-        viewModel.setSuppressed(false)
-        updater.state.value = UpdateStatus.DOWNLOADED
-        settle()
-
-        viewModel.onUpdateReadyDismissed()
-        settle()
-
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-        assertEquals(0, updater.completes)
-    }
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertFalse(settings.value.hasRated)
+            assertEquals(now, settings.value.lastRatePromptAt)
+        }
 
     @Test
-    fun `nothing is shown before onboarding is done`() = runTest {
-        val settings = FakeSettingsRepository(AppSettings(onboardingDone = false, successfulScans = 9))
-        val viewModel = viewModel(settings)
-        updater.state.value = UpdateStatus.AVAILABLE
+    fun `the update dialog appears when an update is available`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
 
-        viewModel.setSuppressed(false)
-        settle()
+            viewModel.setSuppressed(false)
+            settle()
 
-        assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
-    }
+            assertEquals(ActivePrompt.UPDATE, viewModel.prompt.value)
+            verify(exactly = 1) { analytics.log(Events.UPDATE_PROMPT_SHOWN, emptyMap()) }
+        }
 
     @Test
-    fun `refreshing the update asks the updater to check`() = runTest {
-        val viewModel = viewModel(FakeSettingsRepository())
+    fun `nothing is shown when Play reports no update`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
 
-        viewModel.refreshUpdate()
+            viewModel.setSuppressed(false)
+            settle()
 
-        assertEquals(1, updater.checks)
-    }
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+        }
+
+    @Test
+    fun `later hides the update prompt for three days`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
+            viewModel.setSuppressed(false)
+            settle()
+
+            viewModel.onUpdateLater()
+            settle()
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(now + SystemPromptTiming.UPDATE_SNOOZE_MILLIS, settings.value.updateLaterUntil)
+        }
+
+    @Test
+    fun `confirming the update without an activity just closes the dialog`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
+            viewModel.setSuppressed(false)
+            settle()
+
+            viewModel.onUpdateConfirmed(null)
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(0, updater.starts)
+        }
+
+    @Test
+    fun `confirming the update starts the flexible flow`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
+            viewModel.setSuppressed(false)
+            settle()
+
+            viewModel.onUpdateConfirmed(mockk<Activity>(relaxed = true))
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(1, updater.starts)
+        }
+
+    @Test
+    fun `the rate sheet goes first and the update dialog follows once it is closed`() =
+        runTest {
+            val settings = FakeSettingsRepository(rateReady)
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
+            viewModel.setSuppressed(false)
+            settle()
+            assertEquals(ActivePrompt.RATE, viewModel.prompt.value)
+
+            viewModel.onRateDismissed()
+            settle()
+
+            assertEquals(ActivePrompt.UPDATE, viewModel.prompt.value)
+        }
+
+    @Test
+    fun `a downloaded update asks for a restart`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            updater.state.value = UpdateStatus.DOWNLOADED
+            settle()
+            assertEquals(ActivePrompt.UPDATE_READY, viewModel.prompt.value)
+
+            viewModel.onUpdateReadyConfirmed()
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(1, updater.completes)
+        }
+
+    @Test
+    fun `dismissing the restart prompt does not ask again`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = true))
+            val viewModel = viewModel(settings)
+            viewModel.setSuppressed(false)
+            updater.state.value = UpdateStatus.DOWNLOADED
+            settle()
+
+            viewModel.onUpdateReadyDismissed()
+            settle()
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+            assertEquals(0, updater.completes)
+        }
+
+    @Test
+    fun `nothing is shown before onboarding is done`() =
+        runTest {
+            val settings = FakeSettingsRepository(AppSettings(onboardingDone = false, successfulScans = 9))
+            val viewModel = viewModel(settings)
+            updater.state.value = UpdateStatus.AVAILABLE
+
+            viewModel.setSuppressed(false)
+            settle()
+
+            assertEquals(ActivePrompt.NONE, viewModel.prompt.value)
+        }
+
+    @Test
+    fun `refreshing the update asks the updater to check`() =
+        runTest {
+            val viewModel = viewModel(FakeSettingsRepository())
+
+            viewModel.refreshUpdate()
+
+            assertEquals(1, updater.checks)
+        }
 }

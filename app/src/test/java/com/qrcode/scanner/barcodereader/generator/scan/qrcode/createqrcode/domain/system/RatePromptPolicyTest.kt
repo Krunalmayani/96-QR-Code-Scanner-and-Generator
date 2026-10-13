@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class RatePromptPolicyTest {
-
     private val day = SystemPromptTiming.MILLIS_PER_DAY
     private val now = 1_800_000_000_000L
 

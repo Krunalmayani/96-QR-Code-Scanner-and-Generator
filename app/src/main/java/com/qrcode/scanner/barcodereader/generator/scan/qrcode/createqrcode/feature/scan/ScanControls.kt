@@ -51,7 +51,13 @@ internal fun ScanTopBar(
     onEvent: (ScanEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Box(modifier.fillMaxWidth().statusBarsPadding().height(64.dp).padding(horizontal = 8.dp)) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .height(64.dp)
+            .padding(horizontal = 8.dp),
+    ) {
         Row(Modifier.align(Alignment.CenterStart), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             FlashButton(on = state.flashOn, enabled = hasFlash && !state.frontCamera, onClick = { onEvent(ScanEvent.FlashToggled) })
             IconButtonRounded(
@@ -80,7 +86,13 @@ internal fun ScanTopBar(
 /** Top row in batch mode (s10): close, title, Done. */
 @Composable
 internal fun BatchTopBar(onEvent: (ScanEvent) -> Unit, modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxWidth().statusBarsPadding().height(64.dp).padding(horizontal = 8.dp)) {
+    Box(
+        modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .height(64.dp)
+            .padding(horizontal = 8.dp),
+    ) {
         IconButtonRounded(
             icon = AppIcons.Close,
             contentDescription = stringResource(R.string.scan_batch_close),
@@ -95,12 +107,13 @@ internal fun BatchTopBar(onEvent: (ScanEvent) -> Unit, modifier: Modifier = Modi
             modifier = Modifier.align(Alignment.Center),
         )
         Box(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .height(48.dp)
-                .clip(PillShape)
-                .clickable(role = Role.Button) { onEvent(ScanEvent.BatchDoneClicked) }
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterEnd)
+                    .height(48.dp)
+                    .clip(PillShape)
+                    .clickable(role = Role.Button) { onEvent(ScanEvent.BatchDoneClicked) }
+                    .padding(horizontal = 16.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(R.string.common_done), style = AppTheme.type.button, color = Color.White)
@@ -124,7 +137,11 @@ private fun FlashButton(on: Boolean, enabled: Boolean, onClick: () -> Unit) {
 internal fun ScanHint(mode: ScanMode, modifier: Modifier = Modifier) {
     val text = stringResource(if (mode.wideFrame) R.string.scan_hint_barcode else R.string.scan_hint_qr)
     Box(
-        modifier.height(36.dp).clip(PillShape).background(HintBackground).padding(horizontal = 16.dp),
+        modifier
+            .height(36.dp)
+            .clip(PillShape)
+            .background(HintBackground)
+            .padding(horizontal = 16.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(text, style = AppTheme.type.chip, color = Color.White, textAlign = TextAlign.Center, maxLines = 1)
@@ -135,7 +152,11 @@ internal fun ScanHint(mode: ScanMode, modifier: Modifier = Modifier) {
 @Composable
 internal fun BatchCountPill(count: Int, modifier: Modifier = Modifier) {
     Row(
-        modifier.height(36.dp).clip(PillShape).background(CameraColors.hit).padding(start = 12.dp, end = 16.dp),
+        modifier
+            .height(36.dp)
+            .clip(PillShape)
+            .background(CameraColors.hit)
+            .padding(start = 12.dp, end = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -162,11 +183,12 @@ internal fun ModeSelector(mode: ScanMode, onSelect: (ScanMode) -> Unit, modifier
     )
 }
 
-private fun modeLabelRes(mode: ScanMode): Int = when (mode) {
-    ScanMode.QR -> R.string.scan_mode_qr
-    ScanMode.BARCODE -> R.string.scan_mode_barcode
-    ScanMode.ALL -> R.string.scan_mode_all
-}
+private fun modeLabelRes(mode: ScanMode): Int =
+    when (mode) {
+        ScanMode.QR -> R.string.scan_mode_qr
+        ScanMode.BARCODE -> R.string.scan_mode_barcode
+        ScanMode.ALL -> R.string.scan_mode_all
+    }
 
 /** "1x [slider] 5x"; the slider mirrors pinch zoom. */
 @Composable
@@ -203,12 +225,13 @@ internal fun ZoomRow(
 @Composable
 internal fun GlassButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        modifier = modifier
-            .height(48.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(CameraColors.glass)
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 24.dp),
+        modifier =
+            modifier
+                .height(48.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(CameraColors.glass)
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(horizontal = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {

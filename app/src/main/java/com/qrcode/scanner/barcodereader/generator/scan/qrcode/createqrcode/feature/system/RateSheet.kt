@@ -126,11 +126,12 @@ private fun Star(value: Int, filled: Boolean, selected: Boolean, onSelect: (Int)
     val c = AppTheme.colors
     val description = pluralStringResource(R.plurals.system_rate_star, value, value)
     Box(
-        modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .selectable(selected = selected, role = Role.RadioButton, onClick = { onSelect(value) })
-            .semantics { contentDescription = description },
+        modifier =
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .selectable(selected = selected, role = Role.RadioButton, onClick = { onSelect(value) })
+                .semantics { contentDescription = description },
         contentAlignment = Alignment.Center,
     ) {
         Icon(
@@ -147,10 +148,11 @@ private fun RatePreviewFrame(dark: Boolean, stars: Int) {
     AppTheme(dark = dark) {
         Box(Modifier.fillMaxSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.BottomCenter) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
-                    .padding(24.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
+                        .padding(24.dp),
             ) {
                 RateSheetBody(onRate = {}, onLater = {}, initialStars = stars)
             }

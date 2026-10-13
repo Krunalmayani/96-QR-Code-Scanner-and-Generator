@@ -31,15 +31,16 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import kotlinx.coroutines.launch
 
 @StringRes
-private fun GeneratedMessage.textRes(): Int = when (this) {
-    GeneratedMessage.SAVED_TO_GALLERY -> R.string.create_toast_saved_gallery
-    GeneratedMessage.SAVED_TO_DOWNLOADS -> R.string.create_toast_saved_downloads
-    GeneratedMessage.COPIED -> R.string.common_copied
-    GeneratedMessage.SAVE_FAILED -> R.string.create_error_save_failed
-    GeneratedMessage.SHARE_FAILED -> R.string.create_error_share_failed
-    GeneratedMessage.PERMISSION_DENIED -> R.string.create_error_storage_permission
-    GeneratedMessage.LOGO_FAILED -> R.string.create_error_logo_failed
-}
+private fun GeneratedMessage.textRes(): Int =
+    when (this) {
+        GeneratedMessage.SAVED_TO_GALLERY -> R.string.create_toast_saved_gallery
+        GeneratedMessage.SAVED_TO_DOWNLOADS -> R.string.create_toast_saved_downloads
+        GeneratedMessage.COPIED -> R.string.common_copied
+        GeneratedMessage.SAVE_FAILED -> R.string.create_error_save_failed
+        GeneratedMessage.SHARE_FAILED -> R.string.create_error_share_failed
+        GeneratedMessage.PERMISSION_DENIED -> R.string.create_error_storage_permission
+        GeneratedMessage.LOGO_FAILED -> R.string.create_error_logo_failed
+    }
 
 /**
  * Entry of the Generated destination: wires the ViewModel to the Android pieces the screen needs (permission request,
@@ -66,12 +67,14 @@ fun GeneratedRoute(
         }
     }
 
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        viewModel.onEvent(GeneratedEvent.StoragePermissionResult(granted))
-    }
-    val logoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) viewModel.onEvent(GeneratedEvent.LogoPicked(uri.toString()))
-    }
+    val permissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            viewModel.onEvent(GeneratedEvent.StoragePermissionResult(granted))
+        }
+    val logoLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) viewModel.onEvent(GeneratedEvent.LogoPicked(uri.toString()))
+        }
 
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
@@ -108,12 +111,13 @@ fun GeneratedRoute(
 /** Opens the system share sheet for [uri]; false when no app can handle it. */
 private fun startShare(context: Context, uri: String, mimeType: String): Boolean {
     val stream = Uri.parse(uri)
-    val send = Intent(Intent.ACTION_SEND).apply {
-        type = mimeType
-        putExtra(Intent.EXTRA_STREAM, stream)
-        clipData = ClipData.newRawUri(null, stream)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
+    val send =
+        Intent(Intent.ACTION_SEND).apply {
+            type = mimeType
+            putExtra(Intent.EXTRA_STREAM, stream)
+            clipData = ClipData.newRawUri(null, stream)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
     val chooser = Intent.createChooser(send, context.getString(R.string.create_share_chooser_title))
     return try {
         context.startActivity(chooser)
@@ -122,4 +126,3 @@ private fun startShare(context: Context, uri: String, mimeType: String): Boolean
         false
     }
 }
-

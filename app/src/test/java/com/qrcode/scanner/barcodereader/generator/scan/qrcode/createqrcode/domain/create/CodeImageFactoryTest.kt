@@ -16,14 +16,15 @@ class CodeImageFactoryTest {
 
     @Test fun matchesCodeRendererForQrStyles() {
         val factory = CodeImageFactory(CodeFormat.QR_CODE, url)
-        val styles = listOf(
-            QrStyle(),
-            QrStyle(foreground = 0xFF4F46E5, dotShape = DotShape.DOTS, eyeShape = EyeShape.LEAF),
-            QrStyle(errorCorrection = ErrorCorrection.H, frameText = "Scan me"),
-            QrStyle(logoUri = "file:///logo.png", errorCorrection = ErrorCorrection.L),
-            QrStyle(gradientEnd = 0xFF0B7A6E),
-            QrStyle(errorCorrection = ErrorCorrection.L),
-        )
+        val styles =
+            listOf(
+                QrStyle(),
+                QrStyle(foreground = 0xFF4F46E5, dotShape = DotShape.DOTS, eyeShape = EyeShape.LEAF),
+                QrStyle(errorCorrection = ErrorCorrection.H, frameText = "Scan me"),
+                QrStyle(logoUri = "file:///logo.png", errorCorrection = ErrorCorrection.L),
+                QrStyle(gradientEnd = 0xFF0B7A6E),
+                QrStyle(errorCorrection = ErrorCorrection.L),
+            )
         for (style in styles) {
             assertEquals(CodeRenderer.render(CodeFormat.QR_CODE, url, style), factory.image(style), "$style")
         }

@@ -23,11 +23,12 @@ class AppOpenPolicy(
 ) {
     constructor(config: AdsConfig) : this(config.appOpenMinAwayMs)
 
-    fun shouldShow(input: AppOpenInput): Boolean = when {
-        !input.adsAllowed || !input.onboardingDone -> false
-        input.fullScreenAdShowing || !input.adReady -> false
-        else -> awayLongEnough(input.nowMs, input.lastBackgroundAtMs)
-    }
+    fun shouldShow(input: AppOpenInput): Boolean =
+        when {
+            !input.adsAllowed || !input.onboardingDone -> false
+            input.fullScreenAdShowing || !input.adReady -> false
+            else -> awayLongEnough(input.nowMs, input.lastBackgroundAtMs)
+        }
 
     /** A background time of 0 (never) or in the future (clock moved back) never qualifies. */
     private fun awayLongEnough(nowMs: Long, lastBackgroundAtMs: Long): Boolean =

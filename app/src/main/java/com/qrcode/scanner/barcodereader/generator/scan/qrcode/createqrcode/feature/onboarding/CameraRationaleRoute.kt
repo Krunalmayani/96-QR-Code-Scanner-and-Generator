@@ -33,14 +33,16 @@ internal fun CameraRationaleRoute(
         }
     }
 
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        viewModel.finish(if (granted) CameraStepResult.GRANTED else CameraStepResult.DENIED)
-    }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            viewModel.finish(if (granted) CameraStepResult.GRANTED else CameraStepResult.DENIED)
+        }
 
     CameraRationaleContent(
         onAllow = {
-            val alreadyGranted = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
-                PackageManager.PERMISSION_GRANTED
+            val alreadyGranted =
+                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) ==
+                    PackageManager.PERMISSION_GRANTED
             if (alreadyGranted) viewModel.finish(CameraStepResult.GRANTED) else launcher.launch(Manifest.permission.CAMERA)
         },
         onNotNow = { viewModel.finish(CameraStepResult.SKIPPED) },

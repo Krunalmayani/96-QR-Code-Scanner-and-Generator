@@ -71,9 +71,10 @@ fun ViewfinderOverlay(
     val bracketColor by animateColorAsState(if (detected) ScanHitColor else Color.White, tween(150), label = "bracketColor")
 
     Canvas(
-        modifier = modifier
-            .fillMaxSize()
-            .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen },
+        modifier =
+            modifier
+                .fillMaxSize()
+                .graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen },
     ) {
         val rect = viewfinderRect(size.width, size.height, density, shape)
         val radius = 22.dp.toPx()
@@ -92,19 +93,28 @@ fun ViewfinderOverlay(
         val t = rect.top
         val r = rect.right
         val b = rect.bottom
-        val corners = Path().apply {
-            moveTo(l, t + len); lineTo(l, t + radius)
-            arcTo(Rect(l, t, l + 2 * radius, t + 2 * radius), 180f, 90f, false); lineTo(l + len, t)
+        val corners =
+            Path().apply {
+                moveTo(l, t + len)
+                lineTo(l, t + radius)
+                arcTo(Rect(l, t, l + 2 * radius, t + 2 * radius), 180f, 90f, false)
+                lineTo(l + len, t)
 
-            moveTo(r - len, t); lineTo(r - radius, t)
-            arcTo(Rect(r - 2 * radius, t, r, t + 2 * radius), 270f, 90f, false); lineTo(r, t + len)
+                moveTo(r - len, t)
+                lineTo(r - radius, t)
+                arcTo(Rect(r - 2 * radius, t, r, t + 2 * radius), 270f, 90f, false)
+                lineTo(r, t + len)
 
-            moveTo(r, b - len); lineTo(r, b - radius)
-            arcTo(Rect(r - 2 * radius, b - 2 * radius, r, b), 0f, 90f, false); lineTo(r - len, b)
+                moveTo(r, b - len)
+                lineTo(r, b - radius)
+                arcTo(Rect(r - 2 * radius, b - 2 * radius, r, b), 0f, 90f, false)
+                lineTo(r - len, b)
 
-            moveTo(l + len, b); lineTo(l + radius, b)
-            arcTo(Rect(l, b - 2 * radius, l + 2 * radius, b), 90f, 90f, false); lineTo(l, b - len)
-        }
+                moveTo(l + len, b)
+                lineTo(l + radius, b)
+                arcTo(Rect(l, b - 2 * radius, l + 2 * radius, b), 90f, 90f, false)
+                lineTo(l, b - len)
+            }
         drawPath(corners, bracketColor, style = Stroke(width = 4.dp.toPx(), cap = StrokeCap.Round))
 
         if (scanning && !detected) {
@@ -112,11 +122,12 @@ fun ViewfinderOverlay(
             val alpha = sin(PI.toFloat() * progress).coerceIn(0f, 1f)
             val x0 = l + 10.dp.toPx()
             val x1 = r - 10.dp.toPx()
-            val brush = Brush.horizontalGradient(
-                colors = listOf(Color.Transparent, CameraColors.scanLine.copy(alpha = alpha), Color.Transparent),
-                startX = x0,
-                endX = x1,
-            )
+            val brush =
+                Brush.horizontalGradient(
+                    colors = listOf(Color.Transparent, CameraColors.scanLine.copy(alpha = alpha), Color.Transparent),
+                    startX = x0,
+                    endX = x1,
+                )
             drawLine(brush, Offset(x0, y), Offset(x1, y), strokeWidth = 14.dp.toPx(), alpha = 0.25f * alpha)
             drawLine(brush, Offset(x0, y), Offset(x1, y), strokeWidth = 3.dp.toPx(), cap = StrokeCap.Round)
         }

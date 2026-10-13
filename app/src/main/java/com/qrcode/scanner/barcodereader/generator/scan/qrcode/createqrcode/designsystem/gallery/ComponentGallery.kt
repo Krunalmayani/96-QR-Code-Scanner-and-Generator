@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ActionBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBottomSheet
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
@@ -114,99 +113,157 @@ private fun GalleryContent(dark: Boolean, onToggleDark: () -> Unit, onBack: () -
         bottomBar = { BottomNavBar(BottomTab.Settings, {}) },
     ) { padding ->
         Box(Modifier.fillMaxSize().background(AppTheme.colors.background)) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = androidx.compose.foundation.layout.PaddingValues(
-                start = 16.dp, end = 16.dp, top = padding.calculateTopPadding() + 8.dp, bottom = padding.calculateBottomPadding() + 24.dp,
-            ),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            items(sections) { section ->
-                SectionLabel(section)
-                when (section) {
-                    "Buttons" -> Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        PrimaryButton("Primary", {}, Modifier.fillMaxWidth(), leadingIcon = AppIcons.QrCode)
-                        PrimaryButton("Disabled", {}, Modifier.fillMaxWidth(), enabled = false)
-                        TonalButton("Tonal", {}, Modifier.fillMaxWidth())
-                        AppOutlinedButton("Outlined", {}, Modifier.fillMaxWidth())
-                        AppTextButton("Text button", {})
-                        DestructiveButton("Delete", {}, Modifier.fillMaxWidth())
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            IconButtonRounded(AppIcons.Copy, "Copy", {}, style = IconButtonStyle.Filled)
-                            IconButtonRounded(AppIcons.Share, "Share", {}, style = IconButtonStyle.Tonal)
-                            IconButtonRounded(AppIcons.Star, "Favorite", {}, style = IconButtonStyle.Primary)
-                            IconButtonRounded(AppIcons.FlashOn, "Flash", {}, style = IconButtonStyle.Plain)
-                        }
-                    }
-                    "Chips and badges" -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        ChipRow(listOf(ChipItem("All", true), ChipItem("Favorites", false, AppIcons.Star), ChipItem("Links", false), ChipItem("Wi-Fi", false)), {}, contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp))
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            AppBadge("Website", icon = AppIcons.Link)
-                            AppBadge("Secure", tone = Tone.Success)
-                            AppBadge("Not secure", tone = Tone.Warning)
-                            AppBadge("Unsafe", tone = Tone.Error)
-                        }
-                        SegmentedControl(listOf("QR", "Barcode", "All"), segment, { segment = it })
-                    }
-                    "Inputs" -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        AppSearchBar(query, { query = it }, "Search history")
-                        AppTextField(text, { text = it }, "Website URL", helper = "We add https:// for you", placeholder = "example.com")
-                        AppTextField("exa mple", {}, "Website URL", error = "Enter a valid web address")
-                        AppSlider(slider, { slider = it })
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            listOf(0xFF13142B, 0xFF4F46E5, 0xFF0F9F8E, 0xFFC62828).forEachIndexed { i, argb ->
-                                ColorSwatch(Color(argb), swatch == i, { swatch = i }, "Color ${i + 1}")
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding =
+                    androidx.compose.foundation.layout.PaddingValues(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = padding.calculateTopPadding() + 8.dp,
+                        bottom = padding.calculateBottomPadding() + 24.dp,
+                    ),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                items(sections) { section ->
+                    SectionLabel(section)
+                    when (section) {
+                        "Buttons" ->
+                            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                PrimaryButton("Primary", {}, Modifier.fillMaxWidth(), leadingIcon = AppIcons.QrCode)
+                                PrimaryButton("Disabled", {}, Modifier.fillMaxWidth(), enabled = false)
+                                TonalButton("Tonal", {}, Modifier.fillMaxWidth())
+                                AppOutlinedButton("Outlined", {}, Modifier.fillMaxWidth())
+                                AppTextButton("Text button", {})
+                                DestructiveButton("Delete", {}, Modifier.fillMaxWidth())
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    IconButtonRounded(AppIcons.Copy, "Copy", {}, style = IconButtonStyle.Filled)
+                                    IconButtonRounded(AppIcons.Share, "Share", {}, style = IconButtonStyle.Tonal)
+                                    IconButtonRounded(AppIcons.Star, "Favorite", {}, style = IconButtonStyle.Primary)
+                                    IconButtonRounded(AppIcons.FlashOn, "Flash", {}, style = IconButtonStyle.Plain)
+                                }
                             }
-                        }
+                        "Chips and badges" ->
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                ChipRow(
+                                    listOf(
+                                        ChipItem("All", true),
+                                        ChipItem("Favorites", false, AppIcons.Star),
+                                        ChipItem("Links", false),
+                                        ChipItem("Wi-Fi", false),
+                                    ),
+                                    {
+                                    },
+                                    contentPadding =
+                                        androidx.compose.foundation.layout
+                                            .PaddingValues(0.dp),
+                                )
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    AppBadge("Website", icon = AppIcons.Link)
+                                    AppBadge("Secure", tone = Tone.Success)
+                                    AppBadge("Not secure", tone = Tone.Warning)
+                                    AppBadge("Unsafe", tone = Tone.Error)
+                                }
+                                SegmentedControl(listOf("QR", "Barcode", "All"), segment, { segment = it })
+                            }
+                        "Inputs" ->
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                AppSearchBar(query, { query = it }, "Search history")
+                                AppTextField(
+                                    text,
+                                    { text = it },
+                                    "Website URL",
+                                    helper = "We add https:// for you",
+                                    placeholder = "example.com",
+                                )
+                                AppTextField("exa mple", {}, "Website URL", error = "Enter a valid web address")
+                                AppSlider(slider, { slider = it })
+                                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    listOf(0xFF13142B, 0xFF4F46E5, 0xFF0F9F8E, 0xFFC62828).forEachIndexed { i, argb ->
+                                        ColorSwatch(Color(argb), swatch == i, { swatch = i }, "Color ${i + 1}")
+                                    }
+                                }
+                            }
+                        "Lists and settings" ->
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                CardGroup {
+                                    ListRow("example.com/menu", subtitle = "Website  ·  10:42", leading = {
+                                        IconTile(AppIcons.Link)
+                                    }, trailing = { Icon(AppIcons.Star, null, tint = AppTheme.colors.primary) }, onClick = {})
+                                    AppDivider()
+                                    ListRow(
+                                        "Home Wi-Fi",
+                                        subtitle = "Wi-Fi  ·  Yesterday",
+                                        leading = { IconTile(AppIcons.Wifi, tone = Tone.Success) },
+                                        onClick = {},
+                                    )
+                                }
+                                CardGroup {
+                                    SettingsSwitchRow(
+                                        "Vibrate",
+                                        switch,
+                                        { switch = it },
+                                        subtitle = "Short buzz on every scan",
+                                        icon = AppIcons.Vibrate,
+                                    )
+                                    AppDivider()
+                                    SettingsRadioRow("System", radio == 0, { radio = 0 })
+                                    AppDivider()
+                                    SettingsRadioRow("Dark", radio == 1, { radio = 1 })
+                                    AppDivider()
+                                    SettingsNavRow("Language", {}, value = "English", icon = AppIcons.Language)
+                                }
+                                AppCard {
+                                    KeyValueRow("Network", "Home Wi-Fi")
+                                    AppDivider()
+                                    KeyValueRow("Security", "WPA2")
+                                }
+                                Row(Modifier.fillMaxWidth()) {
+                                    QuickAction(AppIcons.Copy, "Copy", {}, Modifier.weight(1f))
+                                    QuickAction(AppIcons.Share, "Share", {}, Modifier.weight(1f))
+                                    QuickAction(AppIcons.Star, "Favorite", {}, Modifier.weight(1f))
+                                }
+                            }
+                        "Feedback" ->
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                InfoBanner("This link uses http, so it is not encrypted.")
+                                InfoBanner("Saved", tone = Tone.Success, icon = AppIcons.CheckCircle)
+                                Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                                    LoadingSpinner()
+                                    PageDots(3, 1)
+                                }
+                                IndeterminateBar()
+                                Box(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
+                                    EmptyState(AppIcons.History, "No scans yet", message = "Scan a code and it shows up here.")
+                                }
+                            }
+                        "Overlays" ->
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                TonalButton("Sheet", { sheet = true })
+                                TonalButton("Dialog", { dialog = true })
+                                TonalButton("Toast", { scope.launch { toast.show("Saved to gallery") } })
+                            }
+                        else ->
+                            Text(
+                                "Bottom navigation is pinned at the bottom of this screen.",
+                                style = AppTheme.type.body,
+                                color = AppTheme.colors.inkSecondary,
+                            )
                     }
-                    "Lists and settings" -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        CardGroup {
-                            ListRow("example.com/menu", subtitle = "Website  ·  10:42", leading = { IconTile(AppIcons.Link) }, trailing = { Icon(AppIcons.Star, null, tint = AppTheme.colors.primary) }, onClick = {})
-                            AppDivider()
-                            ListRow("Home Wi-Fi", subtitle = "Wi-Fi  ·  Yesterday", leading = { IconTile(AppIcons.Wifi, tone = Tone.Success) }, onClick = {})
-                        }
-                        CardGroup {
-                            SettingsSwitchRow("Vibrate", switch, { switch = it }, subtitle = "Short buzz on every scan", icon = AppIcons.Vibrate)
-                            AppDivider()
-                            SettingsRadioRow("System", radio == 0, { radio = 0 })
-                            AppDivider()
-                            SettingsRadioRow("Dark", radio == 1, { radio = 1 })
-                            AppDivider()
-                            SettingsNavRow("Language", {}, value = "English", icon = AppIcons.Language)
-                        }
-                        AppCard { KeyValueRow("Network", "Home Wi-Fi"); AppDivider(); KeyValueRow("Security", "WPA2") }
-                        Row(Modifier.fillMaxWidth()) {
-                            QuickAction(AppIcons.Copy, "Copy", {}, Modifier.weight(1f))
-                            QuickAction(AppIcons.Share, "Share", {}, Modifier.weight(1f))
-                            QuickAction(AppIcons.Star, "Favorite", {}, Modifier.weight(1f))
-                        }
-                    }
-                    "Feedback" -> Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                        InfoBanner("This link uses http, so it is not encrypted.")
-                        InfoBanner("Saved", tone = Tone.Success, icon = AppIcons.CheckCircle)
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) { LoadingSpinner(); PageDots(3, 1) }
-                        IndeterminateBar()
-                        Box(Modifier.fillMaxWidth().padding(vertical = 8.dp)) {
-                            EmptyState(AppIcons.History, "No scans yet", "Scan a code and it shows up here.")
-                        }
-                    }
-                    "Overlays" -> Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        TonalButton("Sheet", { sheet = true })
-                        TonalButton("Dialog", { dialog = true })
-                        TonalButton("Toast", { scope.launch { toast.show("Saved to gallery") } })
-                    }
-                    else -> Text("Bottom navigation is pinned at the bottom of this screen.", style = AppTheme.type.body, color = AppTheme.colors.inkSecondary)
                 }
             }
-        }
-        AppToastHost(toast, Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp))
+            AppToastHost(toast, Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp))
         }
     }
 
     if (sheet) {
         AppBottomSheet(onDismissRequest = { sheet = false }) {
             Text("Bottom sheet", style = AppTheme.type.titleLarge, color = AppTheme.colors.ink)
-            Text("Swipe down or tap outside to close.", style = AppTheme.type.body, color = AppTheme.colors.inkSecondary, modifier = Modifier.padding(vertical = 8.dp))
+            Text(
+                "Swipe down or tap outside to close.",
+                style = AppTheme.type.body,
+                color = AppTheme.colors.inkSecondary,
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
             PrimaryButton("Got it", { sheet = false }, Modifier.fillMaxWidth())
         }
     }

@@ -62,8 +62,14 @@ class EyeLeafTest {
         var y = 0f
         for (c in cmds) {
             when (c) {
-                is PathCommand.MoveTo -> { x = c.x; y = c.y }
-                is PathCommand.LineTo -> { x = c.x; y = c.y }
+                is PathCommand.MoveTo -> {
+                    x = c.x
+                    y = c.y
+                }
+                is PathCommand.LineTo -> {
+                    x = c.x
+                    y = c.y
+                }
                 is PathCommand.ArcTo -> {
                     val a = Math.toRadians(c.startAngleDegrees.toDouble())
                     assertEquals(x, c.cx + c.r * Math.cos(a).toFloat(), 0.001f)

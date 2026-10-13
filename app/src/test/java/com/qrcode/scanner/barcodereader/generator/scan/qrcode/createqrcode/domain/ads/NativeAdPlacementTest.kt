@@ -51,10 +51,12 @@ class NativeAdPlacementTest {
 
     @Test
     fun `every content index appears exactly once in order`() {
-        for (everyN in listOf(2, 4, 8, 13)) for (count in 0..60) {
-            val contents = layout(count, everyN).filter { it != "ad" }
-            assertEquals(List(count) { "c$it" }, contents, "everyN=$everyN count=$count")
-            assertEquals(NativeAdPlacement.adCount(count, everyN), layout(count, everyN).count { it == "ad" })
+        for (everyN in listOf(2, 4, 8, 13)) {
+            for (count in 0..60) {
+                val contents = layout(count, everyN).filter { it != "ad" }
+                assertEquals(List(count) { "c$it" }, contents, "everyN=$everyN count=$count")
+                assertEquals(NativeAdPlacement.adCount(count, everyN), layout(count, everyN).count { it == "ad" })
+            }
         }
     }
 

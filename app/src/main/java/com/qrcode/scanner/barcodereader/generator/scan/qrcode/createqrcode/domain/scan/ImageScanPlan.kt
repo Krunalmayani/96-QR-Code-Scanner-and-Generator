@@ -6,7 +6,11 @@ import kotlin.math.max
  * One attempt at reading a picked image. [contrast] stretches the brightness range, [invert] flips light and dark
  * (light-on-dark codes), [rotationDegrees] is the rotation handed to the decoder.
  */
-enum class ImageVariant(val rotationDegrees: Int, val contrast: Boolean, val invert: Boolean) {
+enum class ImageVariant(
+    val rotationDegrees: Int,
+    val contrast: Boolean,
+    val invert: Boolean,
+) {
     ORIGINAL(0, contrast = false, invert = false),
     CONTRAST_STRETCHED(0, contrast = true, invert = false),
     INVERTED(0, contrast = false, invert = true),
@@ -21,7 +25,10 @@ object ImageScanPlan {
 }
 
 /** Linear brightness correction `out = in * gain + offset` (0..255 scale). */
-data class ContrastStretch(val gain: Float, val offset: Float) {
+data class ContrastStretch(
+    val gain: Float,
+    val offset: Float,
+) {
     companion object {
         private const val LEVELS = 256
         private const val MIN_SPAN = 8

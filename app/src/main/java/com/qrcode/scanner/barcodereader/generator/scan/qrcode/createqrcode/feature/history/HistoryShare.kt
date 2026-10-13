@@ -9,11 +9,11 @@ import android.net.Uri
 import androidx.core.content.FileProvider
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.export.HistoryExportFormat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.time.LocalDate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 /** Hands history text and CSV files to the system share sheet. Every function returns false when sharing failed. */
 internal object HistoryShare {
@@ -21,28 +21,31 @@ internal object HistoryShare {
     private const val FILE_PROVIDER_SUFFIX = ".fileprovider"
 
     fun shareText(context: Context, text: String): Boolean {
-        val send = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
+        val send =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, text)
+            }
         return launchChooser(context, send, context.getString(R.string.hist_share_chooser_title))
     }
 
     /** Writes [csv] to cache/shared/ and offers it through a FileProvider uri. */
     suspend fun exportCsv(context: Context, csv: String): Boolean {
-        val uri = try {
-            withContext(Dispatchers.IO) { writeCsv(context, csv) }
-        } catch (e: IOException) {
-            return false
-        } catch (e: IllegalArgumentException) {
-            return false
-        }
-        val send = Intent(Intent.ACTION_SEND).apply {
-            type = HistoryExportFormat.CSV.mimeType
-            putExtra(Intent.EXTRA_STREAM, uri)
-            clipData = ClipData.newRawUri("", uri)
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        }
+        val uri =
+            try {
+                withContext(Dispatchers.IO) { writeCsv(context, csv) }
+            } catch (e: IOException) {
+                return false
+            } catch (e: IllegalArgumentException) {
+                return false
+            }
+        val send =
+            Intent(Intent.ACTION_SEND).apply {
+                type = HistoryExportFormat.CSV.mimeType
+                putExtra(Intent.EXTRA_STREAM, uri)
+                clipData = ClipData.newRawUri("", uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
         return launchChooser(context, send, context.getString(R.string.hist_export_chooser_title))
     }
 

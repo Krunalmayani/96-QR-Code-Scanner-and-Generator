@@ -37,37 +37,42 @@ enum class FieldErrorMessage {
 }
 
 /** A message id plus the numbers to format into it. */
-data class FieldErrorKey(val message: FieldErrorMessage, val args: List<Int> = emptyList()) {
+data class FieldErrorKey(
+    val message: FieldErrorMessage,
+    val args: List<Int> = emptyList(),
+) {
     companion object {
         /**
          * Maps [error] to its message. [field] (when known) selects a more specific wording for a few generic
          * codes: a missing Wi-Fi password and a missing event start read differently from "required".
          */
-        fun of(error: FieldError, field: FormField? = null): FieldErrorKey = when (error) {
-            FieldError.Required -> when (field) {
-                FormField.PASSWORD -> FieldErrorKey(FieldErrorMessage.PASSWORD_REQUIRED)
-                FormField.START -> FieldErrorKey(FieldErrorMessage.START_REQUIRED)
-                else -> FieldErrorKey(FieldErrorMessage.REQUIRED)
+        fun of(error: FieldError, field: FormField? = null): FieldErrorKey =
+            when (error) {
+                FieldError.Required ->
+                    when (field) {
+                        FormField.PASSWORD -> FieldErrorKey(FieldErrorMessage.PASSWORD_REQUIRED)
+                        FormField.START -> FieldErrorKey(FieldErrorMessage.START_REQUIRED)
+                        else -> FieldErrorKey(FieldErrorMessage.REQUIRED)
+                    }
+                FieldError.InvalidUrl -> FieldErrorKey(FieldErrorMessage.INVALID_URL)
+                FieldError.InvalidEmail -> FieldErrorKey(FieldErrorMessage.INVALID_EMAIL)
+                FieldError.InvalidPhone -> FieldErrorKey(FieldErrorMessage.INVALID_PHONE)
+                is FieldError.TooLong -> FieldErrorKey(FieldErrorMessage.TOO_LONG, listOf(error.max))
+                FieldError.SsidRequired -> FieldErrorKey(FieldErrorMessage.SSID_REQUIRED)
+                is FieldError.PasswordTooShort -> FieldErrorKey(FieldErrorMessage.PASSWORD_TOO_SHORT, listOf(error.min))
+                FieldError.EndBeforeStart -> FieldErrorKey(FieldErrorMessage.END_BEFORE_START)
+                FieldError.InvalidLatitude -> FieldErrorKey(FieldErrorMessage.INVALID_LATITUDE)
+                FieldError.InvalidLongitude -> FieldErrorKey(FieldErrorMessage.INVALID_LONGITUDE)
+                FieldError.InvalidHandle -> FieldErrorKey(FieldErrorMessage.INVALID_HANDLE)
+                FieldError.BarcodeDigitsOnly -> FieldErrorKey(FieldErrorMessage.BARCODE_DIGITS_ONLY)
+                is FieldError.BarcodeWrongLength -> {
+                    val lengths = error.expected.ifEmpty { listOf(0) }
+                    FieldErrorKey(FieldErrorMessage.BARCODE_WRONG_LENGTH, listOf(lengths.min(), lengths.max()))
+                }
+                is FieldError.BarcodeBadCheckDigit -> FieldErrorKey(FieldErrorMessage.BARCODE_BAD_CHECK_DIGIT, listOf(error.expected))
+                FieldError.BarcodeInvalidChars -> FieldErrorKey(FieldErrorMessage.BARCODE_INVALID_CHARS)
+                FieldError.ItfOddLength -> FieldErrorKey(FieldErrorMessage.ITF_ODD_LENGTH)
+                is FieldError.DataTooLong -> FieldErrorKey(FieldErrorMessage.DATA_TOO_LONG, listOf(error.max))
             }
-            FieldError.InvalidUrl -> FieldErrorKey(FieldErrorMessage.INVALID_URL)
-            FieldError.InvalidEmail -> FieldErrorKey(FieldErrorMessage.INVALID_EMAIL)
-            FieldError.InvalidPhone -> FieldErrorKey(FieldErrorMessage.INVALID_PHONE)
-            is FieldError.TooLong -> FieldErrorKey(FieldErrorMessage.TOO_LONG, listOf(error.max))
-            FieldError.SsidRequired -> FieldErrorKey(FieldErrorMessage.SSID_REQUIRED)
-            is FieldError.PasswordTooShort -> FieldErrorKey(FieldErrorMessage.PASSWORD_TOO_SHORT, listOf(error.min))
-            FieldError.EndBeforeStart -> FieldErrorKey(FieldErrorMessage.END_BEFORE_START)
-            FieldError.InvalidLatitude -> FieldErrorKey(FieldErrorMessage.INVALID_LATITUDE)
-            FieldError.InvalidLongitude -> FieldErrorKey(FieldErrorMessage.INVALID_LONGITUDE)
-            FieldError.InvalidHandle -> FieldErrorKey(FieldErrorMessage.INVALID_HANDLE)
-            FieldError.BarcodeDigitsOnly -> FieldErrorKey(FieldErrorMessage.BARCODE_DIGITS_ONLY)
-            is FieldError.BarcodeWrongLength -> {
-                val lengths = error.expected.ifEmpty { listOf(0) }
-                FieldErrorKey(FieldErrorMessage.BARCODE_WRONG_LENGTH, listOf(lengths.min(), lengths.max()))
-            }
-            is FieldError.BarcodeBadCheckDigit -> FieldErrorKey(FieldErrorMessage.BARCODE_BAD_CHECK_DIGIT, listOf(error.expected))
-            FieldError.BarcodeInvalidChars -> FieldErrorKey(FieldErrorMessage.BARCODE_INVALID_CHARS)
-            FieldError.ItfOddLength -> FieldErrorKey(FieldErrorMessage.ITF_ODD_LENGTH)
-            is FieldError.DataTooLong -> FieldErrorKey(FieldErrorMessage.DATA_TOO_LONG, listOf(error.max))
-        }
     }
 }

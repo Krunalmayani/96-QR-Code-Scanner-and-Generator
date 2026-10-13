@@ -248,7 +248,7 @@
     <string name="create_eye_circle">دائرة</string>
     <string name="create_eye_leaf">ورقة</string>
     <string name="create_extras_logo_title">شعار في المنتصف</string>
-    <string name="create_extras_logo_hint">أضف صورتك الخاصة. يُضبط حجمها تلقائيًا على 18%.</string>
+    <string name="create_extras_logo_hint" formatted="false">أضف صورتك الخاصة. يُضبط حجمها تلقائيًا على 18%.</string>
     <string name="create_extras_logo_add">إضافة</string>
     <string name="create_extras_logo_remove">إزالة</string>
     <string name="create_extras_frame">تسمية الإطار</string>

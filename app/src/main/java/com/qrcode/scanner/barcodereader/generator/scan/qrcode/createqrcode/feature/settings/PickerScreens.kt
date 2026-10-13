@@ -71,11 +71,12 @@ fun ThemePickerScreen(
     }
 }
 
-private fun themeIcon(mode: ThemeMode) = when (mode) {
-    ThemeMode.SYSTEM -> AppIcons.Palette
-    ThemeMode.LIGHT -> AppIcons.LightMode
-    ThemeMode.DARK -> AppIcons.DarkMode
-}
+private fun themeIcon(mode: ThemeMode) =
+    when (mode) {
+        ThemeMode.SYSTEM -> AppIcons.Palette
+        ThemeMode.LIGHT -> AppIcons.LightMode
+        ThemeMode.DARK -> AppIcons.DarkMode
+    }
 
 @Composable
 fun LanguagePickerRoute(onBack: () -> Unit, viewModel: AppearanceViewModel = hiltViewModel()) {
@@ -154,24 +155,28 @@ fun LanguagePickerScreen(
 
 @Preview(name = "S57_ThemePicker_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S57_ThemePicker_Light() = AppTheme(dark = false) {
-    ThemePickerScreen(selected = ThemeMode.SYSTEM, onSelect = {}, onBack = {})
-}
+private fun S57_ThemePicker_Light() =
+    AppTheme(dark = false) {
+        ThemePickerScreen(selected = ThemeMode.SYSTEM, onSelect = {}, onBack = {})
+    }
 
 @Preview(name = "S57_ThemePicker_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S57_ThemePicker_Dark() = AppTheme(dark = true) {
-    ThemePickerScreen(selected = ThemeMode.DARK, onSelect = {}, onBack = {})
-}
+private fun S57_ThemePicker_Dark() =
+    AppTheme(dark = true) {
+        ThemePickerScreen(selected = ThemeMode.DARK, onSelect = {}, onBack = {})
+    }
 
 @Preview(name = "S58_LanguagePicker_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S58_LanguagePicker_Light() = AppTheme(dark = false) {
-    LanguagePickerScreen(selectedTag = "", onSelect = {}, onBack = {})
-}
+private fun S58_LanguagePicker_Light() =
+    AppTheme(dark = false) {
+        LanguagePickerScreen(selectedTag = "", onSelect = {}, onBack = {})
+    }
 
 @Preview(name = "S58_LanguagePicker_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S58_LanguagePicker_Dark() = AppTheme(dark = true) {
-    LanguagePickerScreen(selectedTag = "es", onSelect = {}, onBack = {})
-}
+private fun S58_LanguagePicker_Dark() =
+    AppTheme(dark = true) {
+        LanguagePickerScreen(selectedTag = "es", onSelect = {}, onBack = {})
+    }

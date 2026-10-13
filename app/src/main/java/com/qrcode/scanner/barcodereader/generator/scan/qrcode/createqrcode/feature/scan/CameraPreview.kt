@@ -46,7 +46,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import java.util.concurrent.Executors
 
 /** What the bound camera can do; read after binding. */
-data class CameraCapabilities(val hasFlash: Boolean = false, val maxZoomRatio: Float = 1f)
+data class CameraCapabilities(
+    val hasFlash: Boolean = false,
+    val maxZoomRatio: Float = 1f,
+)
 
 /**
  * CameraX preview + ML Kit analysis. Binds to the current lifecycle owner, unbinds (torch off) when it leaves the
@@ -71,12 +74,13 @@ fun CameraPreview(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val density = LocalDensity.current.density
-    val previewView = remember {
-        PreviewView(context).apply {
-            implementationMode = PreviewView.ImplementationMode.COMPATIBLE
-            scaleType = PreviewView.ScaleType.FILL_CENTER
+    val previewView =
+        remember {
+            PreviewView(context).apply {
+                implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+                scaleType = PreviewView.ScaleType.FILL_CENTER
+            }
         }
-    }
     val analysisExecutor = remember { Executors.newSingleThreadExecutor() }
     DisposableEffect(analysisExecutor) { onDispose { analysisExecutor.shutdown() } }
 
@@ -111,7 +115,9 @@ fun CameraPreview(
                     latestOnReady(
                         CameraCapabilities(
                             hasFlash = bound.cameraInfo.hasFlashUnit(),
-                            maxZoomRatio = bound.cameraInfo.zoomState.value?.maxZoomRatio ?: 1f,
+                            maxZoomRatio =
+                                bound.cameraInfo.zoomState.value
+                                    ?.maxZoomRatio ?: 1f,
                         ),
                     )
                 } catch (e: Exception) {
@@ -145,15 +151,16 @@ fun CameraPreview(
         }
     }
 
-    val areaSpec = remember(viewSize, scanAreaOnly, mode) {
-        if (scanAreaOnly && viewSize.width > 0 && viewSize.height > 0) {
-            val shape = if (mode.wideFrame) ViewfinderShape.Wide else ViewfinderShape.Square
-            val frame = viewfinderRect(viewSize.width.toFloat(), viewSize.height.toFloat(), density, shape)
-            ScanAreaSpec(PxRect(frame.left, frame.top, frame.right, frame.bottom), viewSize.width.toFloat(), viewSize.height.toFloat())
-        } else {
-            null
+    val areaSpec =
+        remember(viewSize, scanAreaOnly, mode) {
+            if (scanAreaOnly && viewSize.width > 0 && viewSize.height > 0) {
+                val shape = if (mode.wideFrame) ViewfinderShape.Wide else ViewfinderShape.Square
+                val frame = viewfinderRect(viewSize.width.toFloat(), viewSize.height.toFloat(), density, shape)
+                ScanAreaSpec(PxRect(frame.left, frame.top, frame.right, frame.bottom), viewSize.width.toFloat(), viewSize.height.toFloat())
+            } else {
+                null
+            }
         }
-    }
     val currentAnalyzer = analyzer
     SideEffect {
         currentAnalyzer?.enabled = analyzing
@@ -191,23 +198,31 @@ private const val ANALYSIS_WIDTH = 1280
 private const val ANALYSIS_HEIGHT = 960
 
 private fun buildPreview(view: PreviewView): Preview {
-    val selector = ResolutionSelector.Builder()
-        .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+    val selector =
+        ResolutionSelector
+            .Builder()
+            .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+            .build()
+    return Preview
+        .Builder()
+        .setResolutionSelector(selector)
         .build()
-    return Preview.Builder().setResolutionSelector(selector).build().also { it.setSurfaceProvider(view.surfaceProvider) }
+        .also { it.setSurfaceProvider(view.surfaceProvider) }
 }
 
 private fun buildAnalysis(): ImageAnalysis {
-    val selector = ResolutionSelector.Builder()
-        .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
-        .setResolutionStrategy(
-            ResolutionStrategy(
-                Size(ANALYSIS_WIDTH, ANALYSIS_HEIGHT),
-                ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
-            ),
-        )
-        .build()
-    return ImageAnalysis.Builder()
+    val selector =
+        ResolutionSelector
+            .Builder()
+            .setAspectRatioStrategy(AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+            .setResolutionStrategy(
+                ResolutionStrategy(
+                    Size(ANALYSIS_WIDTH, ANALYSIS_HEIGHT),
+                    ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
+                ),
+            ).build()
+    return ImageAnalysis
+        .Builder()
         .setResolutionSelector(selector)
         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
         .build()

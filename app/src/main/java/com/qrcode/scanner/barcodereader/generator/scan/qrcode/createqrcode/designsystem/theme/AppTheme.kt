@@ -10,7 +10,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
@@ -22,21 +21,24 @@ val LocalAppType = staticCompositionLocalOf { AppType() }
 /** Accessor for design tokens: `AppTheme.colors.primary`, `AppTheme.type.body`, `AppTheme.shapes.card`. */
 object AppTheme {
     val colors: AppColors
-        @Composable @ReadOnlyComposable get() = LocalAppColors.current
+        @Composable @ReadOnlyComposable
+        get() = LocalAppColors.current
 
     val type: AppType
-        @Composable @ReadOnlyComposable get() = LocalAppType.current
+        @Composable @ReadOnlyComposable
+        get() = LocalAppType.current
 
     val shapes: AppShapes get() = AppShapes
 }
 
 /** True when [mode] resolves to dark right now (SYSTEM follows the OS). */
 @Composable
-fun isDarkFor(mode: ThemeMode): Boolean = when (mode) {
-    ThemeMode.SYSTEM -> isSystemInDarkTheme()
-    ThemeMode.LIGHT -> false
-    ThemeMode.DARK -> true
-}
+fun isDarkFor(mode: ThemeMode): Boolean =
+    when (mode) {
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+    }
 
 /** App theme. Colors cross-fade over 250 ms when the user switches theme. */
 @Composable
@@ -55,33 +57,54 @@ fun AppTheme(
 ) {
     val colors = animatedColors(if (dark) DarkAppColors else LightAppColors)
     val type = remember { AppType() }
-    val scheme = if (dark) {
-        darkColorScheme(
-            primary = colors.primary, onPrimary = colors.onPrimary,
-            primaryContainer = colors.primaryContainer, onPrimaryContainer = colors.onPrimaryContainer,
-            secondary = colors.success, onSecondary = colors.onPrimary,
-            secondaryContainer = colors.successContainer, onSecondaryContainer = colors.onSuccessContainer,
-            background = colors.background, onBackground = colors.ink,
-            surface = colors.surface, onSurface = colors.ink,
-            surfaceVariant = colors.surfaceVariant, onSurfaceVariant = colors.inkSecondary,
-            outline = colors.inkSecondary, outlineVariant = colors.outline,
-            error = colors.error, onError = colors.onError, errorContainer = colors.errorContainer,
-            scrim = Color.Black,
-        )
-    } else {
-        lightColorScheme(
-            primary = colors.primary, onPrimary = colors.onPrimary,
-            primaryContainer = colors.primaryContainer, onPrimaryContainer = colors.onPrimaryContainer,
-            secondary = colors.success, onSecondary = colors.onPrimary,
-            secondaryContainer = colors.successContainer, onSecondaryContainer = colors.onSuccessContainer,
-            background = colors.background, onBackground = colors.ink,
-            surface = colors.surface, onSurface = colors.ink,
-            surfaceVariant = colors.surfaceVariant, onSurfaceVariant = colors.inkSecondary,
-            outline = colors.inkSecondary, outlineVariant = colors.outline,
-            error = colors.error, onError = colors.onError, errorContainer = colors.errorContainer,
-            scrim = Color.Black,
-        )
-    }
+    val scheme =
+        if (dark) {
+            darkColorScheme(
+                primary = colors.primary,
+                onPrimary = colors.onPrimary,
+                primaryContainer = colors.primaryContainer,
+                onPrimaryContainer = colors.onPrimaryContainer,
+                secondary = colors.success,
+                onSecondary = colors.onPrimary,
+                secondaryContainer = colors.successContainer,
+                onSecondaryContainer = colors.onSuccessContainer,
+                background = colors.background,
+                onBackground = colors.ink,
+                surface = colors.surface,
+                onSurface = colors.ink,
+                surfaceVariant = colors.surfaceVariant,
+                onSurfaceVariant = colors.inkSecondary,
+                outline = colors.inkSecondary,
+                outlineVariant = colors.outline,
+                error = colors.error,
+                onError = colors.onError,
+                errorContainer = colors.errorContainer,
+                scrim = Color.Black,
+            )
+        } else {
+            lightColorScheme(
+                primary = colors.primary,
+                onPrimary = colors.onPrimary,
+                primaryContainer = colors.primaryContainer,
+                onPrimaryContainer = colors.onPrimaryContainer,
+                secondary = colors.success,
+                onSecondary = colors.onPrimary,
+                secondaryContainer = colors.successContainer,
+                onSecondaryContainer = colors.onSuccessContainer,
+                background = colors.background,
+                onBackground = colors.ink,
+                surface = colors.surface,
+                onSurface = colors.ink,
+                surfaceVariant = colors.surfaceVariant,
+                onSurfaceVariant = colors.inkSecondary,
+                outline = colors.inkSecondary,
+                outlineVariant = colors.outline,
+                error = colors.error,
+                onError = colors.onError,
+                errorContainer = colors.errorContainer,
+                scrim = Color.Black,
+            )
+        }
     CompositionLocalProvider(
         LocalAppColors provides colors,
         LocalAppType provides type,

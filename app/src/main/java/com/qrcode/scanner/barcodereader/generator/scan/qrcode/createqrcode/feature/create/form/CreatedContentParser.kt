@@ -9,8 +9,10 @@ import javax.inject.Inject
  * Reads the payload of a freshly built form back into a typed [ScanContent], exactly like a scan would
  * (so the created record shows the same title and type as the scanned one). Open so tests can replace it.
  */
-open class CreatedContentParser @Inject constructor() {
-    private val parser by lazy { ScanContentParser() }
+open class CreatedContentParser
+    @Inject
+    constructor() {
+        private val parser by lazy { ScanContentParser() }
 
-    open fun parse(payload: String, format: CodeFormat): ScanContent = parser.parse(payload, format)
-}
+        open fun parse(payload: String, format: CodeFormat): ScanContent = parser.parse(payload, format)
+    }

@@ -82,10 +82,11 @@ internal fun OnboardingScreen(
 ) {
     val count = OnboardingSlide.entries.size
     val page = pagerState.currentPage
-    val fling = PagerDefaults.flingBehavior(
-        state = pagerState,
-        snapAnimationSpec = PageSpec,
-    )
+    val fling =
+        PagerDefaults.flingBehavior(
+            state = pagerState,
+            snapAnimationSpec = PageSpec,
+        )
     Box(modifier.fillMaxSize().background(AppTheme.colors.background)) {
         Column(Modifier.fillMaxSize()) {
             HorizontalPager(
@@ -99,10 +100,11 @@ internal fun OnboardingScreen(
             PageDots(
                 count = count,
                 selected = page,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = 24.dp)
-                    .semantics { contentDescription = pageDescription },
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 24.dp)
+                        .semantics { contentDescription = pageDescription },
             )
             NavigationRow(page = page, lastPage = count - 1, onBack = onBack, onNext = onNext)
         }
@@ -118,10 +120,11 @@ internal fun OnboardingScreen(
 @Composable
 private fun NavigationRow(page: Int, lastPage: Int, onBack: () -> Unit, onNext: () -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .navigationBarsPadding()
-            .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 32.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .navigationBarsPadding()
+                .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 32.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -145,11 +148,12 @@ private fun NavigationRow(page: Int, lastPage: Int, onBack: () -> Unit, onNext: 
 @Composable
 private fun SkipButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .heightIn(min = 48.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(horizontal = 12.dp),
+        modifier =
+            modifier
+                .heightIn(min = 48.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(horizontal = 12.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(

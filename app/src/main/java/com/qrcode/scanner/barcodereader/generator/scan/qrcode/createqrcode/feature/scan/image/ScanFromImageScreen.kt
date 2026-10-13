@@ -164,7 +164,13 @@ private fun FoundContent(
     modifier: Modifier,
 ) {
     AppScaffold(modifier = modifier, topBar = { AppTopBar(stringResource(R.string.scan_image_result_title), onBack = onBack) }) { padding ->
-        Column(Modifier.padding(padding).fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 8.dp)) {
+        Column(
+            Modifier
+                .padding(padding)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp, vertical = 8.dp),
+        ) {
             ImageCard(state.imageUri, image, height = 300.dp) {
                 FoundBadge(state.codes.size, Modifier.align(Alignment.TopStart).padding(12.dp))
             }
@@ -195,7 +201,11 @@ private fun ImageCard(
 @Composable
 private fun FoundBadge(count: Int, modifier: Modifier) {
     Row(
-        modifier.height(32.dp).clip(RoundedCornerShape(16.dp)).background(CameraColors.hit).padding(start = 8.dp, end = 12.dp),
+        modifier
+            .height(32.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(CameraColors.hit)
+            .padding(start = 8.dp, end = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -336,7 +346,10 @@ private fun NoCodeTips() {
 }
 
 @Composable
-private fun TipRow(icon: ImageVector, @StringRes text: Int) {
+private fun TipRow(
+    icon: ImageVector,
+    @StringRes text: Int,
+) {
     Row(
         Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -349,11 +362,12 @@ private fun TipRow(icon: ImageVector, @StringRes text: Int) {
 
 // ---- Previews --------------------------------------------------------------------------------------------
 
-private val sampleCodes = listOf(
-    FoundCode("Product Launch Meetup", ContentType.EVENT, CodeFormat.QR_CODE),
-    FoundCode("5901234123457", ContentType.PRODUCT, CodeFormat.EAN_13),
-    FoundCode("lumen.studio/portfolio", ContentType.WEBSITE, CodeFormat.QR_CODE),
-)
+private val sampleCodes =
+    listOf(
+        FoundCode("Product Launch Meetup", ContentType.EVENT, CodeFormat.QR_CODE),
+        FoundCode("5901234123457", ContentType.PRODUCT, CodeFormat.EAN_13),
+        FoundCode("lumen.studio/portfolio", ContentType.WEBSITE, CodeFormat.QR_CODE),
+    )
 
 private val previewImage: @Composable (String, Modifier) -> Unit = { _, modifier ->
     Box(modifier.background(Brush.linearGradient(listOf(Color(0xFFCDB9A0), Color(0xFF8A7662)))))

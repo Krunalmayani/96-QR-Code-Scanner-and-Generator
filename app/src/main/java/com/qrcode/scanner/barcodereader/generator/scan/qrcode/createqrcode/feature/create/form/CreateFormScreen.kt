@@ -95,12 +95,13 @@ fun CreateFormScreen(
     }
     val errorTexts = LinkedHashMap<FormField, String>()
     for ((field, error) in state.visibleErrors) errorTexts[field] = fieldErrorText(error, field)
-    val host = FormFieldHost(
-        errors = errorTexts,
-        invalid = state.errors.keys,
-        onBlur = { onEvent(CreateFormEvent.Blur(it)) },
-        onSubmit = { onEvent(CreateFormEvent.Generate) },
-    )
+    val host =
+        FormFieldHost(
+            errors = errorTexts,
+            invalid = state.errors.keys,
+            onBlur = { onEvent(CreateFormEvent.Blur(it)) },
+            onSubmit = { onEvent(CreateFormEvent.Generate) },
+        )
     AppScaffold(
         modifier = modifier.imePadding(),
         topBar = { AppTopBar(title = stringResource(spec.type.titleRes()), onBack = onBack) },
@@ -118,11 +119,12 @@ fun CreateFormScreen(
         snackbarHost = { AppSnackbarHost(snackbarHostState) },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             FormIntro(spec.type)
@@ -165,14 +167,15 @@ private fun FormFields(
         is CreateSpec.Event -> EventFields(spec, host, onSpec, onEvent)
         is CreateSpec.Social -> SocialFields(spec, host, onSpec)
         is CreateSpec.AppStore -> AppStoreFields(spec, host, onSpec)
-        is CreateSpec.Barcode -> BarcodeFields(
-            spec = spec,
-            state = state,
-            host = host,
-            onSpec = onSpec,
-            onSelectType = { onEvent(CreateFormEvent.SelectBarcode(it)) },
-            onSwitchToQr = onSwitchToQr,
-        )
+        is CreateSpec.Barcode ->
+            BarcodeFields(
+                spec = spec,
+                state = state,
+                host = host,
+                onSpec = onSpec,
+                onSelectType = { onEvent(CreateFormEvent.SelectBarcode(it)) },
+                onSwitchToQr = onSwitchToQr,
+            )
     }
 }
 
@@ -207,16 +210,19 @@ private fun PreviewForm(dark: Boolean, state: CreateFormUiState) {
 private val websiteError = previewState(CreateSpec.Website("brewhouse coffee"), setOf(FormField.URL))
 private val textState = previewState(CreateSpec.Text("Meeting notes: ship v2.4 on Friday.")).copy(density = DensityLevel.LOW)
 private val phoneState = previewState(CreateSpec.Phone("(206) 555-0198"))
-private val contactState = previewState(
-    CreateSpec.Contact(name = "Sophie Lambert", phone = "+1 (415) 555-0142", email = "sophie@lumen.studio"),
-)
+private val contactState =
+    previewState(
+        CreateSpec.Contact(name = "Sophie Lambert", phone = "+1 (415) 555-0142", email = "sophie@lumen.studio"),
+    )
 private val wifiState = previewState(CreateSpec.Wifi(ssid = "CafeNova_Guest", password = "guestpass123"))
-private val eventState = previewState(
-    EventTimes.blankEvent(1_800_000_000_000L, TimeZone.getTimeZone("UTC")).copy(title = "Product Launch Meetup"),
-)
+private val eventState =
+    previewState(
+        EventTimes.blankEvent(1_800_000_000_000L, TimeZone.getTimeZone("UTC")).copy(title = "Product Launch Meetup"),
+    )
 private val socialState = previewState(CreateSpec.Social(handle = "lumen.studio"))
-private val barcodeState = previewState(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345"))
-    .copy(barcodeStatus = BarcodeStatus.CheckDigitWillBeAdded(7))
+private val barcodeState =
+    previewState(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345"))
+        .copy(barcodeStatus = BarcodeStatus.CheckDigitWillBeAdded(7))
 
 @Preview(name = "S32_WebsiteFormError_Light", widthDp = 360, heightDp = 800)
 @Composable

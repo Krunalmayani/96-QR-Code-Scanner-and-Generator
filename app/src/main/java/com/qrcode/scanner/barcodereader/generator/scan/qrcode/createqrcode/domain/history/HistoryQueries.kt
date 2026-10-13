@@ -21,23 +21,25 @@ object HistoryQueries {
     fun browse(tab: HistoryTab, chip: HistoryChip, query: String = ""): HistoryQuerySpec {
         val source = if (tab == HistoryTab.CREATED) ScanSource.CREATED else null
         return HistoryQuerySpec(
-            filter = HistoryFilter(
-                source = source,
-                types = HistoryChipMapper.contentTypes(chip),
-                favoritesOnly = HistoryChipMapper.favoritesOnly(chip),
-                query = query,
-            ),
+            filter =
+                HistoryFilter(
+                    source = source,
+                    types = HistoryChipMapper.contentTypes(chip),
+                    favoritesOnly = HistoryChipMapper.favoritesOnly(chip),
+                    query = query,
+                ),
             excludeCreated = tab == HistoryTab.SCANNED,
         )
     }
 
     /** Search mode: [scope] chips instead of tabs, text [query] matched by the repository. */
-    fun search(scope: SearchScope, query: String): HistoryQuerySpec = when (scope) {
-        SearchScope.ALL -> HistoryQuerySpec(HistoryFilter(query = query), excludeCreated = false)
-        SearchScope.SCANNED -> HistoryQuerySpec(HistoryFilter(query = query), excludeCreated = true)
-        SearchScope.CREATED -> HistoryQuerySpec(HistoryFilter(source = ScanSource.CREATED, query = query), excludeCreated = false)
-        SearchScope.FAVORITES -> HistoryQuerySpec(HistoryFilter(favoritesOnly = true, query = query), excludeCreated = false)
-    }
+    fun search(scope: SearchScope, query: String): HistoryQuerySpec =
+        when (scope) {
+            SearchScope.ALL -> HistoryQuerySpec(HistoryFilter(query = query), excludeCreated = false)
+            SearchScope.SCANNED -> HistoryQuerySpec(HistoryFilter(query = query), excludeCreated = true)
+            SearchScope.CREATED -> HistoryQuerySpec(HistoryFilter(source = ScanSource.CREATED, query = query), excludeCreated = false)
+            SearchScope.FAVORITES -> HistoryQuerySpec(HistoryFilter(favoritesOnly = true, query = query), excludeCreated = false)
+        }
 }
 
 /** Which empty state to show when nothing matches. */

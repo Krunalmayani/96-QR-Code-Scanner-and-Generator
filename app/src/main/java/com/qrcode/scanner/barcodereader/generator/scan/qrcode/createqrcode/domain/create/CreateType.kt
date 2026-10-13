@@ -9,7 +9,10 @@ enum class CreateGroup { CONTENT, SOCIAL, BARCODE }
  * Every kind of code the Create hub can make. [name] is the stable key used in navigation
  * (`CreateForm(typeKey = type.name)`), see [fromKey].
  */
-enum class CreateType(val group: CreateGroup, val defaultFormat: CodeFormat) {
+enum class CreateType(
+    val group: CreateGroup,
+    val defaultFormat: CodeFormat,
+) {
     WEBSITE(CreateGroup.CONTENT, CodeFormat.QR_CODE),
     TEXT(CreateGroup.CONTENT, CodeFormat.QR_CODE),
     CONTACT(CreateGroup.CONTENT, CodeFormat.QR_CODE),
@@ -42,9 +45,20 @@ enum class CreateType(val group: CreateGroup, val defaultFormat: CodeFormat) {
         fun fromKey(key: String?): CreateType? = if (key == null) null else entries.firstOrNull { it.name == key }
 
         /** Order of the tiles in the Create hub "All types" grid (design s31). */
-        val hubOrder: List<CreateType> = listOf(
-            WEBSITE, TEXT, CONTACT, PHONE, SMS, EMAIL, WIFI, EVENT, LOCATION, SOCIAL, APP_STORE,
-        )
+        val hubOrder: List<CreateType> =
+            listOf(
+                WEBSITE,
+                TEXT,
+                CONTACT,
+                PHONE,
+                SMS,
+                EMAIL,
+                WIFI,
+                EVENT,
+                LOCATION,
+                SOCIAL,
+                APP_STORE,
+            )
 
         /** Types offered by the "Custom data" tile (design s39 QR / Barcode switch). */
         val barcodeTypes: List<CreateType> = entries.filter { it.isBarcode }

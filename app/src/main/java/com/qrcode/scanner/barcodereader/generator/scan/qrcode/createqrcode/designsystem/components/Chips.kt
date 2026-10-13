@@ -2,7 +2,6 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -47,26 +46,29 @@ fun AppChip(
 ) {
     val c = AppTheme.colors
     val shape = RoundedCornerShape(18.dp)
-    val bg = when {
-        onCamera && selected -> Color.White
-        onCamera -> CameraColors.glass
-        selected -> c.primaryContainer
-        else -> Color.Transparent
-    }
-    val fg = when {
-        onCamera && selected -> Color(0xFF13142B)
-        onCamera -> CameraColors.onGlass
-        selected -> c.onPrimaryContainer
-        else -> c.ink
-    }
+    val bg =
+        when {
+            onCamera && selected -> Color.White
+            onCamera -> CameraColors.glass
+            selected -> c.primaryContainer
+            else -> Color.Transparent
+        }
+    val fg =
+        when {
+            onCamera && selected -> Color(0xFF13142B)
+            onCamera -> CameraColors.onGlass
+            selected -> c.onPrimaryContainer
+            else -> c.ink
+        }
     Row(
-        modifier = modifier
-            .height(36.dp)
-            .clip(shape)
-            .background(bg)
-            .then(if (!selected && !onCamera) Modifier.border(1.dp, c.outline, shape) else Modifier)
-            .selectable(selected = selected, role = Role.Button, onClick = onClick)
-            .padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .height(36.dp)
+                .clip(shape)
+                .background(bg)
+                .then(if (!selected && !onCamera) Modifier.border(1.dp, c.outline, shape) else Modifier)
+                .selectable(selected = selected, role = Role.Button, onClick = onClick)
+                .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -77,7 +79,11 @@ fun AppChip(
     }
 }
 
-data class ChipItem(val label: String, val selected: Boolean, val icon: ImageVector? = null)
+data class ChipItem(
+    val label: String,
+    val selected: Boolean,
+    val icon: ImageVector? = null,
+)
 
 /** Horizontally scrolling row of chips; [onChipClick] receives the index in [chips]. */
 @Composable
@@ -110,11 +116,12 @@ fun AppBadge(
     val c = AppTheme.colors
     val fg = c.badgeContentOf(tone)
     Row(
-        modifier = modifier
-            .height(24.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(c.containerOf(tone))
-            .padding(horizontal = 10.dp),
+        modifier =
+            modifier
+                .height(24.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(c.containerOf(tone))
+                .padding(horizontal = 10.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -135,34 +142,38 @@ fun SegmentedControl(
     val c = AppTheme.colors
     val track = if (onCamera) CameraColors.glass else c.surfaceVariant
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(40.dp)
-            .clip(RoundedCornerShape(20.dp))
-            .background(track)
-            .padding(4.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(track)
+                .padding(4.dp),
     ) {
         options.forEachIndexed { index, label ->
             val selected = index == selectedIndex
-            val thumb = when {
-                !selected -> Color.Transparent
-                onCamera -> Color.White
-                else -> c.surface
-            }
-            val fg = when {
-                selected && onCamera -> Color(0xFF13142B)
-                selected -> c.ink
-                onCamera -> Color(0xFFE8E9FF)
-                else -> c.inkSecondary
-            }
+            val thumb =
+                when {
+                    !selected -> Color.Transparent
+                    onCamera -> Color.White
+                    else -> c.surface
+                }
+            val fg =
+                when {
+                    selected && onCamera -> Color(0xFF13142B)
+                    selected -> c.ink
+                    onCamera -> Color(0xFFE8E9FF)
+                    else -> c.inkSecondary
+                }
             Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(32.dp)
-                    .then(if (selected && !onCamera) Modifier.shadow(1.dp, RoundedCornerShape(16.dp)) else Modifier)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(thumb)
-                    .selectable(selected = selected, role = Role.Tab, onClick = { onSelect(index) }),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .height(32.dp)
+                        .then(if (selected && !onCamera) Modifier.shadow(1.dp, RoundedCornerShape(16.dp)) else Modifier)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(thumb)
+                        .selectable(selected = selected, role = Role.Tab, onClick = { onSelect(index) }),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(label, style = AppTheme.type.chipStrong, color = fg, maxLines = 1)
@@ -175,7 +186,10 @@ fun SegmentedControl(
 @Composable
 private fun ChipsPreview() {
     AppTheme(dark = false) {
-        androidx.compose.foundation.layout.Column(Modifier.background(AppTheme.colors.background).padding(vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        androidx.compose.foundation.layout.Column(
+            Modifier.background(AppTheme.colors.background).padding(vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
             ChipRow(listOf(ChipItem("All", true), ChipItem("Favorites", false, AppIcons.Star), ChipItem("Links", false)), {})
             Row(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 AppBadge("Website", tone = Tone.Primary, icon = AppIcons.Link)

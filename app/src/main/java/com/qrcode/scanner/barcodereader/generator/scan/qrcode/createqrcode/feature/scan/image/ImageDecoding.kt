@@ -43,22 +43,24 @@ internal object ImageDecoding {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
         resolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
         if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
-        val options = BitmapFactory.Options().apply {
-            inSampleSize = ImageSampling.sampleSize(bounds.outWidth, bounds.outHeight, maxSide)
-            inPreferredConfig = Bitmap.Config.ARGB_8888
-        }
+        val options =
+            BitmapFactory.Options().apply {
+                inSampleSize = ImageSampling.sampleSize(bounds.outWidth, bounds.outHeight, maxSide)
+                inPreferredConfig = Bitmap.Config.ARGB_8888
+            }
         val raw = resolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) } ?: return null
         return rotated(raw, exifRotation(resolver, uri))
     }
 
     private fun exifRotation(resolver: ContentResolver, uri: Uri): Int {
-        val orientation = try {
-            resolver.openInputStream(uri)?.use {
-                ExifInterface(it).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            } ?: ExifInterface.ORIENTATION_NORMAL
-        } catch (e: IOException) {
-            ExifInterface.ORIENTATION_NORMAL
-        }
+        val orientation =
+            try {
+                resolver.openInputStream(uri)?.use {
+                    ExifInterface(it).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+                } ?: ExifInterface.ORIENTATION_NORMAL
+            } catch (e: IOException) {
+                ExifInterface.ORIENTATION_NORMAL
+            }
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> 90
             ExifInterface.ORIENTATION_ROTATE_180 -> 180

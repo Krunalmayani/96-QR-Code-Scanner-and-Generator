@@ -9,7 +9,11 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.scan.ScanArea
 
 /** The viewfinder frame in view pixels plus the size of the view it was measured in. */
-data class ScanAreaSpec(val frame: PxRect, val viewWidth: Float, val viewHeight: Float)
+data class ScanAreaSpec(
+    val frame: PxRect,
+    val viewWidth: Float,
+    val viewHeight: Float,
+)
 
 /**
  * CameraX analyzer that runs ML Kit on each frame and reports the codes inside [area] on the main thread.
@@ -35,7 +39,8 @@ class BarcodeAnalyzer(
         val rotation = imageProxy.imageInfo.rotationDegrees
         val crop = cropInImage(imageProxy.width, imageProxy.height, rotation)
         try {
-            scanner.process(InputImage.fromMediaImage(mediaImage, rotation))
+            scanner
+                .process(InputImage.fromMediaImage(mediaImage, rotation))
                 .addOnSuccessListener { barcodes -> deliver(barcodes.mapNotNull { it.toDetectedCode() }, crop) }
                 .addOnCompleteListener { imageProxy.close() }
         } catch (e: RuntimeException) {

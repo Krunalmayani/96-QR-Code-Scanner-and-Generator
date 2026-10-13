@@ -5,12 +5,13 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 /** GS1 mod-10 check digits (EAN-13, EAN-8, UPC-A) and per-format input normalisation. */
 object BarcodeCheckDigit {
     /** Digit count WITHOUT check digit for the formats that carry one; null for others. */
-    fun bodyLength(format: CodeFormat): Int? = when (format) {
-        CodeFormat.EAN_13 -> 12
-        CodeFormat.EAN_8 -> 7
-        CodeFormat.UPC_A -> 11
-        else -> null
-    }
+    fun bodyLength(format: CodeFormat): Int? =
+        when (format) {
+            CodeFormat.EAN_13 -> 12
+            CodeFormat.EAN_8 -> 7
+            CodeFormat.UPC_A -> 11
+            else -> null
+        }
 
     /** GS1 check digit for [body] (all digits, check digit NOT included). */
     fun checkDigit(body: String): Int {

@@ -9,14 +9,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.AppSettings
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.SettingsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.io.IOException
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -25,16 +25,17 @@ private val Context.settingsDataStore: DataStore<Preferences> by preferencesData
 class SettingsRepositoryImpl internal constructor(
     private val dataStore: DataStore<Preferences>,
 ) : SettingsRepository {
-
     @Inject
-    constructor(@ApplicationContext context: Context) : this(context.settingsDataStore)
+    constructor(
+        @ApplicationContext context: Context,
+    ) : this(context.settingsDataStore)
 
-    override val settings: Flow<AppSettings> = dataStore.data
-        .catch { error ->
-            if (error is IOException) emit(emptyPreferences()) else throw error
-        }
-        .map { it.toAppSettings() }
-        .distinctUntilChanged()
+    override val settings: Flow<AppSettings> =
+        dataStore.data
+            .catch { error ->
+                if (error is IOException) emit(emptyPreferences()) else throw error
+            }.map { it.toAppSettings() }
+            .distinctUntilChanged()
 
     override suspend fun current(): AppSettings = settings.first()
 

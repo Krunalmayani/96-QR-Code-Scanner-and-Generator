@@ -26,9 +26,10 @@ internal class NativeAdPool(
     private val scope: CoroutineScope,
     private val adsAvailable: () -> Boolean,
 ) {
-    private val slot = AdSlot<LoadedNative>(AdDefaults.NATIVE_MAX_AGE_MS) { stale ->
-        scope.launch(Dispatchers.Main) { stale.destroy() }
-    }
+    private val slot =
+        AdSlot<LoadedNative>(AdDefaults.NATIVE_MAX_AGE_MS) { stale ->
+            scope.launch(Dispatchers.Main) { stale.destroy() }
+        }
 
     /** Bumped on every load result so waiters in [take] never miss one. */
     private val version = MutableStateFlow(0)

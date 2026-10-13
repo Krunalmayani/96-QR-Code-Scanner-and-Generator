@@ -45,9 +45,11 @@ class MigrationTest {
         }
 
         val context = ApplicationProvider.getApplicationContext<Context>()
-        val db = Room.databaseBuilder(context, AppDatabase::class.java, TEST_DB)
-            .addMigrations(*Migrations.ALL)
-            .build()
+        val db =
+            Room
+                .databaseBuilder(context, AppDatabase::class.java, TEST_DB)
+                .addMigrations(*Migrations.ALL)
+                .build()
         try {
             val rows = runBlocking { db.historyDao().getAll() }
             assertEquals(1, rows.size)

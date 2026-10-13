@@ -33,7 +33,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result.platform.NetworkStatus
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result.platform.WifiConnector
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
@@ -47,6 +46,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Result screen for a fresh scan and the history detail ([ResultViewModel.ARG_FROM_HISTORY]). The record is observed by
@@ -67,7 +67,6 @@ class ResultViewModel internal constructor(
     private val analytics: Analytics,
     private val noteDebounceMs: Long,
 ) : ViewModel() {
-
     @Inject
     constructor(
         savedStateHandle: SavedStateHandle,
@@ -200,10 +199,11 @@ class ResultViewModel internal constructor(
 
     private fun refreshProductSites() {
         val product = _state.value.record?.content as? ScanContent.Product
-        val sites = product
-            ?.let { ProductSearchUrls.ordered(productOrder, it.number) }
-            ?.map { (site, url) -> ProductSiteLink(site, url) }
-            .orEmpty()
+        val sites =
+            product
+                ?.let { ProductSearchUrls.ordered(productOrder, it.number) }
+                ?.map { (site, url) -> ProductSiteLink(site, url) }
+                .orEmpty()
         updateProduct { it.copy(sites = sites) }
     }
 
@@ -334,7 +334,9 @@ class ResultViewModel internal constructor(
     }
 
     private fun onOpenProductSite(site: ProductSite) {
-        val link = _state.value.product.sites.firstOrNull { it.site == site } ?: return
+        val link =
+            _state.value.product.sites
+                .firstOrNull { it.site == site } ?: return
         openUrl(link.url, site.name.lowercase())
     }
 
@@ -348,10 +350,11 @@ class ResultViewModel internal constructor(
         val clipped = text.take(MAX_NOTE_LENGTH)
         _state.update { it.copy(note = clipped) }
         noteJob?.cancel()
-        noteJob = viewModelScope.launch {
-            delay(noteDebounceMs)
-            history.updateNote(recordId, clipped)
-        }
+        noteJob =
+            viewModelScope.launch {
+                delay(noteDebounceMs)
+                history.updateNote(recordId, clipped)
+            }
     }
 
     private fun commitNote() {
@@ -388,10 +391,11 @@ class ResultViewModel internal constructor(
         val plan = WifiConnectPlanner.plan(wifiConnector.sdkInt, wifi.security, wifi.password)
         wifiJob?.cancel()
         reduceWifi(WifiConnectEvent.Started)
-        wifiJob = viewModelScope.launch {
-            val outcome = plan.failure?.let { WifiConnectOutcome.Failed(it) } ?: connectSafely(request)
-            applyWifiOutcome(outcome)
-        }
+        wifiJob =
+            viewModelScope.launch {
+                val outcome = plan.failure?.let { WifiConnectOutcome.Failed(it) } ?: connectSafely(request)
+                applyWifiOutcome(outcome)
+            }
     }
 
     private suspend fun connectSafely(request: WifiConnectRequest): WifiConnectOutcome =

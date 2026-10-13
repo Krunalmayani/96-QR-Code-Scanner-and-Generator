@@ -36,29 +36,32 @@ class CreateHubViewModelTest {
     }
 
     @Test
-    fun `starts empty`() = runTest {
-        val vm = CreateHubViewModel(history)
-        assertEquals(CreateHubUiState(), vm.state.value)
-    }
-
-    @Test
-    fun `query changes flow into the state`() = runTest {
-        val vm = CreateHubViewModel(history)
-        vm.state.test {
-            awaitItem()
-            vm.onEvent(CreateHubEvent.QueryChanged("wifi"))
-            assertEquals("wifi", awaitItem().query)
+    fun `starts empty`() =
+        runTest {
+            val vm = CreateHubViewModel(history)
+            assertEquals(CreateHubUiState(), vm.state.value)
         }
-    }
 
     @Test
-    fun `recent lists the newest created types, distinct, without scans`() = runTest {
-        history.save(Fixtures.record(Fixtures.website(), ScanSource.CREATED, createdAt = 10))
-        history.save(Fixtures.record(Fixtures.website("https://b.io"), ScanSource.CREATED, createdAt = 20))
-        history.save(Fixtures.record(Fixtures.text("scanned"), ScanSource.CAMERA, createdAt = 30))
-        history.save(Fixtures.record(ScanContent.Wifi("WIFI:", CodeFormat.QR_CODE, "x"), ScanSource.CREATED, createdAt = 40))
-        val vm = CreateHubViewModel(history)
-        val state = vm.awaitState { it.recent.isNotEmpty() }
-        assertEquals(listOf(CreateType.WIFI, CreateType.WEBSITE), state.recent)
-    }
+    fun `query changes flow into the state`() =
+        runTest {
+            val vm = CreateHubViewModel(history)
+            vm.state.test {
+                awaitItem()
+                vm.onEvent(CreateHubEvent.QueryChanged("wifi"))
+                assertEquals("wifi", awaitItem().query)
+            }
+        }
+
+    @Test
+    fun `recent lists the newest created types, distinct, without scans`() =
+        runTest {
+            history.save(Fixtures.record(Fixtures.website(), ScanSource.CREATED, createdAt = 10))
+            history.save(Fixtures.record(Fixtures.website("https://b.io"), ScanSource.CREATED, createdAt = 20))
+            history.save(Fixtures.record(Fixtures.text("scanned"), ScanSource.CAMERA, createdAt = 30))
+            history.save(Fixtures.record(ScanContent.Wifi("WIFI:", CodeFormat.QR_CODE, "x"), ScanSource.CREATED, createdAt = 40))
+            val vm = CreateHubViewModel(history)
+            val state = vm.awaitState { it.recent.isNotEmpty() }
+            assertEquals(listOf(CreateType.WIFI, CreateType.WEBSITE), state.recent)
+        }
 }

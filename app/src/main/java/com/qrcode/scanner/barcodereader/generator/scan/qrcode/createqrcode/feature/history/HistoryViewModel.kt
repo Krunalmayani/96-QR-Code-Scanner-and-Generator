@@ -2,7 +2,6 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Analytics
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Events
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Params
@@ -21,9 +20,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryRepository
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.usecase.DeleteRecordsUseCase
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.usecase.ToggleFavoriteUseCase
-import java.time.Instant
-import java.time.ZoneId
-import javax.inject.Inject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.Channel
@@ -40,6 +37,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import javax.inject.Inject
 
 /**
  * History list: tabs, chips, debounced search, day grouping, multi-select and delete with undo.
@@ -54,7 +54,6 @@ class HistoryViewModel internal constructor(
     private val nowProvider: () -> Instant,
     private val zoneProvider: () -> ZoneId,
 ) : ViewModel() {
-
     @Inject
     constructor(
         history: HistoryRepository,
@@ -84,7 +83,10 @@ class HistoryViewModel internal constructor(
             if (searchActive) HistoryQueries.search(scope, query) else HistoryQueries.browse(tab, chip)
     }
 
-    private class Loaded(val request: Request, val records: List<ScanRecord>)
+    private class Loaded(
+        val request: Request,
+        val records: List<ScanRecord>,
+    )
 
     private val controls = MutableStateFlow(Controls())
     private val selection = MutableStateFlow(SelectionState())
@@ -93,42 +95,46 @@ class HistoryViewModel internal constructor(
     val effect: Flow<HistoryEffect> = effects.receiveAsFlow()
 
     @OptIn(FlowPreview::class)
-    private val appliedQuery: Flow<String> = controls
-        .map { if (it.searchActive) it.query else "" }
-        .distinctUntilChanged()
-        .debounce { if (it.isBlank()) 0L else SEARCH_DEBOUNCE_MS }
-        .distinctUntilChanged()
+    private val appliedQuery: Flow<String> =
+        controls
+            .map { if (it.searchActive) it.query else "" }
+            .distinctUntilChanged()
+            .debounce { if (it.isBlank()) 0L else SEARCH_DEBOUNCE_MS }
+            .distinctUntilChanged()
 
-    private val request: Flow<Request> = combine(
-        controls.map { it.copy(query = "") }.distinctUntilChanged(),
-        appliedQuery,
-    ) { c, query -> Request(c.tab, c.chip, c.searchActive, c.scope, if (c.searchActive) query else "") }
-        .distinctUntilChanged()
+    private val request: Flow<Request> =
+        combine(
+            controls.map { it.copy(query = "") }.distinctUntilChanged(),
+            appliedQuery,
+        ) { c, query -> Request(c.tab, c.chip, c.searchActive, c.scope, if (c.searchActive) query else "") }
+            .distinctUntilChanged()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val loaded: Flow<Loaded> = request.flatMapLatest { req ->
-        val spec = req.spec()
-        history.observe(spec.filter).map { rows -> Loaded(req, spec.select(rows)) }
-    }
+    private val loaded: Flow<Loaded> =
+        request.flatMapLatest { req ->
+            val spec = req.spec()
+            history.observe(spec.filter).map { rows -> Loaded(req, spec.select(rows)) }
+        }
 
-    val uiState: StateFlow<HistoryUiState> = combine(controls, selection, loaded) { c, sel, result ->
-        val groups = HistoryGrouper.group(result.records, nowProvider(), zoneProvider())
-        val req = result.request
-        val visible = result.records.mapTo(HashSet()) { it.id }
-        HistoryUiState(
-            tab = c.tab,
-            chip = c.chip,
-            searchActive = c.searchActive,
-            searchScope = c.scope,
-            query = c.query,
-            appliedQuery = req.query,
-            groups = groups,
-            recordCount = result.records.size,
-            loading = false,
-            emptyKind = HistoryEmpty.resolve(req.tab, req.chip, req.searchActive, req.query, req.scope),
-            selection = sel.retain(visible),
-        )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), HistoryUiState())
+    val uiState: StateFlow<HistoryUiState> =
+        combine(controls, selection, loaded) { c, sel, result ->
+            val groups = HistoryGrouper.group(result.records, nowProvider(), zoneProvider())
+            val req = result.request
+            val visible = result.records.mapTo(HashSet()) { it.id }
+            HistoryUiState(
+                tab = c.tab,
+                chip = c.chip,
+                searchActive = c.searchActive,
+                searchScope = c.scope,
+                query = c.query,
+                appliedQuery = req.query,
+                groups = groups,
+                recordCount = result.records.size,
+                loading = false,
+                emptyKind = HistoryEmpty.resolve(req.tab, req.chip, req.searchActive, req.query, req.scope),
+                selection = sel.retain(visible),
+            )
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(STOP_TIMEOUT_MS), HistoryUiState())
 
     fun onEvent(event: HistoryEvent) {
         when (event) {
@@ -228,7 +234,8 @@ class HistoryViewModel internal constructor(
 
     /** Selected rows as stored right now, newest first. Ids that no longer exist are skipped. */
     private suspend fun selectedRecords(): List<ScanRecord> =
-        selection.value.ids.mapNotNull { history.getById(it) }
+        selection.value.ids
+            .mapNotNull { history.getById(it) }
             .sortedWith(compareByDescending<ScanRecord> { it.createdAt }.thenByDescending { it.id })
 
     private fun logFavoriteToggle(types: List<String>) {

@@ -1,13 +1,13 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
 import app.cash.turbine.test
-import io.mockk.mockk
-import io.mockk.verify
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Analytics
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Events
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.ThemeMode
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.testing.FakeSettingsRepository
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testing.MainDispatcherExtension
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -49,25 +49,27 @@ class AppearanceViewModelTest {
     }
 
     @Test
-    fun `picking a language stores the tag, logs it and asks the screen to apply it`() = runTest {
-        val vm = viewModel()
-        vm.effects.test {
-            vm.onEvent(AppearanceEvent.SelectLanguage("hi"))
-            assertEquals(AppearanceEffect.ApplyLanguage("hi"), awaitItem())
+    fun `picking a language stores the tag, logs it and asks the screen to apply it`() =
+        runTest {
+            val vm = viewModel()
+            vm.effects.test {
+                vm.onEvent(AppearanceEvent.SelectLanguage("hi"))
+                assertEquals(AppearanceEffect.ApplyLanguage("hi"), awaitItem())
+            }
+            assertEquals("hi", settings.value.languageTag)
+            verify { analytics.log(Events.LANGUAGE_CHANGED, mapOf(PARAM_CHOICE to "hi")) }
         }
-        assertEquals("hi", settings.value.languageTag)
-        verify { analytics.log(Events.LANGUAGE_CHANGED, mapOf(PARAM_CHOICE to "hi")) }
-    }
 
     @Test
-    fun `system default stores an empty tag`() = runTest {
-        settings.value = settings.value.copy(languageTag = "de")
-        val vm = viewModel()
-        vm.effects.test {
-            vm.onEvent(AppearanceEvent.SelectLanguage(""))
-            assertEquals(AppearanceEffect.ApplyLanguage(""), awaitItem())
+    fun `system default stores an empty tag`() =
+        runTest {
+            settings.value = settings.value.copy(languageTag = "de")
+            val vm = viewModel()
+            vm.effects.test {
+                vm.onEvent(AppearanceEvent.SelectLanguage(""))
+                assertEquals(AppearanceEffect.ApplyLanguage(""), awaitItem())
+            }
+            assertEquals("", settings.value.languageTag)
+            verify { analytics.log(Events.LANGUAGE_CHANGED, mapOf(PARAM_CHOICE to "system")) }
         }
-        assertEquals("", settings.value.languageTag)
-        verify { analytics.log(Events.LANGUAGE_CHANGED, mapOf(PARAM_CHOICE to "system")) }
-    }
 }

@@ -6,16 +6,24 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 sealed interface HistoryListItem {
     val key: String
 
-    data class Header(val label: DayLabel) : HistoryListItem {
+    data class Header(
+        val label: DayLabel,
+    ) : HistoryListItem {
         override val key: String get() = "header-${label.key}"
     }
 
     /** [first]/[last] tell the UI which rows open and close a rounded card (ads split a card in two). */
-    data class Row(val record: ScanRecord, val first: Boolean, val last: Boolean) : HistoryListItem {
+    data class Row(
+        val record: ScanRecord,
+        val first: Boolean,
+        val last: Boolean,
+    ) : HistoryListItem {
         override val key: String get() = "row-${record.id}"
     }
 
-    data class Ad(val index: Int) : HistoryListItem {
+    data class Ad(
+        val index: Int,
+    ) : HistoryListItem {
         override val key: String get() = "ad-$index"
     }
 }

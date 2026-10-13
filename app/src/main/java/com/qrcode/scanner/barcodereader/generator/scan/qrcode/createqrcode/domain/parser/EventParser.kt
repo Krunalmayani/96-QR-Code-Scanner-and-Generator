@@ -16,8 +16,13 @@ import java.time.ZoneOffset
  * convention); a `...Z` time is UTC; a floating time (no Z) is interpreted in [defaultZone], and so is a time
  * whose `TZID=` is not a valid IANA zone id. A valid IANA `TZID` (for example `America/New_York`) is honoured.
  */
-internal class EventParser(private val defaultZone: ZoneId) {
-    private class Stamp(val millis: Long, val allDay: Boolean)
+internal class EventParser(
+    private val defaultZone: ZoneId,
+) {
+    private class Stamp(
+        val millis: Long,
+        val allDay: Boolean,
+    )
 
     fun parse(text: String, raw: String, format: CodeFormat): ScanContent.Event? {
         val lines = FieldParsing.unfoldLines(text)
@@ -68,7 +73,14 @@ internal class EventParser(private val defaultZone: ZoneId) {
             val ss = m.groupValues[6].ifEmpty { "0" }
             val time = LocalTime.of(hh.toInt(), mm.toInt(), ss.toInt())
             val zone = if (m.groupValues[7].equals("Z", ignoreCase = true)) ZoneOffset.UTC else zoneFor(params["TZID"])
-            Stamp(LocalDateTime.of(date, time).atZone(zone).toInstant().toEpochMilli(), false)
+            Stamp(
+                LocalDateTime
+                    .of(date, time)
+                    .atZone(zone)
+                    .toInstant()
+                    .toEpochMilli(),
+                false,
+            )
         } catch (e: DateTimeException) {
             null
         }
@@ -87,6 +99,7 @@ internal class EventParser(private val defaultZone: ZoneId) {
         if (start == null || duration == null) return null
         val m = DURATION.matchEntire(duration) ?: return null
         val g = m.groupValues
+
         fun n(i: Int) = g[i].ifEmpty { "0" }.toLong()
         val seconds = n(2) * 604_800 + n(3) * 86_400 + n(4) * 3_600 + n(5) * 60 + n(6)
         val signed = if (g[1] == "-") -seconds else seconds

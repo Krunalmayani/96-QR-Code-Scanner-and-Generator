@@ -44,7 +44,9 @@ import timber.log.Timber
 internal typealias SdkBannerAd = com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 /** A loaded banner. Opaque outside this file. */
-class LoadedBanner internal constructor(internal val ad: SdkBannerAd) {
+class LoadedBanner internal constructor(
+    internal val ad: SdkBannerAd,
+) {
     fun destroy() {
         ad.destroy()
     }
@@ -61,10 +63,14 @@ class LoadedNative internal constructor(
 }
 
 /** A loaded interstitial. Opaque outside this file. */
-internal class LoadedInterstitial(val ad: InterstitialAd)
+internal class LoadedInterstitial(
+    val ad: InterstitialAd,
+)
 
 /** A loaded app open ad. Opaque outside this file. */
-internal class LoadedAppOpen(val ad: AppOpenAd)
+internal class LoadedAppOpen(
+    val ad: AppOpenAd,
+)
 
 /** Lifecycle of a full-screen ad. May be called from a background thread. */
 internal interface FullScreenCallbacks {
@@ -145,19 +151,20 @@ internal object NextGenAdsGateway {
 
     /** Shows [loaded] on the main thread. */
     fun showInterstitial(loaded: LoadedInterstitial, activity: Activity, callbacks: FullScreenCallbacks) {
-        loaded.ad.adEventCallback = object : InterstitialAdEventCallback {
-            override fun onAdShowedFullScreenContent() {
-                callbacks.onShown()
-            }
+        loaded.ad.adEventCallback =
+            object : InterstitialAdEventCallback {
+                override fun onAdShowedFullScreenContent() {
+                    callbacks.onShown()
+                }
 
-            override fun onAdDismissedFullScreenContent() {
-                callbacks.onDismissed()
-            }
+                override fun onAdDismissedFullScreenContent() {
+                    callbacks.onDismissed()
+                }
 
-            override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
-                callbacks.onFailedToShow(fullScreenContentError.message.orEmpty())
+                override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
+                    callbacks.onFailedToShow(fullScreenContentError.message.orEmpty())
+                }
             }
-        }
         loaded.ad.show(activity)
     }
 
@@ -180,19 +187,20 @@ internal object NextGenAdsGateway {
 
     /** Shows [loaded] on the main thread. */
     fun showAppOpen(loaded: LoadedAppOpen, activity: Activity, callbacks: FullScreenCallbacks) {
-        loaded.ad.adEventCallback = object : AppOpenAdEventCallback {
-            override fun onAdShowedFullScreenContent() {
-                callbacks.onShown()
-            }
+        loaded.ad.adEventCallback =
+            object : AppOpenAdEventCallback {
+                override fun onAdShowedFullScreenContent() {
+                    callbacks.onShown()
+                }
 
-            override fun onAdDismissedFullScreenContent() {
-                callbacks.onDismissed()
-            }
+                override fun onAdDismissedFullScreenContent() {
+                    callbacks.onDismissed()
+                }
 
-            override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
-                callbacks.onFailedToShow(fullScreenContentError.message.orEmpty())
+                override fun onAdFailedToShowFullScreenContent(fullScreenContentError: FullScreenContentError) {
+                    callbacks.onFailedToShow(fullScreenContentError.message.orEmpty())
+                }
             }
-        }
         loaded.ad.show(activity)
     }
 
@@ -223,50 +231,55 @@ internal object NextGenAdsGateway {
         val adView = NativeAdView(context)
         adView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         adView.background = roundedRect(style.background, style.outline, dp(CARD_RADIUS_DP), dp(1))
-        val column = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(dp(CARD_PADDING_DP), dp(CARD_PADDING_DP), dp(CARD_PADDING_DP), dp(CARD_PADDING_DP))
-        }
+        val column =
+            LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(CARD_PADDING_DP), dp(CARD_PADDING_DP), dp(CARD_PADDING_DP), dp(CARD_PADDING_DP))
+            }
         adView.addView(column, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
 
         val icon = ImageView(context).apply { setImageDrawable(ad.icon?.drawable) }
-        val headline = TextView(context).apply {
-            text = ad.headline.orEmpty()
-            setTextColor(style.headline)
-            textSize = HEADLINE_SP
-            setTypeface(typeface, Typeface.BOLD)
-            maxLines = 2
-        }
-        val label = TextView(context).apply {
-            text = style.adLabel
-            contentDescription = style.adLabelDescription
-            setTextColor(style.label)
-            textSize = LABEL_SP
-            background = roundedRect(0, style.label, dp(4), dp(1))
-            setPadding(dp(4), dp(1), dp(4), dp(1))
-        }
+        val headline =
+            TextView(context).apply {
+                text = ad.headline.orEmpty()
+                setTextColor(style.headline)
+                textSize = HEADLINE_SP
+                setTypeface(typeface, Typeface.BOLD)
+                maxLines = 2
+            }
+        val label =
+            TextView(context).apply {
+                text = style.adLabel
+                contentDescription = style.adLabelDescription
+                setTextColor(style.label)
+                textSize = LABEL_SP
+                background = roundedRect(0, style.label, dp(4), dp(1))
+                setPadding(dp(4), dp(1), dp(4), dp(1))
+            }
         column.addView(headerRow(context, icon, headline, label, dp(ICON_SIZE_DP), dp(8)))
 
         val media = MediaView(context)
         column.addView(media, linearParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(MEDIA_HEIGHT_DP), dp(8)))
 
-        val body = TextView(context).apply {
-            text = ad.body.orEmpty()
-            setTextColor(style.body)
-            textSize = BODY_SP
-            maxLines = 3
-            visibility = if (ad.body.isNullOrEmpty()) View.GONE else View.VISIBLE
-        }
+        val body =
+            TextView(context).apply {
+                text = ad.body.orEmpty()
+                setTextColor(style.body)
+                textSize = BODY_SP
+                maxLines = 3
+                visibility = if (ad.body.isNullOrEmpty()) View.GONE else View.VISIBLE
+            }
         column.addView(body, linearParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, dp(8)))
 
-        val cta = Button(context).apply {
-            text = ad.callToAction.orEmpty()
-            isAllCaps = false
-            setTextColor(style.ctaText)
-            background = roundedRect(style.ctaBackground, style.ctaBackground, dp(CTA_MIN_HEIGHT_DP), 0)
-            minHeight = dp(CTA_MIN_HEIGHT_DP)
-            visibility = if (ad.callToAction.isNullOrEmpty()) View.GONE else View.VISIBLE
-        }
+        val cta =
+            Button(context).apply {
+                text = ad.callToAction.orEmpty()
+                isAllCaps = false
+                setTextColor(style.ctaText)
+                background = roundedRect(style.ctaBackground, style.ctaBackground, dp(CTA_MIN_HEIGHT_DP), 0)
+                minHeight = dp(CTA_MIN_HEIGHT_DP)
+                visibility = if (ad.callToAction.isNullOrEmpty()) View.GONE else View.VISIBLE
+            }
         column.addView(cta, linearParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, dp(8)))
 
         adView.iconView = icon
@@ -279,11 +292,12 @@ internal object NextGenAdsGateway {
     }
 
     private fun headerRow(context: Context, icon: ImageView, headline: TextView, label: TextView, iconPx: Int, gapPx: Int): View {
-        val textColumn = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            addView(headline)
-            addView(label, linearParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, gapPx / 2))
-        }
+        val textColumn =
+            LinearLayout(context).apply {
+                orientation = LinearLayout.VERTICAL
+                addView(headline)
+                addView(label, linearParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, gapPx / 2))
+            }
         return LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL

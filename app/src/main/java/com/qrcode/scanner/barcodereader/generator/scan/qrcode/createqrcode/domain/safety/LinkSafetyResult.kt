@@ -13,25 +13,36 @@ sealed interface LinkRisk {
     }
 
     /** Host imitates [brand] (edit distance, digit/letter swaps, brand-in-subdomain or brand-with-suffix tricks). */
-    data class LookalikeBrand(val brand: String, val host: String) : LinkRisk {
+    data class LookalikeBrand(
+        val brand: String,
+        val host: String,
+    ) : LinkRisk {
         override val severe get() = true
     }
 
     /** Host contains `xn--` labels or non-ASCII characters (possible homograph attack). */
-    data class Punycode(val host: String) : LinkRisk {
+    data class Punycode(
+        val host: String,
+    ) : LinkRisk {
         override val severe get() = true
     }
 
-    data class SuspiciousTld(val tld: String) : LinkRisk {
+    data class SuspiciousTld(
+        val tld: String,
+    ) : LinkRisk {
         override val severe get() = false
     }
 
-    data class UrlShortener(val host: String) : LinkRisk {
+    data class UrlShortener(
+        val host: String,
+    ) : LinkRisk {
         override val severe get() = false
     }
 
     /** Host is an IP address. Severe only together with [NotHttps]; the checker decides. */
-    data class IpAddressHost(val host: String) : LinkRisk {
+    data class IpAddressHost(
+        val host: String,
+    ) : LinkRisk {
         override val severe get() = false
     }
 
@@ -40,20 +51,29 @@ sealed interface LinkRisk {
         override val severe get() = true
     }
 
-    data class ExcessiveSubdomains(val labelCount: Int) : LinkRisk {
+    data class ExcessiveSubdomains(
+        val labelCount: Int,
+    ) : LinkRisk {
         override val severe get() = false
     }
 
     /** `javascript:`, `data:`, `file:`, `intent:`, `vbscript:` and any other non-http(s) scheme. */
-    data class NonWebScheme(val scheme: String) : LinkRisk {
+    data class NonWebScheme(
+        val scheme: String,
+    ) : LinkRisk {
         override val severe get() = true
     }
 
-    data class VeryLongUrl(val length: Int) : LinkRisk {
+    data class VeryLongUrl(
+        val length: Int,
+    ) : LinkRisk {
         override val severe get() = false
     }
 }
 
-data class LinkSafetyResult(val level: Level, val risks: List<LinkRisk>) {
+data class LinkSafetyResult(
+    val level: Level,
+    val risks: List<LinkRisk>,
+) {
     val isSafe: Boolean get() = level == Level.SAFE
 }

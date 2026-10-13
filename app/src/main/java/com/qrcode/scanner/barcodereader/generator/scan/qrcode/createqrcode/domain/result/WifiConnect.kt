@@ -27,7 +27,9 @@ sealed interface WifiConnectOutcome {
 
     data object Suggested : WifiConnectOutcome
 
-    data class Failed(val reason: WifiFailure) : WifiConnectOutcome
+    data class Failed(
+        val reason: WifiFailure,
+    ) : WifiConnectOutcome
 }
 
 enum class WifiStrategy {
@@ -42,7 +44,11 @@ enum class WifiStrategy {
 }
 
 /** How to connect on a given Android version. [failure] is set when no attempt should be made. */
-data class WifiPlan(val strategy: WifiStrategy, val needsLocation: Boolean, val failure: WifiFailure? = null)
+data class WifiPlan(
+    val strategy: WifiStrategy,
+    val needsLocation: Boolean,
+    val failure: WifiFailure? = null,
+)
 
 object WifiConnectPlanner {
     const val ANDROID_Q = 29
@@ -77,11 +83,12 @@ object WifiPassphrase {
      * WPA passphrases are 8 to 63 characters; the legacy API also accepts a raw 64-digit hex key. Open networks
      * need none. WEP keys are 5/13/16 characters or 10/26/32 hex digits (legacy API only).
      */
-    fun isValid(security: WifiSecurity, password: String, legacy: Boolean): Boolean = when (security) {
-        WifiSecurity.NONE -> true
-        WifiSecurity.WPA -> password.length in WPA_MIN..WPA_MAX || (legacy && password.length == WPA_HEX_LENGTH && isHex(password))
-        WifiSecurity.WEP -> legacy && (password.length in WEP_ASCII_LENGTHS || (password.length in WEP_HEX_LENGTHS && isHex(password)))
-    }
+    fun isValid(security: WifiSecurity, password: String, legacy: Boolean): Boolean =
+        when (security) {
+            WifiSecurity.NONE -> true
+            WifiSecurity.WPA -> password.length in WPA_MIN..WPA_MAX || (legacy && password.length == WPA_HEX_LENGTH && isHex(password))
+            WifiSecurity.WEP -> legacy && (password.length in WEP_ASCII_LENGTHS || (password.length in WEP_HEX_LENGTHS && isHex(password)))
+        }
 
     /** Value for `WifiConfiguration.preSharedKey`: quoted passphrase, or the raw 64-digit hex key. */
     fun legacyWpaKey(password: String): String =
@@ -109,9 +116,13 @@ data class WifiConnectState(
 sealed interface WifiConnectEvent {
     data object Started : WifiConnectEvent
 
-    data class Succeeded(val viaSuggestion: Boolean = false) : WifiConnectEvent
+    data class Succeeded(
+        val viaSuggestion: Boolean = false,
+    ) : WifiConnectEvent
 
-    data class Failed(val reason: WifiFailure) : WifiConnectEvent
+    data class Failed(
+        val reason: WifiFailure,
+    ) : WifiConnectEvent
 
     /** User pressed Cancel while connecting. */
     data object Cancelled : WifiConnectEvent
@@ -122,15 +133,22 @@ sealed interface WifiConnectEvent {
 
 /** Idle -> Connecting -> Connected | Failed. Late or duplicate callbacks are ignored instead of corrupting the state. */
 object WifiConnectMachine {
-    fun reduce(state: WifiConnectState, event: WifiConnectEvent): WifiConnectState = when (event) {
-        WifiConnectEvent.Started ->
-            if (state.phase == WifiPhase.IDLE || state.phase == WifiPhase.FAILED) WifiConnectState(WifiPhase.CONNECTING) else state
-        is WifiConnectEvent.Succeeded ->
-            if (state.phase == WifiPhase.CONNECTING) WifiConnectState(WifiPhase.CONNECTED, viaSuggestion = event.viaSuggestion) else state
-        is WifiConnectEvent.Failed ->
-            if (state.phase == WifiPhase.CONNECTING) WifiConnectState(WifiPhase.FAILED, failure = event.reason) else state
-        WifiConnectEvent.Cancelled ->
-            if (state.phase == WifiPhase.CONNECTING) WifiConnectState() else state
-        WifiConnectEvent.Dismissed -> WifiConnectState()
-    }
+    fun reduce(state: WifiConnectState, event: WifiConnectEvent): WifiConnectState =
+        when (event) {
+            WifiConnectEvent.Started ->
+                if (state.phase == WifiPhase.IDLE || state.phase == WifiPhase.FAILED) WifiConnectState(WifiPhase.CONNECTING) else state
+            is WifiConnectEvent.Succeeded ->
+                if (state.phase ==
+                    WifiPhase.CONNECTING
+                ) {
+                    WifiConnectState(WifiPhase.CONNECTED, viaSuggestion = event.viaSuggestion)
+                } else {
+                    state
+                }
+            is WifiConnectEvent.Failed ->
+                if (state.phase == WifiPhase.CONNECTING) WifiConnectState(WifiPhase.FAILED, failure = event.reason) else state
+            WifiConnectEvent.Cancelled ->
+                if (state.phase == WifiPhase.CONNECTING) WifiConnectState() else state
+            WifiConnectEvent.Dismissed -> WifiConnectState()
+        }
 }

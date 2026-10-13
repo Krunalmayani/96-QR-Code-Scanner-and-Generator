@@ -85,13 +85,22 @@ internal fun ProductSearchContent(
             OverlineLabel(stringResource(R.string.result_product_barcode))
             Text(grouped, style = AppTheme.type.titleLarge, color = AppTheme.colors.ink, modifier = Modifier.padding(top = 4.dp))
             if (!product.online) {
-                Text(content.format.displayName, style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary, modifier = Modifier.padding(top = 4.dp))
+                Text(
+                    content.format.displayName,
+                    style = AppTheme.type.caption,
+                    color = AppTheme.colors.inkSecondary,
+                    modifier = Modifier.padding(top = 4.dp),
+                )
             }
         }
         if (product.online) {
             SiteList(product.sites, onEvent)
             AppCard(Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.result_product_search_note), style = AppTheme.type.bodySmall, color = AppTheme.colors.inkSecondary)
+                Text(
+                    stringResource(R.string.result_product_search_note),
+                    style = AppTheme.type.bodySmall,
+                    color = AppTheme.colors.inkSecondary,
+                )
             }
         } else {
             OfflineCard(onRetry = { onEvent(ResultEvent.ProductRetry) })
@@ -157,20 +166,23 @@ private fun OfflineCard(onRetry: () -> Unit) {
     }
 }
 
-private fun ProductSite.nameRes(): Int = when (this) {
-    ProductSite.GOOGLE -> R.string.result_product_google
-    ProductSite.OPEN_FOOD_FACTS -> R.string.result_product_off
-    ProductSite.AMAZON -> R.string.result_product_amazon
-}
+private fun ProductSite.nameRes(): Int =
+    when (this) {
+        ProductSite.GOOGLE -> R.string.result_product_google
+        ProductSite.OPEN_FOOD_FACTS -> R.string.result_product_off
+        ProductSite.AMAZON -> R.string.result_product_amazon
+    }
 
-private fun ProductSite.hintRes(): Int = when (this) {
-    ProductSite.GOOGLE -> R.string.result_product_google_hint
-    ProductSite.OPEN_FOOD_FACTS -> R.string.result_product_off_hint
-    ProductSite.AMAZON -> R.string.result_product_amazon_hint
-}
+private fun ProductSite.hintRes(): Int =
+    when (this) {
+        ProductSite.GOOGLE -> R.string.result_product_google_hint
+        ProductSite.OPEN_FOOD_FACTS -> R.string.result_product_off_hint
+        ProductSite.AMAZON -> R.string.result_product_amazon_hint
+    }
 
-private fun ProductSite.icon() = when (this) {
-    ProductSite.GOOGLE -> AppIcons.Search
-    ProductSite.OPEN_FOOD_FACTS -> AppIcons.Product
-    ProductSite.AMAZON -> AppIcons.Link
-}
+private fun ProductSite.icon() =
+    when (this) {
+        ProductSite.GOOGLE -> AppIcons.Search
+        ProductSite.OPEN_FOOD_FACTS -> AppIcons.Product
+        ProductSite.AMAZON -> AppIcons.Link
+    }

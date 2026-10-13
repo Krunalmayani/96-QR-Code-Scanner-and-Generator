@@ -47,13 +47,14 @@ private fun ButtonBase(
     val bg = if (enabled) container else colors.surfaceVariant
     val fg = if (enabled) content else colors.inkSecondary.copy(alpha = 0.75f)
     Row(
-        modifier = modifier
-            .heightIn(min = height)
-            .clip(shape)
-            .background(bg)
-            .then(if (border != null && enabled) Modifier.border(border, shape) else Modifier)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
-            .padding(horizontal = horizontalPadding),
+        modifier =
+            modifier
+                .heightIn(min = height)
+                .clip(shape)
+                .background(bg)
+                .then(if (border != null && enabled) Modifier.border(border, shape) else Modifier)
+                .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+                .padding(horizontal = horizontalPadding),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -166,19 +167,38 @@ fun IconButtonRounded(
     val bg: Color
     val fg: Color
     when (style) {
-        IconButtonStyle.Plain -> { bg = Color.Transparent; fg = c.ink }
-        IconButtonStyle.Filled -> { bg = c.surfaceVariant; fg = c.ink }
-        IconButtonStyle.Tonal -> { bg = c.primaryContainer; fg = c.onPrimaryContainer }
-        IconButtonStyle.Primary -> { bg = c.primary; fg = c.onPrimary }
-        IconButtonStyle.OnCamera -> { bg = CameraColors.glass; fg = CameraColors.onGlass }
-        IconButtonStyle.OnCameraActive -> { bg = Color.White; fg = Color(0xFF13142B) }
+        IconButtonStyle.Plain -> {
+            bg = Color.Transparent
+            fg = c.ink
+        }
+        IconButtonStyle.Filled -> {
+            bg = c.surfaceVariant
+            fg = c.ink
+        }
+        IconButtonStyle.Tonal -> {
+            bg = c.primaryContainer
+            fg = c.onPrimaryContainer
+        }
+        IconButtonStyle.Primary -> {
+            bg = c.primary
+            fg = c.onPrimary
+        }
+        IconButtonStyle.OnCamera -> {
+            bg = CameraColors.glass
+            fg = CameraColors.onGlass
+        }
+        IconButtonStyle.OnCameraActive -> {
+            bg = Color.White
+            fg = Color(0xFF13142B)
+        }
     }
     Box(
-        modifier = modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(bg)
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
+        modifier =
+            modifier
+                .size(size)
+                .clip(CircleShape)
+                .background(bg)
+                .clickable(enabled = enabled, role = Role.Button, onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Icon(

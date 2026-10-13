@@ -14,7 +14,9 @@ data class BatchEntry(
  * Adding a code that is already in the batch (same payload and format) is ignored, so the count badge only
  * grows for new codes. The batch holds at most [MAX_SIZE] codes.
  */
-data class ScanBatch(val entries: List<BatchEntry> = emptyList()) {
+data class ScanBatch(
+    val entries: List<BatchEntry> = emptyList(),
+) {
     val size: Int get() = entries.size
     val isEmpty: Boolean get() = entries.isEmpty()
     val isFull: Boolean get() = entries.size >= MAX_SIZE

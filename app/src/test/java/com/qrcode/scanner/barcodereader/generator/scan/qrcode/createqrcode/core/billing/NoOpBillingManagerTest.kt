@@ -11,22 +11,25 @@ class NoOpBillingManagerTest {
     private val billing: BillingManager = NoOpBillingManager()
 
     @Test
-    fun `nobody is ad free by default`() = runTest {
-        assertFalse(billing.isAdFree.first())
-    }
-
-    @Test
-    fun `ad free flow emits a single false and completes`() = runTest {
-        billing.isAdFree.test {
-            assertEquals(false, awaitItem())
-            awaitComplete()
+    fun `nobody is ad free by default`() =
+        runTest {
+            assertFalse(billing.isAdFree.first())
         }
-    }
 
     @Test
-    fun `purchase is not available and does nothing`() = runTest {
-        assertFalse(billing.isPurchaseAvailable)
-        billing.purchaseRemoveAds()
-        assertFalse(billing.isAdFree.first())
-    }
+    fun `ad free flow emits a single false and completes`() =
+        runTest {
+            billing.isAdFree.test {
+                assertEquals(false, awaitItem())
+                awaitComplete()
+            }
+        }
+
+    @Test
+    fun `purchase is not available and does nothing`() =
+        runTest {
+            assertFalse(billing.isPurchaseAvailable)
+            billing.purchaseRemoveAds()
+            assertFalse(billing.isAdFree.first())
+        }
 }

@@ -38,22 +38,24 @@ internal fun rememberWhenText(createdAt: Long): String {
 internal fun headerCaption(record: ScanRecord): String {
     val whenText = rememberWhenText(record.createdAt)
     if (record.source == ScanSource.CREATED) return whenText
-    val kind = when (CodeKinds.of(record.format)) {
-        CodeKind.QR -> stringResource(R.string.result_kind_qr)
-        CodeKind.BARCODE -> stringResource(R.string.result_kind_barcode)
-        CodeKind.OTHER -> record.format.displayName
-    }
+    val kind =
+        when (CodeKinds.of(record.format)) {
+            CodeKind.QR -> stringResource(R.string.result_kind_qr)
+            CodeKind.BARCODE -> stringResource(R.string.result_kind_barcode)
+            CodeKind.OTHER -> record.format.displayName
+        }
     return stringResource(R.string.result_caption, whenText, kind)
 }
 
 @Composable
-internal fun sourceLabel(source: ScanSource): String = stringResource(
-    when (source) {
-        ScanSource.CAMERA -> R.string.result_source_camera
-        ScanSource.IMAGE -> R.string.result_source_image
-        ScanSource.CREATED -> R.string.result_source_created
-    },
-)
+internal fun sourceLabel(source: ScanSource): String =
+    stringResource(
+        when (source) {
+            ScanSource.CAMERA -> R.string.result_source_camera
+            ScanSource.IMAGE -> R.string.result_source_image
+            ScanSource.CREATED -> R.string.result_source_created
+        },
+    )
 
 /** Date part of an event time. All-day events are stored at UTC midnight, so they are formatted in UTC. */
 @Composable
@@ -74,8 +76,8 @@ internal fun rememberEventTime(millis: Long): String {
 
 /** Month abbreviation and day number for the date tile of an event header. */
 @Composable
-internal fun rememberEventTile(millis: Long, allDay: Boolean): Pair<String, String> {
-    return remember(millis, allDay) {
+internal fun rememberEventTile(millis: Long, allDay: Boolean): Pair<String, String> =
+    remember(millis, allDay) {
         val month = SimpleDateFormat("MMM", Locale.getDefault())
         val day = SimpleDateFormat("d", Locale.getDefault())
         if (allDay) {
@@ -85,4 +87,3 @@ internal fun rememberEventTile(millis: Long, allDay: Boolean): Pair<String, Stri
         val date = Date(millis)
         month.format(date).uppercase(Locale.getDefault()) to day.format(date)
     }
-}

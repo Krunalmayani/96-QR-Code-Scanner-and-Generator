@@ -45,7 +45,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 
 /** The three onboarding slides (artboards s02 to s04). */
-internal enum class OnboardingSlide(@StringRes val title: Int, @StringRes val body: Int) {
+internal enum class OnboardingSlide(
+    @StringRes val title: Int,
+    @StringRes val body: Int,
+) {
     Scan(R.string.onb_slide1_title, R.string.onb_slide1_body),
     Create(R.string.onb_slide2_title, R.string.onb_slide2_body),
     Privacy(R.string.onb_slide3_title, R.string.onb_slide3_body),
@@ -114,13 +117,14 @@ private fun SlideHero(
         BoxWithConstraints(Modifier.fillMaxSize().statusBarsPadding().padding(vertical = 16.dp)) {
             val scale = minOf(1f, maxWidth / stageWidth, maxHeight / stageHeight)
             Box(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .requiredSize(stageWidth, stageHeight)
-                    .graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                    },
+                modifier =
+                    Modifier
+                        .align(Alignment.Center)
+                        .requiredSize(stageWidth, stageHeight)
+                        .graphicsLayer {
+                            scaleX = scale
+                            scaleY = scale
+                        },
                 content = stage,
             )
         }
@@ -136,8 +140,12 @@ private fun BoxScope.ScanStage() {
             Modifier
                 .align(Alignment.Center)
                 .size(188.dp)
-                .shadow(20.dp, RoundedCornerShape(24.dp), ambientColor = OnboardingColors.cardShadow, spotColor = OnboardingColors.cardShadow)
-                .background(Color.White, RoundedCornerShape(24.dp)),
+                .shadow(
+                    20.dp,
+                    RoundedCornerShape(24.dp),
+                    ambientColor = OnboardingColors.cardShadow,
+                    spotColor = OnboardingColors.cardShadow,
+                ).background(Color.White, RoundedCornerShape(24.dp)),
             contentAlignment = Alignment.Center,
         ) {
             QrIllustration(dimension = 160.dp, styled = false)
@@ -235,11 +243,12 @@ private fun HeroChip(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier
-            .height(40.dp)
-            .shadow(8.dp, RoundedCornerShape(20.dp))
-            .background(OnboardingColors.chipSurface, RoundedCornerShape(20.dp))
-            .padding(start = 12.dp, end = 16.dp),
+        modifier =
+            modifier
+                .height(40.dp)
+                .shadow(8.dp, RoundedCornerShape(20.dp))
+                .background(OnboardingColors.chipSurface, RoundedCornerShape(20.dp))
+                .padding(start = 12.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -259,27 +268,28 @@ private fun DetectedBrackets(modifier: Modifier = Modifier) {
         val t = stroke
         val r = size.width - stroke
         val b = size.height - stroke
-        val corners = Path().apply {
-            moveTo(l, t + len)
-            lineTo(l, t + radius)
-            arcTo(Rect(l, t, l + 2 * radius, t + 2 * radius), 180f, 90f, false)
-            lineTo(l + len, t)
+        val corners =
+            Path().apply {
+                moveTo(l, t + len)
+                lineTo(l, t + radius)
+                arcTo(Rect(l, t, l + 2 * radius, t + 2 * radius), 180f, 90f, false)
+                lineTo(l + len, t)
 
-            moveTo(r - len, t)
-            lineTo(r - radius, t)
-            arcTo(Rect(r - 2 * radius, t, r, t + 2 * radius), 270f, 90f, false)
-            lineTo(r, t + len)
+                moveTo(r - len, t)
+                lineTo(r - radius, t)
+                arcTo(Rect(r - 2 * radius, t, r, t + 2 * radius), 270f, 90f, false)
+                lineTo(r, t + len)
 
-            moveTo(r, b - len)
-            lineTo(r, b - radius)
-            arcTo(Rect(r - 2 * radius, b - 2 * radius, r, b), 0f, 90f, false)
-            lineTo(r - len, b)
+                moveTo(r, b - len)
+                lineTo(r, b - radius)
+                arcTo(Rect(r - 2 * radius, b - 2 * radius, r, b), 0f, 90f, false)
+                lineTo(r - len, b)
 
-            moveTo(l + len, b)
-            lineTo(l + radius, b)
-            arcTo(Rect(l, b - 2 * radius, l + 2 * radius, b), 90f, 90f, false)
-            lineTo(l, b - len)
-        }
+                moveTo(l + len, b)
+                lineTo(l + radius, b)
+                arcTo(Rect(l, b - 2 * radius, l + 2 * radius, b), 90f, 90f, false)
+                lineTo(l, b - len)
+            }
         drawPath(corners, OnboardingColors.detectedBracket, style = Stroke(width = 4.dp.toPx(), cap = StrokeCap.Round))
     }
 }

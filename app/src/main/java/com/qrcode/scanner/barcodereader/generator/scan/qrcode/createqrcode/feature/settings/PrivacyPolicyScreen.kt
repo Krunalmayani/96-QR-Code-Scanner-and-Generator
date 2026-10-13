@@ -77,11 +77,12 @@ fun PrivacyPolicyScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             PrivacyHero()
@@ -119,11 +120,12 @@ fun PrivacyPolicyScreen(
 private fun PrivacyHero() {
     val c = AppTheme.colors
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer)))
-            .padding(20.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer)))
+                .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(AppIcons.Shield, contentDescription = null, tint = c.onPrimary)
@@ -134,12 +136,14 @@ private fun PrivacyHero() {
 
 @Preview(name = "S60_PrivacyPolicy_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S60_PrivacyPolicy_Light() = AppTheme(dark = false) {
-    PrivacyPolicyScreen(onReadFullPolicy = {}, onBack = {})
-}
+private fun S60_PrivacyPolicy_Light() =
+    AppTheme(dark = false) {
+        PrivacyPolicyScreen(onReadFullPolicy = {}, onBack = {})
+    }
 
 @Preview(name = "S60_PrivacyPolicy_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S60_PrivacyPolicy_Dark() = AppTheme(dark = true) {
-    PrivacyPolicyScreen(onReadFullPolicy = {}, onBack = {})
-}
+private fun S60_PrivacyPolicy_Dark() =
+    AppTheme(dark = true) {
+        PrivacyPolicyScreen(onReadFullPolicy = {}, onBack = {})
+    }

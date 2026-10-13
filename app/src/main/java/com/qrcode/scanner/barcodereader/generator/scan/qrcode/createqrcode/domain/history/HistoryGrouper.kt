@@ -11,18 +11,24 @@ sealed interface DayLabel {
 
     data object Yesterday : DayLabel
 
-    data class Date(val date: LocalDate) : DayLabel
+    data class Date(
+        val date: LocalDate,
+    ) : DayLabel
 
     /** Stable id for list keys. */
     val key: String
-        get() = when (this) {
-            Today -> "today"
-            Yesterday -> "yesterday"
-            is Date -> "date-$date"
-        }
+        get() =
+            when (this) {
+                Today -> "today"
+                Yesterday -> "yesterday"
+                is Date -> "date-$date"
+            }
 }
 
-data class DayGroup(val label: DayLabel, val records: List<ScanRecord>)
+data class DayGroup(
+    val label: DayLabel,
+    val records: List<ScanRecord>,
+)
 
 object HistoryGrouper {
     /**
@@ -41,9 +47,10 @@ object HistoryGrouper {
             .map { DayGroup(labelFor(it.key, today), it.value) }
     }
 
-    fun labelFor(day: LocalDate, today: LocalDate): DayLabel = when (day) {
-        today -> DayLabel.Today
-        today.minusDays(1) -> DayLabel.Yesterday
-        else -> DayLabel.Date(day)
-    }
+    fun labelFor(day: LocalDate, today: LocalDate): DayLabel =
+        when (day) {
+            today -> DayLabel.Today
+            today.minusDays(1) -> DayLabel.Yesterday
+            else -> DayLabel.Date(day)
+        }
 }

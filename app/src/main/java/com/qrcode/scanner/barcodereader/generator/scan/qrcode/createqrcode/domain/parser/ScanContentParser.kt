@@ -31,7 +31,9 @@ import java.time.ZoneId
  *
  * @param defaultZone zone used for floating (zone-less) iCalendar times.
  */
-class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()) {
+class ScanContentParser(
+    private val defaultZone: ZoneId = ZoneId.systemDefault(),
+) {
     private val events = EventParser(defaultZone)
 
     fun parse(rawValue: String, format: CodeFormat): ScanContent =
@@ -42,7 +44,7 @@ class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()
         }
 
     private fun classify(raw: String, format: CodeFormat): ScanContent {
-        val text = raw.removePrefix("﻿").trim()
+        val text = raw.removePrefix("\uFEFF").trim()
         if (text.isEmpty() || hasBinary(text)) return ScanContent.Unknown(raw, format)
         return product(text, raw, format)
             ?: structured(text, raw, format)
@@ -63,25 +65,26 @@ class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()
 
     // ---- 3..12 prefix based -----------------------------------------------------------------------------------
 
-    private fun structured(text: String, raw: String, format: CodeFormat): ScanContent? = when {
-        text.startsWith("WIFI:", ignoreCase = true) -> WifiParser.parse(text, raw, format)
-        text.startsWith("BEGIN:VCARD", ignoreCase = true) -> ContactParser.parseVCard(text, raw, format)
-        text.startsWith("MECARD:", ignoreCase = true) -> ContactParser.parseMeCard(text, raw, format)
-        text.startsWith("BEGIN:VEVENT", ignoreCase = true) || text.startsWith("BEGIN:VCALENDAR", ignoreCase = true) ->
-            events.parse(text, raw, format)
-        text.startsWith("MATMSG:", ignoreCase = true) -> matmsg(text, raw, format)
-        text.startsWith("mailto:", ignoreCase = true) -> mailto(text, raw, format)
-        SMS_PREFIXES.any { text.startsWith(it, ignoreCase = true) } -> sms(text, raw, format)
-        text.startsWith("tel:", ignoreCase = true) -> tel(text, raw, format)
-        text.startsWith("geo:", ignoreCase = true) -> geo(text, raw, format)
-        text.startsWith("URLTO:", ignoreCase = true) -> urlTo(text, raw, format)
-        text.startsWith("MEBKM:", ignoreCase = true) -> mebkm(text, raw, format)
-        text.startsWith("http://", ignoreCase = true) || text.startsWith("https://", ignoreCase = true) -> web(text, raw, format)
-        else -> null
-    }.let { parsed ->
-        // A recognised-but-malformed prefix (e.g. WIFI: without S:) must not fall into the URL/domain heuristics.
-        if (parsed == null && hasKnownPrefix(text)) ScanContent.Text(raw, format) else parsed
-    }
+    private fun structured(text: String, raw: String, format: CodeFormat): ScanContent? =
+        when {
+            text.startsWith("WIFI:", ignoreCase = true) -> WifiParser.parse(text, raw, format)
+            text.startsWith("BEGIN:VCARD", ignoreCase = true) -> ContactParser.parseVCard(text, raw, format)
+            text.startsWith("MECARD:", ignoreCase = true) -> ContactParser.parseMeCard(text, raw, format)
+            text.startsWith("BEGIN:VEVENT", ignoreCase = true) || text.startsWith("BEGIN:VCALENDAR", ignoreCase = true) ->
+                events.parse(text, raw, format)
+            text.startsWith("MATMSG:", ignoreCase = true) -> matmsg(text, raw, format)
+            text.startsWith("mailto:", ignoreCase = true) -> mailto(text, raw, format)
+            SMS_PREFIXES.any { text.startsWith(it, ignoreCase = true) } -> sms(text, raw, format)
+            text.startsWith("tel:", ignoreCase = true) -> tel(text, raw, format)
+            text.startsWith("geo:", ignoreCase = true) -> geo(text, raw, format)
+            text.startsWith("URLTO:", ignoreCase = true) -> urlTo(text, raw, format)
+            text.startsWith("MEBKM:", ignoreCase = true) -> mebkm(text, raw, format)
+            text.startsWith("http://", ignoreCase = true) || text.startsWith("https://", ignoreCase = true) -> web(text, raw, format)
+            else -> null
+        }.let { parsed ->
+            // A recognised-but-malformed prefix (e.g. WIFI: without S:) must not fall into the URL/domain heuristics.
+            if (parsed == null && hasKnownPrefix(text)) ScanContent.Text(raw, format) else parsed
+        }
 
     private fun hasKnownPrefix(text: String): Boolean =
         KNOWN_PREFIXES.any { text.startsWith(it, ignoreCase = true) } || SCHEME.containsMatchIn(text.take(40))
@@ -135,11 +138,12 @@ class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()
         val q = rest.indexOf('?')
         val colon = rest.indexOf(':')
         val amp = rest.indexOf('&')
-        val queryAt = when {
-            q >= 0 && (colon < 0 || q < colon) -> q
-            colon < 0 && amp >= 0 -> amp
-            else -> -1
-        }
+        val queryAt =
+            when {
+                q >= 0 && (colon < 0 || q < colon) -> q
+                colon < 0 && amp >= 0 -> amp
+                else -> -1
+            }
         val number: String
         val message: String
         if (queryAt >= 0) {
@@ -159,7 +163,8 @@ class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()
     }
 
     private fun isDialable(number: String): Boolean =
-        number.length <= MAX_PHONE_LENGTH && number.any { it in '0'..'9' } &&
+        number.length <= MAX_PHONE_LENGTH &&
+            number.any { it in '0'..'9' } &&
             number.all { it in '0'..'9' || it in "+-().*#,; " }
 
     // ---- geo --------------------------------------------------------------------------------------------------
@@ -205,15 +210,39 @@ class ScanContentParser(private val defaultZone: ZoneId = ZoneId.systemDefault()
 
     private companion object {
         val PRODUCT_LENGTHS = setOf(8, 12, 13)
-        val LINEAR_FORMATS = setOf(
-            CodeFormat.EAN_13, CodeFormat.EAN_8, CodeFormat.UPC_A, CodeFormat.UPC_E, CodeFormat.CODE_128,
-            CodeFormat.CODE_39, CodeFormat.CODE_93, CodeFormat.ITF, CodeFormat.CODABAR,
-        )
+        val LINEAR_FORMATS =
+            setOf(
+                CodeFormat.EAN_13,
+                CodeFormat.EAN_8,
+                CodeFormat.UPC_A,
+                CodeFormat.UPC_E,
+                CodeFormat.CODE_128,
+                CodeFormat.CODE_39,
+                CodeFormat.CODE_93,
+                CodeFormat.ITF,
+                CodeFormat.CODABAR,
+            )
         val SMS_PREFIXES = listOf("smsto:", "mmsto:", "sms:", "mms:")
-        val KNOWN_PREFIXES = listOf(
-            "WIFI:", "BEGIN:VCARD", "MECARD:", "BEGIN:VEVENT", "BEGIN:VCALENDAR", "MATMSG:", "mailto:", "smsto:", "mmsto:",
-            "sms:", "mms:", "tel:", "geo:", "URLTO:", "MEBKM:", "http://", "https://",
-        )
+        val KNOWN_PREFIXES =
+            listOf(
+                "WIFI:",
+                "BEGIN:VCARD",
+                "MECARD:",
+                "BEGIN:VEVENT",
+                "BEGIN:VCALENDAR",
+                "MATMSG:",
+                "mailto:",
+                "smsto:",
+                "mmsto:",
+                "sms:",
+                "mms:",
+                "tel:",
+                "geo:",
+                "URLTO:",
+                "MEBKM:",
+                "http://",
+                "https://",
+            )
         const val MAX_EMAIL_LENGTH = 254
         const val MAX_PHONE_LENGTH = 40
         val EMAIL = Regex("[A-Za-z0-9._%+'-]+@[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}")

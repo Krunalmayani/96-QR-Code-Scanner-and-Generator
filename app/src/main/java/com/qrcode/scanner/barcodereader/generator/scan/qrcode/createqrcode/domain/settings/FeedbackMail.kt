@@ -3,7 +3,9 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
 import java.net.URLEncoder
 
 /** Topic chips on the feedback form. [mailLabel] is the English name written into the e-mail for the developer. */
-enum class FeedbackTopic(val mailLabel: String) {
+enum class FeedbackTopic(
+    val mailLabel: String,
+) {
     SCANNING("Scanning"),
     CREATING("Creating"),
     DESIGN("Design"),
@@ -36,15 +38,22 @@ object FeedbackMail {
         replyEmail: String,
         appInfo: String,
         deviceInfo: String,
-    ): String = buildString {
-        append(message.trim().take(MAX_MESSAGE_LENGTH))
-        append("\n\n---\n")
-        append("Topic: ").append(topic.mailLabel).append('\n')
-        if (rating in 1..MAX_STARS) append("Rating: ").append(rating).append('/').append(MAX_STARS).append('\n')
-        if (replyEmail.isNotBlank()) append("Reply to: ").append(replyEmail.trim()).append('\n')
-        append("App: ").append(appInfo).append('\n')
-        append("Device: ").append(deviceInfo)
-    }
+    ): String =
+        buildString {
+            append(message.trim().take(MAX_MESSAGE_LENGTH))
+            append("\n\n---\n")
+            append("Topic: ").append(topic.mailLabel).append('\n')
+            if (rating in 1..MAX_STARS) {
+                append("Rating: ")
+                    .append(rating)
+                    .append('/')
+                    .append(MAX_STARS)
+                    .append('\n')
+            }
+            if (replyEmail.isNotBlank()) append("Reply to: ").append(replyEmail.trim()).append('\n')
+            append("App: ").append(appInfo).append('\n')
+            append("Device: ").append(deviceInfo)
+        }
 
     /** `mailto:` URI string with percent-encoded subject and body (spaces as %20, not +). */
     fun mailtoUri(recipient: String, subject: String, body: String): String {

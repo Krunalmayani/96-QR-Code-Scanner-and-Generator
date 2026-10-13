@@ -10,19 +10,23 @@ import org.junit.jupiter.api.Test
 class HistoryTextTest {
     @Test
     fun `share text lists raw values one per line`() {
-        val text = HistoryShareText.build(
-            listOf(
-                Fixtures.record(Fixtures.website("https://a.com")),
-                Fixtures.record(Fixtures.text("hello")),
-            ),
-        )
+        val text =
+            HistoryShareText.build(
+                listOf(
+                    Fixtures.record(Fixtures.website("https://a.com")),
+                    Fixtures.record(Fixtures.text("hello")),
+                ),
+            )
         assertEquals("https://a.com\nhello", text)
     }
 
     @Test
     fun `multi line records are separated by a blank line and blanks are skipped`() {
         val contact = ScanContent.Contact("BEGIN:VCARD\nFN:Sophie\nEND:VCARD", CodeFormat.QR_CODE, name = "Sophie")
-        val text = HistoryShareText.build(listOf(Fixtures.record(contact), Fixtures.record(Fixtures.text("   ")), Fixtures.record(Fixtures.text("x"))))
+        val text =
+            HistoryShareText.build(
+                listOf(Fixtures.record(contact), Fixtures.record(Fixtures.text("   ")), Fixtures.record(Fixtures.text("x"))),
+            )
         assertEquals("BEGIN:VCARD\nFN:Sophie\nEND:VCARD\n\nx", text)
     }
 

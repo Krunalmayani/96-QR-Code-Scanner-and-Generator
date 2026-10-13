@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QR Code Scanner and Generator</string>
+    <string name="app_name" translatable="false">QR Code Scanner and Generator</string>
     <!-- Replace with the real hosted policy before publishing. -->
     <string name="privacy_policy_url" translatable="false">https://example.com/privacy</string>
 </resources>

@@ -54,11 +54,12 @@ fun CodeCard(
 ) {
     val shape = AppTheme.shapes.card
     Box(
-        modifier = modifier
-            .clip(shape)
-            .background(PaperColor)
-            .border(1.dp, AppTheme.colors.outline, shape)
-            .padding(12.dp),
+        modifier =
+            modifier
+                .clip(shape)
+                .background(PaperColor)
+                .border(1.dp, AppTheme.colors.outline, shape)
+                .padding(12.dp),
         contentAlignment = Alignment.Center,
     ) {
         if (image != null) {
@@ -84,11 +85,12 @@ fun CodeCard(
 @Composable
 fun rememberLogoBitmap(uri: String?): ImageBitmap? {
     val loaded by produceState<ImageBitmap?>(initialValue = null, uri) {
-        value = if (uri == null) {
-            null
-        } else {
-            withContext(Dispatchers.IO) { LogoDecoder.decode(uri)?.asImageBitmap() }
-        }
+        value =
+            if (uri == null) {
+                null
+            } else {
+                withContext(Dispatchers.IO) { LogoDecoder.decode(uri)?.asImageBitmap() }
+            }
     }
     return if (uri == null) null else loaded
 }

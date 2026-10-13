@@ -86,22 +86,24 @@ fun AppNav(onboardingDone: Boolean) {
     }
 }
 
-private fun NavDestination.toTab(): BottomTab? = when {
-    hasRoute<Scan>() -> BottomTab.Scan
-    hasRoute<CreateHub>() -> BottomTab.Create
-    hasRoute<History>() -> BottomTab.History
-    hasRoute<Settings>() -> BottomTab.Settings
-    else -> null
-}
+private fun NavDestination.toTab(): BottomTab? =
+    when {
+        hasRoute<Scan>() -> BottomTab.Scan
+        hasRoute<CreateHub>() -> BottomTab.Create
+        hasRoute<History>() -> BottomTab.History
+        hasRoute<Settings>() -> BottomTab.Settings
+        else -> null
+    }
 
 /** Switches tab keeping each tab's back stack and state; Scan is the root. */
 fun NavHostController.navigateToTab(tab: BottomTab) {
-    val route: Any = when (tab) {
-        BottomTab.Create -> CreateHub
-        BottomTab.Scan -> Scan
-        BottomTab.History -> History
-        BottomTab.Settings -> Settings
-    }
+    val route: Any =
+        when (tab) {
+            BottomTab.Create -> CreateHub
+            BottomTab.Scan -> Scan
+            BottomTab.History -> History
+            BottomTab.Settings -> Settings
+        }
     navigate(route) {
         popUpTo<Scan> { saveState = true }
         launchSingleTop = true

@@ -16,23 +16,40 @@ import kotlin.math.abs
 class VectorBuilderTest {
     private val matrix = CodeEncoder.encodeQr("https://www.brewhouse-coffee.com/menu?table=12", ErrorCorrection.M)
 
-    private fun bounds(shape: VectorShape): FloatArray? = when (shape) {
-        is VectorShape.Rect -> floatArrayOf(shape.x, shape.y, shape.x + shape.width, shape.y + shape.height)
-        is VectorShape.Circle -> floatArrayOf(shape.cx - shape.r, shape.cy - shape.r, shape.cx + shape.r, shape.cy + shape.r)
-        is VectorShape.Path -> {
-            val xs = ArrayList<Float>()
-            val ys = ArrayList<Float>()
-            for (c in shape.commands) when (c) {
-                is PathCommand.MoveTo -> { xs += c.x; ys += c.y }
-                is PathCommand.LineTo -> { xs += c.x; ys += c.y }
-                is PathCommand.QuadTo -> { xs += c.x; ys += c.y }
-                is PathCommand.ArcTo -> { xs += c.cx - c.r; xs += c.cx + c.r; ys += c.cy - c.r; ys += c.cy + c.r }
-                PathCommand.Close -> Unit
+    private fun bounds(shape: VectorShape): FloatArray? =
+        when (shape) {
+            is VectorShape.Rect -> floatArrayOf(shape.x, shape.y, shape.x + shape.width, shape.y + shape.height)
+            is VectorShape.Circle -> floatArrayOf(shape.cx - shape.r, shape.cy - shape.r, shape.cx + shape.r, shape.cy + shape.r)
+            is VectorShape.Path -> {
+                val xs = ArrayList<Float>()
+                val ys = ArrayList<Float>()
+                for (c in shape.commands) {
+                    when (c) {
+                        is PathCommand.MoveTo -> {
+                            xs += c.x
+                            ys += c.y
+                        }
+                        is PathCommand.LineTo -> {
+                            xs += c.x
+                            ys += c.y
+                        }
+                        is PathCommand.QuadTo -> {
+                            xs += c.x
+                            ys += c.y
+                        }
+                        is PathCommand.ArcTo -> {
+                            xs += c.cx - c.r
+                            xs += c.cx + c.r
+                            ys += c.cy - c.r
+                            ys += c.cy + c.r
+                        }
+                        PathCommand.Close -> Unit
+                    }
+                }
+                floatArrayOf(xs.min(), ys.min(), xs.max(), ys.max())
             }
-            floatArrayOf(xs.min(), ys.min(), xs.max(), ys.max())
+            is VectorShape.Text -> null
         }
-        is VectorShape.Text -> null
-    }
 
     private fun assertInside(img: QrVectorImage) {
         val eps = 0.001f
@@ -61,14 +78,16 @@ class VectorBuilderTest {
     }
 
     @Test fun everyShapeCombinationStaysInBoundsAndHasThreeEyes() {
-        for (dot in DotShape.entries) for (eye in EyeShape.entries) {
-            val style = QrStyle(dotShape = dot, eyeShape = eye)
-            val img = QrVectorBuilder.build(matrix, style)
-            assertInside(img)
-            val eyes = eyeItems(img, 2, matrix.width)
-            assertEquals(6, eyes.size, "ring + pupil per eye for $dot/$eye")
-            assertEquals(3, eyes.count { it.shape is VectorShape.Path && (it.shape as VectorShape.Path).evenOdd })
-            assertTrue(img.items.isNotEmpty())
+        for (dot in DotShape.entries) {
+            for (eye in EyeShape.entries) {
+                val style = QrStyle(dotShape = dot, eyeShape = eye)
+                val img = QrVectorBuilder.build(matrix, style)
+                assertInside(img)
+                val eyes = eyeItems(img, 2, matrix.width)
+                assertEquals(6, eyes.size, "ring + pupil per eye for $dot/$eye")
+                assertEquals(3, eyes.count { it.shape is VectorShape.Path && (it.shape as VectorShape.Path).evenOdd })
+                assertTrue(img.items.isNotEmpty())
+            }
         }
     }
 
@@ -76,8 +95,10 @@ class VectorBuilderTest {
         val img = QrVectorBuilder.build(matrix, QrStyle(), quietZoneModules = 0)
         val rects = img.items.map { it.shape }.filterIsInstance<VectorShape.Rect>()
         var darkOutsideEyes = 0
-        for (y in 0 until matrix.height) for (x in 0 until matrix.width) {
-            if (matrix[x, y] && !QrGeometry.isFinderModule(x, y, matrix.width)) darkOutsideEyes++
+        for (y in 0 until matrix.height) {
+            for (x in 0 until matrix.width) {
+                if (matrix[x, y] && !QrGeometry.isFinderModule(x, y, matrix.width)) darkOutsideEyes++
+            }
         }
         val covered = rects.filter { it.height == 1f && it.cornerRadius == 0f && it.width >= 1f && it.x + it.width <= matrix.width }
         // pupils (3x3) are not 1 high, so what remains are the merged data runs
@@ -113,14 +134,19 @@ class VectorBuilderTest {
     @Test fun gradientEndpoints() {
         val g = ShapePaint.LinearGradient(0, 0, 0f)
         val h = g.endpoints(100f, 50f)
-        assertEquals(0f, h.x0, 0.001f); assertEquals(25f, h.y0, 0.001f)
-        assertEquals(100f, h.x1, 0.001f); assertEquals(25f, h.y1, 0.001f)
+        assertEquals(0f, h.x0, 0.001f)
+        assertEquals(25f, h.y0, 0.001f)
+        assertEquals(100f, h.x1, 0.001f)
+        assertEquals(25f, h.y1, 0.001f)
         val v = ShapePaint.LinearGradient(0, 0, 90f).endpoints(100f, 50f)
-        assertEquals(50f, v.x0, 0.01f); assertEquals(0f, v.y0, 0.01f)
+        assertEquals(50f, v.x0, 0.01f)
+        assertEquals(0f, v.y0, 0.01f)
         assertEquals(50f, v.y1, 0.01f)
         val d = ShapePaint.LinearGradient(0, 0, 45f).endpoints(100f, 100f)
-        assertEquals(0f, d.x0, 0.01f); assertEquals(0f, d.y0, 0.01f)
-        assertEquals(100f, d.x1, 0.01f); assertEquals(100f, d.y1, 0.01f)
+        assertEquals(0f, d.x0, 0.01f)
+        assertEquals(0f, d.y0, 0.01f)
+        assertEquals(100f, d.x1, 0.01f)
+        assertEquals(100f, d.y1, 0.01f)
     }
 
     // ---- logo ----
@@ -160,10 +186,22 @@ class VectorBuilderTest {
 
     @Test fun effectiveErrorCorrection() {
         assertEquals(ErrorCorrection.M, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.M)))
-        assertEquals(ErrorCorrection.Q, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.L, logoUri = "x")))
-        assertEquals(ErrorCorrection.Q, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.M, logoUri = "x")))
-        assertEquals(ErrorCorrection.Q, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.Q, logoUri = "x")))
-        assertEquals(ErrorCorrection.H, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.H, logoUri = "x")))
+        assertEquals(
+            ErrorCorrection.Q,
+            QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.L, logoUri = "x")),
+        )
+        assertEquals(
+            ErrorCorrection.Q,
+            QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.M, logoUri = "x")),
+        )
+        assertEquals(
+            ErrorCorrection.Q,
+            QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.Q, logoUri = "x")),
+        )
+        assertEquals(
+            ErrorCorrection.H,
+            QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.H, logoUri = "x")),
+        )
         assertEquals(ErrorCorrection.L, QrVectorBuilder.effectiveErrorCorrection(QrStyle(errorCorrection = ErrorCorrection.L)))
     }
 
@@ -173,7 +211,11 @@ class VectorBuilderTest {
         val framed = QrVectorBuilder.build(matrix, QrStyle(frameText = "Scan me"))
         assertEquals(plain.width, framed.width)
         assertEquals(plain.height * (1 + QrVectorBuilder.FRAME_BAND_FRACTION), framed.height, 0.001f)
-        val text = framed.items.map { it.shape }.filterIsInstance<VectorShape.Text>().single()
+        val text =
+            framed.items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Text>()
+                .single()
         assertEquals("Scan me", text.text)
         assertTrue(text.y > framed.width && text.y < framed.height)
         assertTrue(text.size > 0f)
@@ -188,8 +230,23 @@ class VectorBuilderTest {
     }
 
     @Test fun longFrameTextShrinksToFit() {
-        val short = QrVectorBuilder.build(matrix, QrStyle(frameText = "Hi")).items.map { it.shape }.filterIsInstance<VectorShape.Text>().single()
-        val long = QrVectorBuilder.build(matrix, QrStyle(frameText = "Scan this code for the full menu please")).items.map { it.shape }.filterIsInstance<VectorShape.Text>().single()
+        val short =
+            QrVectorBuilder
+                .build(
+                    matrix,
+                    QrStyle(frameText = "Hi"),
+                ).items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Text>()
+                .single()
+        val long =
+            QrVectorBuilder
+                .build(matrix, QrStyle(frameText = "Scan this code for the full menu please"))
+                .items
+                .map {
+                    it.shape
+                }.filterIsInstance<VectorShape.Text>()
+                .single()
         assertTrue(long.size < short.size)
     }
 
@@ -202,7 +259,11 @@ class VectorBuilderTest {
         val barModules = rects.sumOf { it.width.toInt() }
         assertEquals(m.darkCount(), barModules)
         assertTrue(rects.all { it.x >= BarcodeVectorBuilder.QUIET_1D && it.x + it.width <= img.width - BarcodeVectorBuilder.QUIET_1D })
-        val text = img.items.map { it.shape }.filterIsInstance<VectorShape.Text>().single()
+        val text =
+            img.items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Text>()
+                .single()
         assertEquals("4006381333931", text.text)
         assertTrue(text.y < img.height)
         assertInside(img)
@@ -234,7 +295,13 @@ class VectorBuilderTest {
         assertEquals((m.width + 2 * BarcodeVectorBuilder.QUIET_2D).toFloat(), img.width)
         assertEquals((m.height + 2 * BarcodeVectorBuilder.QUIET_2D).toFloat(), img.height)
         assertTrue(img.items.none { it.shape is VectorShape.Text })
-        assertEquals(m.darkCount(), img.items.map { it.shape }.filterIsInstance<VectorShape.Rect>().sumOf { it.width.toInt() })
+        assertEquals(
+            m.darkCount(),
+            img.items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Rect>()
+                .sumOf { it.width.toInt() },
+        )
         assertInside(img)
     }
 
@@ -250,17 +317,35 @@ class VectorBuilderTest {
         val qr = CodeRenderer.render(CreateSpec.Website("example.com"), QrStyle(logoUri = "x"))
         assertNotNull(qr.logoRect)
         val bar = CodeRenderer.render(CreateSpec.Barcode(CreateType.BARCODE_EAN_8, "9638507"), QrStyle())
-        assertEquals("96385074", bar.items.map { it.shape }.filterIsInstance<VectorShape.Text>().single().text)
+        assertEquals(
+            "96385074",
+            bar.items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Text>()
+                .single()
+                .text,
+        )
         val aztec = CodeRenderer.render(CodeFormat.AZTEC, "x", QrStyle())
         assertTrue(aztec.items.isNotEmpty())
     }
 
     @Test fun pathCommandsStartWithMoveToAndRingsHaveTwoSubpaths() {
         val img = QrVectorBuilder.build(matrix, QrStyle(eyeShape = EyeShape.ROUNDED))
-        val ring = img.items.map { it.shape }.filterIsInstance<VectorShape.Path>().first { it.evenOdd }
+        val ring =
+            img.items
+                .map { it.shape }
+                .filterIsInstance<VectorShape.Path>()
+                .first { it.evenOdd }
         assertTrue(ring.commands.first() is PathCommand.MoveTo)
         assertEquals(2, ring.commands.count { it is PathCommand.MoveTo })
         assertEquals(2, ring.commands.count { it == PathCommand.Close })
-        assertTrue(abs(ring.commands.filterIsInstance<PathCommand.ArcTo>().first().sweepAngleDegrees) == 90f)
+        assertTrue(
+            abs(
+                ring.commands
+                    .filterIsInstance<PathCommand.ArcTo>()
+                    .first()
+                    .sweepAngleDegrees,
+            ) == 90f,
+        )
     }
 }

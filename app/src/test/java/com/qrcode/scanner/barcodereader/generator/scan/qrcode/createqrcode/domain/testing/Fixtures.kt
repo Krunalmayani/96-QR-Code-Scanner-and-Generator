@@ -20,12 +20,13 @@ object Fixtures {
         id: Long = 0,
         isFavorite: Boolean = false,
         note: String = "",
-    ): ScanRecord = ScanRecord(
-        id = id,
-        content = content,
-        createdAt = createdAt,
-        source = source,
-        isFavorite = isFavorite,
-        note = note,
-    )
+    ): ScanRecord =
+        ScanRecord(
+            id = id,
+            content = content,
+            createdAt = createdAt,
+            source = source,
+            isFavorite = isFavorite,
+            note = note,
+        )
 }

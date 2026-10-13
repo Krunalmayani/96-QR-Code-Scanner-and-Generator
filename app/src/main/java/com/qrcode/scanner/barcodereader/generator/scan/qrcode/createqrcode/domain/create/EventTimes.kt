@@ -4,7 +4,10 @@ import java.util.Calendar
 import java.util.TimeZone
 
 /** Hour and minute of a wall-clock time. */
-data class TimeOfDay(val hour: Int, val minute: Int)
+data class TimeOfDay(
+    val hour: Int,
+    val minute: Int,
+)
 
 /**
  * Converts between what the Material3 pickers hand over (a date as UTC midnight millis, an hour and a minute) and the
@@ -22,19 +25,23 @@ object EventTimes {
     /** The instant at [time] on the calendar day that [utcDateMillis] (UTC midnight from a date picker) names, in [zone]. */
     fun combine(utcDateMillis: Long, time: TimeOfDay, zone: TimeZone): Long {
         val day = calendar(UTC, utcDateMillis)
-        return Calendar.getInstance(zone).apply {
-            clear()
-            set(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH), time.hour, time.minute, 0)
-        }.timeInMillis
+        return Calendar
+            .getInstance(zone)
+            .apply {
+                clear()
+                set(day.get(Calendar.YEAR), day.get(Calendar.MONTH), day.get(Calendar.DAY_OF_MONTH), time.hour, time.minute, 0)
+            }.timeInMillis
     }
 
     /** UTC midnight of the calendar day that [instantMillis] falls on in [zone] (initial selection of a date picker). */
     fun dateOf(instantMillis: Long, zone: TimeZone): Long {
         val local = calendar(zone, instantMillis)
-        return Calendar.getInstance(UTC).apply {
-            clear()
-            set(local.get(Calendar.YEAR), local.get(Calendar.MONTH), local.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
-        }.timeInMillis
+        return Calendar
+            .getInstance(UTC)
+            .apply {
+                clear()
+                set(local.get(Calendar.YEAR), local.get(Calendar.MONTH), local.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
+            }.timeInMillis
     }
 
     fun timeOf(instantMillis: Long, zone: TimeZone): TimeOfDay {
@@ -44,11 +51,12 @@ object EventTimes {
 
     /** Next full hour after [nowMillis]. */
     fun defaultStart(nowMillis: Long, zone: TimeZone): Long {
-        val local = calendar(zone, nowMillis).apply {
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            set(Calendar.MILLISECOND, 0)
-        }
+        val local =
+            calendar(zone, nowMillis).apply {
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
         return local.timeInMillis + HOUR_MILLIS
     }
 
@@ -87,11 +95,12 @@ object EventTimes {
     fun withStart(event: CreateSpec.Event, newStart: Long): CreateSpec.Event {
         val oldStart = event.startMillis
         val end = event.endMillis
-        val newEnd = when {
-            end == null -> null
-            oldStart == null -> maxOf(end, newStart)
-            else -> end + (newStart - oldStart)
-        }
+        val newEnd =
+            when {
+                end == null -> null
+                oldStart == null -> maxOf(end, newStart)
+                else -> end + (newStart - oldStart)
+            }
         return event.copy(startMillis = newStart, endMillis = newEnd)
     }
 

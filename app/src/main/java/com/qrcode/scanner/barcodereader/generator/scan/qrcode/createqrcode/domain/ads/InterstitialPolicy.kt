@@ -37,13 +37,14 @@ class InterstitialPolicy(
     fun isFirstSession(nowMs: Long, firstLaunchAtMs: Long): Boolean =
         firstLaunchAtMs <= 0L || nowMs - firstLaunchAtMs < firstSessionMs
 
-    fun shouldShow(input: InterstitialInput): Boolean = when {
-        !input.adsAllowed || !input.onboardingDone -> false
-        input.fullScreenAdShowing || !input.adReady -> false
-        input.resultsSinceLastInterstitial < everyN -> false
-        isFirstSession(input.nowMs, input.firstLaunchAtMs) -> false
-        else -> minIntervalElapsed(input.nowMs, input.lastInterstitialAtMs)
-    }
+    fun shouldShow(input: InterstitialInput): Boolean =
+        when {
+            !input.adsAllowed || !input.onboardingDone -> false
+            input.fullScreenAdShowing || !input.adReady -> false
+            input.resultsSinceLastInterstitial < everyN -> false
+            isFirstSession(input.nowMs, input.firstLaunchAtMs) -> false
+            else -> minIntervalElapsed(input.nowMs, input.lastInterstitialAtMs)
+        }
 
     /** A last-shown time in the future is corrupt (clock moved back) and must not block ads for good. */
     private fun minIntervalElapsed(nowMs: Long, lastAtMs: Long): Boolean =

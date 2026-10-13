@@ -90,11 +90,12 @@ private fun BlockedHeader(block: CameraBlock) {
         Icon(AppIcons.Camera, contentDescription = null, tint = colors.error, modifier = Modifier.size(64.dp))
     }
     val title = if (block == CameraBlock.Unavailable) R.string.scan_unavailable_title else R.string.scan_denied_title
-    val message = when (block) {
-        CameraBlock.PermissionDenied -> R.string.scan_denied_message_request
-        CameraBlock.PermissionPermanentlyDenied -> R.string.scan_denied_message_settings
-        CameraBlock.Unavailable -> R.string.scan_unavailable_message
-    }
+    val message =
+        when (block) {
+            CameraBlock.PermissionDenied -> R.string.scan_denied_message_request
+            CameraBlock.PermissionPermanentlyDenied -> R.string.scan_denied_message_settings
+            CameraBlock.Unavailable -> R.string.scan_unavailable_message
+        }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(stringResource(title), style = AppTheme.type.headline, color = colors.ink, textAlign = TextAlign.Center)
         Text(stringResource(message), style = AppTheme.type.body, color = colors.inkSecondary, textAlign = TextAlign.Center)
@@ -103,11 +104,12 @@ private fun BlockedHeader(block: CameraBlock) {
 
 @Composable
 private fun BlockedActions(block: CameraBlock, onPrimary: () -> Unit, onPickImage: () -> Unit) {
-    val primary = when (block) {
-        CameraBlock.PermissionDenied -> R.string.scan_request_again
-        CameraBlock.PermissionPermanentlyDenied -> R.string.scan_open_settings
-        CameraBlock.Unavailable -> R.string.common_retry
-    }
+    val primary =
+        when (block) {
+            CameraBlock.PermissionDenied -> R.string.scan_request_again
+            CameraBlock.PermissionPermanentlyDenied -> R.string.scan_open_settings
+            CameraBlock.Unavailable -> R.string.common_retry
+        }
     val icon = if (block == CameraBlock.PermissionPermanentlyDenied) AppIcons.SettingsGear else AppIcons.Camera
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         PrimaryButton(stringResource(primary), onPrimary, Modifier.fillMaxWidth(), leadingIcon = icon)

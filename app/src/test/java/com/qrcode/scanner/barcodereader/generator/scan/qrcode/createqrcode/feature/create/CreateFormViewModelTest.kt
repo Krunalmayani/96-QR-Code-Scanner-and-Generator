@@ -30,8 +30,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testi
 import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
-import java.io.IOException
-import java.time.ZoneOffset
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -40,6 +38,8 @@ import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import java.io.IOException
+import java.time.ZoneOffset
 
 class CreateFormViewModelTest {
     @JvmField
@@ -49,10 +49,12 @@ class CreateFormViewModelTest {
     private val history = FakeHistoryRepository()
     private val settings = FakeSettingsRepository()
     private val analytics = mockk<Analytics>(relaxed = true)
-    private val parser = object : CreatedContentParser() {
-        private val real = ScanContentParser(ZoneOffset.UTC)
-        override fun parse(payload: String, format: CodeFormat): ScanContent = real.parse(payload, format)
-    }
+    private val parser =
+        object : CreatedContentParser() {
+            private val real = ScanContentParser(ZoneOffset.UTC)
+
+            override fun parse(payload: String, format: CodeFormat): ScanContent = real.parse(payload, format)
+        }
 
     private fun viewModel(
         type: CreateType?,
@@ -66,12 +68,13 @@ class CreateFormViewModelTest {
 
     @Test
     fun `an unknown type key leaves the form without a spec`() {
-        val vm = CreateFormViewModel(
-            savedStateHandle = SavedStateHandle(mapOf(CreateFormViewModel.KEY_TYPE to "NOPE")),
-            saveScan = SaveScanUseCase(history, settings),
-            parser = parser,
-            analytics = analytics,
-        )
+        val vm =
+            CreateFormViewModel(
+                savedStateHandle = SavedStateHandle(mapOf(CreateFormViewModel.KEY_TYPE to "NOPE")),
+                saveScan = SaveScanUseCase(history, settings),
+                parser = parser,
+                analytics = analytics,
+            )
         assertNull(vm.state.value.spec)
         assertFalse(vm.state.value.isValid)
         vm.onEvent(CreateFormEvent.Generate)
@@ -92,26 +95,33 @@ class CreateFormViewModelTest {
     fun `an error appears after the field loses focus`() {
         val vm = viewModel(CreateType.WEBSITE)
         vm.onEvent(CreateFormEvent.Edit(CreateSpec.Website("brewhouse coffee")))
-        assertTrue(vm.state.value.visibleErrors.isEmpty())
+        assertTrue(
+            vm.state.value.visibleErrors
+                .isEmpty(),
+        )
         vm.onEvent(CreateFormEvent.Blur(FormField.URL))
         assertEquals(FieldError.InvalidUrl, vm.state.value.visibleErrors[FormField.URL])
         vm.onEvent(CreateFormEvent.Edit(CreateSpec.Website("brewhouse-coffee.com")))
-        assertTrue(vm.state.value.visibleErrors.isEmpty())
+        assertTrue(
+            vm.state.value.visibleErrors
+                .isEmpty(),
+        )
         assertTrue(vm.state.value.isValid)
     }
 
     @Test
-    fun `generating an invalid form shows every error and creates nothing`() = runTest {
-        val vm = viewModel(CreateType.WIFI)
-        vm.effects.test {
-            vm.onEvent(CreateFormEvent.Generate)
-            val state = vm.state.value
-            assertTrue(state.showAllErrors)
-            assertEquals(setOf(FormField.SSID, FormField.PASSWORD), state.visibleErrors.keys)
-            expectNoEvents()
+    fun `generating an invalid form shows every error and creates nothing`() =
+        runTest {
+            val vm = viewModel(CreateType.WIFI)
+            vm.effects.test {
+                vm.onEvent(CreateFormEvent.Generate)
+                val state = vm.state.value
+                assertTrue(state.showAllErrors)
+                assertEquals(setOf(FormField.SSID, FormField.PASSWORD), state.visibleErrors.keys)
+                expectNoEvents()
+            }
+            assertTrue(history.persistedRecords.isEmpty())
         }
-        assertTrue(history.persistedRecords.isEmpty())
-    }
 
     @Test
     fun `edits of another type are ignored`() {
@@ -121,51 +131,54 @@ class CreateFormViewModelTest {
     }
 
     @Test
-    fun `generating a website saves a created record, logs the type only and opens it`() = runTest {
-        val vm = viewModel(CreateType.WEBSITE)
-        vm.onEvent(CreateFormEvent.Edit(CreateSpec.Website("brewhouse-coffee.com/menu")))
-        assertTrue(vm.state.value.isValid)
-        vm.effects.test {
-            vm.onEvent(CreateFormEvent.Generate)
-            val effect = awaitItem() as CreateFormEffect.OpenGenerated
-            val record = checkNotNull(history.getById(effect.recordId))
-            assertEquals(ScanSource.CREATED, record.source)
-            assertEquals(QrStyle(), record.style)
-            val content = record.content as ScanContent.Website
-            assertEquals("https://brewhouse-coffee.com/menu", content.rawValue)
-            assertEquals(CodeFormat.QR_CODE, content.format)
+    fun `generating a website saves a created record, logs the type only and opens it`() =
+        runTest {
+            val vm = viewModel(CreateType.WEBSITE)
+            vm.onEvent(CreateFormEvent.Edit(CreateSpec.Website("brewhouse-coffee.com/menu")))
+            assertTrue(vm.state.value.isValid)
+            vm.effects.test {
+                vm.onEvent(CreateFormEvent.Generate)
+                val effect = awaitItem() as CreateFormEffect.OpenGenerated
+                val record = checkNotNull(history.getById(effect.recordId))
+                assertEquals(ScanSource.CREATED, record.source)
+                assertEquals(QrStyle(), record.style)
+                val content = record.content as ScanContent.Website
+                assertEquals("https://brewhouse-coffee.com/menu", content.rawValue)
+                assertEquals(CodeFormat.QR_CODE, content.format)
+            }
+            verify(exactly = 1) { analytics.log(Events.CREATE_SUCCESS, mapOf(Params.TYPE to "WEBSITE")) }
+            assertEquals(1, settings.value.completedActions)
+            assertFalse(vm.state.value.generating)
         }
-        verify(exactly = 1) { analytics.log(Events.CREATE_SUCCESS, mapOf(Params.TYPE to "WEBSITE")) }
-        assertEquals(1, settings.value.completedActions)
-        assertFalse(vm.state.value.generating)
-    }
 
     @Test
-    fun `with history off the record is transient but still opens`() = runTest {
-        settings.value = AppSettings(saveHistory = false)
-        val vm = viewModel(CreateType.TEXT)
-        vm.onEvent(CreateFormEvent.Edit(CreateSpec.Text("hello")))
-        vm.effects.test {
-            vm.onEvent(CreateFormEvent.Generate)
-            val effect = awaitItem() as CreateFormEffect.OpenGenerated
-            assertTrue(effect.recordId < 0)
+    fun `with history off the record is transient but still opens`() =
+        runTest {
+            settings.value = AppSettings(saveHistory = false)
+            val vm = viewModel(CreateType.TEXT)
+            vm.onEvent(CreateFormEvent.Edit(CreateSpec.Text("hello")))
+            vm.effects.test {
+                vm.onEvent(CreateFormEvent.Generate)
+                val effect = awaitItem() as CreateFormEffect.OpenGenerated
+                assertTrue(effect.recordId < 0)
+            }
+            assertTrue(history.persistedRecords.isEmpty())
         }
-        assertTrue(history.persistedRecords.isEmpty())
-    }
 
     @Test
-    fun `a failing save reports a failure and allows another try`() = runTest {
-        val broken = mockk<HistoryRepository>()
-        coEvery { broken.save(any(), any()) } throws IOException("disk full")
-        val vm = viewModel(CreateType.TEXT, repo = broken)
-        vm.onEvent(CreateFormEvent.Edit(CreateSpec.Text("hello")))
-        vm.effects.test {
-            vm.onEvent(CreateFormEvent.Generate)
-            assertEquals(CreateFormEffect.GenerateFailed, awaitItem())
+    fun `a failing save reports a failure and allows another try`() =
+        runTest {
+            val broken = mockk<HistoryRepository>()
+            coEvery { broken.save(any(), any()) } throws IOException("disk full")
+            val vm = viewModel(CreateType.TEXT, repo = broken)
+            vm.onEvent(CreateFormEvent.Edit(CreateSpec.Text("hello")))
+            vm.effects.test {
+                vm.onEvent(CreateFormEvent.Generate)
+                assertEquals(CreateFormEffect.GenerateFailed, awaitItem())
+            }
+            assertFalse(vm.state.value.generating)
+            verify(exactly = 0) { analytics.log(Events.CREATE_SUCCESS, any()) }
         }
-        assertFalse(vm.state.value.generating)
-        verify(exactly = 0) { analytics.log(Events.CREATE_SUCCESS, any()) }
-    }
 
     @Test
     fun `the text form reports how dense the code will be`() {
@@ -219,18 +232,19 @@ class CreateFormViewModelTest {
     }
 
     @Test
-    fun `an EAN-13 without check digit is completed and read back as a product`() = runTest {
-        val vm = viewModel(CreateType.BARCODE_EAN_13)
-        vm.onEvent(CreateFormEvent.Edit(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345")))
-        vm.effects.test {
-            vm.onEvent(CreateFormEvent.Generate)
-            val effect = awaitItem() as CreateFormEffect.OpenGenerated
-            val content = checkNotNull(history.getById(effect.recordId)).content as ScanContent.Product
-            assertEquals("5901234123457", content.rawValue)
-            assertEquals(CodeFormat.EAN_13, content.format)
+    fun `an EAN-13 without check digit is completed and read back as a product`() =
+        runTest {
+            val vm = viewModel(CreateType.BARCODE_EAN_13)
+            vm.onEvent(CreateFormEvent.Edit(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345")))
+            vm.effects.test {
+                vm.onEvent(CreateFormEvent.Generate)
+                val effect = awaitItem() as CreateFormEffect.OpenGenerated
+                val content = checkNotNull(history.getById(effect.recordId)).content as ScanContent.Product
+                assertEquals("5901234123457", content.rawValue)
+                assertEquals(CodeFormat.EAN_13, content.format)
+            }
+            verify { analytics.log(Events.CREATE_SUCCESS, mapOf(Params.TYPE to "BARCODE_EAN_13")) }
         }
-        verify { analytics.log(Events.CREATE_SUCCESS, mapOf(Params.TYPE to "BARCODE_EAN_13")) }
-    }
 
     // ---- events ----
 

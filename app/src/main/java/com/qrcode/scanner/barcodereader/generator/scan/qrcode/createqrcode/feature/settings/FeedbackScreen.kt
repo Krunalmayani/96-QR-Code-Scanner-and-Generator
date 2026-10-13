@@ -105,11 +105,12 @@ fun FeedbackScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             RatingCard(rating = state.rating, onRate = { onEvent(FeedbackEvent.SetRating(it)) })
@@ -162,20 +163,23 @@ private fun RatingCard(rating: Int, onRate: (Int) -> Unit) {
     }
 }
 
-private val PreviewState = FeedbackUiState(
-    rating = 4,
-    topic = FeedbackTopic.SCANNING,
-    message = "Scanning small barcodes in low light takes a few tries.",
-)
+private val PreviewState =
+    FeedbackUiState(
+        rating = 4,
+        topic = FeedbackTopic.SCANNING,
+        message = "Scanning small barcodes in low light takes a few tries.",
+    )
 
 @Preview(name = "S61_Feedback_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S61_Feedback_Light() = AppTheme(dark = false) {
-    FeedbackScreen(state = PreviewState, onEvent = {}, onSend = {}, onBack = {})
-}
+private fun S61_Feedback_Light() =
+    AppTheme(dark = false) {
+        FeedbackScreen(state = PreviewState, onEvent = {}, onSend = {}, onBack = {})
+    }
 
 @Preview(name = "S61_Feedback_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S61_Feedback_Dark() = AppTheme(dark = true) {
-    FeedbackScreen(state = PreviewState.copy(email = "bad", emailChecked = true), onEvent = {}, onSend = {}, onBack = {})
-}
+private fun S61_Feedback_Dark() =
+    AppTheme(dark = true) {
+        FeedbackScreen(state = PreviewState.copy(email = "bad", emailChecked = true), onEvent = {}, onSend = {}, onBack = {})
+    }

@@ -8,7 +8,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
  * fires once, and fires again only after it was out of view for [windowMillis].
  * Thread safe (the analyzer thread and the UI thread both touch it).
  */
-class DuplicateFilter(private val windowMillis: Long = DEFAULT_WINDOW_MILLIS) {
+class DuplicateFilter(
+    private val windowMillis: Long = DEFAULT_WINDOW_MILLIS,
+) {
     private val lastSeen = HashMap<String, Long>()
 
     /** True when [rawValue] should be processed now; always records the sighting at [nowMillis]. */

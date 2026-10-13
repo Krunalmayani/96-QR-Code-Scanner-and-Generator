@@ -52,23 +52,25 @@ object Params {
  * turns Crashlytics collection off ([CrashReporter]).
  */
 @Singleton
-class Analytics @Inject constructor(
-    @ApplicationContext context: Context,
-    private val crashReporter: CrashReporter,
-) {
-    private val firebase = FirebaseAnalytics.getInstance(context)
+class Analytics
+    @Inject
+    constructor(
+        @ApplicationContext context: Context,
+        private val crashReporter: CrashReporter,
+    ) {
+        private val firebase = FirebaseAnalytics.getInstance(context)
 
-    fun setEnabled(enabled: Boolean) {
-        firebase.setAnalyticsCollectionEnabled(enabled)
-        crashReporter.setEnabled(enabled)
-    }
+        fun setEnabled(enabled: Boolean) {
+            firebase.setAnalyticsCollectionEnabled(enabled)
+            crashReporter.setEnabled(enabled)
+        }
 
-    fun log(event: String, params: Map<String, String> = emptyMap()) {
-        val bundle = Bundle().apply { params.forEach { (key, value) -> putString(key, value.take(MAX_PARAM_LENGTH)) } }
-        firebase.logEvent(event, bundle)
-    }
+        fun log(event: String, params: Map<String, String> = emptyMap()) {
+            val bundle = Bundle().apply { params.forEach { (key, value) -> putString(key, value.take(MAX_PARAM_LENGTH)) } }
+            firebase.logEvent(event, bundle)
+        }
 
-    private companion object {
-        const val MAX_PARAM_LENGTH = 36
+        private companion object {
+            const val MAX_PARAM_LENGTH = 36
+        }
     }
-}

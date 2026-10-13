@@ -2,7 +2,9 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
 
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryRepository
 
-class ToggleFavoriteUseCase(private val historyRepository: HistoryRepository) {
+class ToggleFavoriteUseCase(
+    private val historyRepository: HistoryRepository,
+) {
     /** Flips the favorite flag of [id]. Returns the new state, or null when the record does not exist. */
     suspend operator fun invoke(id: Long): Boolean? {
         val record = historyRepository.getById(id) ?: return null

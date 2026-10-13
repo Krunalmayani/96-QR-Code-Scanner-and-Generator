@@ -64,33 +64,36 @@ internal fun Long.toColor(): Color = Color(this.toInt())
 // ---- names ----
 
 @StringRes
-internal fun CodeSwatch.nameRes(): Int = when (this) {
-    CodeSwatch.INDIGO -> R.string.create_color_indigo
-    CodeSwatch.INK -> R.string.create_color_ink
-    CodeSwatch.TEAL -> R.string.create_color_teal
-    CodeSwatch.RED -> R.string.create_color_red
-    CodeSwatch.BROWN -> R.string.create_color_brown
-    CodeSwatch.BLUE -> R.string.create_color_blue
-    CodeSwatch.PURPLE -> R.string.create_color_purple
-}
+internal fun CodeSwatch.nameRes(): Int =
+    when (this) {
+        CodeSwatch.INDIGO -> R.string.create_color_indigo
+        CodeSwatch.INK -> R.string.create_color_ink
+        CodeSwatch.TEAL -> R.string.create_color_teal
+        CodeSwatch.RED -> R.string.create_color_red
+        CodeSwatch.BROWN -> R.string.create_color_brown
+        CodeSwatch.BLUE -> R.string.create_color_blue
+        CodeSwatch.PURPLE -> R.string.create_color_purple
+    }
 
 @StringRes
-internal fun BackgroundSwatch.nameRes(): Int = when (this) {
-    BackgroundSwatch.WHITE -> R.string.create_color_white
-    BackgroundSwatch.MIST -> R.string.create_color_mist
-    BackgroundSwatch.CREAM -> R.string.create_color_cream
-    BackgroundSwatch.MINT -> R.string.create_color_mint
-    BackgroundSwatch.LAVENDER -> R.string.create_color_lavender
-}
+internal fun BackgroundSwatch.nameRes(): Int =
+    when (this) {
+        BackgroundSwatch.WHITE -> R.string.create_color_white
+        BackgroundSwatch.MIST -> R.string.create_color_mist
+        BackgroundSwatch.CREAM -> R.string.create_color_cream
+        BackgroundSwatch.MINT -> R.string.create_color_mint
+        BackgroundSwatch.LAVENDER -> R.string.create_color_lavender
+    }
 
 @StringRes
-internal fun GradientPreset.nameRes(): Int = when (this) {
-    GradientPreset.AURORA -> R.string.create_gradient_aurora
-    GradientPreset.BERRY -> R.string.create_gradient_berry
-    GradientPreset.OCEAN -> R.string.create_gradient_ocean
-    GradientPreset.EMBER -> R.string.create_gradient_ember
-    GradientPreset.FOREST -> R.string.create_gradient_forest
-}
+internal fun GradientPreset.nameRes(): Int =
+    when (this) {
+        GradientPreset.AURORA -> R.string.create_gradient_aurora
+        GradientPreset.BERRY -> R.string.create_gradient_berry
+        GradientPreset.OCEAN -> R.string.create_gradient_ocean
+        GradientPreset.EMBER -> R.string.create_gradient_ember
+        GradientPreset.FOREST -> R.string.create_gradient_forest
+    }
 
 // ---- color swatches ----
 
@@ -191,13 +194,14 @@ private fun GradientSwatch(preset: GradientPreset, selected: Boolean, onClick: (
     val colors = AppTheme.colors
     val shape = AppTheme.shapes.tile
     Box(
-        modifier = Modifier
-            .size(40.dp)
-            .clip(shape)
-            .background(Brush.linearGradient(listOf(preset.start.toColor(), preset.end.toColor())))
-            .border(if (selected) 3.dp else 1.dp, if (selected) colors.primary else colors.outline, shape)
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-            .semantics { this.contentDescription = contentDescription },
+        modifier =
+            Modifier
+                .size(40.dp)
+                .clip(shape)
+                .background(Brush.linearGradient(listOf(preset.start.toColor(), preset.end.toColor())))
+                .border(if (selected) 3.dp else 1.dp, if (selected) colors.primary else colors.outline, shape)
+                .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+                .semantics { this.contentDescription = contentDescription },
         contentAlignment = Alignment.Center,
     ) {
         if (selected) Icon(AppIcons.Check, contentDescription = null, tint = OnSwatchLight, modifier = Modifier.size(18.dp))
@@ -210,13 +214,14 @@ private fun CustomColorTile(onClick: () -> Unit) {
     val shape = AppTheme.shapes.tile
     val description = stringResource(R.string.create_colors_custom)
     Box(
-        modifier = Modifier
-            .size(40.dp)
-            .clip(shape)
-            .background(colors.surfaceVariant)
-            .border(1.dp, colors.outline, shape)
-            .clickable(role = Role.Button, onClick = onClick)
-            .semantics { contentDescription = description },
+        modifier =
+            Modifier
+                .size(40.dp)
+                .clip(shape)
+                .background(colors.surfaceVariant)
+                .border(1.dp, colors.outline, shape)
+                .clickable(role = Role.Button, onClick = onClick)
+                .semantics { contentDescription = description },
         contentAlignment = Alignment.Center,
     ) {
         Icon(AppIcons.Create, contentDescription = null, tint = colors.inkSecondary, modifier = Modifier.size(20.dp))
@@ -253,12 +258,13 @@ internal fun ReliabilityMessage(reliability: ScanReliability) {
 }
 
 @StringRes
-private fun ReliabilityReason.messageRes(): Int = when (this) {
-    ReliabilityReason.LOW_CONTRAST -> R.string.create_reason_low_contrast
-    ReliabilityReason.INVERTED -> R.string.create_reason_inverted
-    ReliabilityReason.GRADIENT_LOW_CONTRAST -> R.string.create_reason_gradient
-    ReliabilityReason.DOTS_LOW_EC -> R.string.create_reason_dots
-}
+private fun ReliabilityReason.messageRes(): Int =
+    when (this) {
+        ReliabilityReason.LOW_CONTRAST -> R.string.create_reason_low_contrast
+        ReliabilityReason.INVERTED -> R.string.create_reason_inverted
+        ReliabilityReason.GRADIENT_LOW_CONTRAST -> R.string.create_reason_gradient
+        ReliabilityReason.DOTS_LOW_EC -> R.string.create_reason_dots
+    }
 
 // ---- barcode options ----
 
@@ -314,12 +320,13 @@ internal fun DotShapeTile(
     val tileShape = AppTheme.shapes.card
     val ink = if (selected) colors.onPrimaryContainer else colors.ink
     Column(
-        modifier = modifier
-            .clip(tileShape)
-            .background(if (selected) colors.primaryContainer else colors.surface)
-            .border(if (selected) 2.dp else 1.dp, if (selected) colors.primary else colors.outline, tileShape)
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-            .padding(top = 12.dp, bottom = 8.dp, start = 4.dp, end = 4.dp),
+        modifier =
+            modifier
+                .clip(tileShape)
+                .background(if (selected) colors.primaryContainer else colors.surface)
+                .border(if (selected) 2.dp else 1.dp, if (selected) colors.primary else colors.outline, tileShape)
+                .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+                .padding(top = 12.dp, bottom = 8.dp, start = 4.dp, end = 4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {

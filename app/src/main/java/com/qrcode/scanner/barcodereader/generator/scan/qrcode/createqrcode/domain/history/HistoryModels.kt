@@ -14,18 +14,19 @@ enum class SearchScope { ALL, SCANNED, CREATED, FAVORITES }
 /** Maps filter chips to the content types they select. */
 object HistoryChipMapper {
     /** Types selected by [chip]. Empty means "every type" (ALL and FAVORITES do not narrow by type). */
-    fun contentTypes(chip: HistoryChip): Set<ContentType> = when (chip) {
-        HistoryChip.ALL, HistoryChip.FAVORITES -> emptySet()
-        HistoryChip.LINKS -> setOf(ContentType.WEBSITE)
-        HistoryChip.WIFI -> setOf(ContentType.WIFI)
-        HistoryChip.CONTACTS -> setOf(ContentType.CONTACT)
-        HistoryChip.TEXT -> setOf(ContentType.TEXT)
-        HistoryChip.PHONE -> setOf(ContentType.PHONE, ContentType.SMS)
-        HistoryChip.EMAIL -> setOf(ContentType.EMAIL)
-        HistoryChip.LOCATION -> setOf(ContentType.LOCATION)
-        HistoryChip.EVENTS -> setOf(ContentType.EVENT)
-        HistoryChip.PRODUCTS -> setOf(ContentType.PRODUCT)
-    }
+    fun contentTypes(chip: HistoryChip): Set<ContentType> =
+        when (chip) {
+            HistoryChip.ALL, HistoryChip.FAVORITES -> emptySet()
+            HistoryChip.LINKS -> setOf(ContentType.WEBSITE)
+            HistoryChip.WIFI -> setOf(ContentType.WIFI)
+            HistoryChip.CONTACTS -> setOf(ContentType.CONTACT)
+            HistoryChip.TEXT -> setOf(ContentType.TEXT)
+            HistoryChip.PHONE -> setOf(ContentType.PHONE, ContentType.SMS)
+            HistoryChip.EMAIL -> setOf(ContentType.EMAIL)
+            HistoryChip.LOCATION -> setOf(ContentType.LOCATION)
+            HistoryChip.EVENTS -> setOf(ContentType.EVENT)
+            HistoryChip.PRODUCTS -> setOf(ContentType.PRODUCT)
+        }
 
     fun favoritesOnly(chip: HistoryChip): Boolean = chip == HistoryChip.FAVORITES
 }

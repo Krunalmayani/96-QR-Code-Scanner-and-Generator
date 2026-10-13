@@ -32,6 +32,8 @@ class FakeWifiConnector : WifiConnector {
     }
 }
 
-class FakeNetworkStatus(var online: Boolean = true) : NetworkStatus {
+class FakeNetworkStatus(
+    var online: Boolean = true,
+) : NetworkStatus {
     override fun isOnline(): Boolean = online
 }

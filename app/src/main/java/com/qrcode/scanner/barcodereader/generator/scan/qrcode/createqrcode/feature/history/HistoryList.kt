@@ -82,15 +82,18 @@ internal fun HistoryList(
         }
         listItems.forEach { entry ->
             when (entry) {
-                is HistoryListItem.Header -> stickyHeader(key = entry.key, contentType = TYPE_HEADER) {
-                    DayHeader(entry.label, formats)
-                }
-                is HistoryListItem.Row -> item(key = entry.key, contentType = TYPE_ROW) {
-                    HistoryListRow(entry, state, formats, onEvent)
-                }
-                is HistoryListItem.Ad -> item(key = entry.key, contentType = TYPE_AD) {
-                    Box(Modifier.fillMaxWidth().padding(vertical = 4.dp)) { NativeAdCard() }
-                }
+                is HistoryListItem.Header ->
+                    stickyHeader(key = entry.key, contentType = TYPE_HEADER) {
+                        DayHeader(entry.label, formats)
+                    }
+                is HistoryListItem.Row ->
+                    item(key = entry.key, contentType = TYPE_ROW) {
+                        HistoryListRow(entry, state, formats, onEvent)
+                    }
+                is HistoryListItem.Ad ->
+                    item(key = entry.key, contentType = TYPE_AD) {
+                        Box(Modifier.fillMaxWidth().padding(vertical = 4.dp)) { NativeAdCard() }
+                    }
             }
         }
     }
@@ -137,12 +140,13 @@ private fun HistoryListRow(
     }
 }
 
-private fun cardShape(first: Boolean, last: Boolean): Shape = RoundedCornerShape(
-    topStart = if (first) CardRadius else 0.dp,
-    topEnd = if (first) CardRadius else 0.dp,
-    bottomStart = if (last) CardRadius else 0.dp,
-    bottomEnd = if (last) CardRadius else 0.dp,
-)
+private fun cardShape(first: Boolean, last: Boolean): Shape =
+    RoundedCornerShape(
+        topStart = if (first) CardRadius else 0.dp,
+        topEnd = if (first) CardRadius else 0.dp,
+        bottomStart = if (last) CardRadius else 0.dp,
+        bottomEnd = if (last) CardRadius else 0.dp,
+    )
 
 /** Swipe left to delete (the row then reports the delete; the list update removes it). */
 @Composable
@@ -153,16 +157,17 @@ private fun SwipeToDeleteBox(
     content: @Composable () -> Unit,
 ) {
     val currentOnDelete by rememberUpdatedState(onDelete)
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { target ->
-            if (target == SwipeToDismissBoxValue.EndToStart) {
-                currentOnDelete()
-                true
-            } else {
-                false
-            }
-        },
-    )
+    val dismissState =
+        rememberSwipeToDismissBoxState(
+            confirmValueChange = { target ->
+                if (target == SwipeToDismissBoxValue.EndToStart) {
+                    currentOnDelete()
+                    true
+                } else {
+                    false
+                }
+            },
+        )
     SwipeToDismissBox(
         state = dismissState,
         modifier = Modifier.clip(shape),
@@ -179,10 +184,11 @@ private fun SwipeToDeleteBox(
 private fun DeleteBackground(active: Boolean) {
     val c = AppTheme.colors
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(if (active) c.error else Color.Transparent)
-            .padding(end = 24.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(if (active) c.error else Color.Transparent)
+                .padding(end = 24.dp),
         contentAlignment = Alignment.CenterEnd,
     ) {
         if (active) Icon(AppIcons.Delete, contentDescription = null, tint = c.onError)
@@ -209,20 +215,25 @@ private fun HistoryRow(
     val background = if (isSelected) c.primaryContainer else c.surface
     Column(Modifier.fillMaxWidth().background(background)) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 60.dp)
-                .combinedClickable(
-                    onClickLabel = stringResource(R.string.hist_cd_open_row),
-                    onLongClickLabel = stringResource(R.string.hist_cd_select_row),
-                    onClick = onClick,
-                    onLongClick = onLongClick,
-                )
-                .semantics {
-                    selected = isSelected
-                    customActions = listOf(CustomAccessibilityAction(deleteLabel) { onDelete(); true })
-                }
-                .padding(start = 16.dp, top = 6.dp, bottom = 6.dp, end = if (selecting) 16.dp else 4.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 60.dp)
+                    .combinedClickable(
+                        onClickLabel = stringResource(R.string.hist_cd_open_row),
+                        onLongClickLabel = stringResource(R.string.hist_cd_select_row),
+                        onClick = onClick,
+                        onLongClick = onLongClick,
+                    ).semantics {
+                        selected = isSelected
+                        customActions =
+                            listOf(
+                                CustomAccessibilityAction(deleteLabel) {
+                                    onDelete()
+                                    true
+                                },
+                            )
+                    }.padding(start = 16.dp, top = 6.dp, bottom = 6.dp, end = if (selecting) 16.dp else 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -242,9 +253,10 @@ private fun RowTexts(title: String, subtitle: String, highlightQuery: String, mo
     val c = AppTheme.colors
     val highlightBg = c.primaryContainer
     val highlightFg = c.onPrimaryContainer
-    val titleText = remember(title, highlightQuery, highlightBg, highlightFg) {
-        highlighted(title, highlightQuery, highlightBg, highlightFg)
-    }
+    val titleText =
+        remember(title, highlightQuery, highlightBg, highlightFg) {
+            highlighted(title, highlightQuery, highlightBg, highlightFg)
+        }
     Column(modifier, verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Text(titleText, style = AppTheme.type.title, color = c.ink, maxLines = 1, overflow = TextOverflow.Ellipsis)
         Text(subtitle, style = AppTheme.type.caption, color = c.inkSecondary, maxLines = 1, overflow = TextOverflow.Ellipsis)

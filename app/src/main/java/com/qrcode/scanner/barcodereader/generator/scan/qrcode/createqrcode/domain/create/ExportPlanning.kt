@@ -22,7 +22,10 @@ object ExportSizes {
     fun at(index: Int): Int = points[index.coerceIn(0, points.lastIndex)]
 }
 
-data class PixelSize(val width: Int, val height: Int)
+data class PixelSize(
+    val width: Int,
+    val height: Int,
+)
 
 object ExportDimensions {
     /** Pixel size of [image] exported [widthPx] wide; the height keeps the picture's aspect ratio. */

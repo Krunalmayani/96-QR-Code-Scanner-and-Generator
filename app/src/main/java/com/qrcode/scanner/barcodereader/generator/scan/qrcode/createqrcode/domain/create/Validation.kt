@@ -5,34 +5,96 @@ sealed interface FieldError {
     /** Stable upper-case code, e.g. "INVALID_URL". */
     val code: String
 
-    data object Required : FieldError { override val code = "REQUIRED" }
-    data object InvalidUrl : FieldError { override val code = "INVALID_URL" }
-    data object InvalidEmail : FieldError { override val code = "INVALID_EMAIL" }
-    data object InvalidPhone : FieldError { override val code = "INVALID_PHONE" }
-    data class TooLong(val max: Int) : FieldError { override val code = "TOO_LONG" }
-    data object SsidRequired : FieldError { override val code = "SSID_REQUIRED" }
+    data object Required : FieldError {
+        override val code = "REQUIRED"
+    }
+
+    data object InvalidUrl : FieldError {
+        override val code = "INVALID_URL"
+    }
+
+    data object InvalidEmail : FieldError {
+        override val code = "INVALID_EMAIL"
+    }
+
+    data object InvalidPhone : FieldError {
+        override val code = "INVALID_PHONE"
+    }
+
+    data class TooLong(
+        val max: Int,
+    ) : FieldError {
+        override val code = "TOO_LONG"
+    }
+
+    data object SsidRequired : FieldError {
+        override val code = "SSID_REQUIRED"
+    }
 
     /** [min] is the shortest acceptable length (WPA 8; WEP next valid length 5, 10, 13 or 26). */
-    data class PasswordTooShort(val min: Int) : FieldError { override val code = "PASSWORD_TOO_SHORT" }
-    data object EndBeforeStart : FieldError { override val code = "END_BEFORE_START" }
-    data object InvalidLatitude : FieldError { override val code = "INVALID_LATITUDE" }
-    data object InvalidLongitude : FieldError { override val code = "INVALID_LONGITUDE" }
-    data object InvalidHandle : FieldError { override val code = "INVALID_HANDLE" }
-    data object BarcodeDigitsOnly : FieldError { override val code = "BARCODE_DIGITS_ONLY" }
-    data class BarcodeWrongLength(val expected: List<Int>) : FieldError { override val code = "BARCODE_WRONG_LENGTH" }
+    data class PasswordTooShort(
+        val min: Int,
+    ) : FieldError {
+        override val code = "PASSWORD_TOO_SHORT"
+    }
+
+    data object EndBeforeStart : FieldError {
+        override val code = "END_BEFORE_START"
+    }
+
+    data object InvalidLatitude : FieldError {
+        override val code = "INVALID_LATITUDE"
+    }
+
+    data object InvalidLongitude : FieldError {
+        override val code = "INVALID_LONGITUDE"
+    }
+
+    data object InvalidHandle : FieldError {
+        override val code = "INVALID_HANDLE"
+    }
+
+    data object BarcodeDigitsOnly : FieldError {
+        override val code = "BARCODE_DIGITS_ONLY"
+    }
+
+    data class BarcodeWrongLength(
+        val expected: List<Int>,
+    ) : FieldError {
+        override val code = "BARCODE_WRONG_LENGTH"
+    }
 
     /** [expected] is the check digit that would make the number valid. */
-    data class BarcodeBadCheckDigit(val expected: Int) : FieldError { override val code = "BARCODE_BAD_CHECK_DIGIT" }
-    data object BarcodeInvalidChars : FieldError { override val code = "BARCODE_INVALID_CHARS" }
-    data object ItfOddLength : FieldError { override val code = "ITF_ODD_LENGTH" }
-    data class DataTooLong(val max: Int) : FieldError { override val code = "DATA_TOO_LONG" }
+    data class BarcodeBadCheckDigit(
+        val expected: Int,
+    ) : FieldError {
+        override val code = "BARCODE_BAD_CHECK_DIGIT"
+    }
+
+    data object BarcodeInvalidChars : FieldError {
+        override val code = "BARCODE_INVALID_CHARS"
+    }
+
+    data object ItfOddLength : FieldError {
+        override val code = "ITF_ODD_LENGTH"
+    }
+
+    data class DataTooLong(
+        val max: Int,
+    ) : FieldError {
+        override val code = "DATA_TOO_LONG"
+    }
 }
 
 sealed interface ValidationResult {
     data object Valid : ValidationResult
-    data class Invalid(val error: FieldError) : ValidationResult
+
+    data class Invalid(
+        val error: FieldError,
+    ) : ValidationResult
 
     val isValid: Boolean get() = this is Valid
+
     fun errorOrNull(): FieldError? = (this as? Invalid)?.error
 }
 

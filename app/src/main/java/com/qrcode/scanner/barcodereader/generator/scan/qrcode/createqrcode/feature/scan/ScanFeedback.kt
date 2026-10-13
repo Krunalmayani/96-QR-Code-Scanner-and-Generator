@@ -9,7 +9,9 @@ import android.os.Vibrator
 import android.os.VibratorManager
 
 /** Haptic and sound played when a code is detected. Every call is best effort: failures are swallowed. */
-class ScanFeedback(context: Context) {
+class ScanFeedback(
+    context: Context,
+) {
     private val vibrator: Vibrator? = findVibrator(context)
     private var tone: ToneGenerator? = null
 

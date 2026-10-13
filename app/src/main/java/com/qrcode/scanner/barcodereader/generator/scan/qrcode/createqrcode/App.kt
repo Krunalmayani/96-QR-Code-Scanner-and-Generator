@@ -5,7 +5,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Analytics
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.SettingsRepository
 import dagger.hilt.android.HiltAndroidApp
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -13,10 +12,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @HiltAndroidApp
 class App : Application() {
-
     @Inject lateinit var adManager: AdManager
 
     @Inject lateinit var analytics: Analytics
@@ -33,7 +32,10 @@ class App : Application() {
             settingsRepository.update { if (it.firstLaunchAt == 0L) it.copy(firstLaunchAt = System.currentTimeMillis()) else it }
         }
         appScope.launch {
-            settingsRepository.settings.map { it.analyticsEnabled }.distinctUntilChanged().collect { analytics.setEnabled(it) }
+            settingsRepository.settings
+                .map { it.analyticsEnabled }
+                .distinctUntilChanged()
+                .collect { analytics.setEnabled(it) }
         }
     }
 }

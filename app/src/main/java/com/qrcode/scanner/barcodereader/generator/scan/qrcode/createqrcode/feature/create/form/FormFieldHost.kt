@@ -54,11 +54,12 @@ internal fun FormTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     var hadFocus by remember { mutableStateOf(false) }
-    val ime = when {
-        !singleLine -> ImeAction.Default
-        last -> ImeAction.Done
-        else -> ImeAction.Next
-    }
+    val ime =
+        when {
+            !singleLine -> ImeAction.Default
+            last -> ImeAction.Done
+            else -> ImeAction.Next
+        }
     AppTextField(
         value = value,
         onValueChange = onValueChange,

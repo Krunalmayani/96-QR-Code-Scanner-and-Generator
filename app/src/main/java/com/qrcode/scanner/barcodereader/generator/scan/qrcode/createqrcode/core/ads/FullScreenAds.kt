@@ -14,13 +14,13 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.ads.InterstitialInput
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.ads.InterstitialPolicy
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.SettingsRepository
-import java.util.concurrent.atomic.AtomicInteger
-import java.util.concurrent.atomic.AtomicLong
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import java.util.concurrent.atomic.AtomicInteger
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Interstitial and app open ads: preloading, frequency rules (via the pure policies in domain/ads) and
@@ -75,16 +75,17 @@ internal class FullScreenAds(
             resultsSinceInterstitial.set(0)
             return
         }
-        val input = InterstitialInput(
-            adsAllowed = adsAvailable(),
-            onboardingDone = settings.onboardingDone,
-            resultsSinceLastInterstitial = resultsSinceInterstitial.get(),
-            nowMs = now,
-            lastInterstitialAtMs = settings.lastInterstitialAt,
-            firstLaunchAtMs = settings.firstLaunchAt,
-            adReady = interstitials.isReady(now),
-            fullScreenAdShowing = isFullScreenShowing(),
-        )
+        val input =
+            InterstitialInput(
+                adsAllowed = adsAvailable(),
+                onboardingDone = settings.onboardingDone,
+                resultsSinceLastInterstitial = resultsSinceInterstitial.get(),
+                nowMs = now,
+                lastInterstitialAtMs = settings.lastInterstitialAt,
+                firstLaunchAtMs = settings.firstLaunchAt,
+                adReady = interstitials.isReady(now),
+                fullScreenAdShowing = isFullScreenShowing(),
+            )
         if (policy.shouldShow(input)) showInterstitial(activity) else preloadInterstitial()
     }
 
@@ -104,21 +105,22 @@ internal class FullScreenAds(
         }
     }
 
-    private fun interstitialCallbacks() = object : FullScreenCallbacks {
-        override fun onShown() {
-            resultsSinceInterstitial.set(0)
-            val at = nowMs()
-            scope.launch { settingsRepository.update { it.copy(lastInterstitialAt = at) } }
-            analytics.log(Events.AD_INTERSTITIAL_SHOWN)
-        }
+    private fun interstitialCallbacks() =
+        object : FullScreenCallbacks {
+            override fun onShown() {
+                resultsSinceInterstitial.set(0)
+                val at = nowMs()
+                scope.launch { settingsRepository.update { it.copy(lastInterstitialAt = at) } }
+                analytics.log(Events.AD_INTERSTITIAL_SHOWN)
+            }
 
-        override fun onDismissed() = interstitialShowFailed()
+            override fun onDismissed() = interstitialShowFailed()
 
-        override fun onFailedToShow(message: String) {
-            Timber.w("Interstitial failed to show: %s", message)
-            interstitialShowFailed()
+            override fun onFailedToShow(message: String) {
+                Timber.w("Interstitial failed to show: %s", message)
+                interstitialShowFailed()
+            }
         }
-    }
 
     /** Also used for "dismissed": the screen is free again and the next ad loads. */
     private fun interstitialShowFailed() {
@@ -151,14 +153,15 @@ internal class FullScreenAds(
         // MainActivity reports every STARTED, also after an ad or a dialog; consume the background mark once.
         if (settings.lastBackgroundAt != 0L) consumeBackgroundMark(settings.lastBackgroundAt)
         val now = nowMs()
-        val input = AppOpenInput(
-            adsAllowed = adsAvailable(),
-            onboardingDone = settings.onboardingDone,
-            nowMs = now,
-            lastBackgroundAtMs = settings.lastBackgroundAt,
-            adReady = appOpens.isReady(now),
-            fullScreenAdShowing = isFullScreenShowing(),
-        )
+        val input =
+            AppOpenInput(
+                adsAllowed = adsAvailable(),
+                onboardingDone = settings.onboardingDone,
+                nowMs = now,
+                lastBackgroundAtMs = settings.lastBackgroundAt,
+                adReady = appOpens.isReady(now),
+                fullScreenAdShowing = isFullScreenShowing(),
+            )
         if (AppOpenPolicy(remoteFlags.config.value).shouldShow(input)) showAppOpen(activity) else preloadAppOpen()
     }
 
@@ -183,18 +186,19 @@ internal class FullScreenAds(
         }
     }
 
-    private fun appOpenCallbacks() = object : FullScreenCallbacks {
-        override fun onShown() {
-            analytics.log(Events.AD_APP_OPEN_SHOWN)
-        }
+    private fun appOpenCallbacks() =
+        object : FullScreenCallbacks {
+            override fun onShown() {
+                analytics.log(Events.AD_APP_OPEN_SHOWN)
+            }
 
-        override fun onDismissed() = appOpenShowFailed()
+            override fun onDismissed() = appOpenShowFailed()
 
-        override fun onFailedToShow(message: String) {
-            Timber.w("App open ad failed to show: %s", message)
-            appOpenShowFailed()
+            override fun onFailedToShow(message: String) {
+                Timber.w("App open ad failed to show: %s", message)
+                appOpenShowFailed()
+            }
         }
-    }
 
     private fun appOpenShowFailed() {
         endFullScreen()

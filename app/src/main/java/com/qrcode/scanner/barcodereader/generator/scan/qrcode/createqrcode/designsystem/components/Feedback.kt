@@ -78,7 +78,13 @@ fun LoadingSpinner(modifier: Modifier = Modifier, size: Dp = 48.dp, onCamera: Bo
     CircularProgressIndicator(
         modifier = modifier.size(size).semantics { contentDescription = description },
         color = if (onCamera) androidx.compose.ui.graphics.Color.White else c.primary,
-        trackColor = if (onCamera) androidx.compose.ui.graphics.Color.White.copy(alpha = 0.3f) else c.primaryContainer,
+        trackColor =
+            if (onCamera) {
+                androidx.compose.ui.graphics.Color.White
+                    .copy(alpha = 0.3f)
+            } else {
+                c.primaryContainer
+            },
         strokeWidth = 4.dp,
     )
 }
@@ -122,10 +128,11 @@ fun InfoBanner(
 ) {
     val c = AppTheme.colors
     Row(
-        modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(c.containerOf(tone))
-            .padding(12.dp),
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(16.dp))
+                .background(c.containerOf(tone))
+                .padding(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -139,7 +146,12 @@ fun InfoBanner(
 private fun EmptyStatePreview() {
     AppTheme(dark = false) {
         Box(Modifier.background(AppTheme.colors.background)) {
-            EmptyState(AppIcons.History, "No scans yet", message = "Scan a code and it shows up here.", action = { PrimaryButton("Scan a code", {}) })
+            EmptyState(
+                AppIcons.History,
+                "No scans yet",
+                message = "Scan a code and it shows up here.",
+                action = { PrimaryButton("Scan a code", {}) },
+            )
         }
     }
 }

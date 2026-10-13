@@ -46,11 +46,12 @@ fun ScanRoute(
         permission.status != CameraPermissionStatus.GRANTED -> {
             CameraBlockedScreen(
                 block = blockFor(permission.status),
-                onPrimary = if (permission.status == CameraPermissionStatus.PERMANENTLY_DENIED) {
-                    permission.openSettings
-                } else {
-                    permission.request
-                },
+                onPrimary =
+                    if (permission.status == CameraPermissionStatus.PERMANENTLY_DENIED) {
+                        permission.openSettings
+                    } else {
+                        permission.request
+                    },
                 onPickImage = onOpenGallery,
                 onOpenSettings = onOpenSettings,
                 modifier = modifier,
@@ -59,34 +60,36 @@ fun ScanRoute(
                 CameraRationaleDialog(onAllow = permission.onRationaleAllow, onDismiss = permission.onRationaleDismiss)
             }
         }
-        cameraFailed -> CameraBlockedScreen(
-            block = CameraBlock.Unavailable,
-            onPrimary = { cameraFailed = false },
-            onPickImage = onOpenGallery,
-            onOpenSettings = onOpenSettings,
-            modifier = modifier,
-        )
-        else -> ScanScreen(
-            state = state,
-            capabilities = capabilities,
-            onEvent = viewModel::onEvent,
-            modifier = modifier,
-            camera = {
-                CameraPreview(
-                    mode = state.mode,
-                    frontCamera = state.frontCamera,
-                    torchOn = state.flashOn,
-                    zoom = state.zoom,
-                    analyzing = !state.detected,
-                    scanAreaOnly = state.scanAreaOnly,
-                    frozen = state.detected && !state.batchMode,
-                    onZoomChange = { viewModel.onEvent(ScanEvent.ZoomChanged(it)) },
-                    onCodes = { viewModel.onEvent(ScanEvent.CodesDetected(it)) },
-                    onCameraReady = { capabilities = it },
-                    onCameraError = { cameraFailed = true },
-                )
-            },
-        )
+        cameraFailed ->
+            CameraBlockedScreen(
+                block = CameraBlock.Unavailable,
+                onPrimary = { cameraFailed = false },
+                onPickImage = onOpenGallery,
+                onOpenSettings = onOpenSettings,
+                modifier = modifier,
+            )
+        else ->
+            ScanScreen(
+                state = state,
+                capabilities = capabilities,
+                onEvent = viewModel::onEvent,
+                modifier = modifier,
+                camera = {
+                    CameraPreview(
+                        mode = state.mode,
+                        frontCamera = state.frontCamera,
+                        torchOn = state.flashOn,
+                        zoom = state.zoom,
+                        analyzing = !state.detected,
+                        scanAreaOnly = state.scanAreaOnly,
+                        frozen = state.detected && !state.batchMode,
+                        onZoomChange = { viewModel.onEvent(ScanEvent.ZoomChanged(it)) },
+                        onCodes = { viewModel.onEvent(ScanEvent.CodesDetected(it)) },
+                        onCameraReady = { capabilities = it },
+                        onCameraError = { cameraFailed = true },
+                    )
+                },
+            )
     }
 }
 

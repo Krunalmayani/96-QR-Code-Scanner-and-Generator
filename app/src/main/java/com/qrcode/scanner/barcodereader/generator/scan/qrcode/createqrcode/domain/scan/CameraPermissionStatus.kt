@@ -25,9 +25,10 @@ fun resolveCameraPermission(
     granted: Boolean,
     shouldShowRationale: Boolean,
     requestedThisSession: Boolean,
-): CameraPermissionStatus = when {
-    granted -> CameraPermissionStatus.GRANTED
-    shouldShowRationale -> CameraPermissionStatus.DENIED
-    requestedThisSession -> CameraPermissionStatus.PERMANENTLY_DENIED
-    else -> CameraPermissionStatus.NOT_ASKED
-}
+): CameraPermissionStatus =
+    when {
+        granted -> CameraPermissionStatus.GRANTED
+        shouldShowRationale -> CameraPermissionStatus.DENIED
+        requestedThisSession -> CameraPermissionStatus.PERMANENTLY_DENIED
+        else -> CameraPermissionStatus.NOT_ASKED
+    }

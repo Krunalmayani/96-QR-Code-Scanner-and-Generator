@@ -1,13 +1,4 @@
 # Overrides on top of detekt's default config.
-style:
-  MagicNumber:
-    active: false
-  MaxLineLength:
-    maxLineLength: 140
-  ReturnCount:
-    active: false
-  WildcardImport:
-    active: false
 complexity:
   LongMethod:
     threshold: 80
@@ -23,3 +14,23 @@ naming:
     ignoreAnnotated: ['Composable']
   TopLevelPropertyNaming:
     constantPattern: '[A-Za-z][_A-Za-z0-9]*'
+
+# Advisory rules relaxed for this code base (Compose previews, defensive catch blocks around platform APIs).
+style:
+  MagicNumber:
+    active: false
+  MaxLineLength:
+    active: false
+  ReturnCount:
+    active: false
+  WildcardImport:
+    active: false
+  UnusedPrivateMember:
+    ignoreAnnotated: ['Preview']
+  UnusedPrivateProperty:
+    ignoreAnnotated: ['Preview']
+exceptions:
+  SwallowedException:
+    active: false
+  TooGenericExceptionCaught:
+    active: false

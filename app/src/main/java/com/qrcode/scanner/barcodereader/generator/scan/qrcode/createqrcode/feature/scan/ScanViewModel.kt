@@ -12,7 +12,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.scan.distinctCodes
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.usecase.ToggleFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -22,6 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * State and rules of the live Scan screen: which detections count (mode, duplicates, batch), what happens after
@@ -36,7 +36,6 @@ class ScanViewModel internal constructor(
     private val clock: () -> Long,
     private val freezeMillis: Long,
 ) : ViewModel() {
-
     @Inject
     constructor(
         recorder: ScanRecorder,
@@ -134,10 +133,12 @@ class ScanViewModel internal constructor(
         val current = _state.value
         if (current.detected || busy) return
         val now = clock()
-        val accepted = codes.distinctCodes()
-            .filter { it.rawValue.isNotEmpty() && current.mode.accepts(it.format) }
-            .filterNot { current.batchMode && batch.contains(it.rawValue, it.format) }
-            .filter { duplicates.shouldAccept(it.rawValue, it.format, now) }
+        val accepted =
+            codes
+                .distinctCodes()
+                .filter { it.rawValue.isNotEmpty() && current.mode.accepts(it.format) }
+                .filterNot { current.batchMode && batch.contains(it.rawValue, it.format) }
+                .filter { duplicates.shouldAccept(it.rawValue, it.format, now) }
         if (accepted.isEmpty()) return
         busy = true
         viewModelScope.launch {

@@ -7,7 +7,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
  * user has not rated, at most once per 60 days, never while scanning and never before onboarding is done.
  */
 object RatePromptPolicy {
-
     fun shouldShow(settings: AppSettings, nowMillis: Long, scanningInProgress: Boolean): Boolean =
         !scanningInProgress &&
             settings.onboardingDone &&
@@ -35,10 +34,11 @@ enum class RatingAction {
         private const val FIRST_REVIEW_STAR: Int = 4
 
         /** Action for [stars], or null when [stars] is outside 1..5. */
-        fun forStars(stars: Int): RatingAction? = when {
-            stars < MIN_STARS || stars > MAX_STARS -> null
-            stars >= FIRST_REVIEW_STAR -> IN_APP_REVIEW
-            else -> FEEDBACK
-        }
+        fun forStars(stars: Int): RatingAction? =
+            when {
+                stars < MIN_STARS || stars > MAX_STARS -> null
+                stars >= FIRST_REVIEW_STAR -> IN_APP_REVIEW
+                else -> FEEDBACK
+            }
     }
 }

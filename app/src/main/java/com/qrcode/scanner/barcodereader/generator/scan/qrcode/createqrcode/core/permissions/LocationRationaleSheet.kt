@@ -102,10 +102,11 @@ private fun LocationPoint(text: String) {
 private fun PreviewSheetFrame(content: @Composable () -> Unit) {
     Box(Modifier.fillMaxSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.BottomCenter) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
-                .padding(24.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
+                    .padding(24.dp),
         ) {
             content()
         }

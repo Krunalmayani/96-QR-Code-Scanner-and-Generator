@@ -10,10 +10,17 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ErrorCorrection
 
 /** Thrown when a payload cannot be encoded (too long for the symbology, illegal characters). */
-class CodeEncodeException(message: String, cause: Throwable? = null) : Exception(message, cause)
+class CodeEncodeException(
+    message: String,
+    cause: Throwable? = null,
+) : Exception(message, cause)
 
 /** A grid of modules, `true` = dark. No quiet zone. For 1D codes every row is identical. */
-class ModuleMatrix(val width: Int, val height: Int, private val bits: BooleanArray) {
+class ModuleMatrix(
+    val width: Int,
+    val height: Int,
+    private val bits: BooleanArray,
+) {
     init {
         require(width > 0 && height > 0) { "empty matrix" }
         require(bits.size == width * height) { "bits size ${bits.size} != $width x $height" }
@@ -33,12 +40,14 @@ class ModuleMatrix(val width: Int, val height: Int, private val bits: BooleanArr
         var maxX = -1
         var minY = height
         var maxY = -1
-        for (y in 0 until height) for (x in 0 until width) {
-            if (bits[y * width + x]) {
-                if (x < minX) minX = x
-                if (x > maxX) maxX = x
-                if (y < minY) minY = y
-                if (y > maxY) maxY = y
+        for (y in 0 until height) {
+            for (x in 0 until width) {
+                if (bits[y * width + x]) {
+                    if (x < minX) minX = x
+                    if (x > maxX) maxX = x
+                    if (y < minY) minY = y
+                    if (y > maxY) maxY = y
+                }
             }
         }
         if (maxX < 0) return this
@@ -64,28 +73,30 @@ class ModuleMatrix(val width: Int, val height: Int, private val bits: BooleanArr
 }
 
 /** Maps our [CodeFormat] to ZXing, or null for formats that cannot be created. */
-fun CodeFormat.toZxingFormat(): BarcodeFormat? = when (this) {
-    CodeFormat.QR_CODE -> BarcodeFormat.QR_CODE
-    CodeFormat.EAN_13 -> BarcodeFormat.EAN_13
-    CodeFormat.EAN_8 -> BarcodeFormat.EAN_8
-    CodeFormat.UPC_A -> BarcodeFormat.UPC_A
-    CodeFormat.CODE_128 -> BarcodeFormat.CODE_128
-    CodeFormat.CODE_39 -> BarcodeFormat.CODE_39
-    CodeFormat.ITF -> BarcodeFormat.ITF
-    CodeFormat.PDF_417 -> BarcodeFormat.PDF_417
-    CodeFormat.DATA_MATRIX -> BarcodeFormat.DATA_MATRIX
-    CodeFormat.AZTEC -> BarcodeFormat.AZTEC
-    else -> null
-}
+fun CodeFormat.toZxingFormat(): BarcodeFormat? =
+    when (this) {
+        CodeFormat.QR_CODE -> BarcodeFormat.QR_CODE
+        CodeFormat.EAN_13 -> BarcodeFormat.EAN_13
+        CodeFormat.EAN_8 -> BarcodeFormat.EAN_8
+        CodeFormat.UPC_A -> BarcodeFormat.UPC_A
+        CodeFormat.CODE_128 -> BarcodeFormat.CODE_128
+        CodeFormat.CODE_39 -> BarcodeFormat.CODE_39
+        CodeFormat.ITF -> BarcodeFormat.ITF
+        CodeFormat.PDF_417 -> BarcodeFormat.PDF_417
+        CodeFormat.DATA_MATRIX -> BarcodeFormat.DATA_MATRIX
+        CodeFormat.AZTEC -> BarcodeFormat.AZTEC
+        else -> null
+    }
 
 /** ZXing based encoder producing platform independent [ModuleMatrix] grids (quiet zone 0). */
 object CodeEncoder {
-    fun zxingLevel(level: ErrorCorrection): ErrorCorrectionLevel = when (level) {
-        ErrorCorrection.L -> ErrorCorrectionLevel.L
-        ErrorCorrection.M -> ErrorCorrectionLevel.M
-        ErrorCorrection.Q -> ErrorCorrectionLevel.Q
-        ErrorCorrection.H -> ErrorCorrectionLevel.H
-    }
+    fun zxingLevel(level: ErrorCorrection): ErrorCorrectionLevel =
+        when (level) {
+            ErrorCorrection.L -> ErrorCorrectionLevel.L
+            ErrorCorrection.M -> ErrorCorrectionLevel.M
+            ErrorCorrection.Q -> ErrorCorrectionLevel.Q
+            ErrorCorrection.H -> ErrorCorrectionLevel.H
+        }
 
     private fun isAscii(s: String): Boolean = s.all { it.code < 128 }
 
@@ -105,12 +116,13 @@ object CodeEncoder {
 
     /** True when [payload] fits a QR code at [level]. */
     fun canEncodeQr(payload: String, level: ErrorCorrection): Boolean =
-        payload.isNotEmpty() && try {
-            encodeQr(payload, level)
-            true
-        } catch (e: CodeEncodeException) {
-            false
-        }
+        payload.isNotEmpty() &&
+            try {
+                encodeQr(payload, level)
+                true
+            } catch (e: CodeEncodeException) {
+                false
+            }
 
     /**
      * 1D formats and the 2D barcodes (PDF417, Data Matrix, Aztec), no quiet zone. [data] must already carry its check digit
@@ -150,7 +162,7 @@ object QrGeometry {
     fun finderOrigins(size: Int): List<Pair<Int, Int>> =
         listOf(0 to 0, (size - FINDER_SIZE) to 0, 0 to (size - FINDER_SIZE))
 
-    /** True when module ([x],[y]) is part of one of the three 7x7 finder squares. */
+    /** True when module ([x], [y]) is part of one of the three 7x7 finder squares. */
     fun isFinderModule(x: Int, y: Int, size: Int): Boolean {
         val far = size - FINDER_SIZE
         val inX = x < FINDER_SIZE

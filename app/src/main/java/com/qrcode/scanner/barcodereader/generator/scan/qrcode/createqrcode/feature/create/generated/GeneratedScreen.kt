@@ -79,11 +79,12 @@ fun GeneratedScreen(
         when (state.status) {
             GeneratedStatus.LOADING -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { LoadingSpinner() }
             GeneratedStatus.NOT_FOUND -> NotFound(onBack)
-            GeneratedStatus.READY -> if (state.editing) {
-                EditorScreen(state = state, onEvent = onEvent, onPickLogo = onPickLogo)
-            } else {
-                ResultContent(state = state, onEvent = onEvent, onBack = onBack)
-            }
+            GeneratedStatus.READY ->
+                if (state.editing) {
+                    EditorScreen(state = state, onEvent = onEvent, onPickLogo = onPickLogo)
+                } else {
+                    ResultContent(state = state, onEvent = onEvent, onBack = onBack)
+                }
         }
         AppToastHost(
             state = toastState,
@@ -117,9 +118,10 @@ private fun ResultContent(state: GeneratedUiState, onEvent: (GeneratedEvent) -> 
     AppScaffold(
         topBar = {
             AppTopBar(
-                title = stringResource(
-                    if (state.isBarcode) R.string.create_generated_title_barcode else R.string.create_generated_title_qr,
-                ),
+                title =
+                    stringResource(
+                        if (state.isBarcode) R.string.create_generated_title_barcode else R.string.create_generated_title_qr,
+                    ),
                 onBack = onBack,
                 actions = {
                     IconButtonRounded(
@@ -150,11 +152,12 @@ private fun ResultContent(state: GeneratedUiState, onEvent: (GeneratedEvent) -> 
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             PreviewCard(state = state, record = record, logo = logo)
@@ -249,11 +252,12 @@ private fun DetailsCard(state: GeneratedUiState, record: ScanRecord) {
 // ---- previews ----
 
 private fun sampleRecord(payload: String, format: CodeFormat, style: QrStyle): ScanRecord {
-    val content = if (format == CodeFormat.QR_CODE) {
-        ScanContent.Website(payload, format, payload)
-    } else {
-        ScanContent.Product(payload, format, payload)
-    }
+    val content =
+        if (format == CodeFormat.QR_CODE) {
+            ScanContent.Website(payload, format, payload)
+        } else {
+            ScanContent.Product(payload, format, payload)
+        }
     return ScanRecord(id = 1, content = content, createdAt = 0L, source = ScanSource.CREATED, style = style)
 }
 
@@ -277,16 +281,18 @@ private fun sampleState(record: ScanRecord, editing: Boolean = false, tab: Edito
 private const val SAMPLE_URL = "https://www.brewhouse-coffee.com/menu?table=12"
 private const val SAMPLE_EAN = "5901234123457"
 private val qrRecord = sampleRecord(SAMPLE_URL, CodeFormat.QR_CODE, QrStyle())
-private val shapedRecord = sampleRecord(
-    SAMPLE_URL,
-    CodeFormat.QR_CODE,
-    QrStyle(foreground = 0xFF4F46E5, dotShape = DotShape.DOTS, eyeShape = EyeShape.LEAF, errorCorrection = ErrorCorrection.M),
-)
-private val framedRecord = sampleRecord(
-    SAMPLE_URL,
-    CodeFormat.QR_CODE,
-    QrStyle(foreground = 0xFF4F46E5, frameText = "Scan me", errorCorrection = ErrorCorrection.H),
-)
+private val shapedRecord =
+    sampleRecord(
+        SAMPLE_URL,
+        CodeFormat.QR_CODE,
+        QrStyle(foreground = 0xFF4F46E5, dotShape = DotShape.DOTS, eyeShape = EyeShape.LEAF, errorCorrection = ErrorCorrection.M),
+    )
+private val framedRecord =
+    sampleRecord(
+        SAMPLE_URL,
+        CodeFormat.QR_CODE,
+        QrStyle(foreground = 0xFF4F46E5, frameText = "Scan me", errorCorrection = ErrorCorrection.H),
+    )
 private val lowContrastRecord = sampleRecord(SAMPLE_URL, CodeFormat.QR_CODE, QrStyle(foreground = 0xFFBBBBBB))
 private val barcodeRecord = sampleRecord(SAMPLE_EAN, CodeFormat.EAN_13, QrStyle())
 

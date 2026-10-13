@@ -37,7 +37,8 @@ object CreateHubLogic {
 
     /** Up to [limit] distinct types from the newest created records of [records] (newest first). */
     fun recent(records: List<ScanRecord>, limit: Int = RECENT_LIMIT): List<CreateType> =
-        records.asSequence()
+        records
+            .asSequence()
             .filter { it.source == ScanSource.CREATED }
             .mapNotNull { typeOf(it) }
             .distinct()

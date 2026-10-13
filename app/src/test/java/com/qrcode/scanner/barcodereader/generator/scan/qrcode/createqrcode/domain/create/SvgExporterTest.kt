@@ -27,11 +27,19 @@ class SvgExporterTest {
     private fun count(doc: Document, tag: String) = doc.getElementsByTagName(tag).length
 
     @Test fun wellFormedForEveryStyleCombination() {
-        for (dot in DotShape.entries) for (eye in EyeShape.entries) for (grad in listOf<Long?>(null, 0xFF0044AA)) {
-            val img = QrVectorBuilder.build(matrix, QrStyle(dotShape = dot, eyeShape = eye, gradientEnd = grad, frameText = "Scan me <&>"))
-            val doc = parse(SvgExporter.toSvg(img))
-            assertEquals("svg", doc.documentElement.localName)
-            assertEquals("http://www.w3.org/2000/svg", doc.documentElement.namespaceURI)
+        for (dot in DotShape.entries) {
+            for (eye in EyeShape.entries) {
+                for (grad in listOf<Long?>(null, 0xFF0044AA)) {
+                    val img =
+                        QrVectorBuilder.build(
+                            matrix,
+                            QrStyle(dotShape = dot, eyeShape = eye, gradientEnd = grad, frameText = "Scan me <&>"),
+                        )
+                    val doc = parse(SvgExporter.toSvg(img))
+                    assertEquals("svg", doc.documentElement.localName)
+                    assertEquals("http://www.w3.org/2000/svg", doc.documentElement.namespaceURI)
+                }
+            }
         }
     }
 
@@ -77,9 +85,10 @@ class SvgExporterTest {
         val stops = doc.getElementsByTagName("stop")
         assertEquals("#112233", (stops.item(0) as Element).getAttribute("stop-color"))
         assertEquals("#445566", (stops.item(1) as Element).getAttribute("stop-color"))
-        val gradientFills = (0 until doc.getElementsByTagName("rect").length)
-            .map { doc.getElementsByTagName("rect").item(it) as Element }
-            .count { it.getAttribute("fill") == "url(#g0)" }
+        val gradientFills =
+            (0 until doc.getElementsByTagName("rect").length)
+                .map { doc.getElementsByTagName("rect").item(it) as Element }
+                .count { it.getAttribute("fill") == "url(#g0)" }
         assertTrue(gradientFills > 0)
     }
 
@@ -139,28 +148,32 @@ class SvgExporterTest {
         assertEquals("12.346", SvgExporter.num(12.3456f))
         assertEquals("-2.5", SvgExporter.num(-2.5f))
         assertEquals("1000000", SvgExporter.num(1_000_000f))
-        org.junit.jupiter.api.assertThrows<IllegalArgumentException> { SvgExporter.num(Float.NaN) }
+        org.junit.jupiter.api
+            .assertThrows<IllegalArgumentException> { SvgExporter.num(Float.NaN) }
     }
 
     @Test fun quadAndNegativeSweepAndStartAnchor() {
-        val img = QrVectorImage(
-            20f, 20f, 0xFFFFFFFF,
-            listOf(
-                StyledShape(
-                    VectorShape.Path(
-                        listOf(
-                            PathCommand.MoveTo(1f, 1f),
-                            PathCommand.QuadTo(5f, 0f, 9f, 1f),
-                            PathCommand.ArcTo(5f, 5f, 4f, 0f, -90f),
-                            PathCommand.Close,
+        val img =
+            QrVectorImage(
+                20f,
+                20f,
+                0xFFFFFFFF,
+                listOf(
+                    StyledShape(
+                        VectorShape.Path(
+                            listOf(
+                                PathCommand.MoveTo(1f, 1f),
+                                PathCommand.QuadTo(5f, 0f, 9f, 1f),
+                                PathCommand.ArcTo(5f, 5f, 4f, 0f, -90f),
+                                PathCommand.Close,
+                            ),
                         ),
+                        ShapePaint.Solid(0xFF000000),
                     ),
-                    ShapePaint.Solid(0xFF000000),
+                    StyledShape(VectorShape.Text(1f, 15f, "x", 3f, TextAnchor.START), ShapePaint.Solid(0xFF000000)),
+                    StyledShape(VectorShape.Text(19f, 15f, "y", 3f, TextAnchor.END), ShapePaint.Solid(0xFF000000)),
                 ),
-                StyledShape(VectorShape.Text(1f, 15f, "x", 3f, TextAnchor.START), ShapePaint.Solid(0xFF000000)),
-                StyledShape(VectorShape.Text(19f, 15f, "y", 3f, TextAnchor.END), ShapePaint.Solid(0xFF000000)),
-            ),
-        )
+            )
         val svg = SvgExporter.toSvg(img)
         assertTrue(svg.contains("Q5 0 9 1"))
         assertTrue(svg.contains("A4 4 0 0 0 5 1"))

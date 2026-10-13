@@ -23,7 +23,8 @@ object Validators {
     // ---- url ----
 
     private val schemeRegex = Regex("^([A-Za-z][A-Za-z0-9+.-]*)://(.*)$", RegexOption.DOT_MATCHES_ALL)
-    private val hostRegex = Regex("^[\\p{L}\\p{N}](?:[\\p{L}\\p{N}_-]*[\\p{L}\\p{N}])?(?:\\.[\\p{L}\\p{N}](?:[\\p{L}\\p{N}_-]*[\\p{L}\\p{N}])?)+$")
+    private val hostRegex =
+        Regex("^[\\p{L}\\p{N}](?:[\\p{L}\\p{N}_-]*[\\p{L}\\p{N}])?(?:\\.[\\p{L}\\p{N}](?:[\\p{L}\\p{N}_-]*[\\p{L}\\p{N}])?)+$")
     private val marketHostRegex = Regex("^[A-Za-z]+$")
     private val ipv4Regex = Regex("^\\d{1,3}(\\.\\d{1,3}){3}$")
     private val webSchemes = setOf("http", "https")
@@ -48,17 +49,21 @@ object Validators {
         val host = hostPort.substringBeforeLast(':', hostPort).trim('[', ']')
         val port = if (hostPort.contains(':')) hostPort.substringAfterLast(':') else ""
         if (port.isNotEmpty() && (port.any { it !in '0'..'9' } || port.length > 5)) return fail(FieldError.InvalidUrl)
-        val hostOk = host == "localhost" || ipv4Regex.matches(host) || (scheme == "market" && marketHostRegex.matches(host)) ||
-            (hostRegex.matches(host) && host.substringAfterLast('.').any { it.isLetter() } && host.substringAfterLast('.').length >= 2)
+        val hostOk =
+            host == "localhost" ||
+                ipv4Regex.matches(host) ||
+                (scheme == "market" && marketHostRegex.matches(host)) ||
+                (hostRegex.matches(host) && host.substringAfterLast('.').any { it.isLetter() } && host.substringAfterLast('.').length >= 2)
         return if (hostOk) OK else fail(FieldError.InvalidUrl)
     }
 
     // ---- email / phone ----
 
-    private val emailRegex = Regex(
-        "^[A-Za-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#\$%&'*+/=?^_`{|}~-]+)*" +
-            "@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*\\.[A-Za-z]{2,}$",
-    )
+    private val emailRegex =
+        Regex(
+            "^[A-Za-z0-9!#\$%&'*+/=?^_`{|}~-]+(?:\\.[A-Za-z0-9!#\$%&'*+/=?^_`{|}~-]+)*" +
+                "@[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)*\\.[A-Za-z]{2,}$",
+        )
 
     fun email(value: String, required: Boolean = true): ValidationResult {
         val t = value.trim()
@@ -81,11 +86,12 @@ object Validators {
 
     // ---- wifi ----
 
-    fun ssid(value: String): ValidationResult = when {
-        value.isBlank() -> fail(FieldError.SsidRequired)
-        value.toByteArray(Charsets.UTF_8).size > Limits.SSID -> fail(FieldError.TooLong(Limits.SSID))
-        else -> OK
-    }
+    fun ssid(value: String): ValidationResult =
+        when {
+            value.isBlank() -> fail(FieldError.SsidRequired)
+            value.toByteArray(Charsets.UTF_8).size > Limits.SSID -> fail(FieldError.TooLong(Limits.SSID))
+            else -> OK
+        }
 
     private val wepLengths = listOf(5, 10, 13, 26)
     private val hexRegex = Regex("^[0-9A-Fa-f]+$")
@@ -96,11 +102,12 @@ object Validators {
         if (password.isEmpty()) return fail(FieldError.Required)
         val n = password.length
         return when (security) {
-            WifiSecurity.WPA -> when {
-                n < Limits.WPA_MIN -> fail(FieldError.PasswordTooShort(Limits.WPA_MIN))
-                n > Limits.WPA_MAX -> fail(FieldError.TooLong(Limits.WPA_MAX))
-                else -> OK
-            }
+            WifiSecurity.WPA ->
+                when {
+                    n < Limits.WPA_MIN -> fail(FieldError.PasswordTooShort(Limits.WPA_MIN))
+                    n > Limits.WPA_MAX -> fail(FieldError.TooLong(Limits.WPA_MAX))
+                    else -> OK
+                }
             WifiSecurity.WEP -> {
                 val hexOk = (n == 10 || n == 26) && hexRegex.matches(password)
                 when {
@@ -142,11 +149,12 @@ object Validators {
 
     fun eventEnd(allDay: Boolean, startMillis: Long?, endMillis: Long?): ValidationResult {
         if (startMillis == null || endMillis == null) return OK
-        val before = if (allDay) {
-            Math.floorDiv(endMillis, IcsDates.DAY_MILLIS) < Math.floorDiv(startMillis, IcsDates.DAY_MILLIS)
-        } else {
-            endMillis < startMillis
-        }
+        val before =
+            if (allDay) {
+                Math.floorDiv(endMillis, IcsDates.DAY_MILLIS) < Math.floorDiv(startMillis, IcsDates.DAY_MILLIS)
+            } else {
+                endMillis < startMillis
+            }
         return if (before) fail(FieldError.EndBeforeStart) else OK
     }
 
@@ -162,12 +170,13 @@ object Validators {
         if (value.isBlank()) return fail(FieldError.Required)
         if (platform.isPhoneBased) return phone(value)
         val h = PayloadBuilder.cleanHandle(value)
-        val regex = when (platform) {
-            SocialPlatform.X -> xHandle
-            SocialPlatform.INSTAGRAM -> instagramHandle
-            SocialPlatform.TELEGRAM -> telegramHandle
-            else -> generalHandle
-        }
+        val regex =
+            when (platform) {
+                SocialPlatform.X -> xHandle
+                SocialPlatform.INSTAGRAM -> instagramHandle
+                SocialPlatform.TELEGRAM -> telegramHandle
+                else -> generalHandle
+            }
         return if (regex.matches(h)) OK else fail(FieldError.InvalidHandle)
     }
 
@@ -203,30 +212,34 @@ object Validators {
         return OK
     }
 
-    private fun itf(t: String): ValidationResult = when {
-        t.any { it !in '0'..'9' } -> fail(FieldError.BarcodeDigitsOnly)
-        t.length % 2 != 0 -> fail(FieldError.ItfOddLength)
-        t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
-        else -> OK
-    }
+    private fun itf(t: String): ValidationResult =
+        when {
+            t.any { it !in '0'..'9' } -> fail(FieldError.BarcodeDigitsOnly)
+            t.length % 2 != 0 -> fail(FieldError.ItfOddLength)
+            t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
+            else -> OK
+        }
 
-    private fun code39(t: String): ValidationResult = when {
-        t.uppercase().any { it !in CODE39_CHARS } -> fail(FieldError.BarcodeInvalidChars)
-        t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
-        else -> OK
-    }
+    private fun code39(t: String): ValidationResult =
+        when {
+            t.uppercase().any { it !in CODE39_CHARS } -> fail(FieldError.BarcodeInvalidChars)
+            t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
+            else -> OK
+        }
 
-    private fun code128(t: String): ValidationResult = when {
-        t.any { it.code !in 0x20..0x7E } -> fail(FieldError.BarcodeInvalidChars)
-        t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
-        else -> OK
-    }
+    private fun code128(t: String): ValidationResult =
+        when {
+            t.any { it.code !in 0x20..0x7E } -> fail(FieldError.BarcodeInvalidChars)
+            t.length > Limits.BARCODE_1D_MAX -> fail(FieldError.DataTooLong(Limits.BARCODE_1D_MAX))
+            else -> OK
+        }
 
     // ---- whole forms ----
 
     /** All errors of [spec], keyed by the field to show them on. Empty map means the form is valid. */
     fun validate(spec: CreateSpec): Map<FormField, FieldError> {
         val errors = LinkedHashMap<FormField, FieldError>()
+
         fun report(field: FormField, result: ValidationResult) {
             result.errorOrNull()?.let { errors[field] = it }
         }
@@ -288,16 +301,17 @@ object Validators {
     fun errorFor(spec: CreateSpec, field: FormField): FieldError? = validate(spec)[field]
 
     /** The field that carries a whole-payload error such as [FieldError.DataTooLong]. */
-    fun primaryField(type: CreateType): FormField = when (type) {
-        CreateType.WEBSITE, CreateType.APP_STORE -> FormField.URL
-        CreateType.TEXT -> FormField.TEXT
-        CreateType.CONTACT -> FormField.NAME
-        CreateType.WIFI -> FormField.SSID
-        CreateType.EMAIL -> FormField.EMAIL
-        CreateType.PHONE, CreateType.SMS -> FormField.PHONE
-        CreateType.LOCATION -> FormField.LATITUDE
-        CreateType.EVENT -> FormField.TITLE
-        CreateType.SOCIAL -> FormField.HANDLE
-        else -> FormField.BARCODE_DATA
-    }
+    fun primaryField(type: CreateType): FormField =
+        when (type) {
+            CreateType.WEBSITE, CreateType.APP_STORE -> FormField.URL
+            CreateType.TEXT -> FormField.TEXT
+            CreateType.CONTACT -> FormField.NAME
+            CreateType.WIFI -> FormField.SSID
+            CreateType.EMAIL -> FormField.EMAIL
+            CreateType.PHONE, CreateType.SMS -> FormField.PHONE
+            CreateType.LOCATION -> FormField.LATITUDE
+            CreateType.EVENT -> FormField.TITLE
+            CreateType.SOCIAL -> FormField.HANDLE
+            else -> FormField.BARCODE_DATA
+        }
 }

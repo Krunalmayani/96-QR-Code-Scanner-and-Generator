@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppDivider
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
@@ -230,11 +230,12 @@ internal fun PhoneContent(content: ScanContent.Phone) {
 
 @Composable
 internal fun EmailContent(content: ScanContent.Email) {
-    val lines = buildList {
-        add(DetailLine(stringResource(R.string.result_email_to_label), content.address))
-        if (content.subject.isNotBlank()) add(DetailLine(stringResource(R.string.result_email_subject), content.subject))
-        if (content.body.isNotBlank()) add(DetailLine(stringResource(R.string.result_email_message), content.body))
-    }
+    val lines =
+        buildList {
+            add(DetailLine(stringResource(R.string.result_email_to_label), content.address))
+            if (content.subject.isNotBlank()) add(DetailLine(stringResource(R.string.result_email_subject), content.subject))
+            if (content.body.isNotBlank()) add(DetailLine(stringResource(R.string.result_email_message), content.body))
+        }
     DetailsCard(lines)
 }
 
@@ -262,11 +263,12 @@ internal fun SmsContent(content: ScanContent.Sms) {
 internal fun LocationContent(content: ScanContent.Location) {
     val latitude = remember(content.latitude) { ExternalActions.formatCoordinate(content.latitude) }
     val longitude = remember(content.longitude) { ExternalActions.formatCoordinate(content.longitude) }
-    val lines = buildList {
-        if (content.label.isNotBlank()) add(DetailLine(stringResource(R.string.result_location_name), content.label))
-        add(DetailLine(stringResource(R.string.result_location_latitude), latitude, mono = true))
-        add(DetailLine(stringResource(R.string.result_location_longitude), longitude, mono = true))
-    }
+    val lines =
+        buildList {
+            if (content.label.isNotBlank()) add(DetailLine(stringResource(R.string.result_location_name), content.label))
+            add(DetailLine(stringResource(R.string.result_location_latitude), latitude, mono = true))
+            add(DetailLine(stringResource(R.string.result_location_longitude), longitude, mono = true))
+        }
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         MapPlaceholder()
         DetailsCard(lines)
@@ -326,12 +328,13 @@ private fun RawText(text: String) {
             text,
             style = AppTheme.type.mono.copy(fontSize = 14.sp, lineHeight = 22.sp),
             color = c.ink,
-            modifier = Modifier
-                .padding(top = 12.dp)
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(14.dp))
-                .background(c.surfaceVariant)
-                .padding(14.dp),
+            modifier =
+                Modifier
+                    .padding(top = 12.dp)
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(c.surfaceVariant)
+                    .padding(14.dp),
         )
     }
 }

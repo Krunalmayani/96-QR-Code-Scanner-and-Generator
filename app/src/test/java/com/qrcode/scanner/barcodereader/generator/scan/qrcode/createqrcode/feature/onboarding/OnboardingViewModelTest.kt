@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
 class OnboardingViewModelTest {
-
     @JvmField
     @RegisterExtension
     val main = MainDispatcherExtension()
@@ -25,43 +24,46 @@ class OnboardingViewModelTest {
     private val analytics = mockk<Analytics>(relaxed = true)
 
     @Test
-    fun `finish stores the flag, logs the event and asks the UI to leave`() = runTest {
-        val viewModel = OnboardingViewModel(settings, analytics)
-        assertFalse(settings.value.onboardingDone)
+    fun `finish stores the flag, logs the event and asks the UI to leave`() =
+        runTest {
+            val viewModel = OnboardingViewModel(settings, analytics)
+            assertFalse(settings.value.onboardingDone)
 
-        viewModel.effects.test {
-            viewModel.finish(CameraStepResult.GRANTED)
-            assertEquals(OnboardingEffect.Finished, awaitItem())
+            viewModel.effects.test {
+                viewModel.finish(CameraStepResult.GRANTED)
+                assertEquals(OnboardingEffect.Finished, awaitItem())
+            }
+
+            assertTrue(settings.value.onboardingDone)
+            verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to "GRANTED")) }
         }
-
-        assertTrue(settings.value.onboardingDone)
-        verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to "GRANTED")) }
-    }
 
     @Test
-    fun `skipping the camera step still completes onboarding`() = runTest {
-        val viewModel = OnboardingViewModel(settings, analytics)
+    fun `skipping the camera step still completes onboarding`() =
+        runTest {
+            val viewModel = OnboardingViewModel(settings, analytics)
 
-        viewModel.effects.test {
-            viewModel.finish(CameraStepResult.SKIPPED)
-            assertEquals(OnboardingEffect.Finished, awaitItem())
+            viewModel.effects.test {
+                viewModel.finish(CameraStepResult.SKIPPED)
+                assertEquals(OnboardingEffect.Finished, awaitItem())
+            }
+
+            assertTrue(settings.value.onboardingDone)
+            verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to "SKIPPED")) }
         }
-
-        assertTrue(settings.value.onboardingDone)
-        verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to "SKIPPED")) }
-    }
 
     @Test
-    fun `a second finish call is ignored`() = runTest {
-        val viewModel = OnboardingViewModel(settings, analytics)
+    fun `a second finish call is ignored`() =
+        runTest {
+            val viewModel = OnboardingViewModel(settings, analytics)
 
-        viewModel.effects.test {
-            viewModel.finish(CameraStepResult.DENIED)
-            viewModel.finish(CameraStepResult.GRANTED)
-            assertEquals(OnboardingEffect.Finished, awaitItem())
-            expectNoEvents()
+            viewModel.effects.test {
+                viewModel.finish(CameraStepResult.DENIED)
+                viewModel.finish(CameraStepResult.GRANTED)
+                assertEquals(OnboardingEffect.Finished, awaitItem())
+                expectNoEvents()
+            }
+
+            verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, any()) }
         }
-
-        verify(exactly = 1) { analytics.log(Events.ONBOARDING_DONE, any()) }
-    }
 }

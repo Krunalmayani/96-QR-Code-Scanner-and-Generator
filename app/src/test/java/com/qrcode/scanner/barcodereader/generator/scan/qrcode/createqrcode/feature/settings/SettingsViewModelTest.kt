@@ -1,8 +1,6 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
 import app.cash.turbine.test
-import io.mockk.mockk
-import io.mockk.verify
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Analytics
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.analytics.Events
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanSource
@@ -12,6 +10,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.testing.Fixtures
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.usecase.ClearHistoryUseCase
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.testing.MainDispatcherExtension
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -89,71 +89,80 @@ class SettingsViewModelTest {
     }
 
     @Test
-    fun `clear dialog shows the counts and keeps favorites by default`() = runTest {
-        history.seed(Fixtures.record(source = ScanSource.CAMERA))
-        history.seed(Fixtures.record(source = ScanSource.IMAGE, isFavorite = true))
-        history.seed(Fixtures.record(source = ScanSource.CREATED))
-        val vm = viewModel()
-        vm.onEvent(SettingsEvent.ClearHistoryClicked)
-        assertEquals(ClearDialogState(scanned = 2, created = 1, keepFavorites = true), vm.state.value.clearDialog)
-    }
-
-    @Test
-    fun `dismissing the dialog removes it without clearing anything`() = runTest {
-        history.seed(Fixtures.record())
-        val vm = viewModel()
-        vm.onEvent(SettingsEvent.ClearHistoryClicked)
-        vm.onEvent(SettingsEvent.ClearDismissed)
-        assertNull(vm.state.value.clearDialog)
-        assertEquals(1, history.persistedRecords.size)
-    }
-
-    @Test
-    fun `confirming with keep favorites removes only the other rows and reports the count`() = runTest {
-        history.seed(Fixtures.record(source = ScanSource.CAMERA))
-        history.seed(Fixtures.record(source = ScanSource.CREATED))
-        val favorite = history.seed(Fixtures.record(isFavorite = true))
-        val vm = viewModel()
-        vm.effects.test {
+    fun `clear dialog shows the counts and keeps favorites by default`() =
+        runTest {
+            history.seed(Fixtures.record(source = ScanSource.CAMERA))
+            history.seed(Fixtures.record(source = ScanSource.IMAGE, isFavorite = true))
+            history.seed(Fixtures.record(source = ScanSource.CREATED))
+            val vm = viewModel()
             vm.onEvent(SettingsEvent.ClearHistoryClicked)
+            assertEquals(ClearDialogState(scanned = 2, created = 1, keepFavorites = true), vm.state.value.clearDialog)
+        }
+
+    @Test
+    fun `dismissing the dialog removes it without clearing anything`() =
+        runTest {
+            history.seed(Fixtures.record())
+            val vm = viewModel()
+            vm.onEvent(SettingsEvent.ClearHistoryClicked)
+            vm.onEvent(SettingsEvent.ClearDismissed)
+            assertNull(vm.state.value.clearDialog)
+            assertEquals(1, history.persistedRecords.size)
+        }
+
+    @Test
+    fun `confirming with keep favorites removes only the other rows and reports the count`() =
+        runTest {
+            history.seed(Fixtures.record(source = ScanSource.CAMERA))
+            history.seed(Fixtures.record(source = ScanSource.CREATED))
+            val favorite = history.seed(Fixtures.record(isFavorite = true))
+            val vm = viewModel()
+            vm.effects.test {
+                vm.onEvent(SettingsEvent.ClearHistoryClicked)
+                vm.onEvent(SettingsEvent.ClearConfirmed)
+                assertEquals(SettingsEffect.HistoryCleared(2), awaitItem())
+            }
+            assertEquals(listOf(favorite.id), history.persistedRecords.map { it.id })
+            assertNull(vm.state.value.clearDialog)
+            verify { analytics.log(Events.HISTORY_CLEAR) }
+        }
+
+    @Test
+    fun `unchecking keep favorites clears favorites too`() =
+        runTest {
+            history.seed(Fixtures.record(isFavorite = true))
+            history.seed(Fixtures.record())
+            val vm = viewModel()
+            vm.effects.test {
+                vm.onEvent(SettingsEvent.ClearHistoryClicked)
+                vm.onEvent(SettingsEvent.ClearKeepFavoritesChanged(false))
+                assertFalse(
+                    vm.state.value.clearDialog!!
+                        .keepFavorites,
+                )
+                vm.onEvent(SettingsEvent.ClearConfirmed)
+                assertEquals(SettingsEffect.HistoryCleared(2), awaitItem())
+            }
+            assertTrue(history.persistedRecords.isEmpty())
+        }
+
+    @Test
+    fun `clearing an empty history only reports that it is empty`() =
+        runTest {
+            val vm = viewModel()
+            vm.effects.test {
+                vm.onEvent(SettingsEvent.ClearHistoryClicked)
+                assertEquals(SettingsEffect.HistoryAlreadyEmpty, awaitItem())
+            }
+            assertNull(vm.state.value.clearDialog)
+        }
+
+    @Test
+    fun `confirm without an open dialog does nothing`() =
+        runTest {
+            history.seed(Fixtures.record())
+            val vm = viewModel()
             vm.onEvent(SettingsEvent.ClearConfirmed)
-            assertEquals(SettingsEffect.HistoryCleared(2), awaitItem())
+            assertEquals(1, history.persistedRecords.size)
         }
-        assertEquals(listOf(favorite.id), history.persistedRecords.map { it.id })
-        assertNull(vm.state.value.clearDialog)
-        verify { analytics.log(Events.HISTORY_CLEAR) }
-    }
-
-    @Test
-    fun `unchecking keep favorites clears favorites too`() = runTest {
-        history.seed(Fixtures.record(isFavorite = true))
-        history.seed(Fixtures.record())
-        val vm = viewModel()
-        vm.effects.test {
-            vm.onEvent(SettingsEvent.ClearHistoryClicked)
-            vm.onEvent(SettingsEvent.ClearKeepFavoritesChanged(false))
-            assertFalse(vm.state.value.clearDialog!!.keepFavorites)
-            vm.onEvent(SettingsEvent.ClearConfirmed)
-            assertEquals(SettingsEffect.HistoryCleared(2), awaitItem())
-        }
-        assertTrue(history.persistedRecords.isEmpty())
-    }
-
-    @Test
-    fun `clearing an empty history only reports that it is empty`() = runTest {
-        val vm = viewModel()
-        vm.effects.test {
-            vm.onEvent(SettingsEvent.ClearHistoryClicked)
-            assertEquals(SettingsEffect.HistoryAlreadyEmpty, awaitItem())
-        }
-        assertNull(vm.state.value.clearDialog)
-    }
-
-    @Test
-    fun `confirm without an open dialog does nothing`() = runTest {
-        history.seed(Fixtures.record())
-        val vm = viewModel()
-        vm.onEvent(SettingsEvent.ClearConfirmed)
-        assertEquals(1, history.persistedRecords.size)
-    }
 }

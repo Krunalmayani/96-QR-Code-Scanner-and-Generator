@@ -45,7 +45,10 @@ class HistoryExportFormatterTest {
 
     @Test
     fun `csv with no records is only the header`() {
-        assertEquals("id,date,source,type,format,title,content,favorite,note\r\n", HistoryExportFormatter.format(emptyList(), HistoryExportFormat.CSV))
+        assertEquals(
+            "id,date,source,type,format,title,content,favorite,note\r\n",
+            HistoryExportFormatter.format(emptyList(), HistoryExportFormat.CSV),
+        )
     }
 
     @Test
@@ -98,7 +101,14 @@ class HistoryExportFormatterTest {
     @Test
     fun `json keeps content verbatim even when it looks like a formula`() {
         val out = HistoryExportFormatter.format(listOf(text("=1+1")), HistoryExportFormat.JSON)
-        assertEquals("=1+1", Json.parseToJsonElement(out).jsonArray[0].jsonObject["content"]!!.jsonPrimitive.content)
+        assertEquals(
+            "=1+1",
+            Json
+                .parseToJsonElement(out)
+                .jsonArray[0]
+                .jsonObject["content"]!!
+                .jsonPrimitive.content,
+        )
     }
 
     @Test
@@ -109,7 +119,12 @@ class HistoryExportFormatterTest {
     @Test
     fun `text export is human readable`() {
         val out = HistoryExportFormatter.format(listOf(web(fav = true, note = "my note"), text("hello")), HistoryExportFormat.TEXT)
-        assertTrue(out.startsWith("example.com\nType: WEBSITE | Format: QR Code | Source: CAMERA\nDate: 2024-05-01T10:00:00Z\nFavorite: yes\nNote: my note\nContent:\nhttps://example.com"), out)
+        assertTrue(
+            out.startsWith(
+                "example.com\nType: WEBSITE | Format: QR Code | Source: CAMERA\nDate: 2024-05-01T10:00:00Z\nFavorite: yes\nNote: my note\nContent:\nhttps://example.com",
+            ),
+            out,
+        )
         assertTrue(out.contains("\n\nhello\nType: TEXT | Format: Code 128 | Source: IMAGE"), out)
         assertTrue(out.endsWith("Content:\nhello\n"), out)
     }

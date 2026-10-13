@@ -17,9 +17,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 @Composable
 fun GeneratedCodePreview(record: ScanRecord, modifier: Modifier = Modifier) {
     val style = record.style ?: QrStyle()
-    val image = remember(record.rawValue, record.format, style) {
-        CodeImageFactory(record.format, record.rawValue).imageOrNull(style)
-    }
+    val image =
+        remember(record.rawValue, record.format, style) {
+            CodeImageFactory(record.format, record.rawValue).imageOrNull(style)
+        }
     val logo = rememberLogoBitmap(style.logoUri)
     CodeCard(
         image = image,

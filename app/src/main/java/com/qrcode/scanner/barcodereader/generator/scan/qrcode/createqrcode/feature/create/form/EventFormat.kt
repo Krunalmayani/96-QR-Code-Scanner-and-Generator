@@ -1,11 +1,11 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.form
 
-import android.text.format.DateFormat as AndroidDateFormat
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import android.text.format.DateFormat as AndroidDateFormat
 
 /** Display text of event dates and times. java.util only: java.time needs API 26. */
 object EventFormat {

@@ -47,7 +47,11 @@ class ImageScanPlanTest {
     fun `no stretch for flat, full range, empty or malformed histograms`() {
         val flat = IntArray(256).also { it[128] = 1000 }
         assertNull(ContrastStretch.forHistogram(flat))
-        val full = IntArray(256).also { it[0] = 500; it[255] = 500 }
+        val full =
+            IntArray(256).also {
+                it[0] = 500
+                it[255] = 500
+            }
         assertNull(ContrastStretch.forHistogram(full, clipFraction = 0.0))
         assertNull(ContrastStretch.forHistogram(IntArray(256)))
         assertNull(ContrastStretch.forHistogram(IntArray(10)))

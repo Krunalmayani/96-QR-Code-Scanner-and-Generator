@@ -39,8 +39,14 @@ class WifiConnectTest {
     fun `results that arrive outside connecting are ignored`() {
         assertEquals(WifiPhase.IDLE, run(WifiConnectEvent.Succeeded()).phase)
         assertEquals(WifiPhase.IDLE, run(WifiConnectEvent.Failed(WifiFailure.ERROR)).phase)
-        assertEquals(WifiPhase.CONNECTED, run(WifiConnectEvent.Started, WifiConnectEvent.Succeeded(), WifiConnectEvent.Failed(WifiFailure.ERROR)).phase)
-        assertEquals(WifiPhase.FAILED, run(WifiConnectEvent.Started, WifiConnectEvent.Failed(WifiFailure.ERROR), WifiConnectEvent.Succeeded()).phase)
+        assertEquals(
+            WifiPhase.CONNECTED,
+            run(WifiConnectEvent.Started, WifiConnectEvent.Succeeded(), WifiConnectEvent.Failed(WifiFailure.ERROR)).phase,
+        )
+        assertEquals(
+            WifiPhase.FAILED,
+            run(WifiConnectEvent.Started, WifiConnectEvent.Failed(WifiFailure.ERROR), WifiConnectEvent.Succeeded()).phase,
+        )
     }
 
     @Test
@@ -55,7 +61,10 @@ class WifiConnectTest {
     fun `cancel only affects connecting and dismiss always resets`() {
         assertEquals(WifiPhase.IDLE, run(WifiConnectEvent.Started, WifiConnectEvent.Cancelled).phase)
         assertEquals(WifiPhase.CONNECTED, run(WifiConnectEvent.Started, WifiConnectEvent.Succeeded(), WifiConnectEvent.Cancelled).phase)
-        assertEquals(WifiPhase.IDLE, run(WifiConnectEvent.Started, WifiConnectEvent.Failed(WifiFailure.ERROR), WifiConnectEvent.Dismissed).phase)
+        assertEquals(
+            WifiPhase.IDLE,
+            run(WifiConnectEvent.Started, WifiConnectEvent.Failed(WifiFailure.ERROR), WifiConnectEvent.Dismissed).phase,
+        )
         assertFalse(run(WifiConnectEvent.Dismissed).flowVisible)
     }
 

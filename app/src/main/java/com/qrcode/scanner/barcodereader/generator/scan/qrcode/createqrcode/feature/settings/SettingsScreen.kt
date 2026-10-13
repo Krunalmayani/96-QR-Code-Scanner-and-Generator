@@ -94,11 +94,12 @@ fun SettingsScreen(
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
             Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .verticalScroll(scrollState)
-                    .padding(horizontal = 16.dp, vertical = 4.dp),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
             ) {
                 ScanningSection(state.settings, onEvent)
                 Spacer(Modifier.height(SectionGap))
@@ -345,11 +346,12 @@ private fun PrivacySection(settings: AppSettings, onEvent: (SettingsEvent) -> Un
 private fun PrivacyBanner() {
     val c = AppTheme.colors
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(c.primaryContainer)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(c.primaryContainer)
+                .padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.Top,
     ) {
@@ -370,7 +372,11 @@ private fun PrivacyBanner() {
 }
 
 @Composable
-private fun PermissionRow(icon: ImageVector, @StringRes title: Int, @StringRes hint: Int) {
+private fun PermissionRow(
+    icon: ImageVector,
+    @StringRes title: Int,
+    @StringRes hint: Int,
+) {
     ListRow(
         title = stringResource(title),
         subtitle = stringResource(hint),
@@ -442,12 +448,13 @@ private fun AboutSection(versionName: String, actions: SettingsActions) {
 
 // Previews --------------------------------------------------------------------------------------------------------
 
-private val PreviewSettings = AppSettings(
-    beep = true,
-    productSiteOrder = listOf(ProductSite.OPEN_FOOD_FACTS, ProductSite.GOOGLE, ProductSite.AMAZON),
-    theme = ThemeMode.DARK,
-    languageTag = "hi",
-)
+private val PreviewSettings =
+    AppSettings(
+        beep = true,
+        productSiteOrder = listOf(ProductSite.OPEN_FOOD_FACTS, ProductSite.GOOGLE, ProductSite.AMAZON),
+        theme = ThemeMode.DARK,
+        languageTag = "hi",
+    )
 
 @Composable
 private fun SettingsPreview(dark: Boolean, scroll: Int, clearDialog: ClearDialogState? = null) {

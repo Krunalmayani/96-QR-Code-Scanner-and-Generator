@@ -4,25 +4,27 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanContent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanRecord
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanSource
-import java.time.ZoneId
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.time.ZoneId
 
 class ExportPlanTest {
-    private fun record(id: Long, source: ScanSource, favorite: Boolean = false) = ScanRecord(
-        id = id,
-        content = ScanContent.Text("v$id", CodeFormat.QR_CODE),
-        createdAt = id,
-        source = source,
-        isFavorite = favorite,
-    )
+    private fun record(id: Long, source: ScanSource, favorite: Boolean = false) =
+        ScanRecord(
+            id = id,
+            content = ScanContent.Text("v$id", CodeFormat.QR_CODE),
+            createdAt = id,
+            source = source,
+            isFavorite = favorite,
+        )
 
-    private val rows = listOf(
-        record(1, ScanSource.CAMERA),
-        record(2, ScanSource.IMAGE, favorite = true),
-        record(3, ScanSource.CREATED),
-        record(4, ScanSource.CREATED, favorite = true),
-    )
+    private val rows =
+        listOf(
+            record(1, ScanSource.CAMERA),
+            record(2, ScanSource.IMAGE, favorite = true),
+            record(3, ScanSource.CREATED),
+            record(4, ScanSource.CREATED, favorite = true),
+        )
 
     @Test
     fun `default selection includes everything`() {

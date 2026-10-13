@@ -25,13 +25,20 @@ import kotlinx.serialization.Serializable
 @Serializable data object ScanFromImage
 
 // Result / detail. [recordId] may be negative (transient record, history switched off).
-@Serializable data class Result(val recordId: Long, val fromHistory: Boolean = false)
+@Serializable data class Result(
+    val recordId: Long,
+    val fromHistory: Boolean = false,
+)
 
 // Create. [typeKey] is CreateType.name from the create feature.
-@Serializable data class CreateForm(val typeKey: String)
+@Serializable data class CreateForm(
+    val typeKey: String,
+)
 
 /** Generated code + customise editor for the created record [recordId]. */
-@Serializable data class Generated(val recordId: Long)
+@Serializable data class Generated(
+    val recordId: Long,
+)
 
 // Settings sub-screens
 @Serializable data object ThemePicker

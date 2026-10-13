@@ -12,11 +12,12 @@ object PayloadDensity {
     /** Density from the number of modules per side of the QR code for [payload]; too long to encode counts as HIGH. */
     fun of(payload: String): DensityLevel {
         if (payload.isEmpty()) return DensityLevel.LOW
-        val side = try {
-            CodeEncoder.encodeQr(payload, ErrorCorrection.M).width
-        } catch (e: CodeEncodeException) {
-            return DensityLevel.HIGH
-        }
+        val side =
+            try {
+                CodeEncoder.encodeQr(payload, ErrorCorrection.M).width
+            } catch (e: CodeEncodeException) {
+                return DensityLevel.HIGH
+            }
         return when {
             side >= HIGH_FROM_MODULES -> DensityLevel.HIGH
             side >= MEDIUM_FROM_MODULES -> DensityLevel.MEDIUM

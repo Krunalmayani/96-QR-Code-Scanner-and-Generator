@@ -14,14 +14,18 @@ data class ExportSelection(
     val includeCreated: Boolean = true,
     val favoritesOnly: Boolean = false,
 ) {
-    fun select(records: List<ScanRecord>): List<ScanRecord> = records.filter { record ->
-        val sourceOk = if (record.source == ScanSource.CREATED) includeCreated else includeScanned
-        sourceOk && (!favoritesOnly || record.isFavorite)
-    }
+    fun select(records: List<ScanRecord>): List<ScanRecord> =
+        records.filter { record ->
+            val sourceOk = if (record.source == ScanSource.CREATED) includeCreated else includeScanned
+            sourceOk && (!favoritesOnly || record.isFavorite)
+        }
 }
 
 /** Row counts shown next to the include checkboxes. */
-data class ExportCounts(val scanned: Int, val created: Int) {
+data class ExportCounts(
+    val scanned: Int,
+    val created: Int,
+) {
     companion object {
         fun of(records: List<ScanRecord>): ExportCounts {
             val created = records.count { it.source == ScanSource.CREATED }
@@ -36,7 +40,12 @@ object ExportFileName {
 
     /** `qr-history-20261013-142530.csv`. [zone] is the user's time zone (UTC by default for tests). */
     fun build(extension: String, nowMillis: Long, zone: ZoneId = ZoneOffset.UTC): String {
-        val ext = extension.trim().trimStart('.').filter { it.isLetterOrDigit() }.ifEmpty { "txt" }
+        val ext =
+            extension
+                .trim()
+                .trimStart('.')
+                .filter { it.isLetterOrDigit() }
+                .ifEmpty { "txt" }
         return "$BASE-${STAMP.withZone(zone).format(Instant.ofEpochMilli(nowMillis))}.$ext"
     }
 }

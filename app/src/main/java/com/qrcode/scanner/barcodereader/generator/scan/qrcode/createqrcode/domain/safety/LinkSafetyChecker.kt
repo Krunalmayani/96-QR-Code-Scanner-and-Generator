@@ -48,12 +48,13 @@ class LinkSafetyChecker {
         return out
     }
 
-    private fun levelOf(risks: List<LinkRisk>): Level = when {
-        risks.isEmpty() -> Level.SAFE
-        risks.any { it.severe } -> Level.UNSAFE
-        risks.any { it is LinkRisk.IpAddressHost } && risks.any { it == LinkRisk.NotHttps } -> Level.UNSAFE
-        else -> Level.CAUTION
-    }
+    private fun levelOf(risks: List<LinkRisk>): Level =
+        when {
+            risks.isEmpty() -> Level.SAFE
+            risks.any { it.severe } -> Level.UNSAFE
+            risks.any { it is LinkRisk.IpAddressHost } && risks.any { it == LinkRisk.NotHttps } -> Level.UNSAFE
+            else -> Level.CAUTION
+        }
 
     private companion object {
         const val VERY_LONG_URL_LENGTH = 500

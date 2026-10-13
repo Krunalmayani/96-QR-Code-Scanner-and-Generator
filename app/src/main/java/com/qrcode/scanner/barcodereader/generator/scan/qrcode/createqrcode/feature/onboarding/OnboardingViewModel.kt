@@ -23,24 +23,25 @@ sealed interface OnboardingEffect {
 
 /** Completes onboarding after the camera rationale step: persists the flag, logs it, asks the UI to leave. */
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository,
-    private val analytics: Analytics,
-) : ViewModel() {
+class OnboardingViewModel
+    @Inject
+    constructor(
+        private val settingsRepository: SettingsRepository,
+        private val analytics: Analytics,
+    ) : ViewModel() {
+        private val channel = Channel<OnboardingEffect>(Channel.BUFFERED)
+        val effects: Flow<OnboardingEffect> = channel.receiveAsFlow()
 
-    private val channel = Channel<OnboardingEffect>(Channel.BUFFERED)
-    val effects: Flow<OnboardingEffect> = channel.receiveAsFlow()
+        private var finishing = false
 
-    private var finishing = false
-
-    /** Safe to call more than once; only the first call has an effect. */
-    fun finish(result: CameraStepResult) {
-        if (finishing) return
-        finishing = true
-        viewModelScope.launch {
-            settingsRepository.update { it.copy(onboardingDone = true) }
-            analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to result.name))
-            channel.send(OnboardingEffect.Finished)
+        /** Safe to call more than once; only the first call has an effect. */
+        fun finish(result: CameraStepResult) {
+            if (finishing) return
+            finishing = true
+            viewModelScope.launch {
+                settingsRepository.update { it.copy(onboardingDone = true) }
+                analytics.log(Events.ONBOARDING_DONE, mapOf(Params.RESULT to result.name))
+                channel.send(OnboardingEffect.Finished)
+            }
         }
     }
-}

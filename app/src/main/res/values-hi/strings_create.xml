@@ -248,7 +248,7 @@
     <string name="create_eye_circle">गोला</string>
     <string name="create_eye_leaf">पत्ती</string>
     <string name="create_extras_logo_title">बीच में लोगो</string>
-    <string name="create_extras_logo_hint">अपनी इमेज जोड़ें। अपने आप 18% आकार में सेट होती है।</string>
+    <string name="create_extras_logo_hint" formatted="false">अपनी इमेज जोड़ें। अपने आप 18% आकार में सेट होती है।</string>
     <string name="create_extras_logo_add">जोड़ें</string>
     <string name="create_extras_logo_remove">हटाएं</string>
     <string name="create_extras_frame">फ़्रेम लेबल</string>

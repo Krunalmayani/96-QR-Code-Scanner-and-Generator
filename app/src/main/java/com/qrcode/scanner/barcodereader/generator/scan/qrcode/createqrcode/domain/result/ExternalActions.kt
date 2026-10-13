@@ -82,5 +82,9 @@ object ExternalActions {
     }
 
     private fun cleanLabel(label: String): String =
-        label.replace('(', ' ').replace(')', ' ').trim().replace(Regex("\\s+"), " ")
+        label
+            .replace('(', ' ')
+            .replace(')', ' ')
+            .trim()
+            .replace(Regex("\\s+"), " ")
 }

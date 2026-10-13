@@ -45,39 +45,60 @@ private const val HOUR_MS = 3_600_000L
 private const val EVENT_START = 1_794_679_200_000L
 private val QR = CodeFormat.QR_CODE
 
-private val websiteContent = ScanContent.Website("https://www.brewhouse-coffee.com/menu?table=12", QR, "https://www.brewhouse-coffee.com/menu?table=12")
-private val unsafeContent = ScanContent.Website("http://secure-paypa1-verify.top/login?id=88213", QR, "http://secure-paypa1-verify.top/login?id=88213")
-private val textContent = ScanContent.Text(
-    "Meeting notes: ship v2.4 on Friday. Update the release checklist, notify QA, and confirm the store listing screenshots.",
-    QR,
-)
-private val contactContent = ScanContent.Contact(
-    rawValue = "BEGIN:VCARD",
-    format = QR,
-    name = "Sophie Lambert",
-    organization = "Lumen Studio",
-    phones = listOf("+1 (415) 555-0142"),
-    emails = listOf("sophie.lambert@lumen.studio"),
-    address = "48 Market Street, Suite 6\nAustin, TX 78701",
-)
-private val wifiContent = ScanContent.Wifi("WIFI:T:WPA;S:CafeNova_Guest;P:cafe-nova-2026;;", QR, "CafeNova_Guest", "cafe-nova-2026", WifiSecurity.WPA)
-private val eventContent = ScanContent.Event(
-    rawValue = "BEGIN:VEVENT",
-    format = QR,
-    summary = "Product Launch Meetup",
-    startMillis = EVENT_START,
-    endMillis = EVENT_START + 150 * 60_000L,
-    location = "Harbor Hall, 120 Pier Ave, San Francisco",
-    description = "Meet the team, see the live demo and pick up early-access invites. Doors open at 5:30 PM.",
-)
+private val websiteContent =
+    ScanContent.Website(
+        "https://www.brewhouse-coffee.com/menu?table=12",
+        QR,
+        "https://www.brewhouse-coffee.com/menu?table=12",
+    )
+private val unsafeContent =
+    ScanContent.Website(
+        "http://secure-paypa1-verify.top/login?id=88213",
+        QR,
+        "http://secure-paypa1-verify.top/login?id=88213",
+    )
+private val textContent =
+    ScanContent.Text(
+        "Meeting notes: ship v2.4 on Friday. Update the release checklist, notify QA, and confirm the store listing screenshots.",
+        QR,
+    )
+private val contactContent =
+    ScanContent.Contact(
+        rawValue = "BEGIN:VCARD",
+        format = QR,
+        name = "Sophie Lambert",
+        organization = "Lumen Studio",
+        phones = listOf("+1 (415) 555-0142"),
+        emails = listOf("sophie.lambert@lumen.studio"),
+        address = "48 Market Street, Suite 6\nAustin, TX 78701",
+    )
+private val wifiContent =
+    ScanContent.Wifi(
+        "WIFI:T:WPA;S:CafeNova_Guest;P:cafe-nova-2026;;",
+        QR,
+        "CafeNova_Guest",
+        "cafe-nova-2026",
+        WifiSecurity.WPA,
+    )
+private val eventContent =
+    ScanContent.Event(
+        rawValue = "BEGIN:VEVENT",
+        format = QR,
+        summary = "Product Launch Meetup",
+        startMillis = EVENT_START,
+        endMillis = EVENT_START + 150 * 60_000L,
+        location = "Harbor Hall, 120 Pier Ave, San Francisco",
+        description = "Meet the team, see the live demo and pick up early-access invites. Doors open at 5:30 PM.",
+    )
 private val phoneContent = ScanContent.Phone("tel:+12065550198", QR, "+1 (206) 555-0198")
-private val emailContent = ScanContent.Email(
-    "mailto:hello@lumen.studio",
-    QR,
-    "hello@lumen.studio",
-    "Booking inquiry",
-    "Hi, I would like to book a studio visit next week. Are there any slots on Thursday?",
-)
+private val emailContent =
+    ScanContent.Email(
+        "mailto:hello@lumen.studio",
+        QR,
+        "hello@lumen.studio",
+        "Booking inquiry",
+        "Hi, I would like to book a studio visit next week. Are there any slots on Thursday?",
+    )
 private val smsContent = ScanContent.Sms("smsto:+447700900123", QR, "+44 7700 900123", "Reply YES to confirm your table for 2 at 8:00 PM.")
 private val locationContent = ScanContent.Location("geo:37.7749,-122.4194", QR, 37.7749, -122.4194, "San Francisco, CA")
 private val productContent = ScanContent.Product("5449000000996", CodeFormat.EAN_13, "5449000000996")
@@ -113,7 +134,8 @@ private fun sampleState(
 }
 
 private fun productLinks(): List<ProductSiteLink> =
-    ProductSearchUrls.ordered(listOf(ProductSite.GOOGLE, ProductSite.OPEN_FOOD_FACTS, ProductSite.AMAZON), "5449000000996")
+    ProductSearchUrls
+        .ordered(listOf(ProductSite.GOOGLE, ProductSite.OPEN_FOOD_FACTS, ProductSite.AMAZON), "5449000000996")
         .map { (site, url) -> ProductSiteLink(site, url) }
 
 @Composable
@@ -130,10 +152,11 @@ private fun ScreenPreview(dark: Boolean, state: ResultUiState, overlay: (@Compos
 private fun SheetFrame(content: @Composable ColumnScope.() -> Unit) {
     Box(Modifier.fillMaxSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.BottomCenter) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
-                .padding(24.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .background(AppTheme.colors.surface, AppTheme.shapes.sheet)
+                    .padding(24.dp),
             content = content,
         )
     }
@@ -144,11 +167,12 @@ private fun DeleteDialogFrame() {
     val c = AppTheme.colors
     Box(Modifier.fillMaxSize().background(c.scrim), contentAlignment = Alignment.Center) {
         Column(
-            modifier = Modifier
-                .padding(24.dp)
-                .fillMaxWidth()
-                .background(c.surface, AppTheme.shapes.dialog)
-                .padding(24.dp),
+            modifier =
+                Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth()
+                    .background(c.surface, AppTheme.shapes.dialog)
+                    .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             IconTile(AppIcons.Delete, tone = Tone.Error, size = 48.dp)
@@ -270,59 +294,133 @@ private fun S27_WifiConnected_Dark() = ScreenPreview(true, sampleState(wifiConte
 
 @Preview(name = "S28_WifiCouldNotConnect_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S28_WifiCouldNotConnect_Light() = ScreenPreview(false, sampleState(wifiContent, wifi = WifiConnectState(WifiPhase.FAILED, WifiFailure.UNAVAILABLE)), null)
+private fun S28_WifiCouldNotConnect_Light() =
+    ScreenPreview(
+        false,
+        sampleState(wifiContent, wifi = WifiConnectState(WifiPhase.FAILED, WifiFailure.UNAVAILABLE)),
+        null,
+    )
 
 @Preview(name = "S28_WifiCouldNotConnect_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S28_WifiCouldNotConnect_Dark() = ScreenPreview(true, sampleState(wifiContent, wifi = WifiConnectState(WifiPhase.FAILED, WifiFailure.UNAVAILABLE)), null)
+private fun S28_WifiCouldNotConnect_Dark() =
+    ScreenPreview(
+        true,
+        sampleState(wifiContent, wifi = WifiConnectState(WifiPhase.FAILED, WifiFailure.UNAVAILABLE)),
+        null,
+    )
 
 @Preview(name = "S29_ShareSheet_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S29_ShareSheet_Light() = ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), { SheetFrame { ShareSheetBody({}, {}) } })
+private fun S29_ShareSheet_Light() =
+    ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
+        SheetFrame { ShareSheetBody({}, {}) }
+    })
 
 @Preview(name = "S29_ShareSheet_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S29_ShareSheet_Dark() = ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), { SheetFrame { ShareSheetBody({}, {}) } })
+private fun S29_ShareSheet_Dark() =
+    ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
+        SheetFrame { ShareSheetBody({}, {}) }
+    })
 
 @Preview(name = "S30_ProductSearch_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S30_ProductSearch_Light() = ScreenPreview(false, sampleState(productContent, product = ProductUiState(searchOpen = true, online = true, sites = productLinks())), null)
+private fun S30_ProductSearch_Light() =
+    ScreenPreview(
+        false,
+        sampleState(productContent, product = ProductUiState(searchOpen = true, online = true, sites = productLinks())),
+        null,
+    )
 
 @Preview(name = "S30_ProductSearch_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S30_ProductSearch_Dark() = ScreenPreview(true, sampleState(productContent, product = ProductUiState(searchOpen = true, online = true, sites = productLinks())), null)
+private fun S30_ProductSearch_Dark() =
+    ScreenPreview(
+        true,
+        sampleState(productContent, product = ProductUiState(searchOpen = true, online = true, sites = productLinks())),
+        null,
+    )
 
 @Preview(name = "S50_HistoryDetailCreatedWifi_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S50_HistoryDetailCreatedWifi_Light() = ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true, favorite = true), null)
+private fun S50_HistoryDetailCreatedWifi_Light() =
+    ScreenPreview(
+        false,
+        sampleState(wifiContent, ScanSource.CREATED, fromHistory = true, favorite = true),
+        null,
+    )
 
 @Preview(name = "S50_HistoryDetailCreatedWifi_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S50_HistoryDetailCreatedWifi_Dark() = ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true, favorite = true), null)
+private fun S50_HistoryDetailCreatedWifi_Dark() =
+    ScreenPreview(
+        true,
+        sampleState(wifiContent, ScanSource.CREATED, fromHistory = true, favorite = true),
+        null,
+    )
 
 @Preview(name = "S67_DeleteConfirmation_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S67_DeleteConfirmation_Light() = ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), { DeleteDialogFrame() })
+private fun S67_DeleteConfirmation_Light() =
+    ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
+        DeleteDialogFrame()
+    })
 
 @Preview(name = "S67_DeleteConfirmation_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S67_DeleteConfirmation_Dark() = ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), { DeleteDialogFrame() })
+private fun S67_DeleteConfirmation_Dark() =
+    ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
+        DeleteDialogFrame()
+    })
 
 @Preview(name = "S69_UnsafeLinkSheet_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S69_UnsafeLinkSheet_Light() = ScreenPreview(false, unsafeState(), { SheetFrame { UnsafeLinkSheetBody(unsafeState().safety?.level ?: Level.UNSAFE, unsafeState().riskReasons, {}, {}, {}) } })
+private fun S69_UnsafeLinkSheet_Light() =
+    ScreenPreview(false, unsafeState(), {
+        SheetFrame {
+            UnsafeLinkSheetBody(
+                unsafeState().safety?.level ?: Level.UNSAFE,
+                unsafeState().riskReasons,
+                {},
+                {},
+                {},
+            )
+        }
+    })
 
 @Preview(name = "S69_UnsafeLinkSheet_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S69_UnsafeLinkSheet_Dark() = ScreenPreview(true, unsafeState(), { SheetFrame { UnsafeLinkSheetBody(unsafeState().safety?.level ?: Level.UNSAFE, unsafeState().riskReasons, {}, {}, {}) } })
+private fun S69_UnsafeLinkSheet_Dark() =
+    ScreenPreview(true, unsafeState(), {
+        SheetFrame {
+            UnsafeLinkSheetBody(
+                unsafeState().safety?.level ?: Level.UNSAFE,
+                unsafeState().riskReasons,
+                {},
+                {},
+                {},
+            )
+        }
+    })
 
 @Preview(name = "S70_ProductOffline_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S70_ProductOffline_Light() = ScreenPreview(false, sampleState(productContent, product = ProductUiState(searchOpen = true, online = false, sites = productLinks())), null)
+private fun S70_ProductOffline_Light() =
+    ScreenPreview(
+        false,
+        sampleState(productContent, product = ProductUiState(searchOpen = true, online = false, sites = productLinks())),
+        null,
+    )
 
 @Preview(name = "S70_ProductOffline_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
-private fun S70_ProductOffline_Dark() = ScreenPreview(true, sampleState(productContent, product = ProductUiState(searchOpen = true, online = false, sites = productLinks())), null)
+private fun S70_ProductOffline_Dark() =
+    ScreenPreview(
+        true,
+        sampleState(productContent, product = ProductUiState(searchOpen = true, online = false, sites = productLinks())),
+        null,
+    )
 
 @Preview(name = "S74_WebsiteResult_Light", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable

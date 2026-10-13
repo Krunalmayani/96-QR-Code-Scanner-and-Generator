@@ -5,7 +5,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 /** Outcome of reading the codes out of a picked image. */
 sealed interface ImageReadResult {
     /** At least one code, unique by payload and format. */
-    data class Found(val codes: List<DetectedCode>) : ImageReadResult
+    data class Found(
+        val codes: List<DetectedCode>,
+    ) : ImageReadResult
 
     /** The image was readable but holds no code. */
     data object NoCode : ImageReadResult

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class SystemPromptPickerTest {
-
     private val now = 1_800_000_000_000L
     private val rateReady = AppSettings(onboardingDone = true, successfulScans = 6)
     private val quiet = AppSettings(onboardingDone = true)

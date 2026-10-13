@@ -139,7 +139,10 @@ private fun HistoryHeader(
 
 private fun HistoryEmptyKind.isTabEmpty(): Boolean = this == HistoryEmptyKind.SCANNED || this == HistoryEmptyKind.CREATED
 
-private class MenuEntry(val labelRes: Int, val onClick: () -> Unit)
+private class MenuEntry(
+    val labelRes: Int,
+    val onClick: () -> Unit,
+)
 
 /** Three-dot button with a dropdown holding [items]. */
 @Composable
@@ -171,12 +174,13 @@ private fun SelectionTopBar(count: Int, onEvent: (HistoryEvent) -> Unit) {
     val c = AppTheme.colors
     val hasSelection = count > 0
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(c.primaryContainer)
-            .statusBarsPadding()
-            .height(64.dp)
-            .padding(horizontal = 4.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(c.primaryContainer)
+                .statusBarsPadding()
+                .height(64.dp)
+                .padding(horizontal = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         IconButtonRounded(
@@ -215,10 +219,11 @@ private fun SelectionTopBar(count: Int, onEvent: (HistoryEvent) -> Unit) {
         )
         if (hasSelection) {
             OverflowMenu(
-                items = listOf(
-                    MenuEntry(R.string.common_share) { onEvent(HistoryEvent.ShareSelected) },
-                    MenuEntry(R.string.hist_menu_export_selected) { onEvent(HistoryEvent.ExportSelected) },
-                ),
+                items =
+                    listOf(
+                        MenuEntry(R.string.common_share) { onEvent(HistoryEvent.ShareSelected) },
+                        MenuEntry(R.string.hist_menu_export_selected) { onEvent(HistoryEvent.ExportSelected) },
+                    ),
             )
         }
     }
@@ -248,10 +253,11 @@ private fun SearchRow(
 ) {
     val searching = state.searchActive
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(if (searching) Modifier.statusBarsPadding() else Modifier)
-            .padding(start = if (searching) 4.dp else 16.dp, end = 16.dp, top = 12.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .then(if (searching) Modifier.statusBarsPadding() else Modifier)
+                .padding(start = if (searching) 4.dp else 16.dp, end = 16.dp, top = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
     ) {
@@ -282,29 +288,32 @@ private fun FilterChips(state: HistoryUiState, onEvent: (HistoryEvent) -> Unit) 
     val onClick: (Int) -> Unit
     if (state.searchActive) {
         val scopes = SearchScope.entries
-        items = scopes.map { scope ->
-            ChipItem(
-                label = stringResource(scope.labelRes()),
-                selected = scope == state.searchScope,
-                icon = if (scope == SearchScope.FAVORITES) AppIcons.Star else null,
-            )
-        }
+        items =
+            scopes.map { scope ->
+                ChipItem(
+                    label = stringResource(scope.labelRes()),
+                    selected = scope == state.searchScope,
+                    icon = if (scope == SearchScope.FAVORITES) AppIcons.Star else null,
+                )
+            }
         onClick = { index -> onEvent(HistoryEvent.SelectScope(scopes[index])) }
     } else {
         val chips = HistoryChip.entries
-        items = chips.map { chip ->
-            val selected = chip == state.chip
-            val showCount = selected && chip == HistoryChip.FAVORITES && !state.loading
-            ChipItem(
-                label = if (showCount) {
-                    stringResource(R.string.hist_chip_favorites_count, state.recordCount)
-                } else {
-                    stringResource(chip.labelRes())
-                },
-                selected = selected,
-                icon = if (chip == HistoryChip.FAVORITES) AppIcons.Star else null,
-            )
-        }
+        items =
+            chips.map { chip ->
+                val selected = chip == state.chip
+                val showCount = selected && chip == HistoryChip.FAVORITES && !state.loading
+                ChipItem(
+                    label =
+                        if (showCount) {
+                            stringResource(R.string.hist_chip_favorites_count, state.recordCount)
+                        } else {
+                            stringResource(chip.labelRes())
+                        },
+                    selected = selected,
+                    icon = if (chip == HistoryChip.FAVORITES) AppIcons.Star else null,
+                )
+            }
         onClick = { index -> onEvent(HistoryEvent.SelectChip(chips[index])) }
     }
     ChipRow(chips = items, onChipClick = onClick, modifier = Modifier.padding(top = 12.dp))
@@ -336,42 +345,47 @@ private fun HistoryEmptyContent(
     onCreateCode: () -> Unit,
 ) {
     when (state.emptyKind) {
-        HistoryEmptyKind.SCANNED -> EmptyState(
-            icon = AppIcons.History,
-            title = stringResource(R.string.hist_empty_scanned_title),
-            message = stringResource(R.string.hist_empty_scanned_message),
-            action = {
-                PrimaryButton(stringResource(R.string.hist_empty_scanned_action), onStartScanning, leadingIcon = AppIcons.Scan)
-            },
-        )
-        HistoryEmptyKind.CREATED -> EmptyState(
-            icon = AppIcons.QrCode,
-            title = stringResource(R.string.hist_empty_created_title),
-            message = stringResource(R.string.hist_empty_created_message),
-            action = {
-                PrimaryButton(stringResource(R.string.hist_empty_created_action), onCreateCode, leadingIcon = AppIcons.Create)
-            },
-        )
-        HistoryEmptyKind.FAVORITES -> EmptyState(
-            icon = AppIcons.Star,
-            title = stringResource(R.string.hist_empty_favorites_title),
-            message = stringResource(R.string.hist_empty_favorites_message),
-            action = {
-                TonalButton(stringResource(R.string.hist_empty_favorites_action), { onEvent(HistoryEvent.BrowseAll) })
-            },
-        )
-        HistoryEmptyKind.FILTER -> EmptyState(
-            icon = AppIcons.Apps,
-            title = stringResource(R.string.hist_empty_filter_title),
-            message = stringResource(R.string.hist_empty_filter_message),
-            action = {
-                TonalButton(stringResource(R.string.hist_empty_filter_action), { onEvent(HistoryEvent.BrowseAll) })
-            },
-        )
-        HistoryEmptyKind.SEARCH -> EmptyState(
-            icon = AppIcons.Search,
-            title = stringResource(R.string.hist_empty_search_title),
-            message = stringResource(R.string.hist_empty_search_message, state.appliedQuery.trim()),
-        )
+        HistoryEmptyKind.SCANNED ->
+            EmptyState(
+                icon = AppIcons.History,
+                title = stringResource(R.string.hist_empty_scanned_title),
+                message = stringResource(R.string.hist_empty_scanned_message),
+                action = {
+                    PrimaryButton(stringResource(R.string.hist_empty_scanned_action), onStartScanning, leadingIcon = AppIcons.Scan)
+                },
+            )
+        HistoryEmptyKind.CREATED ->
+            EmptyState(
+                icon = AppIcons.QrCode,
+                title = stringResource(R.string.hist_empty_created_title),
+                message = stringResource(R.string.hist_empty_created_message),
+                action = {
+                    PrimaryButton(stringResource(R.string.hist_empty_created_action), onCreateCode, leadingIcon = AppIcons.Create)
+                },
+            )
+        HistoryEmptyKind.FAVORITES ->
+            EmptyState(
+                icon = AppIcons.Star,
+                title = stringResource(R.string.hist_empty_favorites_title),
+                message = stringResource(R.string.hist_empty_favorites_message),
+                action = {
+                    TonalButton(stringResource(R.string.hist_empty_favorites_action), { onEvent(HistoryEvent.BrowseAll) })
+                },
+            )
+        HistoryEmptyKind.FILTER ->
+            EmptyState(
+                icon = AppIcons.Apps,
+                title = stringResource(R.string.hist_empty_filter_title),
+                message = stringResource(R.string.hist_empty_filter_message),
+                action = {
+                    TonalButton(stringResource(R.string.hist_empty_filter_action), { onEvent(HistoryEvent.BrowseAll) })
+                },
+            )
+        HistoryEmptyKind.SEARCH ->
+            EmptyState(
+                icon = AppIcons.Search,
+                title = stringResource(R.string.hist_empty_search_title),
+                message = stringResource(R.string.hist_empty_search_message, state.appliedQuery.trim()),
+            )
     }
 }

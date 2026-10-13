@@ -47,17 +47,18 @@ fun DrawScope.drawVectorImage(image: QrVectorImage, logo: ImageBitmap?) {
     drawLogo(image, logo, scale)
 }
 
-private fun brushFor(paint: ShapePaint, image: QrVectorImage, scale: Float): Brush = when (paint) {
-    is ShapePaint.Solid -> SolidColor(argbColor(paint.argb))
-    is ShapePaint.LinearGradient -> {
-        val line = paint.endpoints(image.width, image.height)
-        Brush.linearGradient(
-            colors = listOf(argbColor(paint.startArgb), argbColor(paint.endArgb)),
-            start = Offset(line.x0 * scale, line.y0 * scale),
-            end = Offset(line.x1 * scale, line.y1 * scale),
-        )
+private fun brushFor(paint: ShapePaint, image: QrVectorImage, scale: Float): Brush =
+    when (paint) {
+        is ShapePaint.Solid -> SolidColor(argbColor(paint.argb))
+        is ShapePaint.LinearGradient -> {
+            val line = paint.endpoints(image.width, image.height)
+            Brush.linearGradient(
+                colors = listOf(argbColor(paint.startArgb), argbColor(paint.endArgb)),
+                start = Offset(line.x0 * scale, line.y0 * scale),
+                end = Offset(line.x1 * scale, line.y1 * scale),
+            )
+        }
     }
-}
 
 private fun DrawScope.drawItem(item: StyledShape, brush: Brush, s: Float) {
     when (val shape = item.shape) {
@@ -108,12 +109,13 @@ internal fun VectorShape.Path.toComposePath(s: Float): Path {
                 y = command.y
             }
             is PathCommand.ArcTo -> {
-                val oval = Rect(
-                    left = (command.cx - command.r) * s,
-                    top = (command.cy - command.r) * s,
-                    right = (command.cx + command.r) * s,
-                    bottom = (command.cy + command.r) * s,
-                )
+                val oval =
+                    Rect(
+                        left = (command.cx - command.r) * s,
+                        top = (command.cy - command.r) * s,
+                        right = (command.cx + command.r) * s,
+                        bottom = (command.cy + command.r) * s,
+                    )
                 path.arcTo(oval, command.startAngleDegrees, command.sweepAngleDegrees, false)
                 val end = Math.toRadians((command.startAngleDegrees + command.sweepAngleDegrees).toDouble())
                 x = command.cx + command.r * cos(end).toFloat()
@@ -132,20 +134,22 @@ internal fun VectorShape.Path.toComposePath(s: Float): Path {
 private const val QUAD_TO_CUBIC = 2f / 3f
 
 private fun DrawScope.drawVectorText(text: VectorShape.Text, paint: ShapePaint, s: Float) {
-    val argb = when (paint) {
-        is ShapePaint.Solid -> paint.argb
-        is ShapePaint.LinearGradient -> paint.startArgb
-    }
+    val argb =
+        when (paint) {
+            is ShapePaint.Solid -> paint.argb
+            is ShapePaint.LinearGradient -> paint.startArgb
+        }
     drawIntoCanvas { canvas ->
         val p = Paint(Paint.ANTI_ALIAS_FLAG)
         p.color = argb.toInt()
         p.textSize = text.size * s
         p.typeface = if (text.bold) Typeface.DEFAULT_BOLD else Typeface.DEFAULT
-        p.textAlign = when (text.anchor) {
-            TextAnchor.START -> Paint.Align.LEFT
-            TextAnchor.MIDDLE -> Paint.Align.CENTER
-            TextAnchor.END -> Paint.Align.RIGHT
-        }
+        p.textAlign =
+            when (text.anchor) {
+                TextAnchor.START -> Paint.Align.LEFT
+                TextAnchor.MIDDLE -> Paint.Align.CENTER
+                TextAnchor.END -> Paint.Align.RIGHT
+            }
         canvas.nativeCanvas.drawText(text.text, text.x * s, text.y * s, p)
     }
 }

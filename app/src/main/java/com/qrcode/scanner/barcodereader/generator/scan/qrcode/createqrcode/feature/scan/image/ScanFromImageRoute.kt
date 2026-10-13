@@ -38,9 +38,10 @@ fun ScanFromImageRoute(
     var rationaleVisible by remember { mutableStateOf(false) }
     var autoLaunched by rememberSaveable { mutableStateOf(false) }
 
-    val picker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) viewModel.onEvent(ImageScanEvent.ImagePicked(uri.toString()))
-    }
+    val picker =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) viewModel.onEvent(ImageScanEvent.ImagePicked(uri.toString()))
+        }
     val launchPicker: () -> Unit = { picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) }
     val requestPicker: () -> Unit = {
         if (PhotosRationaleMemory.acknowledged) {

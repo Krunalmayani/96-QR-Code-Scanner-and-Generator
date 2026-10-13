@@ -10,3 +10,7 @@ ktlint_standard_filename = disabled
 ktlint_standard_property-naming = disabled
 ij_kotlin_allow_trailing_comma = true
 ij_kotlin_allow_trailing_comma_on_call_site = true
+# Style rules relaxed on purpose (long literal test data, intentional backing properties, KDoc+EOL comment pairs).
+ktlint_standard_max-line-length = disabled
+ktlint_standard_backing-property-naming = disabled
+ktlint_standard_no-consecutive-comments = disabled

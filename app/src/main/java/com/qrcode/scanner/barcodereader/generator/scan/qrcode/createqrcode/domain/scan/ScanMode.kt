@@ -2,24 +2,26 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
 
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.CodeFormat
 
-private val LINEAR_FORMATS: Set<CodeFormat> = linkedSetOf(
-    CodeFormat.EAN_13,
-    CodeFormat.EAN_8,
-    CodeFormat.UPC_A,
-    CodeFormat.UPC_E,
-    CodeFormat.CODE_128,
-    CodeFormat.CODE_39,
-    CodeFormat.CODE_93,
-    CodeFormat.ITF,
-    CodeFormat.CODABAR,
-)
+private val LINEAR_FORMATS: Set<CodeFormat> =
+    linkedSetOf(
+        CodeFormat.EAN_13,
+        CodeFormat.EAN_8,
+        CodeFormat.UPC_A,
+        CodeFormat.UPC_E,
+        CodeFormat.CODE_128,
+        CodeFormat.CODE_39,
+        CodeFormat.CODE_93,
+        CodeFormat.ITF,
+        CodeFormat.CODABAR,
+    )
 
-private val MATRIX_FORMATS: Set<CodeFormat> = linkedSetOf(
-    CodeFormat.QR_CODE,
-    CodeFormat.PDF_417,
-    CodeFormat.DATA_MATRIX,
-    CodeFormat.AZTEC,
-)
+private val MATRIX_FORMATS: Set<CodeFormat> =
+    linkedSetOf(
+        CodeFormat.QR_CODE,
+        CodeFormat.PDF_417,
+        CodeFormat.DATA_MATRIX,
+        CodeFormat.AZTEC,
+    )
 
 private val ALL_FORMATS: Set<CodeFormat> = LINEAR_FORMATS + MATRIX_FORMATS
 
@@ -27,7 +29,10 @@ private val ALL_FORMATS: Set<CodeFormat> = LINEAR_FORMATS + MATRIX_FORMATS
  * What the camera looks for, selected with the mode chips on the Scan screen.
  * [wideFrame] picks the wide (barcode shaped) viewfinder instead of the square one.
  */
-enum class ScanMode(val formats: Set<CodeFormat>, val wideFrame: Boolean) {
+enum class ScanMode(
+    val formats: Set<CodeFormat>,
+    val wideFrame: Boolean,
+) {
     QR(setOf(CodeFormat.QR_CODE), wideFrame = false),
     BARCODE(LINEAR_FORMATS, wideFrame = true),
     ALL(ALL_FORMATS, wideFrame = false),

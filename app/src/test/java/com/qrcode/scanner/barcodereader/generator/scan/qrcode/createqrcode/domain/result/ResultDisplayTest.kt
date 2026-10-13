@@ -1,11 +1,11 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result
 
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.CodeFormat
-import java.util.TimeZone
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import java.util.TimeZone
 
 class ResultDisplayTest {
     @Test

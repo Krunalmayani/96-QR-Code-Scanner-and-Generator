@@ -15,7 +15,11 @@ data class HistoryFilter(
     val query: String = "",
 )
 
-data class HistoryCounts(val scanned: Int, val created: Int, val favorites: Int)
+data class HistoryCounts(
+    val scanned: Int,
+    val created: Int,
+    val favorites: Int,
+)
 
 /**
  * Single access point for history. Ids <= 0 passed in by callers mean "not stored".

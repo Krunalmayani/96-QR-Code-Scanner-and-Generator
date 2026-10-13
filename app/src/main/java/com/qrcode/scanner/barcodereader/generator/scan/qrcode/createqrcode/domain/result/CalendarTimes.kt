@@ -1,7 +1,10 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result
 
 /** Begin and end (epoch millis) handed to the calendar insert intent; null means "let the calendar choose". */
-data class CalendarWindow(val beginMillis: Long?, val endMillis: Long?)
+data class CalendarWindow(
+    val beginMillis: Long?,
+    val endMillis: Long?,
+)
 
 /**
  * Normalises the times of a scanned event for `CalendarContract.Events` inserts.

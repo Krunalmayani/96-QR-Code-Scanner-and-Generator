@@ -26,7 +26,12 @@ object ExternalLauncher {
 
     fun openCustomTab(context: Context, url: String, dark: Boolean): Boolean {
         val scheme = if (dark) CustomTabsIntent.COLOR_SCHEME_DARK else CustomTabsIntent.COLOR_SCHEME_LIGHT
-        val tab = CustomTabsIntent.Builder().setShowTitle(true).setColorScheme(scheme).build()
+        val tab =
+            CustomTabsIntent
+                .Builder()
+                .setShowTitle(true)
+                .setColorScheme(scheme)
+                .build()
         if (context !is Activity) tab.intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return try {
             tab.launchUrl(context, Uri.parse(url))
@@ -72,14 +77,15 @@ object ExternalLauncher {
         }
     }
 
-    private fun intentFor(action: ExternalAction): Intent = when (action) {
-        is ExternalAction.Dial -> Intent(Intent.ACTION_DIAL, Uri.parse(action.uri))
-        is ExternalAction.ComposeEmail -> emailIntent(action)
-        is ExternalAction.ComposeSms -> smsIntent(action)
-        is ExternalAction.OpenMap -> Intent(Intent.ACTION_VIEW, Uri.parse(action.uri))
-        is ExternalAction.AddToCalendar -> calendarIntent(action)
-        is ExternalAction.AddToContacts -> contactIntent(action.contact)
-    }
+    private fun intentFor(action: ExternalAction): Intent =
+        when (action) {
+            is ExternalAction.Dial -> Intent(Intent.ACTION_DIAL, Uri.parse(action.uri))
+            is ExternalAction.ComposeEmail -> emailIntent(action)
+            is ExternalAction.ComposeSms -> smsIntent(action)
+            is ExternalAction.OpenMap -> Intent(Intent.ACTION_VIEW, Uri.parse(action.uri))
+            is ExternalAction.AddToCalendar -> calendarIntent(action)
+            is ExternalAction.AddToContacts -> contactIntent(action.contact)
+        }
 
     private fun emailIntent(action: ExternalAction.ComposeEmail): Intent {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse(action.uri))

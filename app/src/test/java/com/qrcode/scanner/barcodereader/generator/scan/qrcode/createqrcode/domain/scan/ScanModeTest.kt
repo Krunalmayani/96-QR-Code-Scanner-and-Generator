@@ -15,10 +15,18 @@ class ScanModeTest {
 
     @Test
     fun `barcode mode accepts the 1D symbologies only`() {
-        val linear = listOf(
-            CodeFormat.EAN_13, CodeFormat.EAN_8, CodeFormat.UPC_A, CodeFormat.UPC_E, CodeFormat.CODE_128,
-            CodeFormat.CODE_39, CodeFormat.CODE_93, CodeFormat.ITF, CodeFormat.CODABAR,
-        )
+        val linear =
+            listOf(
+                CodeFormat.EAN_13,
+                CodeFormat.EAN_8,
+                CodeFormat.UPC_A,
+                CodeFormat.UPC_E,
+                CodeFormat.CODE_128,
+                CodeFormat.CODE_39,
+                CodeFormat.CODE_93,
+                CodeFormat.ITF,
+                CodeFormat.CODABAR,
+            )
         linear.forEach { assertTrue(ScanMode.BARCODE.accepts(it), it.name) }
         listOf(CodeFormat.QR_CODE, CodeFormat.PDF_417, CodeFormat.DATA_MATRIX, CodeFormat.AZTEC, CodeFormat.UNKNOWN)
             .forEach { assertFalse(ScanMode.BARCODE.accepts(it), it.name) }

@@ -6,25 +6,26 @@ import org.junit.jupiter.api.Test
 
 class FieldErrorKeyTest {
     /** One instance of every [FieldError] subtype. The `when` in FieldErrorKey.of is compile-time exhaustive. */
-    private val samples: List<FieldError> = listOf(
-        FieldError.Required,
-        FieldError.InvalidUrl,
-        FieldError.InvalidEmail,
-        FieldError.InvalidPhone,
-        FieldError.TooLong(10),
-        FieldError.SsidRequired,
-        FieldError.PasswordTooShort(8),
-        FieldError.EndBeforeStart,
-        FieldError.InvalidLatitude,
-        FieldError.InvalidLongitude,
-        FieldError.InvalidHandle,
-        FieldError.BarcodeDigitsOnly,
-        FieldError.BarcodeWrongLength(listOf(12, 13)),
-        FieldError.BarcodeBadCheckDigit(7),
-        FieldError.BarcodeInvalidChars,
-        FieldError.ItfOddLength,
-        FieldError.DataTooLong(1000),
-    )
+    private val samples: List<FieldError> =
+        listOf(
+            FieldError.Required,
+            FieldError.InvalidUrl,
+            FieldError.InvalidEmail,
+            FieldError.InvalidPhone,
+            FieldError.TooLong(10),
+            FieldError.SsidRequired,
+            FieldError.PasswordTooShort(8),
+            FieldError.EndBeforeStart,
+            FieldError.InvalidLatitude,
+            FieldError.InvalidLongitude,
+            FieldError.InvalidHandle,
+            FieldError.BarcodeDigitsOnly,
+            FieldError.BarcodeWrongLength(listOf(12, 13)),
+            FieldError.BarcodeBadCheckDigit(7),
+            FieldError.BarcodeInvalidChars,
+            FieldError.ItfOddLength,
+            FieldError.DataTooLong(1000),
+        )
 
     @Test fun everyErrorMapsToItsOwnMessage() {
         val messages = samples.map { FieldErrorKey.of(it).message }
@@ -60,23 +61,25 @@ class FieldErrorKeyTest {
     }
 
     @Test fun realValidatorOutputAlwaysMapsToArgsThatFitTheMessage() {
-        val specs = listOf(
-            CreateSpec.Website("brewhouse coffee"),
-            CreateSpec.Wifi(ssid = "", password = "short"),
-            CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "123"),
-            CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "5901234123450"),
-            CreateSpec.Location("99", "200"),
-        )
+        val specs =
+            listOf(
+                CreateSpec.Website("brewhouse coffee"),
+                CreateSpec.Wifi(ssid = "", password = "short"),
+                CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "123"),
+                CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "5901234123450"),
+                CreateSpec.Location("99", "200"),
+            )
         for (spec in specs) {
             for ((field, error) in Validators.validate(spec)) {
                 val key = FieldErrorKey.of(error, field)
-                val expectedArgs = when (key.message) {
-                    FieldErrorMessage.BARCODE_WRONG_LENGTH -> 2
-                    FieldErrorMessage.TOO_LONG, FieldErrorMessage.PASSWORD_TOO_SHORT,
-                    FieldErrorMessage.BARCODE_BAD_CHECK_DIGIT, FieldErrorMessage.DATA_TOO_LONG,
-                    -> 1
-                    else -> 0
-                }
+                val expectedArgs =
+                    when (key.message) {
+                        FieldErrorMessage.BARCODE_WRONG_LENGTH -> 2
+                        FieldErrorMessage.TOO_LONG, FieldErrorMessage.PASSWORD_TOO_SHORT,
+                        FieldErrorMessage.BARCODE_BAD_CHECK_DIGIT, FieldErrorMessage.DATA_TOO_LONG,
+                        -> 1
+                        else -> 0
+                    }
                 assertEquals(expectedArgs, key.args.size, "$field $error")
             }
         }

@@ -53,13 +53,14 @@ data class AdsConfig(
             interstitialMinIntervalSec: Long,
             nativeEveryNItems: Long,
             appOpenMinAwayMin: Long,
-        ): AdsConfig = AdsConfig(
-            adsEnabled = adsEnabled,
-            interstitialEveryN = interstitialEveryN.clampTo(INTERSTITIAL_EVERY_N_RANGE),
-            interstitialMinIntervalSec = interstitialMinIntervalSec.clampTo(INTERSTITIAL_MIN_INTERVAL_SEC_RANGE),
-            nativeEveryNItems = nativeEveryNItems.clampTo(NATIVE_EVERY_N_ITEMS_RANGE),
-            appOpenMinAwayMin = appOpenMinAwayMin.clampTo(APP_OPEN_MIN_AWAY_MIN_RANGE),
-        )
+        ): AdsConfig =
+            AdsConfig(
+                adsEnabled = adsEnabled,
+                interstitialEveryN = interstitialEveryN.clampTo(INTERSTITIAL_EVERY_N_RANGE),
+                interstitialMinIntervalSec = interstitialMinIntervalSec.clampTo(INTERSTITIAL_MIN_INTERVAL_SEC_RANGE),
+                nativeEveryNItems = nativeEveryNItems.clampTo(NATIVE_EVERY_N_ITEMS_RANGE),
+                appOpenMinAwayMin = appOpenMinAwayMin.clampTo(APP_OPEN_MIN_AWAY_MIN_RANGE),
+            )
 
         private fun Long.clampTo(range: IntRange): Int =
             coerceIn(range.first.toLong(), range.last.toLong()).toInt()

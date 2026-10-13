@@ -34,16 +34,17 @@ class FakeHistoryDao : HistoryDao {
         favoritesOnly: Boolean,
         hasQuery: Boolean,
         pattern: String,
-    ): Flow<List<ScanEntity>> = rows.map { l ->
-        sorted(
-            l.filter {
-                (source == null || it.source == source) &&
-                    (!filterTypes || it.type in types) &&
-                    (!favoritesOnly || it.isFavorite) &&
-                    (!hasQuery || matches(it, pattern))
-            },
-        )
-    }
+    ): Flow<List<ScanEntity>> =
+        rows.map { l ->
+            sorted(
+                l.filter {
+                    (source == null || it.source == source) &&
+                        (!filterTypes || it.type in types) &&
+                        (!favoritesOnly || it.isFavorite) &&
+                        (!hasQuery || matches(it, pattern))
+                },
+            )
+        }
 
     override fun observeById(id: Long): Flow<ScanEntity?> = rows.map { l -> l.firstOrNull { it.id == id } }
 

@@ -48,7 +48,10 @@ internal sealed interface QuickActionSpec {
         val tone: Tone = Tone.Primary,
     ) : QuickActionSpec
 
-    data class Favorite(val favorite: Boolean, val onClick: () -> Unit) : QuickActionSpec
+    data class Favorite(
+        val favorite: Boolean,
+        val onClick: () -> Unit,
+    ) : QuickActionSpec
 }
 
 /** The secondary round actions under the content: type specific ones, then Copy, Share and Favorite (and Delete in history). */
@@ -70,56 +73,82 @@ private fun quickActionSpecs(record: ScanRecord, fromHistory: Boolean, onEvent: 
     val copy = QuickActionSpec.Plain(AppIcons.Copy, copyLabel, { onEvent(ResultEvent.CopyClicked) })
     val share = QuickActionSpec.Plain(AppIcons.Share, shareLabel, { onEvent(ResultEvent.ShareClicked) })
     val favorite = QuickActionSpec.Favorite(record.isFavorite) { onEvent(ResultEvent.FavoriteClicked) }
-    val addContact = QuickActionSpec.Plain(
-        AppIcons.Create,
-        stringResource(R.string.result_action_add_contact_short),
-        { onEvent(ResultEvent.AddToContactsClicked) },
-    )
-    val specs: List<QuickActionSpec> = when (val content = record.content) {
-        is ScanContent.Phone -> listOf(
-            QuickActionSpec.Plain(AppIcons.Sms, stringResource(R.string.result_action_send_sms), { onEvent(ResultEvent.MessageClicked(content.number)) }),
-            addContact,
-            copy,
-            share,
-            favorite,
+    val addContact =
+        QuickActionSpec.Plain(
+            AppIcons.Create,
+            stringResource(R.string.result_action_add_contact_short),
+            { onEvent(ResultEvent.AddToContactsClicked) },
         )
-        is ScanContent.Email -> listOf(
-            QuickActionSpec.Plain(AppIcons.Copy, stringResource(R.string.result_action_copy_address), { onEvent(ResultEvent.CopyClicked) }),
-            addContact,
-            share,
-            favorite,
-        )
-        is ScanContent.Sms -> listOf(
-            QuickActionSpec.Plain(AppIcons.Phone, stringResource(R.string.result_action_call), { onEvent(ResultEvent.DialClicked(content.number)) }),
-            copy,
-            share,
-            favorite,
-        )
-        is ScanContent.Location -> listOf(
-            QuickActionSpec.Plain(AppIcons.Copy, stringResource(R.string.result_action_copy_coordinates), { onEvent(ResultEvent.CopyClicked) }),
-            share,
-            favorite,
-        )
-        is ScanContent.Event -> listOfNotNull(
-            if (content.location.isBlank()) {
-                null
-            } else {
-                QuickActionSpec.Plain(AppIcons.Location, stringResource(R.string.result_action_directions), { onEvent(ResultEvent.DirectionsClicked) })
-            },
-            share,
-            copy,
-            favorite,
-        )
-        is ScanContent.Wifi -> listOf(share, favorite)
-        else -> listOf(copy, share, favorite)
-    }
+    val specs: List<QuickActionSpec> =
+        when (val content = record.content) {
+            is ScanContent.Phone ->
+                listOf(
+                    QuickActionSpec.Plain(AppIcons.Sms, stringResource(R.string.result_action_send_sms), {
+                        onEvent(ResultEvent.MessageClicked(content.number))
+                    }),
+                    addContact,
+                    copy,
+                    share,
+                    favorite,
+                )
+            is ScanContent.Email ->
+                listOf(
+                    QuickActionSpec.Plain(
+                        AppIcons.Copy,
+                        stringResource(R.string.result_action_copy_address),
+                        { onEvent(ResultEvent.CopyClicked) },
+                    ),
+                    addContact,
+                    share,
+                    favorite,
+                )
+            is ScanContent.Sms ->
+                listOf(
+                    QuickActionSpec.Plain(
+                        AppIcons.Phone,
+                        stringResource(R.string.result_action_call),
+                        { onEvent(ResultEvent.DialClicked(content.number)) },
+                    ),
+                    copy,
+                    share,
+                    favorite,
+                )
+            is ScanContent.Location ->
+                listOf(
+                    QuickActionSpec.Plain(
+                        AppIcons.Copy,
+                        stringResource(R.string.result_action_copy_coordinates),
+                        { onEvent(ResultEvent.CopyClicked) },
+                    ),
+                    share,
+                    favorite,
+                )
+            is ScanContent.Event ->
+                listOfNotNull(
+                    if (content.location.isBlank()) {
+                        null
+                    } else {
+                        QuickActionSpec.Plain(
+                            AppIcons.Location,
+                            stringResource(R.string.result_action_directions),
+                            { onEvent(ResultEvent.DirectionsClicked) },
+                        )
+                    },
+                    share,
+                    copy,
+                    favorite,
+                )
+            is ScanContent.Wifi -> listOf(share, favorite)
+            else -> listOf(copy, share, favorite)
+        }
     if (!fromHistory) return specs
-    val delete = QuickActionSpec.Plain(
-        AppIcons.Delete,
-        stringResource(R.string.common_delete),
-        { onEvent(ResultEvent.DeleteClicked) },
-        Tone.Error,
-    )
+    val delete =
+        QuickActionSpec.Plain(
+            AppIcons.Delete,
+            stringResource(R.string.common_delete),
+            { onEvent(ResultEvent.DeleteClicked) },
+            Tone.Error,
+        )
     return specs + delete
 }
 
@@ -168,10 +197,11 @@ internal fun FavoriteAction(favorite: Boolean, onClick: () -> Unit, modifier: Mo
     }
     val shape = AppTheme.shapes.card
     Column(
-        modifier = modifier
-            .clip(shape)
-            .clickable(role = Role.Button, onClick = onClick)
-            .padding(4.dp),
+        modifier =
+            modifier
+                .clip(shape)
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -181,8 +211,7 @@ internal fun FavoriteAction(favorite: Boolean, onClick: () -> Unit, modifier: Mo
                 .graphicsLayer {
                     scaleX = scale.value
                     scaleY = scale.value
-                }
-                .clip(shape)
+                }.clip(shape)
                 .background(if (favorite) c.primary else c.primaryContainer),
             contentAlignment = Alignment.Center,
         ) {

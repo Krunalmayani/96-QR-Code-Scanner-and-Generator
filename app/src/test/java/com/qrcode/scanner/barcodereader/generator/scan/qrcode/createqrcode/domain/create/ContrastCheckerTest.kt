@@ -13,7 +13,9 @@ class ContrastCheckerTest {
     private val white = 0xFFFFFFFF
 
     @Test fun blackOnWhiteIs21() = assertEquals(21.0, ContrastChecker.contrastRatio(black, white), 0.001)
+
     @Test fun identicalColorsAre1() = assertEquals(1.0, ContrastChecker.contrastRatio(0xFF336699, 0xFF336699), 0.0001)
+
     @Test fun ratioIsSymmetric() =
         assertEquals(ContrastChecker.contrastRatio(0xFF123456, white), ContrastChecker.contrastRatio(white, 0xFF123456), 1e-9)
 
@@ -85,8 +87,14 @@ class ContrastCheckerTest {
     }
 
     @Test fun dotsNeedHighErrorCorrection() {
-        assertTrue(ReliabilityReason.DOTS_LOW_EC in ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.L)).reasons)
-        assertTrue(ReliabilityReason.DOTS_LOW_EC in ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.M)).reasons)
+        assertTrue(
+            ReliabilityReason.DOTS_LOW_EC in
+                ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.L)).reasons,
+        )
+        assertTrue(
+            ReliabilityReason.DOTS_LOW_EC in
+                ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.M)).reasons,
+        )
         assertTrue(ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.Q)).isGood)
         assertTrue(ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.DOTS, errorCorrection = ErrorCorrection.H)).isGood)
         assertTrue(ContrastChecker.scanReliability(QrStyle(dotShape = DotShape.ROUNDED, errorCorrection = ErrorCorrection.L)).isGood)

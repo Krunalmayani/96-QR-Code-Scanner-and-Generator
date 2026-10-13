@@ -17,8 +17,8 @@ import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.AdManager
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.LocalAdController
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.app.MainViewModel
@@ -26,12 +26,11 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.isDarkFor
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     private val viewModel: MainViewModel by viewModels()
 
     @Inject lateinit var adManager: AdManager

@@ -3,7 +3,9 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanRecord
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryRepository
 
-class DeleteRecordsUseCase(private val historyRepository: HistoryRepository) {
+class DeleteRecordsUseCase(
+    private val historyRepository: HistoryRepository,
+) {
     /** Deletes [ids] and returns the records that were removed, to hand back to [undo]. Unknown ids are skipped. */
     suspend operator fun invoke(ids: Set<Long>): List<ScanRecord> {
         val removed = ids.mapNotNull { historyRepository.getById(it) }

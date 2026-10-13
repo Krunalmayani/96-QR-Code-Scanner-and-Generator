@@ -23,21 +23,39 @@ internal object ImageVariants {
      */
     fun prepare(source: Bitmap, variant: ImageVariant): Bitmap? {
         if (!variant.contrast && !variant.invert) return source
-        val matrix = when {
-            variant.contrast -> contrastMatrix(source) ?: return null
-            else -> INVERT_MATRIX
-        }
+        val matrix =
+            when {
+                variant.contrast -> contrastMatrix(source) ?: return null
+                else -> INVERT_MATRIX
+            }
         return filtered(source, matrix)
     }
 
-    private val INVERT_MATRIX = ColorMatrix(
-        floatArrayOf(
-            -1f, 0f, 0f, 0f, 255f,
-            0f, -1f, 0f, 0f, 255f,
-            0f, 0f, -1f, 0f, 255f,
-            0f, 0f, 0f, 1f, 0f,
-        ),
-    )
+    private val INVERT_MATRIX =
+        ColorMatrix(
+            floatArrayOf(
+                -1f,
+                0f,
+                0f,
+                0f,
+                255f,
+                0f,
+                -1f,
+                0f,
+                0f,
+                255f,
+                0f,
+                0f,
+                -1f,
+                0f,
+                255f,
+                0f,
+                0f,
+                0f,
+                1f,
+                0f,
+            ),
+        )
 
     private fun contrastMatrix(source: Bitmap): ColorMatrix? {
         val stretch = ContrastStretch.forHistogram(histogram(source)) ?: return null
@@ -45,10 +63,26 @@ internal object ImageVariants {
         val o = stretch.offset
         return ColorMatrix(
             floatArrayOf(
-                g, 0f, 0f, 0f, o,
-                0f, g, 0f, 0f, o,
-                0f, 0f, g, 0f, o,
-                0f, 0f, 0f, 1f, 0f,
+                g,
+                0f,
+                0f,
+                0f,
+                o,
+                0f,
+                g,
+                0f,
+                0f,
+                o,
+                0f,
+                0f,
+                g,
+                0f,
+                o,
+                0f,
+                0f,
+                0f,
+                1f,
+                0f,
             ),
         )
     }

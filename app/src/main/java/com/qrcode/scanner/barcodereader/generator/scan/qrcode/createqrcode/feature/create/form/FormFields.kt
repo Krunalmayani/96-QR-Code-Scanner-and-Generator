@@ -97,11 +97,12 @@ internal fun TextFields(spec: CreateSpec.Text, density: DensityLevel?, host: For
 
 @Composable
 private fun DensityCard(density: DensityLevel) {
-    val (detail, badge, tone) = when (density) {
-        DensityLevel.LOW -> Triple(R.string.create_density_low, R.string.create_density_good, Tone.Success)
-        DensityLevel.MEDIUM -> Triple(R.string.create_density_medium, R.string.create_density_good, Tone.Success)
-        DensityLevel.HIGH -> Triple(R.string.create_density_high, R.string.create_density_dense, Tone.Warning)
-    }
+    val (detail, badge, tone) =
+        when (density) {
+            DensityLevel.LOW -> Triple(R.string.create_density_low, R.string.create_density_good, Tone.Success)
+            DensityLevel.MEDIUM -> Triple(R.string.create_density_medium, R.string.create_density_good, Tone.Success)
+            DensityLevel.HIGH -> Triple(R.string.create_density_high, R.string.create_density_dense, Tone.Warning)
+        }
     AppCard {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             IconTile(AppIcons.QrCode)
@@ -155,44 +156,68 @@ internal fun ValidLine(text: String, modifier: Modifier = Modifier) {
 internal fun ContactFields(spec: CreateSpec.Contact, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(FieldSpacing)) {
         FormTextField(
-            host, FormField.NAME, spec.name, { onSpec(spec.copy(name = it)) },
+            host,
+            FormField.NAME,
+            spec.name,
+            { onSpec(spec.copy(name = it)) },
             stringResource(R.string.create_field_full_name),
             capitalization = KeyboardCapitalization.Words,
         )
         FormTextField(
-            host, FormField.PHONE, spec.phone, { onSpec(spec.copy(phone = it)) },
+            host,
+            FormField.PHONE,
+            spec.phone,
+            { onSpec(spec.copy(phone = it)) },
             stringResource(R.string.create_field_mobile_phone),
             keyboardType = KeyboardType.Phone,
         )
         FormTextField(
-            host, FormField.EMAIL, spec.email, { onSpec(spec.copy(email = it)) },
+            host,
+            FormField.EMAIL,
+            spec.email,
+            { onSpec(spec.copy(email = it)) },
             stringResource(R.string.create_field_email),
             keyboardType = KeyboardType.Email,
         )
         FormTextField(
-            host, FormField.ORGANIZATION, spec.organization, { onSpec(spec.copy(organization = it)) },
+            host,
+            FormField.ORGANIZATION,
+            spec.organization,
+            { onSpec(spec.copy(organization = it)) },
             stringResource(R.string.create_field_company),
             capitalization = KeyboardCapitalization.Words,
         )
         FormTextField(
-            host, FormField.JOB_TITLE, spec.jobTitle, { onSpec(spec.copy(jobTitle = it)) },
+            host,
+            FormField.JOB_TITLE,
+            spec.jobTitle,
+            { onSpec(spec.copy(jobTitle = it)) },
             stringResource(R.string.create_field_job_title),
             capitalization = KeyboardCapitalization.Words,
         )
         FormTextField(
-            host, FormField.ADDRESS, spec.address, { onSpec(spec.copy(address = it)) },
+            host,
+            FormField.ADDRESS,
+            spec.address,
+            { onSpec(spec.copy(address = it)) },
             stringResource(R.string.create_field_address),
             capitalization = KeyboardCapitalization.Words,
             singleLine = false,
             minLines = 2,
         )
         FormTextField(
-            host, FormField.WEBSITE, spec.website, { onSpec(spec.copy(website = it)) },
+            host,
+            FormField.WEBSITE,
+            spec.website,
+            { onSpec(spec.copy(website = it)) },
             stringResource(R.string.create_field_website_optional),
             keyboardType = KeyboardType.Uri,
         )
         FormTextField(
-            host, FormField.NOTE, spec.note, { onSpec(spec.copy(note = it)) },
+            host,
+            FormField.NOTE,
+            spec.note,
+            { onSpec(spec.copy(note = it)) },
             stringResource(R.string.create_field_note),
             capitalization = KeyboardCapitalization.Sentences,
             singleLine = false,
@@ -216,13 +241,19 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
     var passwordVisible by rememberSaveable { mutableStateOf(false) }
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         FormTextField(
-            host, FormField.SSID, spec.ssid, { onSpec(spec.copy(ssid = it)) },
+            host,
+            FormField.SSID,
+            spec.ssid,
+            { onSpec(spec.copy(ssid = it)) },
             stringResource(R.string.create_field_ssid),
             last = spec.security == WifiSecurity.NONE,
         )
         if (spec.security != WifiSecurity.NONE) {
             FormTextField(
-                host, FormField.PASSWORD, spec.password, { onSpec(spec.copy(password = it)) },
+                host,
+                FormField.PASSWORD,
+                spec.password,
+                { onSpec(spec.copy(password = it)) },
                 stringResource(R.string.create_field_password),
                 keyboardType = KeyboardType.Password,
                 last = true,
@@ -256,28 +287,38 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
 }
 
 @StringRes
-private fun WifiSecurity.labelRes(): Int = when (this) {
-    WifiSecurity.NONE -> R.string.create_wifi_security_none
-    WifiSecurity.WEP -> R.string.create_wifi_security_wep
-    WifiSecurity.WPA -> R.string.create_wifi_security_wpa
-}
+private fun WifiSecurity.labelRes(): Int =
+    when (this) {
+        WifiSecurity.NONE -> R.string.create_wifi_security_none
+        WifiSecurity.WEP -> R.string.create_wifi_security_wep
+        WifiSecurity.WPA -> R.string.create_wifi_security_wpa
+    }
 
 /** Email: recipient, subject and body become a mailto: link. */
 @Composable
 internal fun EmailFields(spec: CreateSpec.Email, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(FieldSpacing)) {
         FormTextField(
-            host, FormField.EMAIL, spec.to, { onSpec(spec.copy(to = it)) },
+            host,
+            FormField.EMAIL,
+            spec.to,
+            { onSpec(spec.copy(to = it)) },
             stringResource(R.string.create_field_email_to),
             keyboardType = KeyboardType.Email,
         )
         FormTextField(
-            host, FormField.SUBJECT, spec.subject, { onSpec(spec.copy(subject = it)) },
+            host,
+            FormField.SUBJECT,
+            spec.subject,
+            { onSpec(spec.copy(subject = it)) },
             stringResource(R.string.create_field_subject),
             capitalization = KeyboardCapitalization.Sentences,
         )
         FormTextField(
-            host, FormField.BODY, spec.body, { onSpec(spec.copy(body = it)) },
+            host,
+            FormField.BODY,
+            spec.body,
+            { onSpec(spec.copy(body = it)) },
             stringResource(R.string.create_field_message),
             capitalization = KeyboardCapitalization.Sentences,
             singleLine = false,
@@ -292,13 +333,19 @@ internal fun EmailFields(spec: CreateSpec.Email, host: FormFieldHost, onSpec: (C
 internal fun SmsFields(spec: CreateSpec.Sms, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(FieldSpacing)) {
         FormTextField(
-            host, FormField.PHONE, spec.number, { onSpec(spec.copy(number = it)) },
+            host,
+            FormField.PHONE,
+            spec.number,
+            { onSpec(spec.copy(number = it)) },
             stringResource(R.string.create_field_phone_number),
             helper = stringResource(R.string.create_helper_phone),
             keyboardType = KeyboardType.Phone,
         )
         FormTextField(
-            host, FormField.MESSAGE, spec.message, { onSpec(spec.copy(message = it)) },
+            host,
+            FormField.MESSAGE,
+            spec.message,
+            { onSpec(spec.copy(message = it)) },
             stringResource(R.string.create_field_sms_message),
             capitalization = KeyboardCapitalization.Sentences,
             singleLine = false,
@@ -313,19 +360,28 @@ internal fun SmsFields(spec: CreateSpec.Sms, host: FormFieldHost, onSpec: (Creat
 internal fun LocationFields(spec: CreateSpec.Location, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(FieldSpacing)) {
         FormTextField(
-            host, FormField.LATITUDE, spec.latitude, { onSpec(spec.copy(latitude = it)) },
+            host,
+            FormField.LATITUDE,
+            spec.latitude,
+            { onSpec(spec.copy(latitude = it)) },
             stringResource(R.string.create_field_latitude),
             helper = stringResource(R.string.create_helper_latitude),
             placeholder = stringResource(R.string.create_placeholder_latitude),
         )
         FormTextField(
-            host, FormField.LONGITUDE, spec.longitude, { onSpec(spec.copy(longitude = it)) },
+            host,
+            FormField.LONGITUDE,
+            spec.longitude,
+            { onSpec(spec.copy(longitude = it)) },
             stringResource(R.string.create_field_longitude),
             helper = stringResource(R.string.create_helper_longitude),
             placeholder = stringResource(R.string.create_placeholder_longitude),
         )
         FormTextField(
-            host, FormField.LABEL, spec.label, { onSpec(spec.copy(label = it)) },
+            host,
+            FormField.LABEL,
+            spec.label,
+            { onSpec(spec.copy(label = it)) },
             stringResource(R.string.create_field_place_label),
             capitalization = KeyboardCapitalization.Words,
             last = true,

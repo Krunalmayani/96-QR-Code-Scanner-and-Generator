@@ -18,8 +18,11 @@ object DatabaseModule {
     /** No destructive fallback: a missing migration must fail loudly instead of wiping the user's history. */
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME)
+    fun provideAppDatabase(
+        @ApplicationContext context: Context,
+    ): AppDatabase =
+        Room
+            .databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME)
             .addMigrations(*Migrations.ALL)
             .build()
 

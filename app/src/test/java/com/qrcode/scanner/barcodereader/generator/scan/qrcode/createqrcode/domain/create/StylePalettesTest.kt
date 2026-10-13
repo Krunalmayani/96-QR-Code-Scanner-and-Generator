@@ -12,8 +12,20 @@ class StylePalettesTest {
     @Test fun swatchesAreOpaqueAndUnique() {
         assertTrue(CodeSwatch.entries.all { opaque(it.argb) })
         assertTrue(BackgroundSwatch.entries.all { opaque(it.argb) })
-        assertEquals(CodeSwatch.entries.size, CodeSwatch.entries.map { it.argb }.toSet().size)
-        assertEquals(BackgroundSwatch.entries.size, BackgroundSwatch.entries.map { it.argb }.toSet().size)
+        assertEquals(
+            CodeSwatch.entries.size,
+            CodeSwatch.entries
+                .map { it.argb }
+                .toSet()
+                .size,
+        )
+        assertEquals(
+            BackgroundSwatch.entries.size,
+            BackgroundSwatch.entries
+                .map { it.argb }
+                .toSet()
+                .size,
+        )
     }
 
     @Test fun defaultStyleColorsAreInThePalette() {
@@ -23,11 +35,13 @@ class StylePalettesTest {
     }
 
     @Test fun everyCodeColorIsReadableOnEveryBackground() {
-        for (code in CodeSwatch.entries) for (bg in BackgroundSwatch.entries) {
-            val style = QrStyle(foreground = code.argb, background = bg.argb)
-            val reliability = ContrastChecker.scanReliability(style)
-            assertTrue(reliability.contrastRatio >= ContrastChecker.MIN_RATIO, "$code on $bg: ${reliability.contrastRatio}")
-            assertTrue(reliability.isGood, "$code on $bg: ${reliability.reasons}")
+        for (code in CodeSwatch.entries) {
+            for (bg in BackgroundSwatch.entries) {
+                val style = QrStyle(foreground = code.argb, background = bg.argb)
+                val reliability = ContrastChecker.scanReliability(style)
+                assertTrue(reliability.contrastRatio >= ContrastChecker.MIN_RATIO, "$code on $bg: ${reliability.contrastRatio}")
+                assertTrue(reliability.isGood, "$code on $bg: ${reliability.reasons}")
+            }
         }
     }
 

@@ -8,7 +8,10 @@ class ProductSearchUrlsTest {
     @Test
     fun `each site has its url`() {
         assertEquals("https://www.google.com/search?q=5901234123457", ProductSearchUrls.urlFor(ProductSite.GOOGLE, "5901234123457"))
-        assertEquals("https://world.openfoodfacts.org/product/5901234123457", ProductSearchUrls.urlFor(ProductSite.OPEN_FOOD_FACTS, "5901234123457"))
+        assertEquals(
+            "https://world.openfoodfacts.org/product/5901234123457",
+            ProductSearchUrls.urlFor(ProductSite.OPEN_FOOD_FACTS, "5901234123457"),
+        )
         assertEquals("https://www.amazon.com/s?k=5901234123457", ProductSearchUrls.urlFor(ProductSite.AMAZON, "5901234123457"))
     }
 

@@ -36,15 +36,21 @@ data class ScanUiState(
 )
 
 sealed interface ScanEvent {
-    data class ModeSelected(val mode: ScanMode) : ScanEvent
+    data class ModeSelected(
+        val mode: ScanMode,
+    ) : ScanEvent
 
     data object FlashToggled : ScanEvent
 
-    data class ZoomChanged(val zoom: Float) : ScanEvent
+    data class ZoomChanged(
+        val zoom: Float,
+    ) : ScanEvent
 
     data object CameraSwitched : ScanEvent
 
-    data class CodesDetected(val codes: List<DetectedCode>) : ScanEvent
+    data class CodesDetected(
+        val codes: List<DetectedCode>,
+    ) : ScanEvent
 
     /** The screen is visible again (first show, or back from Result / system settings). */
     data object ScreenResumed : ScanEvent
@@ -57,7 +63,9 @@ sealed interface ScanEvent {
 
     data object BatchFinished : ScanEvent
 
-    data class BatchRowClicked(val recordId: Long) : ScanEvent
+    data class BatchRowClicked(
+        val recordId: Long,
+    ) : ScanEvent
 
     data object QuickDismissed : ScanEvent
 
@@ -71,14 +79,19 @@ sealed interface ScanEvent {
 }
 
 sealed interface ScanEffect {
-    data class OpenResult(val recordId: Long) : ScanEffect
+    data class OpenResult(
+        val recordId: Long,
+    ) : ScanEffect
 
     data object OpenGallery : ScanEffect
 
     data object OpenSettings : ScanEffect
 
     /** Haptic and sound for a detection, already filtered by the user's settings. */
-    data class Feedback(val vibrate: Boolean, val beep: Boolean) : ScanEffect
+    data class Feedback(
+        val vibrate: Boolean,
+        val beep: Boolean,
+    ) : ScanEffect
 }
 
 /** Why the camera cannot be shown instead of the live preview (s09). */

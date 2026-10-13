@@ -55,11 +55,12 @@ private fun RowScope.CreatedButtons(onEvent: (ResultEvent) -> Unit) {
 @Composable
 private fun RowScope.WifiFlowButtons(state: ResultUiState, onEvent: (ResultEvent) -> Unit) {
     when (state.wifi.phase) {
-        WifiPhase.CONNECTING -> AppOutlinedButton(
-            stringResource(R.string.common_cancel),
-            { onEvent(ResultEvent.WifiCancel) },
-            Modifier.weight(1f).heightIn(min = ButtonHeight),
-        )
+        WifiPhase.CONNECTING ->
+            AppOutlinedButton(
+                stringResource(R.string.common_cancel),
+                { onEvent(ResultEvent.WifiCancel) },
+                Modifier.weight(1f).heightIn(min = ButtonHeight),
+            )
         WifiPhase.CONNECTED -> Primary(stringResource(R.string.common_done), null) { onEvent(ResultEvent.WifiDone) }
         WifiPhase.FAILED -> Primary(stringResource(R.string.common_retry), null) { onEvent(ResultEvent.WifiRetry) }
         WifiPhase.IDLE -> Unit

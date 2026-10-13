@@ -2,8 +2,6 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desi
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -79,25 +77,28 @@ fun AppTextField(
 ) {
     val c = AppTheme.colors
     var focused by remember { mutableStateOf(false) }
-    val borderColor = when {
-        error != null -> c.error
-        focused -> c.primary
-        else -> c.outline
-    }
-    val labelColor = when {
-        error != null -> c.error
-        focused -> c.primary
-        else -> c.inkSecondary
-    }
+    val borderColor =
+        when {
+            error != null -> c.error
+            focused -> c.primary
+            else -> c.outline
+        }
+    val labelColor =
+        when {
+            error != null -> c.error
+            focused -> c.primary
+            else -> c.inkSecondary
+        }
     Column(modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(min = 56.dp)
-                .clip(AppTheme.shapes.field)
-                .background(c.surface)
-                .border(if (focused || error != null) 2.dp else 1.5.dp, borderColor, AppTheme.shapes.field)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 56.dp)
+                    .clip(AppTheme.shapes.field)
+                    .background(c.surface)
+                    .border(if (focused || error != null) 2.dp else 1.5.dp, borderColor, AppTheme.shapes.field)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
@@ -109,16 +110,16 @@ fun AppTextField(
                 BasicTextField(
                     value = value,
                     onValueChange = onValueChange,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .onFocusChanged {
-                            focused = it.isFocused
-                            onFocusChanged(it.isFocused)
-                        }
-                        .semantics {
-                            contentDescription = label
-                            if (error != null) error(error)
-                        },
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .onFocusChanged {
+                                focused = it.isFocused
+                                onFocusChanged(it.isFocused)
+                            }.semantics {
+                                contentDescription = label
+                                if (error != null) error(error)
+                            },
                     enabled = enabled,
                     readOnly = readOnly,
                     textStyle = AppTheme.type.input.copy(color = c.ink),
@@ -177,12 +178,13 @@ fun AppSearchBar(
 ) {
     val c = AppTheme.colors
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(48.dp)
-            .clip(AppTheme.shapes.pill)
-            .background(c.surfaceVariant)
-            .padding(start = 16.dp, end = 4.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(48.dp)
+                .clip(AppTheme.shapes.pill)
+                .background(c.surfaceVariant)
+                .padding(start = 16.dp, end = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -206,7 +208,13 @@ fun AppSearchBar(
             },
         )
         if (query.isNotEmpty()) {
-            IconButtonRounded(AppIcons.Close, stringResource(R.string.common_clear), { onQueryChange("") }, size = 40.dp, tint = c.inkSecondary)
+            IconButtonRounded(
+                AppIcons.Close,
+                stringResource(R.string.common_clear),
+                { onQueryChange("") },
+                size = 40.dp,
+                tint = c.inkSecondary,
+            )
         }
     }
 }
@@ -225,14 +233,15 @@ fun AppSwitch(
         onCheckedChange = onCheckedChange,
         modifier = modifier,
         enabled = enabled,
-        colors = SwitchDefaults.colors(
-            checkedThumbColor = c.onPrimary,
-            checkedTrackColor = c.primary,
-            checkedBorderColor = c.primary,
-            uncheckedThumbColor = c.inkSecondary,
-            uncheckedTrackColor = c.surfaceVariant,
-            uncheckedBorderColor = c.inkSecondary,
-        ),
+        colors =
+            SwitchDefaults.colors(
+                checkedThumbColor = c.onPrimary,
+                checkedTrackColor = c.primary,
+                checkedBorderColor = c.primary,
+                uncheckedThumbColor = c.inkSecondary,
+                uncheckedTrackColor = c.surfaceVariant,
+                uncheckedBorderColor = c.inkSecondary,
+            ),
     )
 }
 
@@ -243,11 +252,12 @@ fun AppCheckbox(
 ) {
     val c = AppTheme.colors
     Box(
-        modifier = modifier
-            .size(24.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(if (checked) c.primary else Color.Transparent)
-            .border(2.dp, if (checked) c.primary else c.inkSecondary, RoundedCornerShape(8.dp)),
+        modifier =
+            modifier
+                .size(24.dp)
+                .clip(RoundedCornerShape(8.dp))
+                .background(if (checked) c.primary else Color.Transparent)
+                .border(2.dp, if (checked) c.primary else c.inkSecondary, RoundedCornerShape(8.dp)),
         contentAlignment = Alignment.Center,
     ) {
         if (checked) Icon(AppIcons.Check, contentDescription = null, tint = c.onPrimary, modifier = Modifier.size(16.dp))
@@ -263,11 +273,12 @@ fun CheckboxRow(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 48.dp)
-            .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange)
-            .padding(vertical = 8.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+                .toggleable(value = checked, role = Role.Checkbox, onValueChange = onCheckedChange)
+                .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -364,13 +375,14 @@ fun ColorSwatch(
 ) {
     val c = AppTheme.colors
     Box(
-        modifier = modifier
-            .size(40.dp)
-            .clip(AppTheme.shapes.tile)
-            .background(color)
-            .border(if (selected) 3.dp else 1.dp, if (selected) c.primary else c.outline, AppTheme.shapes.tile)
-            .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
-            .semantics { this.contentDescription = contentDescription },
+        modifier =
+            modifier
+                .size(40.dp)
+                .clip(AppTheme.shapes.tile)
+                .background(color)
+                .border(if (selected) 3.dp else 1.dp, if (selected) c.primary else c.outline, AppTheme.shapes.tile)
+                .selectable(selected = selected, role = Role.RadioButton, onClick = onClick)
+                .semantics { this.contentDescription = contentDescription },
         contentAlignment = Alignment.Center,
     ) {
         if (selected) {
@@ -405,13 +417,14 @@ fun AppSlider(
         valueRange = valueRange,
         steps = steps,
         onValueChangeFinished = onValueChangeFinished,
-        colors = SliderDefaults.colors(
-            thumbColor = active,
-            activeTrackColor = active,
-            inactiveTrackColor = inactive,
-            activeTickColor = Color.Transparent,
-            inactiveTickColor = Color.Transparent,
-        ),
+        colors =
+            SliderDefaults.colors(
+                thumbColor = active,
+                activeTrackColor = active,
+                inactiveTrackColor = inactive,
+                activeTickColor = Color.Transparent,
+                inactiveTickColor = Color.Transparent,
+            ),
     )
 }
 

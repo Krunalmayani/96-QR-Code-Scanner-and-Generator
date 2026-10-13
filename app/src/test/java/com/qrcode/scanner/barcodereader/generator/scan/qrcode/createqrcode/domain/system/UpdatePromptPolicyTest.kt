@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class UpdatePromptPolicyTest {
-
     private val day = SystemPromptTiming.MILLIS_PER_DAY
     private val now = 1_800_000_000_000L
     private val ready = AppSettings(onboardingDone = true)

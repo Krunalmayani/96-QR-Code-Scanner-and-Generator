@@ -97,17 +97,18 @@ fun NativeAdCard(modifier: Modifier = Modifier) {
 @Composable
 private fun NativeAdContent(loaded: LoadedNative, modifier: Modifier) {
     val colors = MaterialTheme.colorScheme
-    val style = NativeCardStyle(
-        background = colors.surface.toArgb(),
-        outline = colors.outlineVariant.toArgb(),
-        headline = colors.onSurface.toArgb(),
-        body = colors.onSurfaceVariant.toArgb(),
-        label = colors.onSurfaceVariant.toArgb(),
-        ctaBackground = colors.primary.toArgb(),
-        ctaText = colors.onPrimary.toArgb(),
-        adLabel = stringResource(R.string.ads_label_ad),
-        adLabelDescription = stringResource(R.string.ads_native_content_description),
-    )
+    val style =
+        NativeCardStyle(
+            background = colors.surface.toArgb(),
+            outline = colors.outlineVariant.toArgb(),
+            headline = colors.onSurface.toArgb(),
+            body = colors.onSurfaceVariant.toArgb(),
+            label = colors.onSurfaceVariant.toArgb(),
+            ctaBackground = colors.primary.toArgb(),
+            ctaText = colors.onPrimary.toArgb(),
+            adLabel = stringResource(R.string.ads_label_ad),
+            adLabelDescription = stringResource(R.string.ads_native_content_description),
+        )
     AndroidView(
         modifier = modifier.fillMaxWidth(),
         factory = { viewContext -> NextGenAdsGateway.createNativeView(viewContext, loaded, style) },
@@ -124,8 +125,9 @@ private fun rememberAdContentSource(): AdContentSource? {
     }
 }
 
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
+private tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }

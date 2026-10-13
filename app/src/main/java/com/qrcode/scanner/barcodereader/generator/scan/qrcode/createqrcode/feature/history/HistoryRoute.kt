@@ -46,22 +46,25 @@ fun HistoryRoute(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is HistoryEffect.OpenRecord -> openRecord(effect.id)
-                is HistoryEffect.RecordsDeleted -> scope.launch {
-                    showUndoSnackbar(
-                        host = snackbarHostState,
-                        message = deletedMessage(context.resources, effect.records),
-                        actionLabel = context.getString(R.string.common_undo),
-                        onUndo = { viewModel.onEvent(HistoryEvent.UndoDelete(effect.records)) },
-                    )
-                }
-                is HistoryEffect.ShareText -> if (!HistoryShare.shareText(context, effect.text)) {
-                    scope.launch { showFailure(snackbarHostState, context, R.string.hist_share_failed) }
-                }
-                is HistoryEffect.ExportCsv -> scope.launch {
-                    if (!HistoryShare.exportCsv(context, effect.csv)) {
-                        showFailure(snackbarHostState, context, R.string.hist_export_failed)
+                is HistoryEffect.RecordsDeleted ->
+                    scope.launch {
+                        showUndoSnackbar(
+                            host = snackbarHostState,
+                            message = deletedMessage(context.resources, effect.records),
+                            actionLabel = context.getString(R.string.common_undo),
+                            onUndo = { viewModel.onEvent(HistoryEvent.UndoDelete(effect.records)) },
+                        )
                     }
-                }
+                is HistoryEffect.ShareText ->
+                    if (!HistoryShare.shareText(context, effect.text)) {
+                        scope.launch { showFailure(snackbarHostState, context, R.string.hist_share_failed) }
+                    }
+                is HistoryEffect.ExportCsv ->
+                    scope.launch {
+                        if (!HistoryShare.exportCsv(context, effect.csv)) {
+                            showFailure(snackbarHostState, context, R.string.hist_export_failed)
+                        }
+                    }
             }
         }
     }
@@ -89,16 +92,18 @@ private suspend fun showUndoSnackbar(
     onUndo: () -> Unit,
 ) = coroutineScope {
     host.currentSnackbarData?.dismiss()
-    val timer = launch {
-        delay(UNDO_WINDOW_MILLIS)
-        host.currentSnackbarData?.dismiss()
-    }
-    val result = host.showSnackbar(
-        message = message,
-        actionLabel = actionLabel,
-        withDismissAction = false,
-        duration = SnackbarDuration.Indefinite,
-    )
+    val timer =
+        launch {
+            delay(UNDO_WINDOW_MILLIS)
+            host.currentSnackbarData?.dismiss()
+        }
+    val result =
+        host.showSnackbar(
+            message = message,
+            actionLabel = actionLabel,
+            withDismissAction = false,
+            duration = SnackbarDuration.Indefinite,
+        )
     timer.cancel()
     if (result == SnackbarResult.ActionPerformed) onUndo()
 }
@@ -106,10 +111,11 @@ private suspend fun showUndoSnackbar(
 /** "Scan deleted" / "3 codes deleted" / "2 items deleted", depending on what was removed. */
 private fun deletedMessage(resources: Resources, records: List<ScanRecord>): String {
     val count = records.size
-    val plural = when {
-        records.all { it.source == ScanSource.CREATED } -> R.plurals.hist_deleted_codes
-        records.none { it.source == ScanSource.CREATED } -> R.plurals.hist_deleted_scans
-        else -> R.plurals.hist_deleted_items
-    }
+    val plural =
+        when {
+            records.all { it.source == ScanSource.CREATED } -> R.plurals.hist_deleted_codes
+            records.none { it.source == ScanSource.CREATED } -> R.plurals.hist_deleted_scans
+            else -> R.plurals.hist_deleted_items
+        }
     return resources.getQuantityString(plural, count, count)
 }

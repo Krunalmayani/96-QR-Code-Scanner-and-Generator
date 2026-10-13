@@ -17,30 +17,44 @@ sealed interface BarcodeStatus {
     data object Empty : BarcodeStatus
 
     /** Still typing: [count] of [needed] digits so far. */
-    data class Incomplete(val count: Int, val needed: Int) : BarcodeStatus
+    data class Incomplete(
+        val count: Int,
+        val needed: Int,
+    ) : BarcodeStatus
 
     /** The body is complete; [digit] will be appended automatically. */
-    data class CheckDigitWillBeAdded(val digit: Int) : BarcodeStatus
+    data class CheckDigitWillBeAdded(
+        val digit: Int,
+    ) : BarcodeStatus
 
     /** Valid input of [length] characters; [checkDigit] is set for GS1 numbers that carry a verified check digit. */
-    data class Complete(val length: Int, val checkDigit: Int?) : BarcodeStatus
+    data class Complete(
+        val length: Int,
+        val checkDigit: Int?,
+    ) : BarcodeStatus
 
-    data class Invalid(val error: FieldError) : BarcodeStatus
+    data class Invalid(
+        val error: FieldError,
+    ) : BarcodeStatus
 }
 
 /** The check digit of a finished barcode value, for the details card. */
-data class CheckDigitInfo(val digit: Int, val valid: Boolean)
+data class CheckDigitInfo(
+    val digit: Int,
+    val valid: Boolean,
+)
 
 object BarcodeInputs {
-    fun rules(format: CodeFormat): BarcodeInputRules = when (format) {
-        CodeFormat.EAN_13 -> BarcodeInputRules(numericOnly = true, maxLength = 13, bodyLength = 12)
-        CodeFormat.EAN_8 -> BarcodeInputRules(numericOnly = true, maxLength = 8, bodyLength = 7)
-        CodeFormat.UPC_A -> BarcodeInputRules(numericOnly = true, maxLength = 12, bodyLength = 11)
-        CodeFormat.ITF -> BarcodeInputRules(numericOnly = true, maxLength = Limits.BARCODE_1D_MAX, bodyLength = null)
-        CodeFormat.CODE_39, CodeFormat.CODE_128 ->
-            BarcodeInputRules(numericOnly = false, maxLength = Limits.BARCODE_1D_MAX, bodyLength = null)
-        else -> BarcodeInputRules(numericOnly = false, maxLength = Limits.BARCODE_2D_MAX, bodyLength = null)
-    }
+    fun rules(format: CodeFormat): BarcodeInputRules =
+        when (format) {
+            CodeFormat.EAN_13 -> BarcodeInputRules(numericOnly = true, maxLength = 13, bodyLength = 12)
+            CodeFormat.EAN_8 -> BarcodeInputRules(numericOnly = true, maxLength = 8, bodyLength = 7)
+            CodeFormat.UPC_A -> BarcodeInputRules(numericOnly = true, maxLength = 12, bodyLength = 11)
+            CodeFormat.ITF -> BarcodeInputRules(numericOnly = true, maxLength = Limits.BARCODE_1D_MAX, bodyLength = null)
+            CodeFormat.CODE_39, CodeFormat.CODE_128 ->
+                BarcodeInputRules(numericOnly = false, maxLength = Limits.BARCODE_1D_MAX, bodyLength = null)
+            else -> BarcodeInputRules(numericOnly = false, maxLength = Limits.BARCODE_2D_MAX, bodyLength = null)
+        }
 
     /** Cuts [data] to the format's maximum length. */
     fun clamp(format: CodeFormat, data: String): String = data.take(rules(format).maxLength)

@@ -1,7 +1,9 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create
 
 /** Code colors offered as swatches (design s41). Every one is readable on every [BackgroundSwatch]. */
-enum class CodeSwatch(val argb: Long) {
+enum class CodeSwatch(
+    val argb: Long,
+) {
     INDIGO(0xFF4F46E5),
     INK(0xFF13142B),
     TEAL(0xFF0B7A6E),
@@ -17,7 +19,9 @@ enum class CodeSwatch(val argb: Long) {
 }
 
 /** Background colors offered as swatches (design s41). */
-enum class BackgroundSwatch(val argb: Long) {
+enum class BackgroundSwatch(
+    val argb: Long,
+) {
     WHITE(0xFFFFFFFF),
     MIST(0xFFF5F6FC),
     CREAM(0xFFFFF0D1),
@@ -31,7 +35,10 @@ enum class BackgroundSwatch(val argb: Long) {
 }
 
 /** Two-color gradient presets; both ends stay readable on a white background. */
-enum class GradientPreset(val start: Long, val end: Long) {
+enum class GradientPreset(
+    val start: Long,
+    val end: Long,
+) {
     AURORA(0xFF4F46E5, 0xFF0B7A6E),
     BERRY(0xFF6D28D9, 0xFFBE185D),
     OCEAN(0xFF1E3A8A, 0xFF0E7490),
@@ -56,11 +63,12 @@ object ColorHex {
     fun parse(input: String): Long? {
         val t = input.trim().removePrefix("#")
         if (t.any { it !in '0'..'9' && it !in 'a'..'f' && it !in 'A'..'F' }) return null
-        val full = when (t.length) {
-            3 -> t.map { "$it$it" }.joinToString("")
-            6 -> t
-            else -> return null
-        }
+        val full =
+            when (t.length) {
+                3 -> t.map { "$it$it" }.joinToString("")
+                6 -> t
+                else -> return null
+            }
         return OPAQUE or full.toLong(16)
     }
 }

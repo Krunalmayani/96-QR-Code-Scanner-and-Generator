@@ -18,15 +18,16 @@ class ScanMappersTest {
 
     @Test
     fun `record survives an entity round trip with style`() {
-        val record = ScanRecord(
-            id = 7,
-            content = wifi,
-            createdAt = 1234,
-            source = ScanSource.CREATED,
-            isFavorite = true,
-            note = "home router",
-            style = QrStyle(foreground = 0xFF112233, gradientEnd = 0xFF445566, dotShape = DotShape.DOTS, frameText = "Scan me"),
-        )
+        val record =
+            ScanRecord(
+                id = 7,
+                content = wifi,
+                createdAt = 1234,
+                source = ScanSource.CREATED,
+                isFavorite = true,
+                note = "home router",
+                style = QrStyle(foreground = 0xFF112233, gradientEnd = 0xFF445566, dotShape = DotShape.DOTS, frameText = "Scan me"),
+            )
         assertEquals(record, record.toEntity().toDomain())
     }
 
@@ -55,8 +56,10 @@ class ScanMappersTest {
 
     @Test
     fun `unknown content subtype falls back to Unknown`() {
-        val entity = ScanRecord(content = wifi, createdAt = 1, source = ScanSource.CAMERA).toEntity()
-            .copy(parsedJson = """{"type":"hologram","rawValue":"x"}""")
+        val entity =
+            ScanRecord(content = wifi, createdAt = 1, source = ScanSource.CAMERA)
+                .toEntity()
+                .copy(parsedJson = """{"type":"hologram","rawValue":"x"}""")
         assertEquals(ScanContent.Unknown(wifi.rawValue, CodeFormat.QR_CODE), entity.toDomain().content)
     }
 
@@ -78,8 +81,10 @@ class ScanMappersTest {
 
     @Test
     fun `unknown enum names fall back instead of crashing`() {
-        val entity = ScanRecord(content = wifi, createdAt = 1, source = ScanSource.CAMERA).toEntity()
-            .copy(format = "HOLOGRAM", source = "TELEPATHY", parsedJson = "oops")
+        val entity =
+            ScanRecord(content = wifi, createdAt = 1, source = ScanSource.CAMERA)
+                .toEntity()
+                .copy(format = "HOLOGRAM", source = "TELEPATHY", parsedJson = "oops")
         val record = entity.toDomain()
         assertEquals(CodeFormat.UNKNOWN, record.format)
         assertEquals(ScanSource.CAMERA, record.source)

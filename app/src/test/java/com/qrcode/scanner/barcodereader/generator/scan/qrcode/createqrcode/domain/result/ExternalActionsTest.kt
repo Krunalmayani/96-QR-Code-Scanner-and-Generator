@@ -97,18 +97,19 @@ class ExternalActionsTest {
 
     @Test
     fun `contact insert uses first and second phone and email and joins notes`() {
-        val contact = ScanContent.Contact(
-            rawValue = "raw",
-            format = qr,
-            name = "Sophie Lambert",
-            organization = "Lumen Studio",
-            jobTitle = "Designer",
-            phones = listOf("+1 415 555 0142", "+1 415 555 0143", "third"),
-            emails = listOf("sophie@lumen.studio"),
-            address = "48 Market Street",
-            website = "https://lumen.studio",
-            note = "Met at the expo",
-        )
+        val contact =
+            ScanContent.Contact(
+                rawValue = "raw",
+                format = qr,
+                name = "Sophie Lambert",
+                organization = "Lumen Studio",
+                jobTitle = "Designer",
+                phones = listOf("+1 415 555 0142", "+1 415 555 0143", "third"),
+                emails = listOf("sophie@lumen.studio"),
+                address = "48 Market Street",
+                website = "https://lumen.studio",
+                note = "Met at the expo",
+            )
         val data = ExternalActions.addToContacts(contact).contact
         assertEquals("Sophie Lambert", data.name)
         assertEquals("Lumen Studio", data.company)

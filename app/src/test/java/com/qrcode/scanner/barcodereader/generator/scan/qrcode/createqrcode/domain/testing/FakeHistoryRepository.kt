@@ -6,20 +6,22 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryCounts
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryFilter
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.HistoryRepository
-import java.util.concurrent.atomic.AtomicLong
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * In-memory [HistoryRepository] for ViewModel and use-case tests. Same semantics as the real one:
  * persisted rows get increasing positive ids (never reused), transient rows (save with persist = false) get
  * -1, -2, ... and are invisible to [observe], [counts] and [all] but work with every id-based method.
  */
-class FakeHistoryRepository(initial: List<ScanRecord> = emptyList()) : HistoryRepository {
+class FakeHistoryRepository(
+    initial: List<ScanRecord> = emptyList(),
+) : HistoryRepository {
     private val persisted = MutableStateFlow<Map<Long, ScanRecord>>(emptyMap())
     private val transient = MutableStateFlow<Map<Long, ScanRecord>>(emptyMap())
     private val lastPersistedId = AtomicLong(0)
@@ -86,10 +88,11 @@ class FakeHistoryRepository(initial: List<ScanRecord> = emptyList()) : HistoryRe
     }
 
     override suspend fun clear(keepFavorites: Boolean, source: ScanSource?): Int {
-        val doomed = persisted.value.values
-            .filter { (source == null || it.source == source) && !(keepFavorites && it.isFavorite) }
-            .map { it.id }
-            .toSet()
+        val doomed =
+            persisted.value.values
+                .filter { (source == null || it.source == source) && !(keepFavorites && it.isFavorite) }
+                .map { it.id }
+                .toSet()
         persisted.update { it - doomed }
         return doomed.size
     }
@@ -105,11 +108,12 @@ class FakeHistoryRepository(initial: List<ScanRecord> = emptyList()) : HistoryRe
 
     override suspend fun all(): List<ScanRecord> = persistedRecords
 
-    private fun storeFor(id: Long): MutableStateFlow<Map<Long, ScanRecord>>? = when {
-        id > 0 -> persisted
-        id < 0 -> transient
-        else -> null
-    }
+    private fun storeFor(id: Long): MutableStateFlow<Map<Long, ScanRecord>>? =
+        when {
+            id > 0 -> persisted
+            id < 0 -> transient
+            else -> null
+        }
 
     private fun modify(id: Long, change: (ScanRecord) -> ScanRecord) {
         storeFor(id)?.update { rows ->
@@ -138,6 +142,6 @@ class FakeHistoryRepository(initial: List<ScanRecord> = emptyList()) : HistoryRe
                     record.displayTitle.contains(query, ignoreCase = true) ||
                     record.rawValue.contains(query, ignoreCase = true) ||
                     record.note.contains(query, ignoreCase = true)
-                )
+            )
     }
 }

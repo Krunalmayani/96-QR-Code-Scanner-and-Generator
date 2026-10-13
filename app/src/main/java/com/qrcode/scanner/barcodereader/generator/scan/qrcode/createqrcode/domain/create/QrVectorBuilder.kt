@@ -49,13 +49,14 @@ object QrVectorBuilder {
         val height = if (frame.isEmpty()) codeSide else codeSide + codeSide * FRAME_BAND_FRACTION
         if (frame.isNotEmpty()) addFrame(items, frame, codeSide, q, style)
 
-        val logo = if (logoReserve) {
-            val side = size * LOGO_IMAGE_FRACTION
-            val c = codeSide / 2f
-            VectorShape.Rect(c - side / 2f, c - side / 2f, side, side, side * 0.2f)
-        } else {
-            null
-        }
+        val logo =
+            if (logoReserve) {
+                val side = size * LOGO_IMAGE_FRACTION
+                val c = codeSide / 2f
+                VectorShape.Rect(c - side / 2f, c - side / 2f, side, side, side * 0.2f)
+            } else {
+                null
+            }
         return QrVectorImage(codeSide, height, style.background, items, logo)
     }
 
@@ -74,34 +75,41 @@ object QrVectorBuilder {
     private fun addEye(items: MutableList<StyledShape>, x: Float, y: Float, shape: EyeShape, paint: ShapePaint) {
         when (shape) {
             EyeShape.SQUARE -> {
-                items += StyledShape(
-                    VectorShape.Path(PathShapes.rect(x, y, 7f, 7f) + PathShapes.rect(x + 1, y + 1, 5f, 5f), evenOdd = true),
-                    paint,
-                )
+                items +=
+                    StyledShape(
+                        VectorShape.Path(PathShapes.rect(x, y, 7f, 7f) + PathShapes.rect(x + 1, y + 1, 5f, 5f), evenOdd = true),
+                        paint,
+                    )
                 items += StyledShape(VectorShape.Rect(x + 2, y + 2, 3f, 3f), paint)
             }
             EyeShape.ROUNDED -> {
-                items += StyledShape(
-                    VectorShape.Path(
-                        PathShapes.roundedRect(x, y, 7f, 7f, 2f) + PathShapes.roundedRect(x + 1, y + 1, 5f, 5f, 1f),
-                        evenOdd = true,
-                    ),
-                    paint,
-                )
+                items +=
+                    StyledShape(
+                        VectorShape.Path(
+                            PathShapes.roundedRect(x, y, 7f, 7f, 2f) + PathShapes.roundedRect(x + 1, y + 1, 5f, 5f, 1f),
+                            evenOdd = true,
+                        ),
+                        paint,
+                    )
                 items += StyledShape(VectorShape.Rect(x + 2, y + 2, 3f, 3f, 0.9f), paint)
             }
             EyeShape.LEAF -> {
-                items += StyledShape(
-                    VectorShape.Path(PathShapes.leaf(x, y, 7f, 7f, 3f) + PathShapes.leaf(x + 1, y + 1, 5f, 5f, 2f), evenOdd = true),
-                    paint,
-                )
+                items +=
+                    StyledShape(
+                        VectorShape.Path(PathShapes.leaf(x, y, 7f, 7f, 3f) + PathShapes.leaf(x + 1, y + 1, 5f, 5f, 2f), evenOdd = true),
+                        paint,
+                    )
                 items += StyledShape(VectorShape.Path(PathShapes.leaf(x + 2, y + 2, 3f, 3f, 1.2f)), paint)
             }
             EyeShape.CIRCLE -> {
-                items += StyledShape(
-                    VectorShape.Path(PathShapes.circle(x + 3.5f, y + 3.5f, 3.5f) + PathShapes.circle(x + 3.5f, y + 3.5f, 2.5f), evenOdd = true),
-                    paint,
-                )
+                items +=
+                    StyledShape(
+                        VectorShape.Path(
+                            PathShapes.circle(x + 3.5f, y + 3.5f, 3.5f) + PathShapes.circle(x + 3.5f, y + 3.5f, 2.5f),
+                            evenOdd = true,
+                        ),
+                        paint,
+                    )
                 items += StyledShape(VectorShape.Circle(x + 3.5f, y + 3.5f, 1.5f), paint)
             }
         }
@@ -118,6 +126,7 @@ object QrVectorBuilder {
         paint: ShapePaint,
     ) {
         val size = m.width
+
         fun drawn(x: Int, y: Int): Boolean =
             x in 0 until size && y in 0 until size && m[x, y] && !QrGeometry.isFinderModule(x, y, size) && !intersects(x, y, clear)
         for (y in 0 until size) {
@@ -136,14 +145,15 @@ object QrVectorBuilder {
                 }
                 val fx = (x + q).toFloat()
                 val fy = (y + q).toFloat()
-                items += StyledShape(
-                    when (shape) {
-                        DotShape.ROUNDED -> VectorShape.Rect(fx, fy, 1f, 1f, 0.35f)
-                        DotShape.DOTS -> VectorShape.Circle(fx + 0.5f, fy + 0.5f, 0.42f)
-                        else -> classy(fx, fy, tl = !drawn(x - 1, y) && !drawn(x, y - 1), br = !drawn(x + 1, y) && !drawn(x, y + 1))
-                    },
-                    paint,
-                )
+                items +=
+                    StyledShape(
+                        when (shape) {
+                            DotShape.ROUNDED -> VectorShape.Rect(fx, fy, 1f, 1f, 0.35f)
+                            DotShape.DOTS -> VectorShape.Circle(fx + 0.5f, fy + 0.5f, 0.42f)
+                            else -> classy(fx, fy, tl = !drawn(x - 1, y) && !drawn(x, y - 1), br = !drawn(x + 1, y) && !drawn(x, y + 1))
+                        },
+                        paint,
+                    )
                 x++
             }
         }
@@ -176,16 +186,25 @@ object QrVectorBuilder {
         val band = codeSide * FRAME_BAND_FRACTION
         val inset = q / 2f
         val bandHeight = band - inset
-        items += StyledShape(
-            VectorShape.Rect(inset, codeSide, codeSide - 2 * inset, bandHeight, bandHeight * 0.3f),
-            ShapePaint.Solid(style.foreground),
-        )
+        items +=
+            StyledShape(
+                VectorShape.Rect(inset, codeSide, codeSide - 2 * inset, bandHeight, bandHeight * 0.3f),
+                ShapePaint.Solid(style.foreground),
+            )
         val fit = (codeSide - 2 * inset) * 0.9f / (text.length * 0.6f)
         val fontSize = min(bandHeight * 0.45f, fit)
-        items += StyledShape(
-            VectorShape.Text(codeSide / 2f, codeSide + bandHeight / 2f + fontSize * 0.35f, text, fontSize, TextAnchor.MIDDLE, bold = true),
-            ShapePaint.Solid(style.background),
-        )
+        items +=
+            StyledShape(
+                VectorShape.Text(
+                    codeSide / 2f,
+                    codeSide + bandHeight / 2f + fontSize * 0.35f,
+                    text,
+                    fontSize,
+                    TextAnchor.MIDDLE,
+                    bold = true,
+                ),
+                ShapePaint.Solid(style.background),
+            )
     }
 }
 
@@ -206,11 +225,12 @@ object BarcodeVectorBuilder {
         format: CodeFormat? = null,
         gradientAngleDegrees: Float = 0f,
     ): QrVectorImage {
-        val linear = when (format) {
-            null -> isLinear(matrix)
-            CodeFormat.PDF_417, CodeFormat.DATA_MATRIX, CodeFormat.AZTEC, CodeFormat.QR_CODE -> false
-            else -> true
-        }
+        val linear =
+            when (format) {
+                null -> isLinear(matrix)
+                CodeFormat.PDF_417, CodeFormat.DATA_MATRIX, CodeFormat.AZTEC, CodeFormat.QR_CODE -> false
+                else -> true
+            }
         val paint = paintOf(style, gradientAngleDegrees)
         return if (linear) build1d(matrix, style, digitsText, paint) else build2d(matrix, style, paint)
     }
@@ -242,10 +262,11 @@ object BarcodeVectorBuilder {
         if (text != null) {
             val fit = width * 0.9f / (text.length * 0.62f)
             val fontSize = min(textZone * 0.7f, fit)
-            items += StyledShape(
-                VectorShape.Text(width / 2f, pad + barHeight + textZone * 0.8f, text, fontSize, TextAnchor.MIDDLE),
-                ShapePaint.Solid(style.foreground),
-            )
+            items +=
+                StyledShape(
+                    VectorShape.Text(width / 2f, pad + barHeight + textZone * 0.8f, text, fontSize, TextAnchor.MIDDLE),
+                    ShapePaint.Solid(style.foreground),
+                )
         }
         return QrVectorImage(width, height, style.background, items)
     }

@@ -19,16 +19,17 @@ fun NavGraphBuilder.settingsGraph(navController: NavHostController) {
 
     composable<Settings> {
         SettingsRoute(
-            navigation = SettingsNavigation(
-                toTheme = { navController.navigate(ThemePicker) },
-                toLanguage = { navController.navigate(LanguagePicker) },
-                toHelp = { navController.navigate(Help) },
-                toFeedback = { navController.navigate(Feedback) },
-                toAbout = { navController.navigate(About) },
-                toExport = { navController.navigate(ExportHistory) },
-                toPrivacySummary = { navController.navigate(PrivacyPolicy) },
-                toComponentGallery = { navController.navigate(ComponentGalleryRoute) },
-            ),
+            navigation =
+                SettingsNavigation(
+                    toTheme = { navController.navigate(ThemePicker) },
+                    toLanguage = { navController.navigate(LanguagePicker) },
+                    toHelp = { navController.navigate(Help) },
+                    toFeedback = { navController.navigate(Feedback) },
+                    toAbout = { navController.navigate(About) },
+                    toExport = { navController.navigate(ExportHistory) },
+                    toPrivacySummary = { navController.navigate(PrivacyPolicy) },
+                    toComponentGallery = { navController.navigate(ComponentGalleryRoute) },
+                ),
         )
     }
     composable<ThemePicker> { ThemePickerRoute(onBack = back) }

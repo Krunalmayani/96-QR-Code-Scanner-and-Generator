@@ -3,7 +3,12 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.CodeFormat
 
 /** Axis-aligned rectangle in pixels (no Android or Compose types so it can be unit tested). */
-data class PxRect(val left: Float, val top: Float, val right: Float, val bottom: Float) {
+data class PxRect(
+    val left: Float,
+    val top: Float,
+    val right: Float,
+    val bottom: Float,
+) {
     val width: Float get() = right - left
     val height: Float get() = bottom - top
     val centerX: Float get() = (left + right) / 2f

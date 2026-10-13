@@ -128,7 +128,12 @@ private fun PasswordRow(password: String, visible: Boolean, onToggle: () -> Unit
 
 /** s26 to s28: the three states of the connect flow. They replace the normal result until dismissed. */
 @Composable
-internal fun WifiFlowContent(content: ScanContent.Wifi, state: ResultUiState, onEvent: (ResultEvent) -> Unit, modifier: Modifier = Modifier) {
+internal fun WifiFlowContent(
+    content: ScanContent.Wifi,
+    state: ResultUiState,
+    onEvent: (ResultEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     when (state.wifi.phase) {
         WifiPhase.CONNECTING -> WifiConnecting(content, modifier)
         WifiPhase.CONNECTED -> WifiConnected(content, state, modifier)

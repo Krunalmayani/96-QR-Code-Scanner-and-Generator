@@ -28,8 +28,9 @@ class SaveScanUseCase(
         return saved
     }
 
-    private fun AppSettings.withCounted(source: ScanSource) = when (source) {
-        ScanSource.CREATED -> copy(completedActions = completedActions + 1)
-        ScanSource.CAMERA, ScanSource.IMAGE -> copy(successfulScans = successfulScans + 1)
-    }
+    private fun AppSettings.withCounted(source: ScanSource) =
+        when (source) {
+            ScanSource.CREATED -> copy(completedActions = completedActions + 1)
+            ScanSource.CAMERA, ScanSource.IMAGE -> copy(successfulScans = successfulScans + 1)
+        }
 }

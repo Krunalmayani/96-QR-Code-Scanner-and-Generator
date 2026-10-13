@@ -14,8 +14,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.ExportFileName
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.ExportSelection
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.time.ZoneId
-import javax.inject.Inject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
@@ -27,9 +25,15 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.ZoneId
+import javax.inject.Inject
 
 /** A formatted export ready to be written to a file the user picks, or shared. */
-data class ExportPayload(val fileName: String, val mimeType: String, val text: String)
+data class ExportPayload(
+    val fileName: String,
+    val mimeType: String,
+    val text: String,
+)
 
 data class ExportUiState(
     val loading: Boolean = true,
@@ -44,20 +48,37 @@ data class ExportUiState(
 }
 
 sealed interface ExportEvent {
-    data class SetIncludeScanned(val on: Boolean) : ExportEvent
-    data class SetIncludeCreated(val on: Boolean) : ExportEvent
-    data class SetFavoritesOnly(val on: Boolean) : ExportEvent
-    data class SelectFormat(val format: HistoryExportFormat) : ExportEvent
+    data class SetIncludeScanned(
+        val on: Boolean,
+    ) : ExportEvent
+
+    data class SetIncludeCreated(
+        val on: Boolean,
+    ) : ExportEvent
+
+    data class SetFavoritesOnly(
+        val on: Boolean,
+    ) : ExportEvent
+
+    data class SelectFormat(
+        val format: HistoryExportFormat,
+    ) : ExportEvent
+
     data object SaveClicked : ExportEvent
+
     data object ShareClicked : ExportEvent
 }
 
 sealed interface ExportEffect {
     /** Open the system "create document" dialog for [payload], then write its text to the chosen Uri. */
-    data class ChooseSaveLocation(val payload: ExportPayload) : ExportEffect
+    data class ChooseSaveLocation(
+        val payload: ExportPayload,
+    ) : ExportEffect
 
     /** Write [payload] to the cache and open the share sheet. */
-    data class Share(val payload: ExportPayload) : ExportEffect
+    data class Share(
+        val payload: ExportPayload,
+    ) : ExportEffect
 
     data object Failed : ExportEffect
 }
@@ -70,7 +91,6 @@ class ExportHistoryViewModel internal constructor(
     private val clock: () -> Long,
     private val zone: ZoneId,
 ) : ViewModel() {
-
     @Inject
     constructor(
         historyRepository: HistoryRepository,
@@ -132,11 +152,12 @@ class ExportHistoryViewModel internal constructor(
             try {
                 val rows = current.selection.select(records)
                 val text = withContext(workDispatcher) { HistoryExportFormatter.format(rows, current.format) }
-                val payload = ExportPayload(
-                    fileName = ExportFileName.build(current.format.extension, clock(), zone),
-                    mimeType = current.format.mimeType,
-                    text = text,
-                )
+                val payload =
+                    ExportPayload(
+                        fileName = ExportFileName.build(current.format.extension, clock(), zone),
+                        mimeType = current.format.mimeType,
+                        text = text,
+                    )
                 analytics.log(Events.HISTORY_EXPORT, mapOf(Params.FORMAT to current.format.name))
                 effectChannel.send(if (share) ExportEffect.Share(payload) else ExportEffect.ChooseSaveLocation(payload))
             } catch (e: CancellationException) {

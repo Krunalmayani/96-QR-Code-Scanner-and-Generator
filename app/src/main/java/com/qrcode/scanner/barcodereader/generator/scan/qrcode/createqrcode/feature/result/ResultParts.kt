@@ -98,11 +98,12 @@ internal fun TitledBanner(
 ) {
     val c = AppTheme.colors
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(c.containerOf(tone))
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(c.containerOf(tone))
+                .padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Icon(icon, contentDescription = null, tint = c.contentOf(tone), modifier = Modifier.size(24.dp))
@@ -115,11 +116,12 @@ internal fun TitledBanner(
                     style = AppTheme.type.bodySmall,
                     color = c.contentOf(tone),
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier
-                        .padding(top = 4.dp)
-                        .heightIn(min = 48.dp)
-                        .clickable(role = Role.Button, onClick = onLinkClick)
-                        .padding(vertical = 12.dp),
+                    modifier =
+                        Modifier
+                            .padding(top = 4.dp)
+                            .heightIn(min = 48.dp)
+                            .clickable(role = Role.Button, onClick = onLinkClick)
+                            .padding(vertical = 12.dp),
                 )
             }
         }
@@ -131,11 +133,12 @@ internal fun TitledBanner(
 internal fun NoteBox(text: String, modifier: Modifier = Modifier) {
     val c = AppTheme.colors
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(20.dp))
-            .background(c.surfaceVariant)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20.dp))
+                .background(c.surfaceVariant)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Icon(AppIcons.Info, contentDescription = null, tint = c.inkSecondary, modifier = Modifier.size(24.dp))
@@ -148,10 +151,11 @@ internal fun NoteBox(text: String, modifier: Modifier = Modifier) {
 internal fun MessageBubble(text: String, modifier: Modifier = Modifier) {
     val c = AppTheme.colors
     Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp, bottomEnd = 20.dp, bottomStart = 6.dp))
-            .background(c.primaryContainer)
-            .padding(horizontal = 16.dp, vertical = 14.dp),
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp, bottomEnd = 20.dp, bottomStart = 6.dp))
+                .background(c.primaryContainer)
+                .padding(horizontal = 16.dp, vertical = 14.dp),
     ) {
         SelectionContainer {
             Text(text, style = AppTheme.type.body.copy(fontSize = 15.sp, lineHeight = 22.sp), color = c.onPrimaryContainer)
@@ -165,12 +169,13 @@ internal fun MapPlaceholder(modifier: Modifier = Modifier) {
     val c = AppTheme.colors
     val description = stringResource(R.string.result_location_map_description)
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(220.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(c.surfaceVariant)
-            .semantics { contentDescription = description },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(220.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(c.surfaceVariant)
+                .semantics { contentDescription = description },
     ) {
         Canvas(Modifier.fillMaxSize()) {
             val corner = CornerRadius(12.dp.toPx())
@@ -205,11 +210,12 @@ internal fun HexView(lines: List<String>, modifier: Modifier = Modifier) {
     val c = AppTheme.colors
     SelectionContainer {
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(14.dp))
-                .background(c.surfaceVariant)
-                .padding(14.dp),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(c.surfaceVariant)
+                    .padding(14.dp),
         ) {
             lines.forEach { Text(it, style = AppTheme.type.mono, color = c.ink) }
         }

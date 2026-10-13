@@ -49,10 +49,11 @@ fun rememberCameraPermissionState(): CameraPermissionState {
     var requested by rememberSaveable { mutableStateOf(false) }
     var rationaleDismissed by rememberSaveable { mutableStateOf(false) }
     var status by remember { mutableStateOf(readCameraStatus(context, requested)) }
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
-        requested = true
-        status = readCameraStatus(context, true)
-    }
+    val launcher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
+            requested = true
+            status = readCameraStatus(context, true)
+        }
     return CameraPermissionState(
         status = status,
         rationaleVisible = status == CameraPermissionStatus.NOT_ASKED && !rationaleDismissed,
@@ -67,15 +68,17 @@ fun rememberCameraPermissionState(): CameraPermissionState {
 private fun readCameraStatus(context: Context, requestedThisSession: Boolean): CameraPermissionStatus {
     val granted = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
     val activity = context.findActivity()
-    val showRationale = activity != null &&
-        ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)
+    val showRationale =
+        activity != null &&
+            ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)
     return resolveCameraPermission(granted, showRationale, requestedThisSession)
 }
 
 /** Opens this app's page in the system settings (user tap only). */
 internal fun openAppSettings(context: Context) {
-    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
-        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    val intent =
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     try {
         context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
@@ -83,8 +86,9 @@ internal fun openAppSettings(context: Context) {
     }
 }
 
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
+private tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }

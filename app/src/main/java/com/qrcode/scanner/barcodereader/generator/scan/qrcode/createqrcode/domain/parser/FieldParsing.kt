@@ -104,7 +104,11 @@ internal object FieldParsing {
     }
 
     /** One `NAME;PARAM=V;FLAG:value` line from a vCard or iCalendar body. */
-    class ContentLine(val name: String, val params: Map<String, String>, val value: String)
+    class ContentLine(
+        val name: String,
+        val params: Map<String, String>,
+        val value: String,
+    )
 
     fun parseContentLine(line: String): ContentLine? {
         var inQuotes = false
@@ -207,6 +211,7 @@ internal object FieldParsing {
     private fun decodeEscapes(s: String, marker: Char, plusAsSpace: Boolean, charset: Charset): String {
         val out = StringBuilder()
         val pending = ByteArrayOutputStream()
+
         fun flush() {
             if (pending.size() > 0) {
                 out.append(String(pending.toByteArray(), charset))

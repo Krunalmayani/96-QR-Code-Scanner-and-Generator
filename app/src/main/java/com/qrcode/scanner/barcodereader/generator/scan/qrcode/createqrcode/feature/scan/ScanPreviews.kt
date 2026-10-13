@@ -29,22 +29,25 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 private const val PreviewWidth = 360
 private const val PreviewHeight = 800
 
-private val websiteRecord = ScanRecord(
-    id = 1,
-    content = ScanContent.Website(
-        rawValue = "https://www.brewhouse-coffee.com/menu?table=12",
-        format = CodeFormat.QR_CODE,
-        url = "https://www.brewhouse-coffee.com/menu?table=12",
-    ),
-    createdAt = 0L,
-    source = ScanSource.CAMERA,
-)
+private val websiteRecord =
+    ScanRecord(
+        id = 1,
+        content =
+            ScanContent.Website(
+                rawValue = "https://www.brewhouse-coffee.com/menu?table=12",
+                format = CodeFormat.QR_CODE,
+                url = "https://www.brewhouse-coffee.com/menu?table=12",
+            ),
+        createdAt = 0L,
+        source = ScanSource.CAMERA,
+    )
 
-private val batchRows = listOf(
-    BatchRow(3, "5901234123457", ContentType.PRODUCT, CodeFormat.EAN_13),
-    BatchRow(2, "lumen.studio/portfolio", ContentType.WEBSITE, CodeFormat.QR_CODE),
-    BatchRow(1, "Ship v2.4 on Friday, update the checklist", ContentType.TEXT, CodeFormat.QR_CODE),
-)
+private val batchRows =
+    listOf(
+        BatchRow(3, "5901234123457", ContentType.PRODUCT, CodeFormat.EAN_13),
+        BatchRow(2, "lumen.studio/portfolio", ContentType.WEBSITE, CodeFormat.QR_CODE),
+        BatchRow(1, "Ship v2.4 on Friday, update the checklist", ContentType.TEXT, CodeFormat.QR_CODE),
+    )
 
 @Composable
 private fun FakeCamera() {

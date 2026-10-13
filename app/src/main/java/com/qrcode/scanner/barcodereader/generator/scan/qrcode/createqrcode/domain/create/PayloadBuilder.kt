@@ -11,20 +11,21 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 object PayloadBuilder {
     fun formatOf(spec: CreateSpec): CodeFormat = if (spec is CreateSpec.Barcode) spec.format else CodeFormat.QR_CODE
 
-    fun build(spec: CreateSpec): String = when (spec) {
-        is CreateSpec.Website -> normalizeUrl(spec.url)
-        is CreateSpec.Text -> spec.text
-        is CreateSpec.Contact -> contact(spec)
-        is CreateSpec.Wifi -> wifi(spec)
-        is CreateSpec.Email -> email(spec)
-        is CreateSpec.Phone -> "tel:" + normalizePhone(spec.number)
-        is CreateSpec.Sms -> sms(spec)
-        is CreateSpec.Location -> location(spec)
-        is CreateSpec.Event -> event(spec)
-        is CreateSpec.Social -> socialUrl(spec.platform, spec.handle)
-        is CreateSpec.AppStore -> normalizeUrl(spec.url)
-        is CreateSpec.Barcode -> BarcodeCheckDigit.normalize(spec.format, spec.data)
-    }
+    fun build(spec: CreateSpec): String =
+        when (spec) {
+            is CreateSpec.Website -> normalizeUrl(spec.url)
+            is CreateSpec.Text -> spec.text
+            is CreateSpec.Contact -> contact(spec)
+            is CreateSpec.Wifi -> wifi(spec)
+            is CreateSpec.Email -> email(spec)
+            is CreateSpec.Phone -> "tel:" + normalizePhone(spec.number)
+            is CreateSpec.Sms -> sms(spec)
+            is CreateSpec.Location -> location(spec)
+            is CreateSpec.Event -> event(spec)
+            is CreateSpec.Social -> socialUrl(spec.platform, spec.handle)
+            is CreateSpec.AppStore -> normalizeUrl(spec.url)
+            is CreateSpec.Barcode -> BarcodeCheckDigit.normalize(spec.format, spec.data)
+        }
 
     // ---- shared helpers (public: forms use them for live previews) ----
 
@@ -63,12 +64,18 @@ object PayloadBuilder {
     // ---- per type ----
 
     private fun wifi(s: CreateSpec.Wifi): String {
-        val type = when (s.security) {
-            WifiSecurity.NONE -> "nopass"
-            WifiSecurity.WEP -> "WEP"
-            WifiSecurity.WPA -> "WPA"
-        }
-        val sb = StringBuilder("WIFI:T:").append(type).append(";S:").append(escapeWifi(s.ssid)).append(';')
+        val type =
+            when (s.security) {
+                WifiSecurity.NONE -> "nopass"
+                WifiSecurity.WEP -> "WEP"
+                WifiSecurity.WPA -> "WPA"
+            }
+        val sb =
+            StringBuilder("WIFI:T:")
+                .append(type)
+                .append(";S:")
+                .append(escapeWifi(s.ssid))
+                .append(';')
         if (s.security != WifiSecurity.NONE && s.password.isNotEmpty()) {
             sb.append("P:").append(escapeWifi(s.password)).append(';')
         }

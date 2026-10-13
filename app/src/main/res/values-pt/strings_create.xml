@@ -248,7 +248,7 @@
     <string name="create_eye_circle">Círculo</string>
     <string name="create_eye_leaf">Folha</string>
     <string name="create_extras_logo_title">Logo central</string>
-    <string name="create_extras_logo_hint">Adicione sua própria imagem. Tamanho automático de 18%.</string>
+    <string name="create_extras_logo_hint" formatted="false">Adicione sua própria imagem. Tamanho automático de 18%.</string>
     <string name="create_extras_logo_add">Adicionar</string>
     <string name="create_extras_logo_remove">Remover</string>
     <string name="create_extras_frame">Rótulo da moldura</string>

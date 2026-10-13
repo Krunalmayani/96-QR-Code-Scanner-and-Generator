@@ -30,29 +30,45 @@ data class HistoryUiState(
 }
 
 sealed interface HistoryEvent {
-    data class SelectTab(val tab: HistoryTab) : HistoryEvent
+    data class SelectTab(
+        val tab: HistoryTab,
+    ) : HistoryEvent
 
-    data class SelectChip(val chip: HistoryChip) : HistoryEvent
+    data class SelectChip(
+        val chip: HistoryChip,
+    ) : HistoryEvent
 
     data object OpenSearch : HistoryEvent
 
     data object CloseSearch : HistoryEvent
 
-    data class QueryChanged(val query: String) : HistoryEvent
+    data class QueryChanged(
+        val query: String,
+    ) : HistoryEvent
 
-    data class SelectScope(val scope: SearchScope) : HistoryEvent
+    data class SelectScope(
+        val scope: SearchScope,
+    ) : HistoryEvent
 
     /** Empty-state button: drop the favorites/type filter (or the search scope) and show everything. */
     data object BrowseAll : HistoryEvent
 
     /** Row tap: opens the record, or toggles it while selecting. */
-    data class RowClicked(val id: Long) : HistoryEvent
+    data class RowClicked(
+        val id: Long,
+    ) : HistoryEvent
 
-    data class RowLongClicked(val id: Long) : HistoryEvent
+    data class RowLongClicked(
+        val id: Long,
+    ) : HistoryEvent
 
-    data class StarClicked(val id: Long) : HistoryEvent
+    data class StarClicked(
+        val id: Long,
+    ) : HistoryEvent
 
-    data class SwipeDeleted(val id: Long) : HistoryEvent
+    data class SwipeDeleted(
+        val id: Long,
+    ) : HistoryEvent
 
     data object BeginSelection : HistoryEvent
 
@@ -68,17 +84,27 @@ sealed interface HistoryEvent {
 
     data object ExportSelected : HistoryEvent
 
-    data class UndoDelete(val records: List<ScanRecord>) : HistoryEvent
+    data class UndoDelete(
+        val records: List<ScanRecord>,
+    ) : HistoryEvent
 }
 
 /** One-shot effects, delivered once through a Channel. */
 sealed interface HistoryEffect {
-    data class OpenRecord(val id: Long) : HistoryEffect
+    data class OpenRecord(
+        val id: Long,
+    ) : HistoryEffect
 
     /** Rows were deleted: show the 5 s Undo snackbar and send [HistoryEvent.UndoDelete] with [records] on tap. */
-    data class RecordsDeleted(val records: List<ScanRecord>) : HistoryEffect
+    data class RecordsDeleted(
+        val records: List<ScanRecord>,
+    ) : HistoryEffect
 
-    data class ShareText(val text: String) : HistoryEffect
+    data class ShareText(
+        val text: String,
+    ) : HistoryEffect
 
-    data class ExportCsv(val csv: String) : HistoryEffect
+    data class ExportCsv(
+        val csv: String,
+    ) : HistoryEffect
 }

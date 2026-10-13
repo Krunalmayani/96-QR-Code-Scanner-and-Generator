@@ -43,15 +43,16 @@ private const val HTTPS_PREFIX = "https://"
 private val PreviewMaxWidth = 280.dp
 
 @StringRes
-private fun SocialPlatform.labelRes(): Int = when (this) {
-    SocialPlatform.INSTAGRAM -> R.string.create_social_instagram
-    SocialPlatform.FACEBOOK -> R.string.create_social_facebook
-    SocialPlatform.X -> R.string.create_social_x
-    SocialPlatform.LINKEDIN -> R.string.create_social_linkedin
-    SocialPlatform.YOUTUBE -> R.string.create_social_youtube
-    SocialPlatform.WHATSAPP -> R.string.create_social_whatsapp
-    SocialPlatform.TELEGRAM -> R.string.create_social_telegram
-}
+private fun SocialPlatform.labelRes(): Int =
+    when (this) {
+        SocialPlatform.INSTAGRAM -> R.string.create_social_instagram
+        SocialPlatform.FACEBOOK -> R.string.create_social_facebook
+        SocialPlatform.X -> R.string.create_social_x
+        SocialPlatform.LINKEDIN -> R.string.create_social_linkedin
+        SocialPlatform.YOUTUBE -> R.string.create_social_youtube
+        SocialPlatform.WHATSAPP -> R.string.create_social_whatsapp
+        SocialPlatform.TELEGRAM -> R.string.create_social_telegram
+    }
 
 /** Social profile (design s38): platform chips, handle, and the live "The code will open ..." line. */
 @OptIn(ExperimentalLayoutApi::class)
@@ -109,23 +110,25 @@ internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: 
 }
 
 @StringRes
-private fun CreateType.valueLabelRes(): Int = when (this) {
-    CreateType.BARCODE_EAN_13 -> R.string.create_field_value_ean13
-    CreateType.BARCODE_EAN_8 -> R.string.create_field_value_ean8
-    CreateType.BARCODE_UPC_A -> R.string.create_field_value_upca
-    else -> R.string.create_field_value
-}
+private fun CreateType.valueLabelRes(): Int =
+    when (this) {
+        CreateType.BARCODE_EAN_13 -> R.string.create_field_value_ean13
+        CreateType.BARCODE_EAN_8 -> R.string.create_field_value_ean8
+        CreateType.BARCODE_UPC_A -> R.string.create_field_value_upca
+        else -> R.string.create_field_value
+    }
 
 @StringRes
-private fun CreateType.helperRes(): Int = when (this) {
-    CreateType.BARCODE_EAN_13 -> R.string.create_helper_ean13
-    CreateType.BARCODE_EAN_8 -> R.string.create_helper_ean8
-    CreateType.BARCODE_UPC_A -> R.string.create_helper_upca
-    CreateType.BARCODE_CODE_128 -> R.string.create_helper_code128
-    CreateType.BARCODE_CODE_39 -> R.string.create_helper_code39
-    CreateType.BARCODE_ITF -> R.string.create_helper_itf
-    else -> R.string.create_helper_2d
-}
+private fun CreateType.helperRes(): Int =
+    when (this) {
+        CreateType.BARCODE_EAN_13 -> R.string.create_helper_ean13
+        CreateType.BARCODE_EAN_8 -> R.string.create_helper_ean8
+        CreateType.BARCODE_UPC_A -> R.string.create_helper_upca
+        CreateType.BARCODE_CODE_128 -> R.string.create_helper_code128
+        CreateType.BARCODE_CODE_39 -> R.string.create_helper_code39
+        CreateType.BARCODE_ITF -> R.string.create_helper_itf
+        else -> R.string.create_helper_2d
+    }
 
 /** Custom data (design s39): QR / Barcode switch, symbology chips, the value with live validation and a preview. */
 @OptIn(ExperimentalLayoutApi::class)
@@ -191,32 +194,35 @@ internal fun BarcodeFields(
     }
 }
 
-private val SingleLineFormats = setOf(
-    CodeFormat.EAN_13,
-    CodeFormat.EAN_8,
-    CodeFormat.UPC_A,
-    CodeFormat.ITF,
-    CodeFormat.CODE_39,
-    CodeFormat.CODE_128,
-)
+private val SingleLineFormats =
+    setOf(
+        CodeFormat.EAN_13,
+        CodeFormat.EAN_8,
+        CodeFormat.UPC_A,
+        CodeFormat.ITF,
+        CodeFormat.CODE_39,
+        CodeFormat.CODE_128,
+    )
 
 @Composable
 private fun BarcodeStatusLine(status: BarcodeStatus) {
     when (status) {
         BarcodeStatus.Empty, is BarcodeStatus.Invalid -> Unit
-        is BarcodeStatus.Incomplete -> Text(
-            stringResource(R.string.create_barcode_status_incomplete, status.count, status.needed),
-            style = AppTheme.type.caption,
-            color = AppTheme.colors.inkSecondary,
-            modifier = Modifier.padding(horizontal = 16.dp),
-        )
+        is BarcodeStatus.Incomplete ->
+            Text(
+                stringResource(R.string.create_barcode_status_incomplete, status.count, status.needed),
+                style = AppTheme.type.caption,
+                color = AppTheme.colors.inkSecondary,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
         is BarcodeStatus.CheckDigitWillBeAdded -> ValidLine(stringResource(R.string.create_barcode_status_will_add, status.digit))
-        is BarcodeStatus.Complete -> ValidLine(
-            if (status.checkDigit != null) {
-                stringResource(R.string.create_barcode_status_valid_check, status.length)
-            } else {
-                stringResource(R.string.create_barcode_status_valid, status.length)
-            },
-        )
+        is BarcodeStatus.Complete ->
+            ValidLine(
+                if (status.checkDigit != null) {
+                    stringResource(R.string.create_barcode_status_valid_check, status.length)
+                } else {
+                    stringResource(R.string.create_barcode_status_valid, status.length)
+                },
+            )
     }
 }

@@ -8,24 +8,26 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import kotlinx.serialization.json.Json
 
 /** Json used for parsedJson and styleJson. Lenient on read so old rows survive model changes. */
-internal val ScanJson: Json = Json {
-    ignoreUnknownKeys = true
-    encodeDefaults = true
-}
+internal val ScanJson: Json =
+    Json {
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+    }
 
-fun ScanRecord.toEntity(): ScanEntity = ScanEntity(
-    id = if (id > 0) id else 0,
-    rawValue = rawValue,
-    format = format.name,
-    type = type.name,
-    displayTitle = displayTitle,
-    parsedJson = encodeContent(content),
-    createdAt = createdAt,
-    source = source.name,
-    isFavorite = isFavorite,
-    note = note,
-    styleJson = style?.let { encodeStyle(it) },
-)
+fun ScanRecord.toEntity(): ScanEntity =
+    ScanEntity(
+        id = if (id > 0) id else 0,
+        rawValue = rawValue,
+        format = format.name,
+        type = type.name,
+        displayTitle = displayTitle,
+        parsedJson = encodeContent(content),
+        createdAt = createdAt,
+        source = source.name,
+        isFavorite = isFavorite,
+        note = note,
+        styleJson = style?.let { encodeStyle(it) },
+    )
 
 /** Never throws: corrupt or unknown JSON falls back to [ScanContent.Unknown] / no style. */
 fun ScanEntity.toDomain(): ScanRecord {

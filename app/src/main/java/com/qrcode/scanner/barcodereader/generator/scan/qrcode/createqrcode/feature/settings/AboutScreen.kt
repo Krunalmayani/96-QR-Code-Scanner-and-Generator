@@ -46,26 +46,28 @@ fun AboutRoute(onBack: () -> Unit) {
     val context = LocalContext.current
     val snackbar = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+
     fun tell(message: String) {
         scope.launch { snackbar.showSnackbar(message) }
     }
     AboutScreen(
         versionName = BuildConfig.VERSION_NAME,
         versionCode = BuildConfig.VERSION_CODE,
-        actions = AboutActions(
-            onRate = { SettingsIntents.rateApp(context) { tell(context.getString(R.string.settings_play_unavailable)) } },
-            onShare = { shareApp(context) { tell(context.getString(R.string.settings_no_app_found)) } },
-            onLicenses = {
-                if (!SettingsIntents.openLicenses(context, context.getString(R.string.settings_about_licenses))) {
-                    tell(context.getString(R.string.settings_no_app_found))
-                }
-            },
-            onTerms = {
-                if (!SettingsIntents.openUrl(context, context.getString(R.string.settings_terms_url))) {
-                    tell(context.getString(R.string.settings_no_app_found))
-                }
-            },
-        ),
+        actions =
+            AboutActions(
+                onRate = { SettingsIntents.rateApp(context) { tell(context.getString(R.string.settings_play_unavailable)) } },
+                onShare = { shareApp(context) { tell(context.getString(R.string.settings_no_app_found)) } },
+                onLicenses = {
+                    if (!SettingsIntents.openLicenses(context, context.getString(R.string.settings_about_licenses))) {
+                        tell(context.getString(R.string.settings_no_app_found))
+                    }
+                },
+                onTerms = {
+                    if (!SettingsIntents.openUrl(context, context.getString(R.string.settings_terms_url))) {
+                        tell(context.getString(R.string.settings_no_app_found))
+                    }
+                },
+            ),
         onBack = onBack,
         snackbarHostState = snackbar,
     )
@@ -101,11 +103,12 @@ fun AboutScreen(
         snackbarHost = { AppSnackbarHost(snackbarHostState) },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -151,10 +154,11 @@ fun AboutScreen(
 private fun AppMark() {
     val c = AppTheme.colors
     Box(
-        modifier = Modifier
-            .size(96.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer))),
+        modifier =
+            Modifier
+                .size(96.dp)
+                .clip(RoundedCornerShape(24.dp))
+                .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer))),
         contentAlignment = Alignment.Center,
     ) {
         Icon(AppIcons.Scan, contentDescription = null, tint = c.onPrimary, modifier = Modifier.size(48.dp))
@@ -163,12 +167,14 @@ private fun AppMark() {
 
 @Preview(name = "S62_About_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S62_About_Light() = AppTheme(dark = false) {
-    AboutScreen(versionName = "2.3.0", versionCode = 230, actions = AboutActions(), onBack = {})
-}
+private fun S62_About_Light() =
+    AppTheme(dark = false) {
+        AboutScreen(versionName = "2.3.0", versionCode = 230, actions = AboutActions(), onBack = {})
+    }
 
 @Preview(name = "S62_About_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S62_About_Dark() = AppTheme(dark = true) {
-    AboutScreen(versionName = "2.3.0", versionCode = 230, actions = AboutActions(), onBack = {})
-}
+private fun S62_About_Dark() =
+    AppTheme(dark = true) {
+        AboutScreen(versionName = "2.3.0", versionCode = 230, actions = AboutActions(), onBack = {})
+    }

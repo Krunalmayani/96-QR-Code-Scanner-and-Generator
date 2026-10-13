@@ -54,12 +54,13 @@ class ScanBatchTest {
 
     @Test
     fun `distinctCodes keeps the first of each payload and format`() {
-        val codes = listOf(
-            DetectedCode("a", CodeFormat.QR_CODE),
-            DetectedCode("b", CodeFormat.QR_CODE),
-            DetectedCode("a", CodeFormat.QR_CODE, PxRect(0f, 0f, 1f, 1f)),
-            DetectedCode("a", CodeFormat.AZTEC),
-        )
+        val codes =
+            listOf(
+                DetectedCode("a", CodeFormat.QR_CODE),
+                DetectedCode("b", CodeFormat.QR_CODE),
+                DetectedCode("a", CodeFormat.QR_CODE, PxRect(0f, 0f, 1f, 1f)),
+                DetectedCode("a", CodeFormat.AZTEC),
+            )
         assertEquals(
             listOf("a" to CodeFormat.QR_CODE, "b" to CodeFormat.QR_CODE, "a" to CodeFormat.AZTEC),
             codes.distinctCodes().map { it.rawValue to it.format },

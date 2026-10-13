@@ -25,11 +25,15 @@ enum class SocialPlatform {
 sealed interface CreateSpec {
     val type: CreateType
 
-    data class Website(val url: String = "") : CreateSpec {
+    data class Website(
+        val url: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.WEBSITE
     }
 
-    data class Text(val text: String = "") : CreateSpec {
+    data class Text(
+        val text: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.TEXT
     }
 
@@ -55,20 +59,33 @@ sealed interface CreateSpec {
         override val type: CreateType get() = CreateType.WIFI
     }
 
-    data class Email(val to: String = "", val subject: String = "", val body: String = "") : CreateSpec {
+    data class Email(
+        val to: String = "",
+        val subject: String = "",
+        val body: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.EMAIL
     }
 
-    data class Phone(val number: String = "") : CreateSpec {
+    data class Phone(
+        val number: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.PHONE
     }
 
-    data class Sms(val number: String = "", val message: String = "") : CreateSpec {
+    data class Sms(
+        val number: String = "",
+        val message: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.SMS
     }
 
     /** [latitude] and [longitude] are decimal degrees as typed (dot or comma separator). */
-    data class Location(val latitude: String = "", val longitude: String = "", val label: String = "") : CreateSpec {
+    data class Location(
+        val latitude: String = "",
+        val longitude: String = "",
+        val label: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.LOCATION
     }
 
@@ -88,16 +105,24 @@ sealed interface CreateSpec {
     }
 
     /** [handle] is the username (a leading @ is ignored) or, for WhatsApp, a phone number. */
-    data class Social(val platform: SocialPlatform = SocialPlatform.INSTAGRAM, val handle: String = "") : CreateSpec {
+    data class Social(
+        val platform: SocialPlatform = SocialPlatform.INSTAGRAM,
+        val handle: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.SOCIAL
     }
 
-    data class AppStore(val url: String = "") : CreateSpec {
+    data class AppStore(
+        val url: String = "",
+    ) : CreateSpec {
         override val type: CreateType get() = CreateType.APP_STORE
     }
 
     /** [type] must be one of the `BARCODE_*` [CreateType]s. */
-    data class Barcode(override val type: CreateType, val data: String = "") : CreateSpec {
+    data class Barcode(
+        override val type: CreateType,
+        val data: String = "",
+    ) : CreateSpec {
         init {
             require(type.isBarcode) { "Barcode spec needs a BARCODE_* type, got $type" }
         }
@@ -107,19 +132,20 @@ sealed interface CreateSpec {
 
     companion object {
         /** An empty form for [type] (initial state of a Create form). */
-        fun blank(type: CreateType): CreateSpec = when (type) {
-            CreateType.WEBSITE -> Website()
-            CreateType.TEXT -> Text()
-            CreateType.CONTACT -> Contact()
-            CreateType.WIFI -> Wifi()
-            CreateType.EMAIL -> Email()
-            CreateType.PHONE -> Phone()
-            CreateType.SMS -> Sms()
-            CreateType.LOCATION -> Location()
-            CreateType.EVENT -> Event()
-            CreateType.SOCIAL -> Social()
-            CreateType.APP_STORE -> AppStore()
-            else -> Barcode(type)
-        }
+        fun blank(type: CreateType): CreateSpec =
+            when (type) {
+                CreateType.WEBSITE -> Website()
+                CreateType.TEXT -> Text()
+                CreateType.CONTACT -> Contact()
+                CreateType.WIFI -> Wifi()
+                CreateType.EMAIL -> Email()
+                CreateType.PHONE -> Phone()
+                CreateType.SMS -> Sms()
+                CreateType.LOCATION -> Location()
+                CreateType.EVENT -> Event()
+                CreateType.SOCIAL -> Social()
+                CreateType.APP_STORE -> AppStore()
+                else -> Barcode(type)
+            }
     }
 }

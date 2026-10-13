@@ -103,10 +103,11 @@ private fun RationaleDialogBody(
 ) {
     val c = AppTheme.colors
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(c.surface, AppTheme.shapes.dialog)
-            .padding(24.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .background(c.surface, AppTheme.shapes.dialog)
+                .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(

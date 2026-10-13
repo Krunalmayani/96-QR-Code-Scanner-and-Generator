@@ -93,9 +93,12 @@ internal fun formatProductSiteOrder(order: List<ProductSite>): String =
  * missing from the stored value is appended in enum order, so the result always holds all sites exactly once.
  */
 internal fun parseProductSiteOrder(raw: String?): List<ProductSite> {
-    val stored = raw.orEmpty().split(',')
-        .mapNotNull { name -> ProductSite.values().firstOrNull { it.name == name.trim() } }
-        .distinct()
+    val stored =
+        raw
+            .orEmpty()
+            .split(',')
+            .mapNotNull { name -> ProductSite.values().firstOrNull { it.name == name.trim() } }
+            .distinct()
     return stored + ProductSite.values().filter { it !in stored }
 }
 

@@ -9,13 +9,14 @@ import org.junit.jupiter.api.Test
 class HistoryListBuilderTest {
     private fun rows(count: Int, from: Long = 1): List<ScanRecord> = (0 until count).map { Fixtures.record(id = from + it) }
 
-    private fun kinds(items: List<HistoryListItem>): String = items.joinToString("") {
-        when (it) {
-            is HistoryListItem.Header -> "H"
-            is HistoryListItem.Row -> "r"
-            is HistoryListItem.Ad -> "A"
+    private fun kinds(items: List<HistoryListItem>): String =
+        items.joinToString("") {
+            when (it) {
+                is HistoryListItem.Header -> "H"
+                is HistoryListItem.Row -> "r"
+                is HistoryListItem.Ad -> "A"
+            }
         }
-    }
 
     @Test
     fun `empty groups give an empty list`() {
@@ -41,9 +42,10 @@ class HistoryListBuilderTest {
 
     @Test
     fun `ads count records across groups and have distinct keys`() {
-        val items = HistoryListBuilder.build(
-            listOf(DayGroup(DayLabel.Today, rows(5)), DayGroup(DayLabel.Yesterday, rows(12, 100))),
-        )
+        val items =
+            HistoryListBuilder.build(
+                listOf(DayGroup(DayLabel.Today, rows(5)), DayGroup(DayLabel.Yesterday, rows(12, 100))),
+            )
         assertEquals("H" + "r".repeat(5) + "H" + "r".repeat(3) + "A" + "r".repeat(8) + "A" + "r", kinds(items))
         val keys = items.map { it.key }
         assertEquals(keys.size, keys.toSet().size)

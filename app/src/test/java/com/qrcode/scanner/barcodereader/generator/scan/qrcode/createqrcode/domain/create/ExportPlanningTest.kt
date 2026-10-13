@@ -71,7 +71,17 @@ class ExportPlanningTest {
 
     @Test fun fileNameUsesTheOffset() {
         val millis = utcMillis(2026, 12, 31, 23, 30, 0)
-        assertEquals("qr-text-20270101-050000.png", ExportNaming.fileName(true, "Text", millis, ExportFormat.PNG, utcOffsetMillis = 5 * 3_600_000 + 1_800_000))
+        assertEquals(
+            "qr-text-20270101-050000.png",
+            ExportNaming.fileName(
+                true,
+                "Text",
+                millis,
+                ExportFormat.PNG,
+                utcOffsetMillis =
+                    5 * 3_600_000 + 1_800_000,
+            ),
+        )
     }
 
     @Test fun slugIsSafeForFileNames() {

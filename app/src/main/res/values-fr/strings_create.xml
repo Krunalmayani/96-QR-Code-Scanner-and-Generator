@@ -248,7 +248,7 @@
     <string name="create_eye_circle">Cercle</string>
     <string name="create_eye_leaf">Feuille</string>
     <string name="create_extras_logo_title">Logo central</string>
-    <string name="create_extras_logo_hint">Ajoutez votre propre image. Taille automatique à 18 %.</string>
+    <string name="create_extras_logo_hint" formatted="false">Ajoutez votre propre image. Taille automatique à 18 %.</string>
     <string name="create_extras_logo_add">Ajouter</string>
     <string name="create_extras_logo_remove">Retirer</string>
     <string name="create_extras_frame">Libellé du cadre</string>

@@ -14,7 +14,8 @@ import org.junit.jupiter.api.extension.ExtensionContext
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainDispatcherExtension(
     val dispatcher: TestDispatcher = UnconfinedTestDispatcher(),
-) : BeforeEachCallback, AfterEachCallback {
+) : BeforeEachCallback,
+    AfterEachCallback {
     override fun beforeEach(context: ExtensionContext?) = Dispatchers.setMain(dispatcher)
 
     override fun afterEach(context: ExtensionContext?) = Dispatchers.resetMain()

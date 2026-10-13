@@ -10,7 +10,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 enum class ResultPhase { LOADING, READY, NOT_FOUND }
 
 /** One entry of the "Search on" list (s30): the site and the URL opened in a Custom Tab. */
-data class ProductSiteLink(val site: ProductSite, val url: String)
+data class ProductSiteLink(
+    val site: ProductSite,
+    val url: String,
+)
 
 /** State of the product search view (s30) and its offline variant (s70). */
 data class ProductUiState(
@@ -55,18 +58,26 @@ sealed interface ResultEvent {
 
     data object FavoriteClicked : ResultEvent
 
-    data class DialClicked(val number: String) : ResultEvent
+    data class DialClicked(
+        val number: String,
+    ) : ResultEvent
 
-    data class ComposeEmailClicked(val address: String) : ResultEvent
+    data class ComposeEmailClicked(
+        val address: String,
+    ) : ResultEvent
 
-    data class MessageClicked(val number: String) : ResultEvent
+    data class MessageClicked(
+        val number: String,
+    ) : ResultEvent
 
     /** "Add contact" for Phone and Email results. */
     data object AddToContactsClicked : ResultEvent
 
     data object DirectionsClicked : ResultEvent
 
-    data class OpenProductSite(val site: ProductSite) : ResultEvent
+    data class OpenProductSite(
+        val site: ProductSite,
+    ) : ResultEvent
 
     data object ProductSearchOpened : ResultEvent
 
@@ -74,7 +85,9 @@ sealed interface ResultEvent {
 
     data object ProductRetry : ResultEvent
 
-    data class NoteChanged(val text: String) : ResultEvent
+    data class NoteChanged(
+        val text: String,
+    ) : ResultEvent
 
     data object NoteCommit : ResultEvent
 
@@ -114,21 +127,34 @@ sealed interface ResultEvent {
 
     data object LocationRationaleDismissed : ResultEvent
 
-    data class LocationPermissionResult(val granted: Boolean) : ResultEvent
+    data class LocationPermissionResult(
+        val granted: Boolean,
+    ) : ResultEvent
 }
 
 /** One-shot instructions for the UI layer. The ViewModel never touches Android APIs. */
 sealed interface ResultEffect {
-    data class CopyText(val text: String, val sensitive: Boolean = false) : ResultEffect
+    data class CopyText(
+        val text: String,
+        val sensitive: Boolean = false,
+    ) : ResultEffect
 
-    data class ShareText(val text: String) : ResultEffect
+    data class ShareText(
+        val text: String,
+    ) : ResultEffect
 
     /** Open [url] (http or https only) in a Custom Tab. */
-    data class OpenUrl(val url: String) : ResultEffect
+    data class OpenUrl(
+        val url: String,
+    ) : ResultEffect
 
-    data class Launch(val action: ExternalAction) : ResultEffect
+    data class Launch(
+        val action: ExternalAction,
+    ) : ResultEffect
 
-    data class ShowMessage(val message: ResultMessage) : ResultEffect
+    data class ShowMessage(
+        val message: ResultMessage,
+    ) : ResultEffect
 
     data object RequestLocationPermission : ResultEffect
 
@@ -138,5 +164,7 @@ sealed interface ResultEffect {
     data object NavigateToScan : ResultEffect
 
     /** Open the create feature's Generated screen (style editor and image sharing) for [recordId]. */
-    data class OpenGenerated(val recordId: Long) : ResultEffect
+    data class OpenGenerated(
+        val recordId: Long,
+    ) : ResultEffect
 }

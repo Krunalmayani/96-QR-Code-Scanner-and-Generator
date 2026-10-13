@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class QrIllustrationTest {
-
     private val last = QR_ILLUSTRATION_GRID - 1
 
     @Test

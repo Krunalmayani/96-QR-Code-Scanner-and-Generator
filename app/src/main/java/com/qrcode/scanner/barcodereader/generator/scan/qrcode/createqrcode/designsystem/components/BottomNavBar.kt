@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -57,7 +57,11 @@ fun BottomNavBar(
     val navInset = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
     Box(modifier.fillMaxWidth().height(BottomNavBarHeight + 20.dp + navInset)) {
         Column(
-            Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(BottomNavBarHeight + navInset).background(c.surface),
+            Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .height(BottomNavBarHeight + navInset)
+                .background(c.surface),
         ) {
             AppDivider()
         }
@@ -67,9 +71,28 @@ fun BottomNavBar(
             verticalAlignment = Alignment.Top,
         ) {
             NavItem(BottomTab.Create, stringResource(R.string.common_nav_create), AppIcons.Create, selected == BottomTab.Create, onSelect)
-            NavItem(BottomTab.Scan, stringResource(R.string.common_nav_scan), AppIcons.Scan, selected == BottomTab.Scan, onSelect, center = true)
-            NavItem(BottomTab.History, stringResource(R.string.common_nav_history), AppIcons.History, selected == BottomTab.History, onSelect)
-            NavItem(BottomTab.Settings, stringResource(R.string.common_nav_settings), AppIcons.Settings, selected == BottomTab.Settings, onSelect)
+            NavItem(
+                BottomTab.Scan,
+                stringResource(R.string.common_nav_scan),
+                AppIcons.Scan,
+                selected == BottomTab.Scan,
+                onSelect,
+                center = true,
+            )
+            NavItem(
+                BottomTab.History,
+                stringResource(R.string.common_nav_history),
+                AppIcons.History,
+                selected == BottomTab.History,
+                onSelect,
+            )
+            NavItem(
+                BottomTab.Settings,
+                stringResource(R.string.common_nav_settings),
+                AppIcons.Settings,
+                selected == BottomTab.Settings,
+                onSelect,
+            )
         }
     }
 }
@@ -86,35 +109,43 @@ private fun NavItem(
     val c = AppTheme.colors
     val tint = if (selected || center) c.primary else c.inkSecondary
     Column(
-        modifier = Modifier
-            .width(72.dp)
-            .padding(top = if (center) 0.dp else 28.dp)
-            .selectable(selected = selected, role = Role.Tab, onClick = { onSelect(tab) }),
+        modifier =
+            Modifier
+                .width(72.dp)
+                .padding(top = if (center) 0.dp else 28.dp)
+                .selectable(selected = selected, role = Role.Tab, onClick = { onSelect(tab) }),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
         if (center) {
             Box(
-                modifier = Modifier
-                    .size(64.dp)
-                    .shadow(10.dp, RoundedCornerShape(24.dp), ambientColor = c.primary, spotColor = c.primary)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(c.primary),
+                modifier =
+                    Modifier
+                        .size(64.dp)
+                        .shadow(10.dp, RoundedCornerShape(24.dp), ambientColor = c.primary, spotColor = c.primary)
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(c.primary),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(icon, contentDescription = null, tint = c.onPrimary, modifier = Modifier.size(32.dp))
             }
         } else {
             Box(
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .width(56.dp)
-                    .height(32.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(if (selected) c.primaryContainer else androidx.compose.ui.graphics.Color.Transparent),
+                modifier =
+                    Modifier
+                        .padding(top = 8.dp)
+                        .width(56.dp)
+                        .height(32.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(if (selected) c.primaryContainer else androidx.compose.ui.graphics.Color.Transparent),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(icon, contentDescription = null, tint = if (selected) c.onPrimaryContainer else c.inkSecondary, modifier = Modifier.size(24.dp))
+                Icon(
+                    icon,
+                    contentDescription = null,
+                    tint = if (selected) c.onPrimaryContainer else c.inkSecondary,
+                    modifier = Modifier.size(24.dp),
+                )
             }
         }
         Text(label, style = AppTheme.type.navLabel, color = tint, maxLines = 1)

@@ -57,14 +57,16 @@ fun SystemPromptsHost(
     val prompt by viewModel.prompt.collectAsStateWithLifecycle()
     when (prompt) {
         ActivePrompt.RATE -> RateSheet(onRate = viewModel::onRateConfirmed, onLater = viewModel::onRateDismissed)
-        ActivePrompt.UPDATE -> UpdateDialog(
-            onUpdate = { viewModel.onUpdateConfirmed(currentActivity) },
-            onLater = viewModel::onUpdateLater,
-        )
-        ActivePrompt.UPDATE_READY -> UpdateReadyDialog(
-            onRestart = viewModel::onUpdateReadyConfirmed,
-            onLater = viewModel::onUpdateReadyDismissed,
-        )
+        ActivePrompt.UPDATE ->
+            UpdateDialog(
+                onUpdate = { viewModel.onUpdateConfirmed(currentActivity) },
+                onLater = viewModel::onUpdateLater,
+            )
+        ActivePrompt.UPDATE_READY ->
+            UpdateReadyDialog(
+                onRestart = viewModel::onUpdateReadyConfirmed,
+                onLater = viewModel::onUpdateReadyDismissed,
+            )
         ActivePrompt.NONE -> Unit
     }
 }
@@ -75,9 +77,10 @@ private fun UpdateCheckOnStart(activity: Activity?, viewModel: SystemPromptsView
     val owner = activity as? LifecycleOwner ?: return
     val lifecycle = remember(owner) { owner.lifecycle }
     DisposableEffect(lifecycle, viewModel) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) viewModel.refreshUpdate()
-        }
+        val observer =
+            LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_START) viewModel.refreshUpdate()
+            }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }
     }
@@ -91,8 +94,9 @@ private fun NavDestination.isQuietDestination(): Boolean =
         hasRoute<Feedback>()
 
 /** Unwraps [ContextWrapper]s (Compose themes wrap the Activity) down to the hosting [Activity], or null. */
-private tailrec fun Context.findActivity(): Activity? = when (this) {
-    is Activity -> this
-    is ContextWrapper -> baseContext.findActivity()
-    else -> null
-}
+private tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }

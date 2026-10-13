@@ -15,8 +15,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -26,7 +26,6 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ActionBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
@@ -40,6 +39,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.FaqAccordion
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.FaqCatalog
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.FaqTopic
+import kotlinx.coroutines.launch
 
 @Composable
 fun HelpRoute(onBack: () -> Unit) {
@@ -50,7 +50,8 @@ fun HelpRoute(onBack: () -> Unit) {
     HelpScreen(
         expanded = FaqCatalog.topics.getOrNull(expandedIndex),
         onToggle = { topic ->
-            expandedIndex = FaqAccordion.toggle(FaqCatalog.topics.getOrNull(expandedIndex), topic)
+            expandedIndex = FaqAccordion
+                .toggle(FaqCatalog.topics.getOrNull(expandedIndex), topic)
                 ?.let { FaqCatalog.topics.indexOf(it) } ?: NONE_OPEN
         },
         onContactSupport = {
@@ -95,11 +96,12 @@ fun HelpScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             FaqCatalog.topics.forEach { topic ->
@@ -139,12 +141,14 @@ private fun FaqItem(topic: FaqTopic, expanded: Boolean, onClick: () -> Unit) {
 
 @Preview(name = "S59_Help_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S59_Help_Light() = AppTheme(dark = false) {
-    HelpScreen(expanded = FaqTopic.WONT_SCAN, onToggle = {}, onContactSupport = {}, onBack = {})
-}
+private fun S59_Help_Light() =
+    AppTheme(dark = false) {
+        HelpScreen(expanded = FaqTopic.WONT_SCAN, onToggle = {}, onContactSupport = {}, onBack = {})
+    }
 
 @Preview(name = "S59_Help_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S59_Help_Dark() = AppTheme(dark = true) {
-    HelpScreen(expanded = FaqTopic.WONT_SCAN, onToggle = {}, onContactSupport = {}, onBack = {})
-}
+private fun S59_Help_Dark() =
+    AppTheme(dark = true) {
+        HelpScreen(expanded = FaqTopic.WONT_SCAN, onToggle = {}, onContactSupport = {}, onBack = {})
+    }

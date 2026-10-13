@@ -7,7 +7,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
  * and the user has not chosen "Later" within the last 3 days.
  */
 object UpdatePromptPolicy {
-
     fun shouldShow(settings: AppSettings, nowMillis: Long, updateAvailable: Boolean): Boolean =
         updateAvailable &&
             settings.onboardingDone &&

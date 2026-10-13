@@ -64,11 +64,12 @@ class EventTimesTest {
     }
 
     @Test fun switchingToAllDayKeepsTheCalendarDays() {
-        val timed = CreateSpec.Event(
-            title = "Launch",
-            startMillis = utcMillis(2026, 11, 14, 18, 0),
-            endMillis = utcMillis(2026, 11, 15, 8, 30),
-        )
+        val timed =
+            CreateSpec.Event(
+                title = "Launch",
+                startMillis = utcMillis(2026, 11, 14, 18, 0),
+                endMillis = utcMillis(2026, 11, 15, 8, 30),
+            )
         val allDay = EventTimes.withAllDay(timed, true, utc)
         assertTrue(allDay.allDay)
         assertEquals(utcMillis(2026, 11, 14), allDay.startMillis)
@@ -84,7 +85,13 @@ class EventTimesTest {
     }
 
     @Test fun switchingBackGivesAMorningHourAndOneHourLength() {
-        val allDay = CreateSpec.Event(title = "Day", allDay = true, startMillis = utcMillis(2026, 11, 14), endMillis = utcMillis(2026, 11, 14))
+        val allDay =
+            CreateSpec.Event(
+                title = "Day",
+                allDay = true,
+                startMillis = utcMillis(2026, 11, 14),
+                endMillis = utcMillis(2026, 11, 14),
+            )
         val timed = EventTimes.withAllDay(allDay, false, utc)
         assertFalse(timed.allDay)
         assertEquals(utcMillis(2026, 11, 14, 9, 0), timed.startMillis)

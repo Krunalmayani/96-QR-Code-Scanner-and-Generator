@@ -8,35 +8,61 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 
 /** One change the customize editor can make to a [QrStyle]. Applied with [applying]. */
 sealed interface StyleEdit {
-    data class Foreground(val argb: Long) : StyleEdit
+    data class Foreground(
+        val argb: Long,
+    ) : StyleEdit
 
-    data class Background(val argb: Long) : StyleEdit
+    data class Background(
+        val argb: Long,
+    ) : StyleEdit
 
     /** Turns the gradient on ([endArgb] set) or off (null). */
-    data class GradientEnd(val endArgb: Long?) : StyleEdit
+    data class GradientEnd(
+        val endArgb: Long?,
+    ) : StyleEdit
 
     /** Sets both gradient colors from a preset. */
-    data class Gradient(val preset: GradientPreset) : StyleEdit
+    data class Gradient(
+        val preset: GradientPreset,
+    ) : StyleEdit
 
-    data class Dots(val shape: DotShape) : StyleEdit
+    data class Dots(
+        val shape: DotShape,
+    ) : StyleEdit
 
-    data class Eyes(val shape: EyeShape) : StyleEdit
+    data class Eyes(
+        val shape: EyeShape,
+    ) : StyleEdit
 
-    data class Correction(val level: ErrorCorrection) : StyleEdit
+    data class Correction(
+        val level: ErrorCorrection,
+    ) : StyleEdit
 
     /** Sets (a stored `file://` Uri string) or removes (null) the center logo. */
-    data class Logo(val uri: String?) : StyleEdit
+    data class Logo(
+        val uri: String?,
+    ) : StyleEdit
 
     /** Text of the frame under the code; blank removes the frame. */
-    data class Frame(val text: String?) : StyleEdit
+    data class Frame(
+        val text: String?,
+    ) : StyleEdit
 
-    data class Size(val px: Int) : StyleEdit
+    data class Size(
+        val px: Int,
+    ) : StyleEdit
 
-    data class Format(val format: ExportFormat) : StyleEdit
+    data class Format(
+        val format: ExportFormat,
+    ) : StyleEdit
 
-    data class ShowNumber(val show: Boolean) : StyleEdit
+    data class ShowNumber(
+        val show: Boolean,
+    ) : StyleEdit
 
-    data class BarHeight(val percent: Int) : StyleEdit
+    data class BarHeight(
+        val percent: Int,
+    ) : StyleEdit
 }
 
 object StyleRules {
@@ -56,24 +82,33 @@ object StyleRules {
 }
 
 /** Applies [edit] and keeps the result consistent (opaque colors, logo needs error correction Q or better, clamped numbers). */
-fun QrStyle.applying(edit: StyleEdit): QrStyle = when (edit) {
-    is StyleEdit.Foreground -> copy(foreground = StyleRules.opaque(edit.argb))
-    is StyleEdit.Background -> copy(background = StyleRules.opaque(edit.argb))
-    is StyleEdit.GradientEnd -> copy(gradientEnd = edit.endArgb?.let { StyleRules.opaque(it) })
-    is StyleEdit.Gradient -> copy(foreground = edit.preset.start, gradientEnd = edit.preset.end)
-    is StyleEdit.Dots -> copy(dotShape = edit.shape)
-    is StyleEdit.Eyes -> copy(eyeShape = edit.shape)
-    is StyleEdit.Correction -> copy(errorCorrection = StyleRules.correctionFor(edit.level, logoUri != null))
-    is StyleEdit.Logo -> copy(
-        logoUri = edit.uri,
-        errorCorrection = StyleRules.correctionFor(errorCorrection, edit.uri != null),
-    )
-    is StyleEdit.Frame -> copy(frameText = edit.text?.trim()?.take(StyleRules.FRAME_TEXT_MAX)?.takeIf { it.isNotBlank() })
-    is StyleEdit.Size -> copy(exportSizePx = ExportSizes.snap(edit.px))
-    is StyleEdit.Format -> copy(exportFormat = edit.format)
-    is StyleEdit.ShowNumber -> copy(showNumber = edit.show)
-    is StyleEdit.BarHeight -> copy(barHeightPercent = edit.percent.coerceIn(StyleRules.BAR_HEIGHT_MIN, StyleRules.BAR_HEIGHT_MAX))
-}
+fun QrStyle.applying(edit: StyleEdit): QrStyle =
+    when (edit) {
+        is StyleEdit.Foreground -> copy(foreground = StyleRules.opaque(edit.argb))
+        is StyleEdit.Background -> copy(background = StyleRules.opaque(edit.argb))
+        is StyleEdit.GradientEnd -> copy(gradientEnd = edit.endArgb?.let { StyleRules.opaque(it) })
+        is StyleEdit.Gradient -> copy(foreground = edit.preset.start, gradientEnd = edit.preset.end)
+        is StyleEdit.Dots -> copy(dotShape = edit.shape)
+        is StyleEdit.Eyes -> copy(eyeShape = edit.shape)
+        is StyleEdit.Correction -> copy(errorCorrection = StyleRules.correctionFor(edit.level, logoUri != null))
+        is StyleEdit.Logo ->
+            copy(
+                logoUri = edit.uri,
+                errorCorrection = StyleRules.correctionFor(errorCorrection, edit.uri != null),
+            )
+        is StyleEdit.Frame ->
+            copy(
+                frameText =
+                    edit.text
+                        ?.trim()
+                        ?.take(StyleRules.FRAME_TEXT_MAX)
+                        ?.takeIf { it.isNotBlank() },
+            )
+        is StyleEdit.Size -> copy(exportSizePx = ExportSizes.snap(edit.px))
+        is StyleEdit.Format -> copy(exportFormat = edit.format)
+        is StyleEdit.ShowNumber -> copy(showNumber = edit.show)
+        is StyleEdit.BarHeight -> copy(barHeightPercent = edit.percent.coerceIn(StyleRules.BAR_HEIGHT_MIN, StyleRules.BAR_HEIGHT_MAX))
+    }
 
 /** Hints shown under the style controls. */
 object StyleAdvice {
@@ -85,10 +120,11 @@ object StyleAdvice {
     }
 
     /** Share of damaged modules a code can survive at [level], in percent. */
-    fun recoveryPercent(level: ErrorCorrection): Int = when (level) {
-        ErrorCorrection.L -> 7
-        ErrorCorrection.M -> 15
-        ErrorCorrection.Q -> 25
-        ErrorCorrection.H -> 30
-    }
+    fun recoveryPercent(level: ErrorCorrection): Int =
+        when (level) {
+            ErrorCorrection.L -> 7
+            ErrorCorrection.M -> 15
+            ErrorCorrection.Q -> 25
+            ErrorCorrection.H -> 30
+        }
 }

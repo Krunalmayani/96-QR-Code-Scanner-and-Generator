@@ -14,17 +14,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -105,12 +105,13 @@ fun AppTopBar(
     contentColor: Color = AppTheme.colors.ink,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(containerColor)
-            .statusBarsPadding()
-            .height(64.dp)
-            .padding(start = if (onBack != null) 8.dp else 16.dp, end = 8.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(containerColor)
+                .statusBarsPadding()
+                .height(64.dp)
+                .padding(start = if (onBack != null) 8.dp else 16.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -141,12 +142,13 @@ fun AppCard(
 ) {
     val shape = AppTheme.shapes.card
     Column(
-        modifier = modifier
-            .clip(shape)
-            .background(containerColor)
-            .border(1.dp, borderColor, shape)
-            .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
-            .padding(contentPadding),
+        modifier =
+            modifier
+                .clip(shape)
+                .background(containerColor)
+                .border(1.dp, borderColor, shape)
+                .then(if (onClick != null) Modifier.clickable(role = Role.Button, onClick = onClick) else Modifier)
+                .padding(contentPadding),
         content = content,
     )
 }
@@ -159,11 +161,12 @@ fun CardGroup(
 ) {
     val shape = AppTheme.shapes.card
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(shape)
-            .background(AppTheme.colors.surface)
-            .border(1.dp, AppTheme.colors.outline, shape),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clip(shape)
+                .background(AppTheme.colors.surface)
+                .border(1.dp, AppTheme.colors.outline, shape),
         content = content,
     )
 }
@@ -185,10 +188,11 @@ fun IconTile(
 ) {
     val c = AppTheme.colors
     Box(
-        modifier = modifier
-            .size(size)
-            .clip(if (size >= 56.dp) RoundedCornerShape(20.dp) else AppTheme.shapes.tile)
-            .background(c.containerOf(tone)),
+        modifier =
+            modifier
+                .size(size)
+                .clip(if (size >= 56.dp) RoundedCornerShape(20.dp) else AppTheme.shapes.tile)
+                .background(c.containerOf(tone)),
         contentAlignment = Alignment.Center,
     ) {
         Icon(icon, contentDescription, tint = c.contentOf(tone), modifier = Modifier.size(iconSize))
@@ -213,18 +217,20 @@ fun ListRow(
     titleMaxLines: Int = 1,
 ) {
     val c = AppTheme.colors
-    val clickable = if (onClick != null || onLongClick != null) {
-        Modifier.combinedClickable(role = Role.Button, onClick = { onClick?.invoke() }, onLongClick = onLongClick)
-    } else {
-        Modifier
-    }
+    val clickable =
+        if (onClick != null || onLongClick != null) {
+            Modifier.combinedClickable(role = Role.Button, onClick = { onClick?.invoke() }, onLongClick = onLongClick)
+        } else {
+            Modifier
+        }
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 64.dp)
-            .background(if (selected) c.primaryContainer.copy(alpha = 0.6f) else Color.Transparent)
-            .then(clickable)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .heightIn(min = 64.dp)
+                .background(if (selected) c.primaryContainer.copy(alpha = 0.6f) else Color.Transparent)
+                .then(clickable)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
@@ -249,7 +255,14 @@ fun KeyValueRow(
 ) {
     Row(modifier.fillMaxWidth().padding(vertical = 12.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Text(label, style = AppTheme.type.bodySmall, color = AppTheme.colors.inkSecondary, modifier = Modifier.width(84.dp))
-        Text(value, style = AppTheme.type.bodyStrong, color = AppTheme.colors.ink, maxLines = valueMaxLines, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+        Text(
+            value,
+            style = AppTheme.type.bodyStrong,
+            color = AppTheme.colors.ink,
+            maxLines = valueMaxLines,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f),
+        )
     }
 }
 
@@ -276,10 +289,11 @@ fun QuickAction(
 ) {
     val c = AppTheme.colors
     Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(20.dp))
-            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
-            .padding(4.dp),
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(20.dp))
+                .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+                .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -287,7 +301,19 @@ fun QuickAction(
             Modifier.size(56.dp).clip(RoundedCornerShape(20.dp)).background(c.containerOf(tone)),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(icon, contentDescription = null, tint = if (tone == Tone.Primary) c.onPrimaryContainer else c.contentOf(tone), modifier = Modifier.size(24.dp))
+            Icon(
+                icon,
+                contentDescription = null,
+                tint =
+                    if (tone ==
+                        Tone.Primary
+                    ) {
+                        c.onPrimaryContainer
+                    } else {
+                        c.contentOf(tone)
+                    },
+                modifier = Modifier.size(24.dp),
+            )
         }
         Text(label, style = AppTheme.type.captionStrong, color = c.ink, textAlign = TextAlign.Center, maxLines = 1)
     }
@@ -331,10 +357,11 @@ fun AppSnackbarHost(hostState: SnackbarHostState, modifier: Modifier = Modifier)
                     action,
                     style = AppTheme.type.bodyStrong,
                     color = Color(0xFFB7B3FF),
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .clickable(role = Role.Button) { data.performAction() }
-                        .padding(horizontal = 8.dp, vertical = 8.dp),
+                    modifier =
+                        Modifier
+                            .clip(CircleShape)
+                            .clickable(role = Role.Button) { data.performAction() }
+                            .padding(horizontal = 8.dp, vertical = 8.dp),
                 )
             }
         }
@@ -357,11 +384,19 @@ private fun SurfacesPreviewDark() {
 private fun SurfacesPreviewContent() {
     Column(Modifier.background(AppTheme.colors.background).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         CardGroup {
-            ListRow("example.com/menu", subtitle = "Website  ·  10:42", leading = { IconTile(AppIcons.Link) }, trailing = { Icon(AppIcons.Chevron, null) }, onClick = {})
+            ListRow("example.com/menu", subtitle = "Website  ·  10:42", leading = {
+                IconTile(AppIcons.Link)
+            }, trailing = { Icon(AppIcons.Chevron, null) }, onClick = {})
             AppDivider()
-            ListRow("Home Wi-Fi", subtitle = "Wi-Fi  ·  Yesterday", leading = { IconTile(AppIcons.Wifi, tone = Tone.Success) }, selected = true, onClick = {})
+            ListRow("Home Wi-Fi", subtitle = "Wi-Fi  ·  Yesterday", leading = {
+                IconTile(AppIcons.Wifi, tone = Tone.Success)
+            }, selected = true, onClick = {})
         }
-        AppCard { KeyValueRow("Network", "Home Wi-Fi"); AppDivider(); KeyValueRow("Security", "WPA2") }
+        AppCard {
+            KeyValueRow("Network", "Home Wi-Fi")
+            AppDivider()
+            KeyValueRow("Security", "WPA2")
+        }
         Row(Modifier.fillMaxWidth()) {
             QuickAction(AppIcons.Copy, "Copy", {}, Modifier.weight(1f))
             QuickAction(AppIcons.Share, "Share", {}, Modifier.weight(1f))

@@ -10,7 +10,8 @@ object RawValueDecoder {
     fun decodeBytes(bytes: ByteArray?): String? {
         if (bytes == null || bytes.isEmpty()) return null
         return try {
-            Charsets.UTF_8.newDecoder()
+            Charsets.UTF_8
+                .newDecoder()
                 .onMalformedInput(CodingErrorAction.REPORT)
                 .onUnmappableCharacter(CodingErrorAction.REPORT)
                 .decode(ByteBuffer.wrap(bytes))

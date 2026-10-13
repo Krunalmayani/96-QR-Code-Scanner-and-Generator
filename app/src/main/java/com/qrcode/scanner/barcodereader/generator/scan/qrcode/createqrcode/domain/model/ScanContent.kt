@@ -36,7 +36,12 @@ sealed interface ScanContent {
         override val format: CodeFormat,
     ) : ScanContent {
         override val type get() = ContentType.TEXT
-        override val title get() = rawValue.lineSequence().firstOrNull().orEmpty().take(60)
+        override val title get() =
+            rawValue
+                .lineSequence()
+                .firstOrNull()
+                .orEmpty()
+                .take(60)
     }
 
     @Serializable

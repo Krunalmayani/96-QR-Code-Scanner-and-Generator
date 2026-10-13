@@ -34,19 +34,36 @@ class ScanContentTextTest {
 
     @Test
     fun `contact is formatted over several lines`() {
-        val c = ScanContent.Contact(
-            "raw", QR_CODE, name = "John Doe", organization = "Acme", jobTitle = "CEO", phones = listOf("1", "2"),
-            emails = listOf("j@d.com"), address = "1 Main St", website = "https://d.com", note = "hi",
-        )
+        val c =
+            ScanContent.Contact(
+                "raw",
+                QR_CODE,
+                name = "John Doe",
+                organization = "Acme",
+                jobTitle = "CEO",
+                phones = listOf("1", "2"),
+                emails = listOf("j@d.com"),
+                address = "1 Main St",
+                website = "https://d.com",
+                note = "hi",
+            )
         assertEquals("John Doe\nCEO, Acme\n1\n2\nj@d.com\n1 Main St\nhttps://d.com\nhi", c.copyText())
         assertEquals(c.copyText(), c.shareText())
     }
 
     @Test
     fun `event is formatted with utc dates`() {
-        val e = ScanContent.Event(
-            "raw", QR_CODE, "Launch", ms("2024-05-01T10:00:00Z"), ms("2024-05-01T11:30:00Z"), false, "HQ", "Cake",
-        )
+        val e =
+            ScanContent.Event(
+                "raw",
+                QR_CODE,
+                "Launch",
+                ms("2024-05-01T10:00:00Z"),
+                ms("2024-05-01T11:30:00Z"),
+                false,
+                "HQ",
+                "Cake",
+            )
         assertEquals("Launch\n2024-05-01 10:00 UTC - 2024-05-01 11:30 UTC\nHQ\nCake", e.copyText())
         val allDay = ScanContent.Event("raw", QR_CODE, "Holiday", ms("2024-12-25T00:00:00Z"), null, true)
         assertEquals("Holiday\n2024-12-25", allDay.shareText())

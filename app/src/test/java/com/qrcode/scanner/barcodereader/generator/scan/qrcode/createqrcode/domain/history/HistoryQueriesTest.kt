@@ -39,11 +39,12 @@ class HistoryQueriesTest {
         val spec = HistoryQueries.browse(HistoryTab.SCANNED, HistoryChip.ALL)
         assertEquals(HistoryFilter(), spec.filter)
         assertTrue(spec.excludeCreated)
-        val rows = listOf(
-            Fixtures.record(source = ScanSource.CAMERA, id = 1),
-            Fixtures.record(source = ScanSource.IMAGE, id = 2),
-            Fixtures.record(source = ScanSource.CREATED, id = 3),
-        )
+        val rows =
+            listOf(
+                Fixtures.record(source = ScanSource.CAMERA, id = 1),
+                Fixtures.record(source = ScanSource.IMAGE, id = 2),
+                Fixtures.record(source = ScanSource.CREATED, id = 3),
+            )
         assertEquals(listOf(1L, 2L), spec.select(rows).map { it.id })
     }
 

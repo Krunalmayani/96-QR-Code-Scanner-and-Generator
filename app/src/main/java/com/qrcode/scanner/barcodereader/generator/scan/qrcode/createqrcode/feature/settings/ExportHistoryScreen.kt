@@ -55,18 +55,19 @@ fun ExportHistoryRoute(onBack: () -> Unit, viewModel: ExportHistoryViewModel = h
         scope.launch { snackbar.showSnackbar(message) }
     }
 
-    val saveLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument(state.format.mimeType),
-    ) { uri: Uri? ->
-        val payload = pending
-        pending = null
-        if (uri != null && payload != null) {
-            scope.launch {
-                val ok = ExportFiles.writeToUri(context, uri, payload.text)
-                tell(context.getString(if (ok) R.string.settings_export_saved else R.string.settings_export_failed))
+    val saveLauncher =
+        rememberLauncherForActivityResult(
+            ActivityResultContracts.CreateDocument(state.format.mimeType),
+        ) { uri: Uri? ->
+            val payload = pending
+            pending = null
+            if (uri != null && payload != null) {
+                scope.launch {
+                    val ok = ExportFiles.writeToUri(context, uri, payload.text)
+                    tell(context.getString(if (ok) R.string.settings_export_saved else R.string.settings_export_failed))
+                }
             }
         }
-    }
 
     LaunchedEffect(viewModel) {
         viewModel.effects.collect { effect ->
@@ -77,8 +78,9 @@ fun ExportHistoryRoute(onBack: () -> Unit, viewModel: ExportHistoryViewModel = h
                 }
                 is ExportEffect.Share -> {
                     val uri = ExportFiles.writeSharedFile(context, effect.payload)
-                    val shared = uri != null &&
-                        SettingsIntents.shareFile(context, uri, effect.payload, context.getString(R.string.settings_export_share_title))
+                    val shared =
+                        uri != null &&
+                            SettingsIntents.shareFile(context, uri, effect.payload, context.getString(R.string.settings_export_share_title))
                     if (!shared) tell(context.getString(R.string.settings_export_failed))
                 }
                 ExportEffect.Failed -> tell(context.getString(R.string.settings_export_failed))
@@ -128,11 +130,12 @@ fun ExportHistoryScreen(
         },
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             AppCard {
@@ -163,11 +166,12 @@ fun ExportHistoryScreen(
                 )
             }
             Text(
-                text = if (state.itemCount > 0) {
-                    quantityString(R.plurals.settings_export_summary, state.itemCount)
-                } else {
-                    stringResource(R.string.settings_export_nothing)
-                },
+                text =
+                    if (state.itemCount > 0) {
+                        quantityString(R.plurals.settings_export_summary, state.itemCount)
+                    } else {
+                        stringResource(R.string.settings_export_nothing)
+                    },
                 style = AppTheme.type.bodyStrong,
                 color = AppTheme.colors.ink,
             )
@@ -180,28 +184,32 @@ fun ExportHistoryScreen(
     }
 }
 
-private fun formatLabelRes(format: HistoryExportFormat): Int = when (format) {
-    HistoryExportFormat.CSV -> R.string.settings_export_format_csv
-    HistoryExportFormat.JSON -> R.string.settings_export_format_json
-    HistoryExportFormat.TEXT -> R.string.settings_export_format_text
-}
+private fun formatLabelRes(format: HistoryExportFormat): Int =
+    when (format) {
+        HistoryExportFormat.CSV -> R.string.settings_export_format_csv
+        HistoryExportFormat.JSON -> R.string.settings_export_format_json
+        HistoryExportFormat.TEXT -> R.string.settings_export_format_text
+    }
 
-private val PreviewState = ExportUiState(
-    loading = false,
-    counts = ExportCounts(scanned = 124, created = 18),
-    selection = ExportSelection(includeScanned = true, includeCreated = true, favoritesOnly = false),
-    format = HistoryExportFormat.CSV,
-    itemCount = 142,
-)
+private val PreviewState =
+    ExportUiState(
+        loading = false,
+        counts = ExportCounts(scanned = 124, created = 18),
+        selection = ExportSelection(includeScanned = true, includeCreated = true, favoritesOnly = false),
+        format = HistoryExportFormat.CSV,
+        itemCount = 142,
+    )
 
 @Preview(name = "S63_ExportHistory_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S63_ExportHistory_Light() = AppTheme(dark = false) {
-    ExportHistoryScreen(state = PreviewState, onEvent = {}, onBack = {})
-}
+private fun S63_ExportHistory_Light() =
+    AppTheme(dark = false) {
+        ExportHistoryScreen(state = PreviewState, onEvent = {}, onBack = {})
+    }
 
 @Preview(name = "S63_ExportHistory_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S63_ExportHistory_Dark() = AppTheme(dark = true) {
-    ExportHistoryScreen(state = PreviewState.copy(format = HistoryExportFormat.JSON), onEvent = {}, onBack = {})
-}
+private fun S63_ExportHistory_Dark() =
+    AppTheme(dark = true) {
+        ExportHistoryScreen(state = PreviewState.copy(format = HistoryExportFormat.JSON), onEvent = {}, onBack = {})
+    }

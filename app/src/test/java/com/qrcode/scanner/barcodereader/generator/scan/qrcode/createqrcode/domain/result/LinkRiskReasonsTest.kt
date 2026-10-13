@@ -1,8 +1,8 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result
 
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.Level
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.LinkRisk
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.LinkSafetyChecker
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.Level
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.LinkSafetyResult
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -34,7 +34,10 @@ class LinkRiskReasonsTest {
 
     @Test
     fun `every risk type maps to a kind with its detail`() {
-        assertEquals(RiskReason(RiskKind.LOOKALIKE_BRAND, "paypal", true), LinkRiskReasons.reasonOf(LinkRisk.LookalikeBrand("paypal", "paypa1.com")))
+        assertEquals(
+            RiskReason(RiskKind.LOOKALIKE_BRAND, "paypal", true),
+            LinkRiskReasons.reasonOf(LinkRisk.LookalikeBrand("paypal", "paypa1.com")),
+        )
         assertEquals(RiskReason(RiskKind.PUNYCODE, "xn--a.com", true), LinkRiskReasons.reasonOf(LinkRisk.Punycode("xn--a.com")))
         assertEquals(RiskReason(RiskKind.SUSPICIOUS_TLD, "tk", false), LinkRiskReasons.reasonOf(LinkRisk.SuspiciousTld("tk")))
         assertEquals(RiskReason(RiskKind.IP_ADDRESS, "10.0.0.1", false), LinkRiskReasons.reasonOf(LinkRisk.IpAddressHost("10.0.0.1")))
@@ -45,13 +48,15 @@ class LinkRiskReasonsTest {
 
     @Test
     fun `duplicates collapse and the list is capped`() {
-        val risks = List(3) { LinkRisk.LookalikeBrand("google", "g00gle.com") } + listOf(
-            LinkRisk.NotHttps,
-            LinkRisk.UrlShortener("bit.ly"),
-            LinkRisk.SuspiciousTld("tk"),
-            LinkRisk.ExcessiveSubdomains(7),
-            LinkRisk.VeryLongUrl(900),
-        )
+        val risks =
+            List(3) { LinkRisk.LookalikeBrand("google", "g00gle.com") } +
+                listOf(
+                    LinkRisk.NotHttps,
+                    LinkRisk.UrlShortener("bit.ly"),
+                    LinkRisk.SuspiciousTld("tk"),
+                    LinkRisk.ExcessiveSubdomains(7),
+                    LinkRisk.VeryLongUrl(900),
+                )
         val reasons = LinkRiskReasons.of(LinkSafetyResult(Level.UNSAFE, risks))
         assertEquals(LinkRiskReasons.MAX_REASONS, reasons.size)
         assertEquals(1, reasons.count { it.kind == RiskKind.LOOKALIKE_BRAND })

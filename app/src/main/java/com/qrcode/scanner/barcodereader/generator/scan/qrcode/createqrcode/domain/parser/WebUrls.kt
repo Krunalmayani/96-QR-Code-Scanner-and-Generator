@@ -5,15 +5,97 @@ internal object WebUrls {
     private const val MAX_URL_LENGTH = 1_000_000
 
     /** Generic TLDs accepted for a bare `domain.tld` (a scheme-less, www-less payload). Two-letter TLDs are also accepted. */
-    private val GENERIC_TLDS = setOf(
-        "com", "net", "org", "edu", "gov", "mil", "int", "info", "biz", "name", "pro", "mobi", "asia", "tel", "travel",
-        "app", "dev", "io", "ai", "xyz", "online", "site", "shop", "store", "tech", "blog", "cloud", "page", "link",
-        "club", "live", "news", "media", "agency", "digital", "email", "network", "world", "life", "today", "space",
-        "website", "top", "icu", "vip", "art", "design", "studio", "services", "solutions", "systems", "center",
-        "company", "group", "global", "market", "money", "bank", "health", "care", "school", "academy", "games",
-        "game", "zone", "social", "photo", "photos", "video", "film", "music", "food", "pizza", "coffee", "cafe",
-        "bar", "pub", "fit", "run", "men", "wiki", "work", "works", "team", "tools", "tips", "guru", "help",
-    )
+    private val GENERIC_TLDS =
+        setOf(
+            "com",
+            "net",
+            "org",
+            "edu",
+            "gov",
+            "mil",
+            "int",
+            "info",
+            "biz",
+            "name",
+            "pro",
+            "mobi",
+            "asia",
+            "tel",
+            "travel",
+            "app",
+            "dev",
+            "io",
+            "ai",
+            "xyz",
+            "online",
+            "site",
+            "shop",
+            "store",
+            "tech",
+            "blog",
+            "cloud",
+            "page",
+            "link",
+            "club",
+            "live",
+            "news",
+            "media",
+            "agency",
+            "digital",
+            "email",
+            "network",
+            "world",
+            "life",
+            "today",
+            "space",
+            "website",
+            "top",
+            "icu",
+            "vip",
+            "art",
+            "design",
+            "studio",
+            "services",
+            "solutions",
+            "systems",
+            "center",
+            "company",
+            "group",
+            "global",
+            "market",
+            "money",
+            "bank",
+            "health",
+            "care",
+            "school",
+            "academy",
+            "games",
+            "game",
+            "zone",
+            "social",
+            "photo",
+            "photos",
+            "video",
+            "film",
+            "music",
+            "food",
+            "pizza",
+            "coffee",
+            "cafe",
+            "bar",
+            "pub",
+            "fit",
+            "run",
+            "men",
+            "wiki",
+            "work",
+            "works",
+            "team",
+            "tools",
+            "tips",
+            "guru",
+            "help",
+        )
 
     /** Two-letter words that are far more often file extensions than country domains. */
     private val FILE_LIKE_TLDS = setOf("md", "py", "sh", "rs", "pl", "ts", "js", "rb", "cs", "kt", "pm", "rc", "gz", "tx", "db", "pb", "ps")
@@ -21,11 +103,12 @@ internal object WebUrls {
     /** Returns an absolute http(s) URL for a payload that starts with a web scheme, else null. */
     fun httpUrlOrNull(text: String): String? {
         if (text.length > MAX_URL_LENGTH || text.any { it.isWhitespace() }) return null
-        val schemeEnd = when {
-            text.startsWith("https://", ignoreCase = true) -> 8
-            text.startsWith("http://", ignoreCase = true) -> 7
-            else -> return null
-        }
+        val schemeEnd =
+            when {
+                text.startsWith("https://", ignoreCase = true) -> 8
+                text.startsWith("http://", ignoreCase = true) -> 7
+                else -> return null
+            }
         return if (hostOf(text.substring(schemeEnd)) != null) text else null
     }
 
@@ -50,7 +133,10 @@ internal object WebUrls {
         val hostPort = authority.substringAfterLast('@')
         val host = stripPort(hostPort)
         if (host.isEmpty() || host.startsWith(".") || host.contains("..")) return null
-        val ok = host.all { it.isLetterOrDigit() || it == '-' || it == '.' || it == '_' || it == '%' || it == '[' || it == ']' || it == ':' }
+        val ok =
+            host.all {
+                it.isLetterOrDigit() || it == '-' || it == '.' || it == '_' || it == '%' || it == '[' || it == ']' || it == ':'
+            }
         return if (ok) host.lowercase() else null
     }
 

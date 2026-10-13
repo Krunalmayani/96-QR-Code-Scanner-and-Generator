@@ -248,7 +248,7 @@
     <string name="create_eye_circle">Circle</string>
     <string name="create_eye_leaf">Leaf</string>
     <string name="create_extras_logo_title">Center logo</string>
-    <string name="create_extras_logo_hint">Add your own image. Auto-sized to 18%.</string>
+    <string name="create_extras_logo_hint" formatted="false">Add your own image. Auto-sized to 18%.</string>
     <string name="create_extras_logo_add">Add</string>
     <string name="create_extras_logo_remove">Remove</string>
     <string name="create_extras_frame">Frame label</string>

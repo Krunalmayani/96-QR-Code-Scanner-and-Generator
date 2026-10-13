@@ -50,7 +50,9 @@ internal object MapsUrls {
         val lng = m.groupValues[2].toDoubleOrNull() ?: return null
         val rest = value.substring(m.range.last + 1).trim()
         val tail = rest.removePrefix(",").trim()
-        val tailOk = rest.isEmpty() || (rest.startsWith(",") && tail.all { it.isDigit() || it == '.' || it == ',' || it == 'z' || it == 'm' || it == '-' })
+        val tailOk =
+            rest.isEmpty() ||
+                (rest.startsWith(",") && tail.all { it.isDigit() || it == '.' || it == ',' || it == 'z' || it == 'm' || it == '-' })
         return if (tailOk && lat in -90.0..90.0 && lng in -180.0..180.0) lat to lng else null
     }
 }

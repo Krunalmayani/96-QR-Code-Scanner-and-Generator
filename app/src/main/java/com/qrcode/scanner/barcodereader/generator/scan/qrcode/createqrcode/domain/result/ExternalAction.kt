@@ -6,16 +6,28 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.doma
  */
 sealed interface ExternalAction {
     /** ACTION_DIAL with a `tel:` URI. Never places the call by itself. */
-    data class Dial(val uri: String) : ExternalAction
+    data class Dial(
+        val uri: String,
+    ) : ExternalAction
 
     /** ACTION_SENDTO with a `mailto:` URI; [subject] and [body] go in the intent extras. */
-    data class ComposeEmail(val uri: String, val address: String, val subject: String, val body: String) : ExternalAction
+    data class ComposeEmail(
+        val uri: String,
+        val address: String,
+        val subject: String,
+        val body: String,
+    ) : ExternalAction
 
     /** ACTION_SENDTO with an `smsto:` URI; [body] goes in the `sms_body` extra. */
-    data class ComposeSms(val uri: String, val body: String) : ExternalAction
+    data class ComposeSms(
+        val uri: String,
+        val body: String,
+    ) : ExternalAction
 
     /** ACTION_VIEW with a `geo:` URI. */
-    data class OpenMap(val uri: String) : ExternalAction
+    data class OpenMap(
+        val uri: String,
+    ) : ExternalAction
 
     /** ACTION_INSERT on `CalendarContract.Events.CONTENT_URI`. Null times are left out of the intent. */
     data class AddToCalendar(
@@ -28,7 +40,9 @@ sealed interface ExternalAction {
     ) : ExternalAction
 
     /** `ContactsContract.Intents.Insert.ACTION` with the prefilled [contact]. */
-    data class AddToContacts(val contact: ContactInsertData) : ExternalAction
+    data class AddToContacts(
+        val contact: ContactInsertData,
+    ) : ExternalAction
 }
 
 /** Values for the `ContactsContract.Intents.Insert` extras. Blank strings are not sent. */

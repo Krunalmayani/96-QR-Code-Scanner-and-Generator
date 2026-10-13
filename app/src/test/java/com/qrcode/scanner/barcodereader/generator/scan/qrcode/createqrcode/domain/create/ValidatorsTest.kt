@@ -9,18 +9,40 @@ import org.junit.jupiter.api.Test
 
 class ValidatorsTest {
     private fun err(r: ValidationResult): FieldError? = r.errorOrNull()
+
     private fun ok(r: ValidationResult) = assertEquals(ValidationResult.Valid, r)
+
     private fun bad(expected: FieldError, r: ValidationResult) = assertEquals(ValidationResult.Invalid(expected), r)
 
     // ---- url ----
     @Test fun urlValid() {
-        for (u in listOf("https://example.com", "example.com", "http://sub.example.co.uk/path?q=1#x", "https://example.com:8080/a", "HTTPS://Example.COM", "192.168.1.10", "https://localhost:3000", "https://bücher.de", "https://user:pw@example.com/")) {
+        for (u in listOf(
+            "https://example.com",
+            "example.com",
+            "http://sub.example.co.uk/path?q=1#x",
+            "https://example.com:8080/a",
+            "HTTPS://Example.COM",
+            "192.168.1.10",
+            "https://localhost:3000",
+            "https://bücher.de",
+            "https://user:pw@example.com/",
+        )) {
             ok(Validators.url(u))
         }
     }
 
     @Test fun urlInvalid() {
-        for (u in listOf("brewhouse coffee", "https://", "https://nodot", "ftp://example.com", "https://exa mple.com", "https://example.c", "https://.com", "https://example.com:abc", "javascript://x.y")) {
+        for (u in listOf(
+            "brewhouse coffee",
+            "https://",
+            "https://nodot",
+            "ftp://example.com",
+            "https://exa mple.com",
+            "https://example.c",
+            "https://.com",
+            "https://example.com:abc",
+            "javascript://x.y",
+        )) {
             bad(FieldError.InvalidUrl, Validators.url(u))
         }
     }
@@ -41,7 +63,15 @@ class ValidatorsTest {
 
     // ---- email ----
     @Test fun emailValid() {
-        for (e in listOf("a@b.co", "sophie.lambert@lumen.studio", "first+tag@sub.example.com", "o'brien@example.org", "x_y-z@ex-ample.io")) ok(Validators.email(e))
+        for (e in listOf(
+            "a@b.co",
+            "sophie.lambert@lumen.studio",
+            "first+tag@sub.example.com",
+            "o'brien@example.org",
+            "x_y-z@ex-ample.io",
+        )) {
+            ok(Validators.email(e))
+        }
     }
 
     @Test fun emailInvalid() {
@@ -58,7 +88,17 @@ class ValidatorsTest {
 
     // ---- phone ----
     @Test fun phoneValid() {
-        for (p in listOf("+14155550142", "(206) 555-0198", "+1 (415) 555-0142", "555.0142", "1234567", "+123456789012345", "00 33 1 23 45 67 89")) ok(Validators.phone(p))
+        for (p in listOf(
+            "+14155550142",
+            "(206) 555-0198",
+            "+1 (415) 555-0142",
+            "555.0142",
+            "1234567",
+            "+123456789012345",
+            "00 33 1 23 45 67 89",
+        )) {
+            ok(Validators.phone(p))
+        }
     }
 
     @Test fun phoneInvalid() {
@@ -250,10 +290,14 @@ class ValidatorsTest {
     }
 
     @Test fun helpersRejectWrongInput() {
-        org.junit.jupiter.api.assertThrows<IllegalArgumentException> { BarcodeCheckDigit.ean13("123") }
-        org.junit.jupiter.api.assertThrows<IllegalArgumentException> { BarcodeCheckDigit.ean8("123") }
-        org.junit.jupiter.api.assertThrows<IllegalArgumentException> { BarcodeCheckDigit.upcA("123") }
-        org.junit.jupiter.api.assertThrows<IllegalArgumentException> { BarcodeCheckDigit.checkDigit("12x") }
+        org.junit.jupiter.api
+            .assertThrows<IllegalArgumentException> { BarcodeCheckDigit.ean13("123") }
+        org.junit.jupiter.api
+            .assertThrows<IllegalArgumentException> { BarcodeCheckDigit.ean8("123") }
+        org.junit.jupiter.api
+            .assertThrows<IllegalArgumentException> { BarcodeCheckDigit.upcA("123") }
+        org.junit.jupiter.api
+            .assertThrows<IllegalArgumentException> { BarcodeCheckDigit.checkDigit("12x") }
     }
 
     // ---- whole-form validate ----
@@ -296,7 +340,10 @@ class ValidatorsTest {
 
     @Test fun validateEmailSmsPhone() {
         assertEquals(FieldError.InvalidEmail, Validators.errorFor(CreateSpec.Email("x"), FormField.EMAIL))
-        assertEquals(FieldError.TooLong(Limits.SUBJECT), Validators.errorFor(CreateSpec.Email("a@b.co", "s".repeat(201)), FormField.SUBJECT))
+        assertEquals(
+            FieldError.TooLong(Limits.SUBJECT),
+            Validators.errorFor(CreateSpec.Email("a@b.co", "s".repeat(201)), FormField.SUBJECT),
+        )
         assertEquals(FieldError.TooLong(Limits.BODY), Validators.errorFor(CreateSpec.Email("a@b.co", "", "s".repeat(1001)), FormField.BODY))
         assertEquals(FieldError.InvalidPhone, Validators.errorFor(CreateSpec.Sms("1"), FormField.PHONE))
         assertEquals(FieldError.TooLong(Limits.MESSAGE), Validators.errorFor(CreateSpec.Sms("5550142", "m".repeat(501)), FormField.MESSAGE))
@@ -317,9 +364,18 @@ class ValidatorsTest {
         val errors = Validators.validate(CreateSpec.Event(title = "", startMillis = null, endMillis = 5L))
         assertEquals(FieldError.Required, errors[FormField.TITLE])
         assertEquals(FieldError.Required, errors[FormField.START])
-        assertEquals(FieldError.EndBeforeStart, Validators.errorFor(CreateSpec.Event("T", startMillis = s, endMillis = s - 1), FormField.END))
-        assertEquals(FieldError.TooLong(Limits.EVENT_LOCATION), Validators.errorFor(CreateSpec.Event("T", location = "l".repeat(201), startMillis = s), FormField.EVENT_LOCATION))
-        assertEquals(FieldError.TooLong(Limits.EVENT_DESCRIPTION), Validators.errorFor(CreateSpec.Event("T", description = "d".repeat(501), startMillis = s), FormField.DESCRIPTION))
+        assertEquals(
+            FieldError.EndBeforeStart,
+            Validators.errorFor(CreateSpec.Event("T", startMillis = s, endMillis = s - 1), FormField.END),
+        )
+        assertEquals(
+            FieldError.TooLong(Limits.EVENT_LOCATION),
+            Validators.errorFor(CreateSpec.Event("T", location = "l".repeat(201), startMillis = s), FormField.EVENT_LOCATION),
+        )
+        assertEquals(
+            FieldError.TooLong(Limits.EVENT_DESCRIPTION),
+            Validators.errorFor(CreateSpec.Event("T", description = "d".repeat(501), startMillis = s), FormField.DESCRIPTION),
+        )
         assertTrue(Validators.isValid(CreateSpec.Event("T", startMillis = s, endMillis = s + 3_600_000)))
     }
 

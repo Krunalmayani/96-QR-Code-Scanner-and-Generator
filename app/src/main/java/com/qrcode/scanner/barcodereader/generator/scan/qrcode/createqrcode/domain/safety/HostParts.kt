@@ -44,7 +44,9 @@ internal class UrlParts(
 }
 
 /** A host split into labels, public suffix and registrable domain. */
-internal class HostParts(val labels: List<String>) {
+internal class HostParts(
+    val labels: List<String>,
+) {
     /** Number of labels in the public suffix: 1 for `com`, 2 for `co.uk` or `github.io`. */
     val suffixLength: Int = suffixLengthOf(labels)
     val suffix: String = labels.takeLast(suffixLength).joinToString(".")

@@ -4,7 +4,10 @@ import kotlinx.serialization.Serializable
 
 /** Symbologies the app can scan and (mostly) create. Pure Kotlin: no Android or ML Kit types. */
 @Serializable
-enum class CodeFormat(val displayName: String, val isQr: Boolean = false) {
+enum class CodeFormat(
+    val displayName: String,
+    val isQr: Boolean = false,
+) {
     QR_CODE("QR Code", isQr = true),
     EAN_13("EAN-13"),
     EAN_8("EAN-8"),

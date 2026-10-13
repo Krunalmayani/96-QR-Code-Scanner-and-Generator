@@ -8,9 +8,10 @@ import androidx.compose.ui.graphics.Color
  * dark, so these are not theme tokens.
  */
 internal object OnboardingColors {
-    val heroBrush: Brush = Brush.linearGradient(
-        colors = listOf(Color(0xFF7A70FF), Color(0xFF4F46E5), Color(0xFF352CB8)),
-    )
+    val heroBrush: Brush =
+        Brush.linearGradient(
+            colors = listOf(Color(0xFF7A70FF), Color(0xFF4F46E5), Color(0xFF352CB8)),
+        )
     val glow = Color(0x14FFFFFF)
     val onHero = Color.White
     val chipSurface = Color.White

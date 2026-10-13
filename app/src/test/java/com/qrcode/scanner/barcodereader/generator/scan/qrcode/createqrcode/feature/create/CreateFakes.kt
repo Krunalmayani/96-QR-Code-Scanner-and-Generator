@@ -29,7 +29,9 @@ class FakeCodeExporter : CodeExporter {
 }
 
 /** [LogoStore] that "imports" every source to a fixed file Uri (or fails when [result] is null). */
-class FakeLogoStore(var result: String? = "file:///data/logos/logo_1.png") : LogoStore {
+class FakeLogoStore(
+    var result: String? = "file:///data/logos/logo_1.png",
+) : LogoStore {
     val imported = mutableListOf<String>()
     val discarded = mutableListOf<String?>()
 

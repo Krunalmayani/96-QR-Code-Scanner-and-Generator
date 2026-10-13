@@ -11,13 +11,14 @@ import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 
-val InterFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold),
-    Font(R.font.inter_extrabold, FontWeight.ExtraBold),
-)
+val InterFamily =
+    FontFamily(
+        Font(R.font.inter_regular, FontWeight.Normal),
+        Font(R.font.inter_medium, FontWeight.Medium),
+        Font(R.font.inter_semibold, FontWeight.SemiBold),
+        Font(R.font.inter_bold, FontWeight.Bold),
+        Font(R.font.inter_extrabold, FontWeight.ExtraBold),
+    )
 
 /** Type scale from the design (qr.css): d1, h1, h2, tt, bd, cap, lb. */
 @Immutable
@@ -56,24 +57,27 @@ data class AppType(
     val caption: TextStyle = style(12, 16, FontWeight.Medium),
     /** 11/16 bold, tracked: overline labels (use with uppercase text). */
     val label: TextStyle = style(11, 16, FontWeight.Bold, 0.06f),
-    val mono: TextStyle = TextStyle(
-        fontFamily = FontFamily.Monospace,
-        fontSize = 13.sp,
-        lineHeight = 20.sp,
-    ),
+    val mono: TextStyle =
+        TextStyle(
+            fontFamily = FontFamily.Monospace,
+            fontSize = 13.sp,
+            lineHeight = 20.sp,
+        ),
 )
 
-private fun style(size: Int, line: Int, weight: FontWeight, tracking: Float = 0f) = TextStyle(
-    fontFamily = InterFamily,
-    fontSize = size.sp,
-    lineHeight = line.sp,
-    fontWeight = weight,
-    letterSpacing = tracking.em,
-)
+private fun style(size: Int, line: Int, weight: FontWeight, tracking: Float = 0f) =
+    TextStyle(
+        fontFamily = InterFamily,
+        fontSize = size.sp,
+        lineHeight = line.sp,
+        fontWeight = weight,
+        letterSpacing = tracking.em,
+    )
 
 /** Material typography mapped onto the design scale so stock M3 widgets also use Inter. */
 internal fun materialTypography(type: AppType): Typography {
     val base = Typography()
+
     fun TextStyle.inter() = copy(fontFamily = InterFamily)
     return base.copy(
         displayLarge = base.displayLarge.inter(),

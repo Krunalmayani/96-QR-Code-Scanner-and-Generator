@@ -37,7 +37,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -104,10 +103,11 @@ fun ConfirmDialog(
         properties = DialogProperties(dismissOnBackPress = !destructive, dismissOnClickOutside = !destructive),
     ) {
         Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .background(c.surface, AppTheme.shapes.dialog)
-                .padding(24.dp),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .background(c.surface, AppTheme.shapes.dialog)
+                    .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             if (icon != null) IconTile(icon, tone = iconTone, size = 48.dp)

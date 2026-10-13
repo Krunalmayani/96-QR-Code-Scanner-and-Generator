@@ -44,17 +44,22 @@ object Raster {
         val w = (m.width + 2 * quietX) * scaleX
         val h = (m.height + 2 * quietY) * scaleY
         val px = IntArray(w * h) { WHITE }
-        for (y in 0 until m.height) for (x in 0 until m.width) {
-            if (!m[x, y]) continue
-            for (dy in 0 until scaleY) for (dx in 0 until scaleX) {
-                px[((y + quietY) * scaleY + dy) * w + (x + quietX) * scaleX + dx] = BLACK
+        for (y in 0 until m.height) {
+            for (x in 0 until m.width) {
+                if (!m[x, y]) continue
+                for (dy in 0 until scaleY) {
+                    for (dx in 0 until scaleX) {
+                        px[((y + quietY) * scaleY + dy) * w + (x + quietX) * scaleX + dx] = BLACK
+                    }
+                }
             }
         }
         return Triple(px, w, h)
     }
 
     fun roundTrip(format: CodeFormat, m: ModuleMatrix): String {
-        val linear = format != CodeFormat.QR_CODE && format != CodeFormat.PDF_417 && format != CodeFormat.DATA_MATRIX && format != CodeFormat.AZTEC
+        val linear =
+            format != CodeFormat.QR_CODE && format != CodeFormat.PDF_417 && format != CodeFormat.DATA_MATRIX && format != CodeFormat.AZTEC
         val (px, w, h) = if (linear) rasterize(m, 4, 2, 10, 4) else rasterize(m, 8, 8, 4, 4)
         return decode(px, w, h, format)
     }
@@ -65,15 +70,18 @@ object Raster {
         val h = (image.height * pxPerUnit).toInt()
         val px = IntArray(w * h) { image.background.toInt() }
         val polys = image.items.map { it to flatten(it.shape) }
-        for (y in 0 until h) for (x in 0 until w) {
-            val ux = (x + 0.5f) / pxPerUnit
-            val uy = (y + 0.5f) / pxPerUnit
-            for ((item, poly) in polys) {
-                if (item.shape is VectorShape.Text) continue
-                if (covers(item.shape, poly, ux, uy)) {
-                    px[y * w + x] = when (val p = item.paint) {
-                        is ShapePaint.Solid -> p.argb.toInt()
-                        is ShapePaint.LinearGradient -> p.startArgb.toInt()
+        for (y in 0 until h) {
+            for (x in 0 until w) {
+                val ux = (x + 0.5f) / pxPerUnit
+                val uy = (y + 0.5f) / pxPerUnit
+                for ((item, poly) in polys) {
+                    if (item.shape is VectorShape.Text) continue
+                    if (covers(item.shape, poly, ux, uy)) {
+                        px[y * w + x] =
+                            when (val p = item.paint) {
+                                is ShapePaint.Solid -> p.argb.toInt()
+                                is ShapePaint.LinearGradient -> p.startArgb.toInt()
+                            }
                     }
                 }
             }
@@ -87,7 +95,10 @@ object Raster {
         var cur: MutableList<Pair<Float, Float>>? = null
         for (c in shape.commands) {
             when (c) {
-                is PathCommand.MoveTo -> { cur = mutableListOf(c.x to c.y); subs += cur }
+                is PathCommand.MoveTo -> {
+                    cur = mutableListOf(c.x to c.y)
+                    subs += cur
+                }
                 is PathCommand.LineTo -> cur!!.add(c.x to c.y)
                 is PathCommand.QuadTo -> cur!!.add(c.x to c.y)
                 is PathCommand.ArcTo -> {
@@ -102,12 +113,13 @@ object Raster {
         return subs
     }
 
-    private fun covers(shape: VectorShape, poly: List<List<Pair<Float, Float>>>, x: Float, y: Float): Boolean = when (shape) {
-        is VectorShape.Rect -> inRoundRect(shape, x, y)
-        is VectorShape.Circle -> (x - shape.cx) * (x - shape.cx) + (y - shape.cy) * (y - shape.cy) <= shape.r * shape.r
-        is VectorShape.Path -> inPath(poly, shape.evenOdd, x, y)
-        is VectorShape.Text -> false
-    }
+    private fun covers(shape: VectorShape, poly: List<List<Pair<Float, Float>>>, x: Float, y: Float): Boolean =
+        when (shape) {
+            is VectorShape.Rect -> inRoundRect(shape, x, y)
+            is VectorShape.Circle -> (x - shape.cx) * (x - shape.cx) + (y - shape.cy) * (y - shape.cy) <= shape.r * shape.r
+            is VectorShape.Path -> inPath(poly, shape.evenOdd, x, y)
+            is VectorShape.Text -> false
+        }
 
     private fun inRoundRect(r: VectorShape.Rect, x: Float, y: Float): Boolean {
         if (x < r.x || x > r.x + r.width || y < r.y || y > r.y + r.height) return false
@@ -136,5 +148,4 @@ object Raster {
         }
         return if (evenOdd) crossings % 2 == 1 else winding != 0
     }
-
 }

@@ -72,35 +72,39 @@ private const val SHEET_HEIGHT_FRACTION = 0.56f
 private val PreviewMaxWidth = 320.dp
 
 @StringRes
-private fun EditorTab.labelRes(): Int = when (this) {
-    EditorTab.COLORS -> R.string.create_tab_colors
-    EditorTab.SHAPES -> R.string.create_tab_shapes
-    EditorTab.EXTRAS -> R.string.create_tab_extras
-}
+private fun EditorTab.labelRes(): Int =
+    when (this) {
+        EditorTab.COLORS -> R.string.create_tab_colors
+        EditorTab.SHAPES -> R.string.create_tab_shapes
+        EditorTab.EXTRAS -> R.string.create_tab_extras
+    }
 
 @StringRes
-private fun DotShape.labelRes(): Int = when (this) {
-    DotShape.SQUARE -> R.string.create_dot_square
-    DotShape.ROUNDED -> R.string.create_dot_rounded
-    DotShape.DOTS -> R.string.create_dot_dots
-    DotShape.CLASSY -> R.string.create_dot_classy
-}
+private fun DotShape.labelRes(): Int =
+    when (this) {
+        DotShape.SQUARE -> R.string.create_dot_square
+        DotShape.ROUNDED -> R.string.create_dot_rounded
+        DotShape.DOTS -> R.string.create_dot_dots
+        DotShape.CLASSY -> R.string.create_dot_classy
+    }
 
 @StringRes
-private fun EyeShape.labelRes(): Int = when (this) {
-    EyeShape.SQUARE -> R.string.create_eye_square
-    EyeShape.ROUNDED -> R.string.create_eye_rounded
-    EyeShape.CIRCLE -> R.string.create_eye_circle
-    EyeShape.LEAF -> R.string.create_eye_leaf
-}
+private fun EyeShape.labelRes(): Int =
+    when (this) {
+        EyeShape.SQUARE -> R.string.create_eye_square
+        EyeShape.ROUNDED -> R.string.create_eye_rounded
+        EyeShape.CIRCLE -> R.string.create_eye_circle
+        EyeShape.LEAF -> R.string.create_eye_leaf
+    }
 
 @StringRes
-private fun ErrorCorrection.labelRes(): Int = when (this) {
-    ErrorCorrection.L -> R.string.create_ec_low
-    ErrorCorrection.M -> R.string.create_ec_medium
-    ErrorCorrection.Q -> R.string.create_ec_quartile
-    ErrorCorrection.H -> R.string.create_ec_high
-}
+private fun ErrorCorrection.labelRes(): Int =
+    when (this) {
+        ErrorCorrection.L -> R.string.create_ec_low
+        ErrorCorrection.M -> R.string.create_ec_medium
+        ErrorCorrection.Q -> R.string.create_ec_quartile
+        ErrorCorrection.H -> R.string.create_ec_high
+    }
 
 /** The customize editor (design s41 to s43, barcode s44): live preview on top, a sheet with the Colors / Shapes / Extras tabs below. */
 @Composable
@@ -140,7 +144,12 @@ internal fun EditorScreen(
 @Composable
 private fun EditorTopBar(onClose: () -> Unit, onDone: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().statusBarsPadding().height(64.dp).padding(horizontal = 8.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .height(64.dp)
+                .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -166,12 +175,13 @@ private fun EditorSheet(
     val tabs = state.tabs
     val tab = if (state.tab in tabs) state.tab else EditorTab.COLORS
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(SHEET_HEIGHT_FRACTION)
-            .clip(AppTheme.shapes.sheet)
-            .background(AppTheme.colors.surface)
-            .padding(start = 20.dp, end = 20.dp, top = 12.dp),
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(SHEET_HEIGHT_FRACTION)
+                .clip(AppTheme.shapes.sheet)
+                .background(AppTheme.colors.surface)
+                .padding(start = 20.dp, end = 20.dp, top = 12.dp),
     ) {
         SegmentedControl(
             options = tabs.map { stringResource(it.labelRes()) },
@@ -179,28 +189,31 @@ private fun EditorSheet(
             onSelect = { onEvent(GeneratedEvent.SelectTab(tabs[it])) },
         )
         Column(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
-                .navigationBarsPadding()
-                .padding(top = 16.dp, bottom = 16.dp),
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .navigationBarsPadding()
+                    .padding(top = 16.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             when (tab) {
-                EditorTab.COLORS -> ColorControls(
-                    style = state.style,
-                    reliability = state.reliability,
-                    onEdit = onEdit,
-                    onCustomColor = onCustomColor,
-                    showGradient = true,
-                )
+                EditorTab.COLORS ->
+                    ColorControls(
+                        style = state.style,
+                        reliability = state.reliability,
+                        onEdit = onEdit,
+                        onCustomColor = onCustomColor,
+                        showGradient = true,
+                    )
                 EditorTab.SHAPES -> ShapesTab(state.style, onEdit)
-                EditorTab.EXTRAS -> if (state.isBarcode) {
-                    BarcodeExtras(state.style, onEdit)
-                } else {
-                    QrExtras(state.style, onEdit, onPickLogo, onRemoveLogo = { onEvent(GeneratedEvent.RemoveLogo) })
-                }
+                EditorTab.EXTRAS ->
+                    if (state.isBarcode) {
+                        BarcodeExtras(state.style, onEdit)
+                    } else {
+                        QrExtras(state.style, onEdit, onPickLogo, onRemoveLogo = { onEvent(GeneratedEvent.RemoveLogo) })
+                    }
             }
         }
     }
@@ -326,11 +339,12 @@ private fun CustomFrameField(initial: String, onEdit: (StyleEdit) -> Unit) {
         },
         label = stringResource(R.string.create_frame_text_label),
         modifier = Modifier.padding(top = 12.dp),
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Characters,
-            keyboardType = KeyboardType.Text,
-            imeAction = ImeAction.Done,
-        ),
+        keyboardOptions =
+            KeyboardOptions(
+                capitalization = KeyboardCapitalization.Characters,
+                keyboardType = KeyboardType.Text,
+                imeAction = ImeAction.Done,
+            ),
     )
 }
 
@@ -421,11 +435,12 @@ private fun CustomColorDialog(initial: Long, onApply: (Long) -> Unit, onDismiss:
             onValueChange = { text = it.take(HEX_FIELD_MAX) },
             label = stringResource(R.string.create_custom_color_label),
             error = if (parsed == null) stringResource(R.string.create_custom_color_invalid) else null,
-            keyboardOptions = KeyboardOptions(
-                capitalization = KeyboardCapitalization.Characters,
-                keyboardType = KeyboardType.Ascii,
-                imeAction = ImeAction.Done,
-            ),
+            keyboardOptions =
+                KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Characters,
+                    keyboardType = KeyboardType.Ascii,
+                    imeAction = ImeAction.Done,
+                ),
         )
     }
 }

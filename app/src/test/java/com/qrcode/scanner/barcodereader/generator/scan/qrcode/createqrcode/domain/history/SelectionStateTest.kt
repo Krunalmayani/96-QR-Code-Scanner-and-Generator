@@ -66,7 +66,12 @@ class SelectionStateTest {
 
     @Test
     fun `retain drops ids that are no longer visible`() {
-        val s = SelectionState().longPress(1).toggle(2).toggle(3).retain(setOf(2L, 3L, 4L))
+        val s =
+            SelectionState()
+                .longPress(1)
+                .toggle(2)
+                .toggle(3)
+                .retain(setOf(2L, 3L, 4L))
         assertEquals(setOf(2L, 3L), s.ids)
         assertTrue(s.active)
     }

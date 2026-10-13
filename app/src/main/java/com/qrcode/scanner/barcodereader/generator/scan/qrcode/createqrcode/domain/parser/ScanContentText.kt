@@ -13,34 +13,40 @@ private val DATE_UTC: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US).withZone(ZoneOffset.UTC)
 
 /** What the "Copy" button should put on the clipboard: the URL, the number, the password, a formatted contact, ... */
-fun ScanContent.copyText(): String = when (this) {
-    is ScanContent.Website -> url
-    is ScanContent.Phone -> number
-    is ScanContent.Email -> address
-    is ScanContent.Sms -> number
-    is ScanContent.Location -> coordinates()
-    is ScanContent.Wifi -> password.ifEmpty { ssid }
-    is ScanContent.Contact -> formatted()
-    is ScanContent.Event -> formatted()
-    is ScanContent.Product -> number
-    is ScanContent.Text -> rawValue
-    is ScanContent.Unknown -> rawValue
-}
+fun ScanContent.copyText(): String =
+    when (this) {
+        is ScanContent.Website -> url
+        is ScanContent.Phone -> number
+        is ScanContent.Email -> address
+        is ScanContent.Sms -> number
+        is ScanContent.Location -> coordinates()
+        is ScanContent.Wifi -> password.ifEmpty { ssid }
+        is ScanContent.Contact -> formatted()
+        is ScanContent.Event -> formatted()
+        is ScanContent.Product -> number
+        is ScanContent.Text -> rawValue
+        is ScanContent.Unknown -> rawValue
+    }
 
 /** What the system share sheet should send. Labels are plain English data, not UI strings. */
-fun ScanContent.shareText(): String = when (this) {
-    is ScanContent.Website -> url
-    is ScanContent.Phone -> number
-    is ScanContent.Email -> listOf(address, subject, body).filter { it.isNotBlank() }.joinToString("\n")
-    is ScanContent.Sms -> if (message.isBlank()) number else "$number\n$message"
-    is ScanContent.Location -> listOf(label, "https://maps.google.com/?q=${coordinates()}").filter { it.isNotBlank() }.joinToString("\n")
-    is ScanContent.Wifi -> wifiShare()
-    is ScanContent.Contact -> formatted()
-    is ScanContent.Event -> formatted()
-    is ScanContent.Product -> number
-    is ScanContent.Text -> rawValue
-    is ScanContent.Unknown -> rawValue
-}
+fun ScanContent.shareText(): String =
+    when (this) {
+        is ScanContent.Website -> url
+        is ScanContent.Phone -> number
+        is ScanContent.Email -> listOf(address, subject, body).filter { it.isNotBlank() }.joinToString("\n")
+        is ScanContent.Sms -> if (message.isBlank()) number else "$number\n$message"
+        is ScanContent.Location ->
+            listOf(
+                label,
+                "https://maps.google.com/?q=${coordinates()}",
+            ).filter { it.isNotBlank() }.joinToString("\n")
+        is ScanContent.Wifi -> wifiShare()
+        is ScanContent.Contact -> formatted()
+        is ScanContent.Event -> formatted()
+        is ScanContent.Product -> number
+        is ScanContent.Text -> rawValue
+        is ScanContent.Unknown -> rawValue
+    }
 
 private fun ScanContent.Location.coordinates(): String =
     String.format(Locale.US, "%.6f,%.6f", latitude, longitude)
@@ -64,7 +70,8 @@ private fun ScanContent.Contact.formatted(): String =
 
 private fun ScanContent.Event.formatted(): String {
     val fmt = if (allDay) DATE_UTC else DATE_TIME_UTC
-    val whenText = listOfNotNull(startMillis, endMillis)
-        .joinToString(" - ") { fmt.format(Instant.ofEpochMilli(it)) }
+    val whenText =
+        listOfNotNull(startMillis, endMillis)
+            .joinToString(" - ") { fmt.format(Instant.ofEpochMilli(it)) }
     return listOf(summary, whenText, location, description).filter { it.isNotBlank() }.joinToString("\n")
 }

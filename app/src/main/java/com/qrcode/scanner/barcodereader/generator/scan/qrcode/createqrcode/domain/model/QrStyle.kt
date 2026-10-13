@@ -12,7 +12,10 @@ enum class EyeShape { SQUARE, ROUNDED, CIRCLE, LEAF }
 enum class ErrorCorrection { L, M, Q, H }
 
 @Serializable
-enum class ExportFormat(val extension: String, val mimeType: String) {
+enum class ExportFormat(
+    val extension: String,
+    val mimeType: String,
+) {
     PNG("png", "image/png"),
     JPG("jpg", "image/jpeg"),
     SVG("svg", "image/svg+xml"),

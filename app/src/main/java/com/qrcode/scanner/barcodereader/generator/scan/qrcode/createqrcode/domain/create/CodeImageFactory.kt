@@ -9,7 +9,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
  * error-correction level, so changing colors or shapes in the editor only re-runs the cheap vector step.
  * Not thread-safe: use from one thread.
  */
-class CodeImageFactory(private val format: CodeFormat, private val payload: String) {
+class CodeImageFactory(
+    private val format: CodeFormat,
+    private val payload: String,
+) {
     private var cachedLevel: ErrorCorrection? = null
     private var cachedMatrix: ModuleMatrix? = null
 
@@ -21,21 +24,23 @@ class CodeImageFactory(private val format: CodeFormat, private val payload: Stri
         }
         val level = QrVectorBuilder.effectiveErrorCorrection(style)
         val cached = cachedMatrix
-        val matrix = if (cached != null && cachedLevel == level) {
-            cached
-        } else {
-            CodeEncoder.encodeQr(payload, level).also {
-                cachedLevel = level
-                cachedMatrix = it
+        val matrix =
+            if (cached != null && cachedLevel == level) {
+                cached
+            } else {
+                CodeEncoder.encodeQr(payload, level).also {
+                    cachedLevel = level
+                    cachedMatrix = it
+                }
             }
-        }
         return QrVectorBuilder.build(matrix, style)
     }
 
     /** Like [image] but null instead of throwing. */
-    fun imageOrNull(style: QrStyle): QrVectorImage? = try {
-        image(style)
-    } catch (e: CodeEncodeException) {
-        null
-    }
+    fun imageOrNull(style: QrStyle): QrVectorImage? =
+        try {
+            image(style)
+        } catch (e: CodeEncodeException) {
+            null
+        }
 }

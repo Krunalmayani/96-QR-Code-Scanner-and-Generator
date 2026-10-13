@@ -7,7 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 
 /** In-memory [SettingsRepository] for tests. [value] reads or replaces the current settings directly. */
-class FakeSettingsRepository(initial: AppSettings = AppSettings()) : SettingsRepository {
+class FakeSettingsRepository(
+    initial: AppSettings = AppSettings(),
+) : SettingsRepository {
     private val state = MutableStateFlow(initial)
 
     var value: AppSettings
