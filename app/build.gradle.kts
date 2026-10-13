@@ -43,12 +43,21 @@ android {
     }
 
     signingConfigs {
+        // Release signing: keystore.properties (local) or QR_KEYSTORE_* environment variables (CI). Never committed.
+        val envStore = System.getenv("QR_KEYSTORE_FILE")
         if (keystoreProps.containsKey("storeFile")) {
             create("release") {
                 storeFile = rootProject.file(keystoreProps.getProperty("storeFile"))
                 storePassword = keystoreProps.getProperty("storePassword")
                 keyAlias = keystoreProps.getProperty("keyAlias")
                 keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        } else if (!envStore.isNullOrBlank()) {
+            create("release") {
+                storeFile = file(envStore)
+                storePassword = System.getenv("QR_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("QR_KEY_ALIAS")
+                keyPassword = System.getenv("QR_KEY_PASSWORD")
             }
         }
     }
