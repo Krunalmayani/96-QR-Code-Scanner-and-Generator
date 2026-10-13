@@ -20,6 +20,7 @@ class StringResourcesTest {
 
     @Test
     fun noHardCodedUserVisibleStringsInFeatureComposables() {
+        assertTrue(featureFiles.size > 30, "expected the feature sources, found ${featureFiles.size} files")
         val violations =
             featureFiles
                 .filterNot {
