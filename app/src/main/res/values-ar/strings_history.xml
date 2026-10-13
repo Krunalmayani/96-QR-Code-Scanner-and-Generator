@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hist_title">السجل</string>
+    <string name="hist_tab_scanned">الممسوحة</string>
+    <string name="hist_tab_created">المنشأة</string>
+    <string name="hist_search_placeholder">البحث في السجل</string>
+
+    <string name="hist_chip_all">الكل</string>
+    <string name="hist_chip_favorites">المفضلة</string>
+    <string name="hist_chip_favorites_count">المفضلة · %1$d</string>
+    <string name="hist_chip_links">روابط</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">جهات الاتصال</string>
+    <string name="hist_chip_text">نص</string>
+    <string name="hist_chip_phone">هاتف</string>
+    <string name="hist_chip_email">بريد إلكتروني</string>
+    <string name="hist_chip_location">موقع</string>
+    <string name="hist_chip_events">أحداث</string>
+    <string name="hist_chip_products">منتجات</string>
+
+    <string name="hist_day_today">اليوم</string>
+    <string name="hist_day_yesterday">أمس</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">موقع ويب</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">جهة اتصال</string>
+    <string name="hist_type_text">نص</string>
+    <string name="hist_type_phone">هاتف</string>
+    <string name="hist_type_email">بريد إلكتروني</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">موقع</string>
+    <string name="hist_type_event">حدث</string>
+    <string name="hist_type_product">منتج</string>
+    <string name="hist_type_unknown">أخرى</string>
+    <plurals name="hist_search_results">
+        <item quantity="zero">لا توجد نتائج</item>
+        <item quantity="one">نتيجة واحدة</item>
+        <item quantity="two">نتيجتان</item>
+        <item quantity="few">%d نتائج</item>
+        <item quantity="many">%d نتيجة</item>
+        <item quantity="other">%d نتيجة</item>
+    </plurals>
+
+    <string name="hist_cd_select_items">تحديد العناصر</string>
+    <string name="hist_cd_exit_selection">إنهاء التحديد</string>
+    <string name="hist_cd_select_all">تحديد الكل</string>
+    <string name="hist_cd_favorite_selected">إضافة المحدد إلى المفضلة</string>
+    <string name="hist_cd_close_search">إغلاق البحث</string>
+    <string name="hist_cd_select_row">تحديد</string>
+    <string name="hist_cd_open_row">فتح</string>
+    <string name="hist_menu_export_history">تصدير السجل</string>
+    <string name="hist_menu_export_selected">تصدير بصيغة CSV</string>
+    <plurals name="hist_selected_count">
+        <item quantity="zero">لا عناصر محددة</item>
+        <item quantity="one">عنصر واحد محدد</item>
+        <item quantity="two">عنصران محددان</item>
+        <item quantity="few">%d عناصر محددة</item>
+        <item quantity="many">%d عنصرًا محددًا</item>
+        <item quantity="other">%d عنصر محدد</item>
+    </plurals>
+
+    <plurals name="hist_deleted_scans">
+        <item quantity="zero">لم تُحذف أي عملية مسح</item>
+        <item quantity="one">تم حذف عملية مسح</item>
+        <item quantity="two">تم حذف عمليتي مسح</item>
+        <item quantity="few">تم حذف %d عمليات مسح</item>
+        <item quantity="many">تم حذف %d عملية مسح</item>
+        <item quantity="other">تم حذف %d عملية مسح</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="zero">لم يُحذف أي رمز</item>
+        <item quantity="one">تم حذف الرمز</item>
+        <item quantity="two">تم حذف رمزين</item>
+        <item quantity="few">تم حذف %d رموز</item>
+        <item quantity="many">تم حذف %d رمزًا</item>
+        <item quantity="other">تم حذف %d رمز</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="zero">لم يُحذف أي عنصر</item>
+        <item quantity="one">تم حذف العنصر</item>
+        <item quantity="two">تم حذف عنصرين</item>
+        <item quantity="few">تم حذف %d عناصر</item>
+        <item quantity="many">تم حذف %d عنصرًا</item>
+        <item quantity="other">تم حذف %d عنصر</item>
+    </plurals>
+
+    <string name="hist_share_chooser_title">مشاركة السجل</string>
+    <string name="hist_export_chooser_title">تصدير السجل</string>
+    <string name="hist_share_failed">تعذّرت مشاركة هذه العناصر</string>
+    <string name="hist_export_failed">تعذّر تصدير هذه العناصر</string>
+
+    <string name="hist_empty_scanned_title">لا توجد عمليات مسح بعد</string>
+    <string name="hist_empty_scanned_message">تظهر هنا الرموز التي تمسحها، وتُحفظ على هذا الجهاز فقط.</string>
+    <string name="hist_empty_scanned_action">ابدأ المسح</string>
+    <string name="hist_empty_created_title">لم يتم إنشاء شيء بعد</string>
+    <string name="hist_empty_created_message">تظهر هنا الرموز التي تنشئها، وتُحفظ على هذا الجهاز فقط.</string>
+    <string name="hist_empty_created_action">إنشاء رمز</string>
+    <string name="hist_empty_favorites_title">لا توجد مفضلات بعد</string>
+    <string name="hist_empty_favorites_message">اضغط على النجمة في أي عملية مسح أو رمز منشأ ليبقى في متناولك بلمسة واحدة.</string>
+    <string name="hist_empty_favorites_action">تصفح السجل</string>
+    <string name="hist_empty_filter_title">لا شيء من هذا النوع</string>
+    <string name="hist_empty_filter_message">ستظهر هنا رموز هذا النوع بمجرد أن تمسح واحدًا أو تنشئه.</string>
+    <string name="hist_empty_filter_action">عرض الكل</string>
+    <string name="hist_empty_search_title">لا نتائج</string>
+    <string name="hist_empty_search_message">لا شيء يطابق “%1$s”. جرّب كلمة مختلفة.</string>
+</resources>

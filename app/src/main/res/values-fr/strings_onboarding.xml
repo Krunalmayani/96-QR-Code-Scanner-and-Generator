@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">Scannez instantanément tout QR code ou code-barres</string>
+    <string name="onb_slide1_body">Pointez l’appareil photo vers un code. Liens, Wi-Fi, contacts, événements et produits sont reconnus immédiatement.</string>
+    <string name="onb_slide1_chip">Code trouvé</string>
+    <string name="onb_slide2_title">Créez des QR codes pour des liens, du Wi-Fi, des contacts et plus</string>
+    <string name="onb_slide2_body">Choisissez un type, remplissez les détails, puis personnalisez couleurs et formes avant d’enregistrer ou de partager.</string>
+    <string name="onb_slide3_title">L’historique reste sur votre appareil, privé par conception</string>
+    <string name="onb_slide3_body">Vos scans sont enregistrés localement. Ajoutez des favoris, supprimez un élément ou effacez tout quand vous le souhaitez.</string>
+    <string name="onb_slide3_chip_saved">Enregistré sur cet appareil</string>
+    <string name="onb_slide3_chip_delete">Supprimable à tout moment</string>
+    <string name="onb_get_started">Commencer</string>
+    <string name="onb_page_indicator">Page %1$d sur %2$d</string>
+</resources>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">هل أعجبك الماسح؟</string>
+    <string name="system_rate_body">تقييم سريع يساعد الآخرين على العثور على التطبيق.</string>
+    <string name="system_rate_action_play">قيّم على Google Play</string>
+    <string name="system_rate_action_feedback">إرسال ملاحظات</string>
+    <string name="system_rate_later">ربما لاحقًا</string>
+    <string name="system_rate_stars_group">التقييم</string>
+    <plurals name="system_rate_star">
+        <item quantity="zero">لا نجوم</item>
+        <item quantity="one">نجمة واحدة</item>
+        <item quantity="two">نجمتان</item>
+        <item quantity="few">%d نجوم</item>
+        <item quantity="many">%d نجمة</item>
+        <item quantity="other">%d نجمة</item>
+    </plurals>
+    <string name="system_update_title">يتوفر تحديث</string>
+    <string name="system_update_body">يتوفر إصدار جديد مع تحسينات وإصلاحات.</string>
+    <string name="system_update_action">تحديث</string>
+    <string name="system_update_later">لاحقًا</string>
+    <string name="system_update_ready_title">تم تنزيل التحديث</string>
+    <string name="system_update_ready_body">أعد تشغيل التطبيق لإكمال تثبيت الإصدار الجديد.</string>
+    <string name="system_update_ready_action">إعادة التشغيل</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">Suka dengan pemindai ini?</string>
+    <string name="system_rate_body">Penilaian singkat membantu orang lain menemukan aplikasi ini.</string>
+    <string name="system_rate_action_play">Beri nilai di Google Play</string>
+    <string name="system_rate_action_feedback">Kirim masukan</string>
+    <string name="system_rate_later">Mungkin nanti</string>
+    <string name="system_rate_stars_group">Penilaian</string>
+    <plurals name="system_rate_star">
+        <item quantity="other">%d bintang</item>
+    </plurals>
+    <string name="system_update_title">Pembaruan tersedia</string>
+    <string name="system_update_body">Versi baru tersedia dengan peningkatan dan perbaikan.</string>
+    <string name="system_update_action">Perbarui</string>
+    <string name="system_update_later">Nanti</string>
+    <string name="system_update_ready_title">Pembaruan diunduh</string>
+    <string name="system_update_ready_body">Mulai ulang aplikasi untuk menyelesaikan pemasangan versi baru.</string>
+    <string name="system_update_ready_action">Mulai ulang</string>
+</resources>

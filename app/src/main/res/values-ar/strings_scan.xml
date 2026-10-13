@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_title">مسح</string>
+    <string name="scan_flash_on">الفلاش قيد التشغيل</string>
+    <string name="scan_flash_off">الفلاش متوقف</string>
+    <string name="scan_switch_camera">تبديل الكاميرا</string>
+    <string name="scan_settings">الإعدادات</string>
+    <string name="scan_hint_qr">ضع الرمز داخل الإطار</string>
+    <string name="scan_hint_barcode">ثبّت الهاتف وضع الباركود داخل الإطار</string>
+    <string name="scan_mode_qr">رمز QR</string>
+    <string name="scan_mode_barcode">باركود</string>
+    <string name="scan_mode_all">الكل</string>
+    <string name="scan_zoom">تكبير</string>
+    <string name="scan_zoom_min">1x</string>
+    <string name="scan_zoom_max">%1$dx</string>
+    <string name="scan_from_gallery">مسح من المعرض</string>
+
+    <string name="scan_batch_chip">دفعة</string>
+    <string name="scan_batch_title">مسح دفعة</string>
+    <string name="scan_batch_close">إغلاق مسح الدفعة</string>
+    <string name="scan_batch_sheet_title">هذه الدفعة</string>
+    <string name="scan_batch_newest_first">الأحدث أولًا</string>
+    <string name="scan_batch_empty">ستظهر الرموز الممسوحة هنا.</string>
+    <string name="scan_batch_finish">إنهاء الدفعة</string>
+    <plurals name="scan_batch_count">
+        <item quantity="zero">لم يُمسح أي رمز</item>
+        <item quantity="one">تم مسح رمز واحد</item>
+        <item quantity="two">تم مسح رمزين</item>
+        <item quantity="few">تم مسح %1$d رموز</item>
+        <item quantity="many">تم مسح %1$d رمزًا</item>
+        <item quantity="other">تم مسح %1$d رمز</item>
+    </plurals>
+
+    <string name="scan_quick_just_now">الآن</string>
+    <string name="scan_quick_open_result">فتح النتيجة</string>
+    <string name="scan_quick_keep_scanning">متابعة المسح</string>
+    <string name="scan_quick_check_address">تحقق من العنوان قبل فتحه.</string>
+    <string name="scan_row_subtitle">%1$s · %2$s</string>
+
+    <string name="scan_type_website">موقع ويب</string>
+    <string name="scan_type_text">نص</string>
+    <string name="scan_type_contact">جهة اتصال</string>
+    <string name="scan_type_phone">هاتف</string>
+    <string name="scan_type_email">بريد إلكتروني</string>
+    <string name="scan_type_sms">SMS</string>
+    <string name="scan_type_location">موقع</string>
+    <string name="scan_type_event">حدث</string>
+    <string name="scan_type_wifi">Wi-Fi</string>
+    <string name="scan_type_product">منتج</string>
+    <string name="scan_type_unknown">غير معروف</string>
+
+    <string name="scan_denied_title">الوصول إلى الكاميرا متوقف</string>
+    <string name="scan_denied_message_request">اسمح بالوصول إلى الكاميرا لمسح الرموز مباشرة. ما زال بإمكانك مسح الرموز من الصور المحفوظة.</string>
+    <string name="scan_denied_message_settings">فعّل إذن الكاميرا في إعدادات Android لمسح الرموز مباشرة. ما زال بإمكانك مسح الرموز من الصور المحفوظة.</string>
+    <string name="scan_request_again">الطلب مرة أخرى</string>
+    <string name="scan_open_settings">فتح الإعدادات</string>
+    <string name="scan_denied_steps">الإعدادات، ثم الأذونات، ثم الكاميرا، ثم السماح فقط أثناء استخدام التطبيق.</string>
+    <string name="scan_unavailable_title">الكاميرا غير متاحة</string>
+    <string name="scan_unavailable_message">تعذّر تشغيل الكاميرا. أغلق التطبيقات الأخرى التي تستخدمها ثم حاول مرة أخرى.</string>
+
+    <string name="scan_image_choose_title">اختر صورة</string>
+    <string name="scan_image_choose_message">اختر لقطة شاشة أو صورة تحتوي على رمز QR أو باركود.</string>
+    <string name="scan_image_choose_button">اختيار صورة</string>
+    <string name="scan_image_preview">الصورة المحددة</string>
+    <string name="scan_image_reading_title">جارٍ قراءة الصورة</string>
+    <string name="scan_image_cancel">إلغاء</string>
+    <string name="scan_image_processing_title">جارٍ البحث عن رموز</string>
+    <string name="scan_image_processing_message">يجري فحص الصورة بحثًا عن رموز QR وباركود. يستغرق هذا لحظة.</string>
+    <string name="scan_image_result_title">نتيجة المسح</string>
+    <string name="scan_image_from_image">من صورة · الآن</string>
+    <string name="scan_image_pick_one">اختر الرمز الذي تريد فتحه.</string>
+    <string name="scan_image_open_result">فتح النتيجة</string>
+    <plurals name="scan_image_codes_found">
+        <item quantity="zero">لم يُعثر على أي رمز</item>
+        <item quantity="one">تم العثور على رمز واحد</item>
+        <item quantity="two">تم العثور على رمزين</item>
+        <item quantity="few">تم العثور على %1$d رموز</item>
+        <item quantity="many">تم العثور على %1$d رمزًا</item>
+        <item quantity="other">تم العثور على %1$d رمز</item>
+    </plurals>
+    <string name="scan_nocode_title">لم يُعثر على رمز QR أو باركود</string>
+    <string name="scan_nocode_message">تعذّرت قراءة رمز في هذه الصورة. قد تفيد بعض الفحوصات السريعة.</string>
+    <string name="scan_nocode_tip_visible">تأكد من ظهور الرمز كاملًا مع حافته البيضاء.</string>
+    <string name="scan_nocode_tip_quality">تجنب الانعكاسات والضبابية والقص الزائد.</string>
+    <string name="scan_nocode_tip_resolution">جرّب أصلًا بدقة أعلى أو لقطة شاشة.</string>
+    <string name="scan_nocode_try_another">جرّب صورة أخرى</string>
+    <string name="scan_nocode_use_camera">استخدم الكاميرا بدلًا من ذلك</string>
+    <string name="scan_unreadable_title">تعذّر فتح هذه الصورة</string>
+    <string name="scan_unreadable_message">قد يكون الملف تالفًا أو بصيغة غير مدعومة. جرّب صورة أخرى.</string>
+</resources>

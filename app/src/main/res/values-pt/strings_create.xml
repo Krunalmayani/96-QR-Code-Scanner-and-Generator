@@ -137,7 +137,7 @@
     <string name="create_helper_ean8">7 dígitos, dígito verificador adicionado</string>
     <string name="create_helper_upca">11 dígitos, dígito verificador adicionado</string>
     <string name="create_helper_code128">Letras, dígitos e símbolos (ASCII)</string>
-    <string name="create_helper_code39">Letras maiúsculas, dígitos, espaço e - . $ / + %</string>
+    <string name="create_helper_code39" formatted="false">Letras maiúsculas, dígitos, espaço e - . $ / + %</string>
     <string name="create_helper_itf">Uma quantidade par de dígitos</string>
     <string name="create_helper_2d">Qualquer texto, até 1000 caracteres</string>
     <string name="create_barcode_status_incomplete">%1$d de %2$d dígitos</string>

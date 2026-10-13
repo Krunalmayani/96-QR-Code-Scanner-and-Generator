@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">Gefällt dir der Scanner?</string>
+    <string name="system_rate_body">Eine kurze Bewertung hilft anderen, die App zu finden.</string>
+    <string name="system_rate_action_play">Bei Google Play bewerten</string>
+    <string name="system_rate_action_feedback">Feedback senden</string>
+    <string name="system_rate_later">Vielleicht später</string>
+    <string name="system_rate_stars_group">Bewertung</string>
+    <plurals name="system_rate_star">
+        <item quantity="one">%d Stern</item>
+        <item quantity="other">%d Sterne</item>
+    </plurals>
+    <string name="system_update_title">Update verfügbar</string>
+    <string name="system_update_body">Eine neue Version mit Verbesserungen und Fehlerbehebungen ist verfügbar.</string>
+    <string name="system_update_action">Aktualisieren</string>
+    <string name="system_update_later">Später</string>
+    <string name="system_update_ready_title">Update heruntergeladen</string>
+    <string name="system_update_ready_body">Die App neu starten, um die Installation der neuen Version abzuschließen.</string>
+    <string name="system_update_ready_action">Neu starten</string>
+</resources>

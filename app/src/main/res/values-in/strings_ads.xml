@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_label_ad">Iklan</string>
+    <string name="ads_native_content_description">Iklan</string>
+
+    <string name="ads_privacy_options_title">Opsi privasi iklan</string>
+    <string name="ads_privacy_options_summary">Tinjau atau ubah pilihan persetujuan iklan Anda</string>
+</resources>

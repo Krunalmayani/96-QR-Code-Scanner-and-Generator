@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">Kamerazugriff erlauben</string>
+    <string name="perm_camera_screen_body">Die Kamera wird nur zum Lesen von QR-Codes und Barcodes verwendet, solange der Scanbildschirm geöffnet ist.</string>
+    <string name="perm_camera_point1_title">Mit einem Tipp scannen</string>
+    <string name="perm_camera_point1_body">Codes werden gelesen, sobald sie im Bild sind.</string>
+    <string name="perm_camera_point2_title">Keine Kamera? Kein Problem</string>
+    <string name="perm_camera_point2_body">Codes lassen sich weiterhin aus gespeicherten Bildern scannen.</string>
+    <string name="perm_camera_point3_title">Jederzeit änderbar</string>
+    <string name="perm_camera_point3_body">Den Zugriff in den Android-Einstellungen verwalten.</string>
+    <string name="perm_camera_allow">Kamera erlauben</string>
+    <string name="perm_not_now">Nicht jetzt</string>
+    <string name="perm_camera_dialog_title">Kamerazugriff erforderlich</string>
+    <string name="perm_camera_dialog_body">Zum Lesen eines QR-Codes oder Barcodes benötigt die App die Kamera. Sie wird nur verwendet, solange der Scanbildschirm geöffnet ist.</string>
+    <string name="perm_continue">Weiter</string>
+    <string name="perm_photos_title">Zugriff auf Fotos erlauben</string>
+    <string name="perm_photos_body">Um einen Code aus einem gespeicherten Bild zu lesen, ein Foto aus der Galerie auswählen. Nur das gewählte Bild wird gelesen.</string>
+    <string name="perm_photos_choose">Foto auswählen</string>
+    <string name="perm_photos_cancel">Abbrechen</string>
+    <string name="perm_location_title">Warum der Standort?</string>
+    <string name="perm_location_body">Auf manchen Android-Versionen braucht das Verbinden mit einem Wi-Fi-Netzwerk aus einem Code die Standortberechtigung. Android verlangt sie für Wi-Fi-Verbindungen, nicht diese App.</string>
+    <string name="perm_location_point1">Wird nur verwendet, um die Verbindung zu ermöglichen</string>
+    <string name="perm_location_point2">Das Passwort lässt sich weiterhin kopieren</string>
+</resources>

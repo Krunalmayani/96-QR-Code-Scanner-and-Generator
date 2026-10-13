@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ads_label_ad">Anzeige</string>
+    <string name="ads_native_content_description">Werbung</string>
+
+    <string name="ads_privacy_options_title">Datenschutzoptionen für Werbung</string>
+    <string name="ads_privacy_options_summary">Einwilligung für Werbung prüfen oder ändern</string>
+</resources>

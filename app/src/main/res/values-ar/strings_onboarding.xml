@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">امسح أي رمز QR أو باركود فورًا</string>
+    <string name="onb_slide1_body">وجّه الكاميرا نحو الرمز. يتم التعرف على الروابط وWi-Fi وجهات الاتصال والأحداث والمنتجات فورًا.</string>
+    <string name="onb_slide1_chip">تم العثور على رمز</string>
+    <string name="onb_slide2_title">أنشئ رموز QR للروابط وWi-Fi وجهات الاتصال وغيرها</string>
+    <string name="onb_slide2_body">اختر نوعًا، واملأ التفاصيل، ثم خصّص الألوان والأشكال قبل الحفظ أو المشاركة.</string>
+    <string name="onb_slide3_title">يبقى السجل على جهازك، خصوصية بحكم التصميم</string>
+    <string name="onb_slide3_body">تُحفظ عمليات المسح محليًا. أضف مفضلات، أو احذف عنصرًا واحدًا، أو امسح كل شيء متى شئت.</string>
+    <string name="onb_slide3_chip_saved">محفوظ على هذا الجهاز</string>
+    <string name="onb_slide3_chip_delete">احذف في أي وقت</string>
+    <string name="onb_get_started">ابدأ الآن</string>
+    <string name="onb_page_indicator">الصفحة %1$d من %2$d</string>
+</resources>

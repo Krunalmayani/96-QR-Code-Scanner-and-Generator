@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hist_title">इतिहास</string>
+    <string name="hist_tab_scanned">स्कैन किए गए</string>
+    <string name="hist_tab_created">बनाए गए</string>
+    <string name="hist_search_placeholder">इतिहास में खोजें</string>
+
+    <string name="hist_chip_all">सभी</string>
+    <string name="hist_chip_favorites">पसंदीदा</string>
+    <string name="hist_chip_favorites_count">पसंदीदा · %1$d</string>
+    <string name="hist_chip_links">लिंक</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">संपर्क</string>
+    <string name="hist_chip_text">टेक्स्ट</string>
+    <string name="hist_chip_phone">फ़ोन</string>
+    <string name="hist_chip_email">ईमेल</string>
+    <string name="hist_chip_location">लोकेशन</string>
+    <string name="hist_chip_events">इवेंट</string>
+    <string name="hist_chip_products">प्रोडक्ट</string>
+
+    <string name="hist_day_today">आज</string>
+    <string name="hist_day_yesterday">कल</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">वेबसाइट</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">संपर्क</string>
+    <string name="hist_type_text">टेक्स्ट</string>
+    <string name="hist_type_phone">फ़ोन</string>
+    <string name="hist_type_email">ईमेल</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">लोकेशन</string>
+    <string name="hist_type_event">इवेंट</string>
+    <string name="hist_type_product">प्रोडक्ट</string>
+    <string name="hist_type_unknown">अन्य</string>
+    <plurals name="hist_search_results">
+        <item quantity="one">%d परिणाम</item>
+        <item quantity="other">%d परिणाम</item>
+    </plurals>
+
+    <string name="hist_cd_select_items">आइटम चुनें</string>
+    <string name="hist_cd_exit_selection">चयन से बाहर निकलें</string>
+    <string name="hist_cd_select_all">सभी चुनें</string>
+    <string name="hist_cd_favorite_selected">चुने हुए पसंदीदा में जोड़ें</string>
+    <string name="hist_cd_close_search">खोज बंद करें</string>
+    <string name="hist_cd_select_row">चुनें</string>
+    <string name="hist_cd_open_row">खोलें</string>
+    <string name="hist_menu_export_history">इतिहास एक्सपोर्ट करें</string>
+    <string name="hist_menu_export_selected">CSV के रूप में एक्सपोर्ट करें</string>
+    <plurals name="hist_selected_count">
+        <item quantity="one">%d चुना गया</item>
+        <item quantity="other">%d चुने गए</item>
+    </plurals>
+
+    <plurals name="hist_deleted_scans">
+        <item quantity="one">स्कैन हटाया गया</item>
+        <item quantity="other">%d स्कैन हटाए गए</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="one">कोड हटाया गया</item>
+        <item quantity="other">%d कोड हटाए गए</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="one">आइटम हटाया गया</item>
+        <item quantity="other">%d आइटम हटाए गए</item>
+    </plurals>
+
+    <string name="hist_share_chooser_title">इतिहास शेयर करें</string>
+    <string name="hist_export_chooser_title">इतिहास एक्सपोर्ट करें</string>
+    <string name="hist_share_failed">ये आइटम शेयर नहीं हो सके</string>
+    <string name="hist_export_failed">ये आइटम एक्सपोर्ट नहीं हो सके</string>
+
+    <string name="hist_empty_scanned_title">अभी कोई स्कैन नहीं</string>
+    <string name="hist_empty_scanned_message">आपके स्कैन किए कोड यहां दिखेंगे, जो सिर्फ़ इसी डिवाइस पर सहेजे जाते हैं।</string>
+    <string name="hist_empty_scanned_action">स्कैन शुरू करें</string>
+    <string name="hist_empty_created_title">अभी कुछ नहीं बनाया</string>
+    <string name="hist_empty_created_message">आपके बनाए कोड यहां दिखेंगे, जो सिर्फ़ इसी डिवाइस पर सहेजे जाते हैं।</string>
+    <string name="hist_empty_created_action">कोड बनाएं</string>
+    <string name="hist_empty_favorites_title">अभी कोई पसंदीदा नहीं</string>
+    <string name="hist_empty_favorites_message">किसी भी स्कैन या बनाए गए कोड पर स्टार टैप करें ताकि वह बस एक टैप दूर रहे।</string>
+    <string name="hist_empty_favorites_action">इतिहास देखें</string>
+    <string name="hist_empty_filter_title">इस प्रकार का कुछ नहीं</string>
+    <string name="hist_empty_filter_message">इस प्रकार के कोड यहां तब दिखेंगे जब आप कोई स्कैन करेंगे या बनाएंगे।</string>
+    <string name="hist_empty_filter_action">सब कुछ दिखाएं</string>
+    <string name="hist_empty_search_title">कोई परिणाम नहीं</string>
+    <string name="hist_empty_search_message">“%1$s” से कुछ मेल नहीं खाता। कोई दूसरा शब्द आज़माएं।</string>
+</resources>

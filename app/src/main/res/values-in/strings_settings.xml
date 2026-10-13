@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_section_scanning">Pemindaian</string>
+    <string name="settings_section_appearance">Tampilan</string>
+    <string name="settings_section_privacy">Privasi dan data</string>
+    <string name="settings_section_about">Tentang dan dukungan</string>
+
+    <string name="settings_vibrate">Getar saat memindai</string>
+    <string name="settings_beep">Suara bip</string>
+    <string name="settings_flash_on_start">Flash saat mulai</string>
+    <string name="settings_auto_open">Buka tautan otomatis</string>
+    <string name="settings_auto_open_hint">Nonaktif secara default. Tautan hanya terbuka saat Anda mengetuknya.</string>
+    <string name="settings_continuous">Mode pindai berkelanjutan</string>
+    <string name="settings_continuous_hint">Terus memindai setelah setiap kode.</string>
+    <string name="settings_scan_area">Area pindai</string>
+    <string name="settings_scan_area_hint">Baca kode hanya di dalam bingkai, atau di mana saja pada layar.</string>
+    <string name="settings_scan_area_frame">Hanya bingkai</string>
+    <string name="settings_scan_area_full">Layar penuh</string>
+
+    <string name="settings_sites_title">Urutan pencarian produk</string>
+    <string name="settings_sites_hint">Situs ditawarkan dalam urutan ini saat Anda mencari barcode.</string>
+    <string name="settings_site_move_up">Naikkan %1$s</string>
+    <string name="settings_site_move_down">Turunkan %1$s</string>
+
+    <string name="settings_theme">Tema</string>
+    <string name="settings_theme_system">Default sistem</string>
+    <string name="settings_theme_light">Terang</string>
+    <string name="settings_theme_dark">Gelap</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_language_system">Default sistem</string>
+
+    <string name="settings_privacy_banner_title">Riwayat hanya disimpan di perangkat Anda</string>
+    <string name="settings_privacy_banner_text">Anda dapat menghapus satu item atau semuanya kapan saja.</string>
+    <string name="settings_perm_camera">Kamera</string>
+    <string name="settings_perm_camera_hint">Membaca kode QR dan barcode</string>
+    <string name="settings_perm_photos">Foto</string>
+    <string name="settings_perm_photos_hint">Memindai kode dari gambar tersimpan</string>
+    <string name="settings_perm_location">Lokasi</string>
+    <string name="settings_perm_location_hint">Hanya jika Android memintanya saat menyambung ke kode Wi-Fi</string>
+    <string name="settings_perm_internet">Internet</string>
+    <string name="settings_perm_internet_hint">Membuka situs web dan pencarian di browser Anda</string>
+    <string name="settings_manage_android">Kelola di pengaturan Android</string>
+    <string name="settings_save_history">Simpan riwayat pindai</string>
+    <string name="settings_save_history_hint">Matikan agar pindaian baru tidak masuk ke Riwayat.</string>
+    <string name="settings_analytics">Bagikan data penggunaan anonim</string>
+    <string name="settings_analytics_hint">Membantu meningkatkan aplikasi. Tidak pernah menyertakan kode Anda.</string>
+    <string name="settings_clear_history">Hapus riwayat</string>
+    <string name="settings_export_history">Ekspor riwayat</string>
+    <string name="settings_privacy_summary">Ringkasan privasi</string>
+    <string name="settings_privacy_policy_web">Kebijakan privasi lengkap</string>
+
+    <string name="settings_help">Bantuan dan FAQ</string>
+    <string name="settings_feedback">Kirim masukan</string>
+    <string name="settings_rate">Beri nilai di Google Play</string>
+    <string name="settings_share_app">Bagikan aplikasi ini</string>
+    <string name="settings_about">Tentang</string>
+
+    <string name="settings_history_empty">Riwayat sudah kosong</string>
+    <plurals name="settings_history_cleared">
+        <item quantity="other">%d item dihapus</item>
+    </plurals>
+    <string name="settings_no_app_found">Tidak ada aplikasi untuk membukanya</string>
+    <string name="settings_play_unavailable">Tidak dapat membuka Google Play</string>
+
+    <string name="settings_clear_title">Hapus semua riwayat?</string>
+    <string name="settings_clear_message">Ini akan menghapus hal berikut dari perangkat ini. Tindakan ini tidak dapat dibatalkan.</string>
+    <plurals name="settings_clear_scanned">
+        <item quantity="other">%d kode dipindai</item>
+    </plurals>
+    <plurals name="settings_clear_created">
+        <item quantity="other">%d kode dibuat</item>
+    </plurals>
+    <string name="settings_clear_keep_favorites">Pertahankan favorit saya</string>
+    <string name="settings_clear_confirm">Hapus semua</string>
+
+    <string name="settings_language_search">Cari bahasa</string>
+    <string name="settings_language_no_match">Tidak ada bahasa yang cocok</string>
+
+    <string name="settings_help_title">Bantuan dan FAQ</string>
+    <string name="settings_contact_support">Hubungi dukungan</string>
+    <string name="settings_faq_expanded">Terbuka</string>
+    <string name="settings_faq_collapsed">Tertutup</string>
+    <string name="settings_faq_wont_scan_q">Mengapa kode saya tidak terpindai?</string>
+    <string name="settings_faq_wont_scan_a">Pegang ponsel 15 hingga 30 cm dari kode, tambahkan cahaya dengan flash, dan jaga kode tetap rata di dalam bingkai. Kode yang rusak mungkin perlu dicoba dua kali.</string>
+    <string name="settings_faq_offline_q">Bisakah memindai tanpa internet?</string>
+    <string name="settings_faq_offline_a">Bisa. Memindai dan membuat kode berfungsi secara offline. Koneksi hanya diperlukan untuk membuka tautan atau mencari produk.</string>
+    <string name="settings_faq_colors_q">Bagaimana cara mengubah warna kode?</string>
+    <string name="settings_faq_colors_a">Setelah membuat kode, ketuk Kustomisasi dan pilih warna di tab Warna. Jaga kontras tetap kuat agar kode mudah dipindai.</string>
+    <string name="settings_faq_history_q">Di mana riwayat saya disimpan?</string>
+    <string name="settings_faq_history_a">Hanya di ponsel Anda. Tidak ada yang diunggah. Anda dapat menghapus satu item atau membersihkan semuanya di Pengaturan.</string>
+    <string name="settings_faq_photo_q">Bagaimana cara memindai dari foto?</string>
+    <string name="settings_faq_photo_a">Di layar Pindai, ketuk tombol galeri dan pilih gambar. Aplikasi membaca kode apa pun di dalamnya. Foto tidak pernah keluar dari ponsel Anda.</string>
+    <string name="settings_faq_auto_open_q">Mengapa tautan tidak terbuka sendiri?</string>
+    <string name="settings_faq_auto_open_a">Demi keamanan Anda, tautan hanya terbuka saat Anda mengetuknya. Anda dapat mengaktifkan Buka tautan otomatis di Pengaturan, tetapi periksa alamatnya dulu.</string>
+    <string name="settings_faq_wifi_q">Bagaimana cara menyambung ke Wi-Fi dari kode?</string>
+    <string name="settings_faq_wifi_a">Pindai kode Wi-Fi, lalu ketuk Sambungkan. Android mungkin meminta izin lokasi sebelum menyambung ke jaringan. Anda juga dapat menyalin sandi.</string>
+    <string name="settings_faq_types_q">Kode apa saja yang dapat dipindai?</string>
+    <string name="settings_faq_types_a">Kode QR dan barcode umum seperti EAN, UPC, Code 128, Code 39, Data Matrix, PDF417, dan Aztec.</string>
+    <string name="settings_faq_export_q">Bagaimana cara mengekspor riwayat?</string>
+    <string name="settings_faq_export_a">Buka Pengaturan, lalu Ekspor riwayat. Pilih CSV, JSON, atau Teks, lalu simpan file atau bagikan.</string>
+    <string name="settings_faq_language_q">Bagaimana cara mengubah bahasa?</string>
+    <string name="settings_faq_language_a">Buka Pengaturan, lalu Bahasa, dan pilih salah satu. Aplikasi langsung beralih.</string>
+
+    <string name="settings_privacy_title">Privasi</string>
+    <string name="settings_privacy_hero_title">Pindaian Anda tetap di ponsel Anda</string>
+    <string name="settings_privacy_hero_text">Kami tidak mengunggah kode, foto, atau riwayat.</string>
+    <string name="settings_privacy_camera">Hanya saat memindai</string>
+    <string name="settings_privacy_photos">Hanya gambar yang Anda pilih</string>
+    <string name="settings_privacy_history">Disimpan secara lokal, dapat dihapus</string>
+    <string name="settings_privacy_history_title">Riwayat</string>
+    <string name="settings_privacy_note">Pencarian produk hanya mengirim nomor barcode ke situs pencarian, dan hanya saat Anda mengetuk Cari. Iklan, jika ditampilkan, dapat menggunakan ID iklan yang bisa Anda setel ulang di pengaturan Android.</string>
+    <string name="settings_privacy_read_full">Baca kebijakan lengkap</string>
+
+    <string name="settings_feedback_title">Kirim masukan</string>
+    <string name="settings_feedback_rating_label">Bagaimana penilaian Anda untuk aplikasi ini?</string>
+    <string name="settings_feedback_star">Beri nilai %1$d dari 5</string>
+    <string name="settings_feedback_topic_scanning">Pemindaian</string>
+    <string name="settings_feedback_topic_creating">Pembuatan</string>
+    <string name="settings_feedback_topic_design">Desain</string>
+    <string name="settings_feedback_topic_other">Lainnya</string>
+    <string name="settings_feedback_message_label">Apa yang bisa kami tingkatkan?</string>
+    <string name="settings_feedback_email_label">Email (opsional)</string>
+    <string name="settings_feedback_email_error">Masukkan alamat email yang valid</string>
+    <string name="settings_feedback_send">Kirim masukan</string>
+    <string name="settings_feedback_no_mail_app">Tidak ada aplikasi email. Tulis ke %1$s.</string>
+
+    <string name="settings_about_title">Tentang</string>
+    <string name="settings_about_version">Versi %1$s (build %2$d)</string>
+    <string name="settings_about_licenses">Lisensi sumber terbuka</string>
+    <string name="settings_about_terms">Ketentuan penggunaan</string>
+    <string name="settings_about_disclaimer">Aplikasi ini adalah utilitas untuk memindai dan membuat kode QR dan barcode. Aplikasi ini tidak menyediakan layanan pembayaran, perbankan, atau keuangan.</string>
+    <string name="settings_share_text">Coba %1$s: %2$s</string>
+
+    <string name="settings_export_title">Ekspor riwayat</string>
+    <string name="settings_export_include">Sertakan</string>
+    <string name="settings_export_scanned">Kode dipindai (%1$d)</string>
+    <string name="settings_export_created">Kode dibuat (%1$d)</string>
+    <string name="settings_export_favorites">Hanya favorit</string>
+    <string name="settings_export_format">Format</string>
+    <string name="settings_export_format_csv">CSV</string>
+    <string name="settings_export_format_json">JSON</string>
+    <string name="settings_export_format_text">Teks</string>
+    <string name="settings_export_note">File disimpan di tempat yang Anda pilih atau dibagikan ke aplikasi pilihan Anda. File tidak diunggah ke mana pun.</string>
+    <string name="settings_export_nothing">Tidak ada yang diekspor</string>
+    <plurals name="settings_export_summary">
+        <item quantity="other">%d item akan diekspor</item>
+    </plurals>
+    <string name="settings_export_save">Simpan file</string>
+    <string name="settings_export_share">Bagikan</string>
+    <string name="settings_export_share_title">Bagikan riwayat</string>
+    <string name="settings_export_saved">File disimpan</string>
+    <string name="settings_export_failed">Tidak dapat mengekspor file</string>
+</resources>

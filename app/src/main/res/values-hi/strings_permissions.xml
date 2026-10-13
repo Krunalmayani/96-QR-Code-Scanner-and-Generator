@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">कैमरा एक्सेस की अनुमति दें</string>
+    <string name="perm_camera_screen_body">कैमरा सिर्फ़ तब QR कोड और बारकोड पढ़ने के लिए इस्तेमाल होता है जब स्कैन स्क्रीन खुली हो।</string>
+    <string name="perm_camera_point1_title">एक टैप में स्कैन करें</string>
+    <string name="perm_camera_point1_body">कोड फ़्रेम में आते ही पढ़ लिए जाते हैं।</string>
+    <string name="perm_camera_point2_title">कैमरा नहीं? कोई बात नहीं</string>
+    <string name="perm_camera_point2_body">आप सहेजी हुई इमेज से भी कोड स्कैन कर सकते हैं।</string>
+    <string name="perm_camera_point3_title">कभी भी बदलें</string>
+    <string name="perm_camera_point3_body">Android सेटिंग में एक्सेस मैनेज करें।</string>
+    <string name="perm_camera_allow">कैमरा अनुमति दें</string>
+    <string name="perm_not_now">अभी नहीं</string>
+    <string name="perm_camera_dialog_title">कैमरा एक्सेस ज़रूरी है</string>
+    <string name="perm_camera_dialog_body">QR कोड या बारकोड पढ़ने के लिए ऐप को आपके कैमरे की ज़रूरत है। यह सिर्फ़ तब इस्तेमाल होता है जब स्कैन स्क्रीन खुली हो।</string>
+    <string name="perm_continue">जारी रखें</string>
+    <string name="perm_photos_title">फ़ोटो एक्सेस की अनुमति दें</string>
+    <string name="perm_photos_body">सहेजी हुई इमेज से कोड पढ़ने के लिए अपनी गैलरी से कोई फ़ोटो चुनें। सिर्फ़ आपकी चुनी हुई इमेज पढ़ी जाती है।</string>
+    <string name="perm_photos_choose">फ़ोटो चुनें</string>
+    <string name="perm_photos_cancel">रद्द करें</string>
+    <string name="perm_location_title">लोकेशन क्यों?</string>
+    <string name="perm_location_body">कुछ Android वर्शन पर कोड से Wi-Fi नेटवर्क से जुड़ने के लिए लोकेशन अनुमति चाहिए। यह Android की ज़रूरत है, इस ऐप की नहीं।</string>
+    <string name="perm_location_point1">सिर्फ़ कनेक्शन की अनुमति देने के लिए इस्तेमाल होती है</string>
+    <string name="perm_location_point2">आप इसके बजाय पासवर्ड कॉपी कर सकते हैं</string>
+</resources>

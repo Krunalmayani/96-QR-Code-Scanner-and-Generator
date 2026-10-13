@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">Jeden QR-Code und Barcode sofort scannen</string>
+    <string name="onb_slide1_body">Kamera auf einen Code richten. Links, Wi-Fi, Kontakte, Termine und Produkte werden sofort erkannt.</string>
+    <string name="onb_slide1_chip">Code gefunden</string>
+    <string name="onb_slide2_title">QR-Codes für Links, Wi-Fi, Kontakte und mehr erstellen</string>
+    <string name="onb_slide2_body">Typ wählen, Details eintragen und vor dem Speichern oder Teilen Farben und Formen anpassen.</string>
+    <string name="onb_slide3_title">Der Verlauf bleibt auf dem Gerät, privat von Grund auf</string>
+    <string name="onb_slide3_body">Scans werden lokal gespeichert. Favoriten hinzufügen, einzelne Einträge oder alles jederzeit löschen.</string>
+    <string name="onb_slide3_chip_saved">Auf diesem Gerät gespeichert</string>
+    <string name="onb_slide3_chip_delete">Jederzeit löschbar</string>
+    <string name="onb_get_started">Los geht’s</string>
+    <string name="onb_page_indicator">Seite %1$d von %2$d</string>
+</resources>

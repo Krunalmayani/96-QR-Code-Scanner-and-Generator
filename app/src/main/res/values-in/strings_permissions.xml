@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">Izinkan akses kamera</string>
+    <string name="perm_camera_screen_body">Kamera hanya digunakan untuk membaca kode QR dan barcode saat layar pemindaian terbuka.</string>
+    <string name="perm_camera_point1_title">Pindai dengan satu ketukan</string>
+    <string name="perm_camera_point1_body">Kode dibaca begitu masuk ke dalam bingkai.</string>
+    <string name="perm_camera_point2_title">Tidak ada kamera? Tidak masalah</string>
+    <string name="perm_camera_point2_body">Anda tetap dapat memindai kode dari gambar tersimpan.</string>
+    <string name="perm_camera_point3_title">Ubah kapan saja</string>
+    <string name="perm_camera_point3_body">Kelola akses di pengaturan Android.</string>
+    <string name="perm_camera_allow">Izinkan kamera</string>
+    <string name="perm_not_now">Nanti saja</string>
+    <string name="perm_camera_dialog_title">Akses kamera diperlukan</string>
+    <string name="perm_camera_dialog_body">Untuk membaca kode QR atau barcode, aplikasi memerlukan kamera Anda. Kamera hanya digunakan saat layar pemindaian terbuka.</string>
+    <string name="perm_continue">Lanjutkan</string>
+    <string name="perm_photos_title">Izinkan akses ke foto</string>
+    <string name="perm_photos_body">Untuk membaca kode dari gambar tersimpan, pilih foto dari galeri Anda. Hanya gambar yang Anda pilih yang dibaca.</string>
+    <string name="perm_photos_choose">Pilih foto</string>
+    <string name="perm_photos_cancel">Batal</string>
+    <string name="perm_location_title">Mengapa Lokasi?</string>
+    <string name="perm_location_body">Pada beberapa versi Android, menyambung ke jaringan Wi-Fi dari kode memerlukan izin Lokasi. Android yang mewajibkannya untuk koneksi Wi-Fi, bukan aplikasi ini.</string>
+    <string name="perm_location_point1">Hanya digunakan untuk mengizinkan koneksi</string>
+    <string name="perm_location_point2">Anda tetap dapat menyalin sandi</string>
+</resources>

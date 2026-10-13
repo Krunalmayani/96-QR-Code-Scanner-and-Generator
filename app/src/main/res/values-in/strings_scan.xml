@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_title">Pindai</string>
+    <string name="scan_flash_on">Flash aktif</string>
+    <string name="scan_flash_off">Flash nonaktif</string>
+    <string name="scan_switch_camera">Ganti kamera</string>
+    <string name="scan_settings">Pengaturan</string>
+    <string name="scan_hint_qr">Sejajarkan kode di dalam bingkai</string>
+    <string name="scan_hint_barcode">Tahan dengan stabil dan masukkan barcode ke dalam bingkai</string>
+    <string name="scan_mode_qr">Kode QR</string>
+    <string name="scan_mode_barcode">Barcode</string>
+    <string name="scan_mode_all">Semua</string>
+    <string name="scan_zoom">Zoom</string>
+    <string name="scan_zoom_min">1x</string>
+    <string name="scan_zoom_max">%1$dx</string>
+    <string name="scan_from_gallery">Pindai dari galeri</string>
+
+    <string name="scan_batch_chip">Massal</string>
+    <string name="scan_batch_title">Pindai massal</string>
+    <string name="scan_batch_close">Tutup pindai massal</string>
+    <string name="scan_batch_sheet_title">Kumpulan ini</string>
+    <string name="scan_batch_newest_first">Terbaru dulu</string>
+    <string name="scan_batch_empty">Kode yang dipindai akan muncul di sini.</string>
+    <string name="scan_batch_finish">Selesaikan</string>
+    <plurals name="scan_batch_count">
+        <item quantity="other">%1$d kode dipindai</item>
+    </plurals>
+
+    <string name="scan_quick_just_now">Baru saja</string>
+    <string name="scan_quick_open_result">Buka hasil</string>
+    <string name="scan_quick_keep_scanning">Lanjut memindai</string>
+    <string name="scan_quick_check_address">Periksa alamat sebelum membukanya.</string>
+    <string name="scan_row_subtitle">%1$s · %2$s</string>
+
+    <string name="scan_type_website">Situs web</string>
+    <string name="scan_type_text">Teks</string>
+    <string name="scan_type_contact">Kontak</string>
+    <string name="scan_type_phone">Telepon</string>
+    <string name="scan_type_email">Email</string>
+    <string name="scan_type_sms">SMS</string>
+    <string name="scan_type_location">Lokasi</string>
+    <string name="scan_type_event">Acara</string>
+    <string name="scan_type_wifi">Wi-Fi</string>
+    <string name="scan_type_product">Produk</string>
+    <string name="scan_type_unknown">Tidak dikenal</string>
+
+    <string name="scan_denied_title">Akses kamera nonaktif</string>
+    <string name="scan_denied_message_request">Izinkan akses kamera untuk memindai kode secara langsung. Anda tetap dapat memindai kode dari gambar tersimpan.</string>
+    <string name="scan_denied_message_settings">Aktifkan izin kamera di pengaturan Android untuk memindai kode secara langsung. Anda tetap dapat memindai kode dari gambar tersimpan.</string>
+    <string name="scan_request_again">Minta lagi</string>
+    <string name="scan_open_settings">Buka pengaturan</string>
+    <string name="scan_denied_steps">Pengaturan, lalu Izin, lalu Kamera, lalu Izinkan hanya saat aplikasi digunakan.</string>
+    <string name="scan_unavailable_title">Kamera tidak tersedia</string>
+    <string name="scan_unavailable_message">Kami tidak dapat memulai kamera. Tutup aplikasi lain yang menggunakannya, lalu coba lagi.</string>
+
+    <string name="scan_image_choose_title">Pilih gambar</string>
+    <string name="scan_image_choose_message">Pilih tangkapan layar atau foto yang berisi kode QR atau barcode.</string>
+    <string name="scan_image_choose_button">Pilih gambar</string>
+    <string name="scan_image_preview">Gambar terpilih</string>
+    <string name="scan_image_reading_title">Membaca gambar</string>
+    <string name="scan_image_cancel">Batal</string>
+    <string name="scan_image_processing_title">Mencari kode</string>
+    <string name="scan_image_processing_message">Memeriksa gambar untuk kode QR dan barcode. Ini hanya sebentar.</string>
+    <string name="scan_image_result_title">Hasil pindai</string>
+    <string name="scan_image_from_image">Dari gambar · Baru saja</string>
+    <string name="scan_image_pick_one">Pilih kode yang ingin dibuka.</string>
+    <string name="scan_image_open_result">Buka hasil</string>
+    <plurals name="scan_image_codes_found">
+        <item quantity="other">%1$d kode ditemukan</item>
+    </plurals>
+    <string name="scan_nocode_title">Kode QR atau barcode tidak ditemukan</string>
+    <string name="scan_nocode_message">Kami tidak dapat membaca kode di gambar ini. Beberapa pemeriksaan cepat dapat membantu.</string>
+    <string name="scan_nocode_tip_visible">Pastikan seluruh kode terlihat, lengkap dengan tepi putihnya.</string>
+    <string name="scan_nocode_tip_quality">Hindari silau, buram, dan pemotongan berlebihan.</string>
+    <string name="scan_nocode_tip_resolution">Coba file asli beresolusi lebih tinggi atau tangkapan layar.</string>
+    <string name="scan_nocode_try_another">Coba gambar lain</string>
+    <string name="scan_nocode_use_camera">Gunakan kamera</string>
+    <string name="scan_unreadable_title">Gambar ini tidak dapat dibuka</string>
+    <string name="scan_unreadable_message">File mungkin rusak atau dalam format yang tidak didukung. Coba gambar lain.</string>
+</resources>

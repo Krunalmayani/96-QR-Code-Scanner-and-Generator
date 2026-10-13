@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_back">वापस</string>
+    <string name="common_close">बंद करें</string>
+    <string name="common_clear">साफ़ करें</string>
+    <string name="common_ok">ठीक है</string>
+    <string name="common_cancel">रद्द करें</string>
+    <string name="common_done">हो गया</string>
+    <string name="common_next">आगे</string>
+    <string name="common_skip">छोड़ें</string>
+    <string name="common_save">सहेजें</string>
+    <string name="common_copy">कॉपी करें</string>
+    <string name="common_share">शेयर करें</string>
+    <string name="common_delete">हटाएं</string>
+    <string name="common_edit">बदलें</string>
+    <string name="common_open">खोलें</string>
+    <string name="common_undo">पूर्ववत करें</string>
+    <string name="common_retry">फिर कोशिश करें</string>
+    <string name="common_search">खोजें</string>
+    <string name="common_more">और विकल्प</string>
+    <string name="common_favorite">पसंदीदा में जोड़ें</string>
+    <string name="common_unfavorite">पसंदीदा से हटाएं</string>
+    <string name="common_loading">लोड हो रहा है</string>
+    <string name="common_yes">हां</string>
+    <string name="common_no">नहीं</string>
+    <string name="common_copied">कॉपी हो गया</string>
+    <string name="common_something_went_wrong">कुछ गड़बड़ हो गई</string>
+    <string name="common_nav_create">बनाएं</string>
+    <string name="common_nav_scan">स्कैन</string>
+    <string name="common_nav_history">इतिहास</string>
+    <string name="common_nav_settings">सेटिंग</string>
+    <string name="common_show_password">पासवर्ड दिखाएं</string>
+    <string name="common_hide_password">पासवर्ड छिपाएं</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">Pindai kode QR atau barcode apa pun secara instan</string>
+    <string name="onb_slide1_body">Arahkan kamera ke kode. Tautan, Wi-Fi, kontak, acara, dan produk langsung dikenali.</string>
+    <string name="onb_slide1_chip">Kode ditemukan</string>
+    <string name="onb_slide2_title">Buat kode QR untuk tautan, Wi-Fi, kontak, dan lainnya</string>
+    <string name="onb_slide2_body">Pilih jenis, isi detail, lalu kustomisasi warna dan bentuk sebelum menyimpan atau membagikan.</string>
+    <string name="onb_slide3_title">Riwayat tetap di perangkat Anda, privat sejak awal</string>
+    <string name="onb_slide3_body">Pindaian Anda disimpan secara lokal. Tambahkan favorit, hapus satu item, atau bersihkan semuanya kapan saja.</string>
+    <string name="onb_slide3_chip_saved">Disimpan di perangkat ini</string>
+    <string name="onb_slide3_chip_delete">Hapus kapan saja</string>
+    <string name="onb_get_started">Mulai</string>
+    <string name="onb_page_indicator">Halaman %1$d dari %2$d</string>
+</resources>

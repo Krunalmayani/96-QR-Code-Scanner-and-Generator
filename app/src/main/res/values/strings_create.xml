@@ -137,7 +137,7 @@
     <string name="create_helper_ean8">7 digits, check digit added</string>
     <string name="create_helper_upca">11 digits, check digit added</string>
     <string name="create_helper_code128">Letters, digits and symbols (ASCII)</string>
-    <string name="create_helper_code39">Capital letters, digits, space and - . $ / + %</string>
+    <string name="create_helper_code39" formatted="false">Capital letters, digits, space and - . $ / + %</string>
     <string name="create_helper_itf">An even number of digits</string>
     <string name="create_helper_2d">Any text, up to 1000 characters</string>
     <string name="create_barcode_status_incomplete">%1$d of %2$d digits</string>

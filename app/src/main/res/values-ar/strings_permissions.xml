@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">السماح بالوصول إلى الكاميرا</string>
+    <string name="perm_camera_screen_body">تُستخدم الكاميرا فقط لقراءة رموز QR والباركود أثناء فتح شاشة المسح.</string>
+    <string name="perm_camera_point1_title">امسح بلمسة واحدة</string>
+    <string name="perm_camera_point1_body">تُقرأ الرموز بمجرد ظهورها في الإطار.</string>
+    <string name="perm_camera_point2_title">لا توجد كاميرا؟ لا مشكلة</string>
+    <string name="perm_camera_point2_body">ما زال بإمكانك مسح الرموز من الصور المحفوظة.</string>
+    <string name="perm_camera_point3_title">غيّر ذلك في أي وقت</string>
+    <string name="perm_camera_point3_body">أدر الوصول من إعدادات Android.</string>
+    <string name="perm_camera_allow">السماح بالكاميرا</string>
+    <string name="perm_not_now">ليس الآن</string>
+    <string name="perm_camera_dialog_title">الوصول إلى الكاميرا مطلوب</string>
+    <string name="perm_camera_dialog_body">لقراءة رمز QR أو باركود، يحتاج التطبيق إلى الكاميرا. تُستخدم فقط أثناء فتح شاشة المسح.</string>
+    <string name="perm_continue">متابعة</string>
+    <string name="perm_photos_title">السماح بالوصول إلى الصور</string>
+    <string name="perm_photos_body">لقراءة رمز من صورة محفوظة، اختر صورة من معرضك. تُقرأ الصورة التي تختارها فقط.</string>
+    <string name="perm_photos_choose">اختيار صورة</string>
+    <string name="perm_photos_cancel">إلغاء</string>
+    <string name="perm_location_title">لماذا الموقع؟</string>
+    <string name="perm_location_body">في بعض إصدارات Android، يتطلب الاتصال بشبكة Wi-Fi من رمز إذن الموقع. يشترطه Android لاتصالات Wi-Fi وليس هذا التطبيق.</string>
+    <string name="perm_location_point1">يُستخدم فقط للسماح بالاتصال</string>
+    <string name="perm_location_point2">ما زال بإمكانك نسخ كلمة المرور بدلًا من ذلك</string>
+</resources>

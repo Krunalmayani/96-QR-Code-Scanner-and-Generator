@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hist_title">Riwayat</string>
+    <string name="hist_tab_scanned">Dipindai</string>
+    <string name="hist_tab_created">Dibuat</string>
+    <string name="hist_search_placeholder">Cari riwayat</string>
+
+    <string name="hist_chip_all">Semua</string>
+    <string name="hist_chip_favorites">Favorit</string>
+    <string name="hist_chip_favorites_count">Favorit · %1$d</string>
+    <string name="hist_chip_links">Tautan</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">Kontak</string>
+    <string name="hist_chip_text">Teks</string>
+    <string name="hist_chip_phone">Telepon</string>
+    <string name="hist_chip_email">Email</string>
+    <string name="hist_chip_location">Lokasi</string>
+    <string name="hist_chip_events">Acara</string>
+    <string name="hist_chip_products">Produk</string>
+
+    <string name="hist_day_today">Hari ini</string>
+    <string name="hist_day_yesterday">Kemarin</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">Situs web</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">Kontak</string>
+    <string name="hist_type_text">Teks</string>
+    <string name="hist_type_phone">Telepon</string>
+    <string name="hist_type_email">Email</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">Lokasi</string>
+    <string name="hist_type_event">Acara</string>
+    <string name="hist_type_product">Produk</string>
+    <string name="hist_type_unknown">Lainnya</string>
+    <plurals name="hist_search_results">
+        <item quantity="other">%d hasil</item>
+    </plurals>
+
+    <string name="hist_cd_select_items">Pilih item</string>
+    <string name="hist_cd_exit_selection">Keluar dari pilihan</string>
+    <string name="hist_cd_select_all">Pilih semua</string>
+    <string name="hist_cd_favorite_selected">Favoritkan yang dipilih</string>
+    <string name="hist_cd_close_search">Tutup pencarian</string>
+    <string name="hist_cd_select_row">Pilih</string>
+    <string name="hist_cd_open_row">Buka</string>
+    <string name="hist_menu_export_history">Ekspor riwayat</string>
+    <string name="hist_menu_export_selected">Ekspor sebagai CSV</string>
+    <plurals name="hist_selected_count">
+        <item quantity="other">%d dipilih</item>
+    </plurals>
+
+    <plurals name="hist_deleted_scans">
+        <item quantity="other">%d pindaian dihapus</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="other">%d kode dihapus</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="other">%d item dihapus</item>
+    </plurals>
+
+    <string name="hist_share_chooser_title">Bagikan riwayat</string>
+    <string name="hist_export_chooser_title">Ekspor riwayat</string>
+    <string name="hist_share_failed">Tidak dapat membagikan item ini</string>
+    <string name="hist_export_failed">Tidak dapat mengekspor item ini</string>
+
+    <string name="hist_empty_scanned_title">Belum ada pindaian</string>
+    <string name="hist_empty_scanned_message">Kode yang Anda pindai muncul di sini, disimpan hanya di perangkat ini.</string>
+    <string name="hist_empty_scanned_action">Mulai memindai</string>
+    <string name="hist_empty_created_title">Belum ada yang dibuat</string>
+    <string name="hist_empty_created_message">Kode yang Anda buat muncul di sini, disimpan hanya di perangkat ini.</string>
+    <string name="hist_empty_created_action">Buat kode</string>
+    <string name="hist_empty_favorites_title">Belum ada favorit</string>
+    <string name="hist_empty_favorites_message">Ketuk bintang pada pindaian atau kode buatan mana pun agar mudah diakses.</string>
+    <string name="hist_empty_favorites_action">Telusuri riwayat</string>
+    <string name="hist_empty_filter_title">Tidak ada jenis ini</string>
+    <string name="hist_empty_filter_message">Kode jenis ini akan muncul di sini setelah Anda memindai atau membuatnya.</string>
+    <string name="hist_empty_filter_action">Tampilkan semua</string>
+    <string name="hist_empty_search_title">Tidak ada hasil</string>
+    <string name="hist_empty_search_message">Tidak ada yang cocok dengan “%1$s”. Coba kata lain.</string>
+</resources>

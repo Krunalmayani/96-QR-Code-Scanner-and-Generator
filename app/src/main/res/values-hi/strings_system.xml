@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">स्कैनर पसंद आ रहा है?</string>
+    <string name="system_rate_body">एक छोटी रेटिंग से दूसरे लोगों को ऐप खोजने में मदद मिलती है।</string>
+    <string name="system_rate_action_play">Google Play पर रेट करें</string>
+    <string name="system_rate_action_feedback">फ़ीडबैक भेजें</string>
+    <string name="system_rate_later">शायद बाद में</string>
+    <string name="system_rate_stars_group">रेटिंग</string>
+    <plurals name="system_rate_star">
+        <item quantity="one">%d स्टार</item>
+        <item quantity="other">%d स्टार</item>
+    </plurals>
+    <string name="system_update_title">अपडेट उपलब्ध है</string>
+    <string name="system_update_body">सुधारों और फ़िक्स के साथ नया वर्शन उपलब्ध है।</string>
+    <string name="system_update_action">अपडेट करें</string>
+    <string name="system_update_later">बाद में</string>
+    <string name="system_update_ready_title">अपडेट डाउनलोड हो गया</string>
+    <string name="system_update_ready_body">नया वर्शन इंस्टॉल पूरा करने के लिए ऐप फिर से शुरू करें।</string>
+    <string name="system_update_ready_action">रीस्टार्ट करें</string>
+</resources>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="result_title_website">Tautan situs web</string>
+    <string name="result_title_text">Teks</string>
+    <string name="result_title_contact">Kontak</string>
+    <string name="result_title_wifi">Jaringan Wi-Fi</string>
+    <string name="result_title_event">Acara</string>
+    <string name="result_title_phone">Nomor telepon</string>
+    <string name="result_title_email">Email</string>
+    <string name="result_title_sms">SMS</string>
+    <string name="result_title_location">Lokasi</string>
+    <string name="result_title_product">Produk</string>
+    <string name="result_title_unknown">Data hasil pindai</string>
+    <string name="result_title_product_search">Cari produk</string>
+
+    <string name="result_badge_website">Situs web</string>
+    <string name="result_badge_text">Teks</string>
+    <string name="result_badge_contact">Kontak</string>
+    <string name="result_badge_phone">Telepon</string>
+    <string name="result_badge_email">Email</string>
+    <string name="result_badge_sms">SMS</string>
+    <string name="result_badge_location">Lokasi</string>
+    <string name="result_badge_event">Acara</string>
+    <string name="result_badge_wifi">Wi-Fi</string>
+    <string name="result_badge_product">Produk</string>
+    <string name="result_badge_unknown">Lainnya</string>
+    <string name="result_badge_created">Dibuat</string>
+
+    <string name="result_when_today">Hari ini, %1$s</string>
+    <string name="result_when_yesterday">Kemarin, %1$s</string>
+    <string name="result_when_date">%1$s · %2$s</string>
+    <string name="result_caption">%1$s · %2$s</string>
+    <string name="result_kind_qr">Kode QR</string>
+    <string name="result_kind_barcode">Barcode</string>
+
+    <string name="result_label_type">Jenis</string>
+    <string name="result_label_format">Format</string>
+    <string name="result_label_source">Sumber</string>
+    <string name="result_source_camera">Kamera</string>
+    <string name="result_source_image">Gambar</string>
+    <string name="result_source_created">Dibuat</string>
+    <string name="result_favorite">Favorit</string>
+    <string name="result_favorited">Difavoritkan</string>
+    <string name="result_not_found_title">Tidak ada yang ditampilkan</string>
+    <string name="result_not_found_message">Item ini sudah tidak ada di riwayat Anda.</string>
+
+    <string name="result_website_opens">Membuka</string>
+    <string name="result_website_https">https</string>
+    <string name="result_website_http">http</string>
+    <string name="result_website_secure">Koneksi aman</string>
+    <string name="result_website_not_secure">Tidak aman</string>
+    <string name="result_website_check_title">Periksa tautan sebelum membuka</string>
+    <string name="result_website_check_body">Pastikan alamatnya sesuai dengan orang yang memberi Anda kode. Waspadai halaman login.</string>
+    <string name="result_website_type_value">Alamat web (URL)</string>
+    <string name="result_website_full_link">Tautan lengkap</string>
+    <string name="result_action_open_link">Buka tautan</string>
+
+    <string name="result_text_content">Isi</string>
+    <plurals name="result_characters">
+        <item quantity="other">%d karakter</item>
+    </plurals>
+    <string name="result_text_stats">%1$s · tekan lama untuk memilih</string>
+    <string name="result_text_type_value">Teks biasa</string>
+    <string name="result_action_copy_text">Salin teks</string>
+
+    <string name="result_contact_phone">Telepon</string>
+    <string name="result_contact_email">Email</string>
+    <string name="result_contact_company">Perusahaan</string>
+    <string name="result_contact_website">Situs web</string>
+    <string name="result_contact_address">Alamat</string>
+    <string name="result_contact_note">Catatan</string>
+    <string name="result_action_add_contact">Tambah ke kontak</string>
+
+    <string name="result_phone_label">Nomor telepon</string>
+    <string name="result_phone_dialer_note">Menelepon akan membuka aplikasi telepon dengan nomor ini sudah terisi. Tidak ada panggilan sampai Anda menekan panggil.</string>
+    <string name="result_action_call">Telepon</string>
+    <string name="result_action_send_sms">Kirim SMS</string>
+    <string name="result_action_add_contact_short">Tambah kontak</string>
+
+    <string name="result_email_to_label">Kepada</string>
+    <string name="result_email_subject">Subjek</string>
+    <string name="result_email_message">Pesan</string>
+    <string name="result_action_compose_email">Tulis email</string>
+    <string name="result_action_copy_address">Salin alamat</string>
+
+    <string name="result_sms_to">Kepada</string>
+    <string name="result_sms_note">Tarif pesan standar dari operator Anda mungkin berlaku saat mengirim.</string>
+    <string name="result_action_open_messages">Buka di Pesan</string>
+
+    <string name="result_location_map_description">Pratinjau peta</string>
+    <string name="result_location_name">Nama</string>
+    <string name="result_location_latitude">Lintang</string>
+    <string name="result_location_longitude">Bujur</string>
+    <string name="result_action_open_maps">Buka di Maps</string>
+    <string name="result_action_copy_coordinates">Salin koordinat</string>
+
+    <string name="result_event_starts">Mulai</string>
+    <string name="result_event_ends">Selesai</string>
+    <string name="result_event_where">Tempat</string>
+    <string name="result_event_description">Deskripsi</string>
+    <string name="result_event_all_day">Sepanjang hari</string>
+    <string name="result_action_add_calendar">Tambah ke kalender</string>
+    <string name="result_action_directions">Petunjuk arah</string>
+
+    <string name="result_wifi_network_name">Nama jaringan</string>
+    <string name="result_wifi_security_wpa">WPA/WPA2/WPA3</string>
+    <string name="result_wifi_security_wep">WEP</string>
+    <string name="result_wifi_security_none">Jaringan terbuka</string>
+    <string name="result_wifi_visible">Jaringan terlihat</string>
+    <string name="result_wifi_hidden">Jaringan tersembunyi</string>
+    <string name="result_wifi_password">Sandi</string>
+    <string name="result_wifi_no_password">Tidak perlu sandi</string>
+    <string name="result_wifi_info_title">Koneksi memakai konfirmasi Android</string>
+    <string name="result_wifi_info_body">Anda mengonfirmasi koneksi di dialog sistem. Beberapa perangkat meminta izin Lokasi terlebih dahulu.</string>
+    <string name="result_wifi_why_location">Mengapa Lokasi?</string>
+    <string name="result_action_copy_password">Salin sandi</string>
+    <string name="result_action_connect">Sambungkan</string>
+    <string name="result_wifi_connecting_title">Menyambung ke %1$s</string>
+    <string name="result_wifi_connecting_body">Biasanya hanya butuh beberapa detik</string>
+    <string name="result_wifi_connected_title">Tersambung</string>
+    <string name="result_wifi_connected_body">Anda sekarang terhubung ke %1$s</string>
+    <string name="result_wifi_saved_title">Jaringan disimpan</string>
+    <string name="result_wifi_saved_body">Ponsel Anda akan tersambung ke %1$s saat berada dalam jangkauan.</string>
+    <string name="result_wifi_saved_to">Disimpan di</string>
+    <string name="result_wifi_saved_to_history">Riwayat</string>
+    <string name="result_wifi_network">Jaringan</string>
+    <string name="result_wifi_security">Keamanan</string>
+    <string name="result_wifi_failed_title">Tidak dapat tersambung</string>
+    <string name="result_wifi_failed_unavailable">Sandi mungkin salah, atau jaringan di luar jangkauan.</string>
+    <string name="result_wifi_failed_permission">Izin Lokasi tidak diberikan, sehingga Android tidak dapat memulai koneksi. Anda tetap dapat menyalin sandi.</string>
+    <string name="result_wifi_failed_unsupported">Jenis keamanan ini tidak dapat disambungkan dari aplikasi pada versi Android ini. Anda tetap dapat menyalin sandi.</string>
+    <string name="result_wifi_failed_invalid_password">Sandi tidak valid untuk jenis jaringan ini.</string>
+    <string name="result_wifi_failed_disabled">Wi-Fi nonaktif. Aktifkan lalu coba lagi.</string>
+    <string name="result_wifi_failed_error">Terjadi kesalahan saat menyambung.</string>
+
+    <string name="result_product_barcode">Barcode</string>
+    <string name="result_product_number">Nomor</string>
+    <string name="result_product_scanned">Dipindai</string>
+    <string name="result_product_disclaimer">Hasil berasal dari situs web eksternal. Harga, ulasan, dan detail dapat berbeda menurut wilayah dan waktu, dan aplikasi ini tidak berafiliasi dengan mereka.</string>
+    <string name="result_action_search_product">Cari produk secara online</string>
+    <string name="result_product_search_on">Cari di</string>
+    <string name="result_product_google">Google</string>
+    <string name="result_product_google_hint">Hasil web</string>
+    <string name="result_product_off">Open Food Facts</string>
+    <string name="result_product_off_hint">Bahan dan nutrisi</string>
+    <string name="result_product_amazon">Amazon</string>
+    <string name="result_product_amazon_hint">Harga dan ulasan</string>
+    <string name="result_product_search_note">Hasil berasal dari situs web eksternal. Hanya nomor barcode yang dikirim, dan hanya saat Anda memilih situs.</string>
+    <string name="result_product_offline_title">Anda sedang offline</string>
+    <string name="result_product_offline_body">Detail produk memerlukan koneksi internet. Memindai dan membuat kode tetap berfungsi tanpa internet.</string>
+    <string name="result_action_copy_number">Salin nomor</string>
+
+    <string name="result_unknown_raw">Data mentah</string>
+    <string name="result_unknown_view_text">Teks</string>
+    <string name="result_unknown_view_hex">Hex</string>
+    <string name="result_unknown_not_recognized">%1$s · kami tidak dapat mengenali jenis tertentu</string>
+    <string name="result_unknown_encoding">Pengodean</string>
+    <string name="result_unknown_encoding_value">Teks UTF-8</string>
+    <string name="result_unknown_hex_truncated">Menampilkan %1$d dari %2$d byte pertama</string>
+    <string name="result_action_copy_data">Salin data</string>
+
+    <string name="result_unsafe_title_unsafe">Tautan ini mungkin tidak aman</string>
+    <string name="result_unsafe_title_caution">Periksa tautan ini dulu</string>
+    <string name="result_unsafe_body_unsafe">Pemeriksaan offline menemukan tanda bahwa alamat ini mungkin mencoba menipu Anda. Tidak ada data yang dikirim ke mana pun.</string>
+    <string name="result_unsafe_body_caution">Beberapa hal pada alamat ini perlu dicermati lagi. Tidak ada data yang dikirim ke mana pun.</string>
+    <string name="result_unsafe_go_back">Kembali ke tempat aman</string>
+    <string name="result_unsafe_copy">Salin tautan saja</string>
+    <string name="result_unsafe_open_anyway">Tetap buka</string>
+    <string name="result_risk_not_https">Tidak aman</string>
+    <string name="result_risk_not_https_detail">Memakai http, bukan https</string>
+    <string name="result_risk_lookalike">Mirip</string>
+    <string name="result_risk_lookalike_detail">Menyerupai %1$s</string>
+    <string name="result_risk_punycode">Karakter aneh</string>
+    <string name="result_risk_punycode_detail">Alamat memakai karakter tidak biasa yang dapat menyerupai huruf lain</string>
+    <string name="result_risk_tld">Akhiran berisiko</string>
+    <string name="result_risk_tld_detail">Alamat berakhiran .%1$s sering dipakai untuk penipuan</string>
+    <string name="result_risk_shortener">Tautan pendek</string>
+    <string name="result_risk_shortener_detail">%1$s menyembunyikan tujuan sebenarnya</string>
+    <string name="result_risk_ip">Alamat IP</string>
+    <string name="result_risk_ip_detail">Menuju angka, bukan nama situs web</string>
+    <string name="result_risk_userinfo">Login tersembunyi</string>
+    <string name="result_risk_userinfo_detail">Teks sebelum @ hanyalah pengecoh; situs sebenarnya ada setelahnya</string>
+    <string name="result_risk_subdomains">Alamat panjang</string>
+    <string name="result_risk_subdomains_detail">Alamat ini memiliki %1$s bagian, yang tidak biasa</string>
+    <string name="result_risk_scheme">Bukan tautan web</string>
+    <string name="result_risk_scheme_detail">Memakai %1$s, bukan http atau https</string>
+    <string name="result_risk_long">Sangat panjang</string>
+    <string name="result_risk_long_detail">Tautan ini sepanjang %1$s karakter</string>
+
+    <string name="result_share_title">Bagikan</string>
+    <string name="result_share_as_text">Bagikan sebagai teks</string>
+    <string name="result_share_as_image">Bagikan sebagai gambar</string>
+    <string name="result_action_share_text">Bagikan</string>
+
+    <string name="result_note_label">Catatan</string>
+    <string name="result_note_placeholder">Tambahkan catatan atau label</string>
+    <string name="result_note_helper">Disimpan hanya di perangkat ini</string>
+    <string name="result_action_edit_style">Edit gaya</string>
+    <string name="result_delete_title_scan">Hapus pindaian ini?</string>
+    <string name="result_delete_title_created">Hapus kode ini?</string>
+    <string name="result_delete_message">\"%1$s\" akan dihapus dari riwayat Anda di perangkat ini.</string>
+
+    <string name="result_msg_no_app">Tidak ada aplikasi untuk membukanya</string>
+    <string name="result_msg_cannot_open">Ini tidak dapat dibuka</string>
+    <string name="result_msg_still_offline">Masih offline. Periksa koneksi Anda lalu coba lagi.</string>
+</resources>

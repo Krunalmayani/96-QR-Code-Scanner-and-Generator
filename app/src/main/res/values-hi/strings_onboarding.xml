@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onb_slide1_title">किसी भी QR कोड या बारकोड को तुरंत स्कैन करें</string>
+    <string name="onb_slide1_body">कैमरा कोड की तरफ़ करें। लिंक, Wi-Fi, संपर्क, इवेंट और प्रोडक्ट तुरंत पहचान लिए जाते हैं।</string>
+    <string name="onb_slide1_chip">कोड मिल गया</string>
+    <string name="onb_slide2_title">लिंक, Wi-Fi, संपर्क और बहुत कुछ के लिए QR कोड बनाएं</string>
+    <string name="onb_slide2_body">प्रकार चुनें, जानकारी भरें, फिर सहेजने या शेयर करने से पहले रंग और आकार कस्टमाइज़ करें।</string>
+    <string name="onb_slide3_title">इतिहास आपके डिवाइस पर रहता है, डिज़ाइन से ही निजी</string>
+    <string name="onb_slide3_body">आपके स्कैन लोकल रूप से सहेजे जाते हैं। पसंदीदा जोड़ें, एक आइटम हटाएं या जब चाहें सब कुछ साफ़ करें।</string>
+    <string name="onb_slide3_chip_saved">इस डिवाइस पर सहेजा गया</string>
+    <string name="onb_slide3_chip_delete">कभी भी हटाएं</string>
+    <string name="onb_get_started">शुरू करें</string>
+    <string name="onb_page_indicator">पेज %1$d / %2$d</string>
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_title">सेटिंग</string>
+    <string name="settings_section_scanning">स्कैनिंग</string>
+    <string name="settings_section_appearance">दिखावट</string>
+    <string name="settings_section_privacy">गोपनीयता और डेटा</string>
+    <string name="settings_section_about">जानकारी और सहायता</string>
+
+    <string name="settings_vibrate">स्कैन पर वाइब्रेट करें</string>
+    <string name="settings_beep">बीप की आवाज़</string>
+    <string name="settings_flash_on_start">शुरू होने पर फ़्लैश</string>
+    <string name="settings_auto_open">लिंक अपने आप खोलें</string>
+    <string name="settings_auto_open_hint">डिफ़ॉल्ट रूप से बंद। लिंक सिर्फ़ टैप करने पर खुलते हैं।</string>
+    <string name="settings_continuous">लगातार स्कैन मोड</string>
+    <string name="settings_continuous_hint">हर कोड के बाद स्कैन करते रहें।</string>
+    <string name="settings_scan_area">स्कैन क्षेत्र</string>
+    <string name="settings_scan_area_hint">कोड सिर्फ़ फ़्रेम के अंदर पढ़ें, या स्क्रीन पर कहीं भी।</string>
+    <string name="settings_scan_area_frame">सिर्फ़ फ़्रेम</string>
+    <string name="settings_scan_area_full">पूरी स्क्रीन</string>
+
+    <string name="settings_sites_title">प्रोडक्ट खोज का क्रम</string>
+    <string name="settings_sites_hint">बारकोड खोजते समय साइटें इसी क्रम में दिखाई जाती हैं।</string>
+    <string name="settings_site_move_up">%1$s ऊपर ले जाएं</string>
+    <string name="settings_site_move_down">%1$s नीचे ले जाएं</string>
+
+    <string name="settings_theme">थीम</string>
+    <string name="settings_theme_system">सिस्टम डिफ़ॉल्ट</string>
+    <string name="settings_theme_light">लाइट</string>
+    <string name="settings_theme_dark">डार्क</string>
+    <string name="settings_language">भाषा</string>
+    <string name="settings_language_system">सिस्टम डिफ़ॉल्ट</string>
+
+    <string name="settings_privacy_banner_title">इतिहास सिर्फ़ आपके डिवाइस पर रहता है</string>
+    <string name="settings_privacy_banner_text">आप किसी भी समय एक आइटम या सब कुछ हटा सकते हैं।</string>
+    <string name="settings_perm_camera">कैमरा</string>
+    <string name="settings_perm_camera_hint">QR कोड और बारकोड पढ़ें</string>
+    <string name="settings_perm_photos">फ़ोटो</string>
+    <string name="settings_perm_photos_hint">सहेजी हुई इमेज से कोड स्कैन करें</string>
+    <string name="settings_perm_location">लोकेशन</string>
+    <string name="settings_perm_location_hint">सिर्फ़ तब जब Wi-Fi कोड से जुड़ते समय Android पूछे</string>
+    <string name="settings_perm_internet">इंटरनेट</string>
+    <string name="settings_perm_internet_hint">अपने ब्राउज़र में वेबसाइट और खोज खोलें</string>
+    <string name="settings_manage_android">Android सेटिंग में मैनेज करें</string>
+    <string name="settings_save_history">स्कैन इतिहास सहेजें</string>
+    <string name="settings_save_history_hint">नए स्कैन को इतिहास से बाहर रखने के लिए बंद करें।</string>
+    <string name="settings_analytics">गुमनाम उपयोग डेटा शेयर करें</string>
+    <string name="settings_analytics_hint">ऐप को बेहतर बनाने में मदद करता है। इसमें आपके कोड कभी शामिल नहीं होते।</string>
+    <string name="settings_clear_history">इतिहास साफ़ करें</string>
+    <string name="settings_export_history">इतिहास एक्सपोर्ट करें</string>
+    <string name="settings_privacy_summary">गोपनीयता सारांश</string>
+    <string name="settings_privacy_policy_web">पूरी गोपनीयता नीति</string>
+
+    <string name="settings_help">सहायता और FAQ</string>
+    <string name="settings_feedback">फ़ीडबैक भेजें</string>
+    <string name="settings_rate">Google Play पर रेट करें</string>
+    <string name="settings_share_app">यह ऐप शेयर करें</string>
+    <string name="settings_about">जानकारी</string>
+
+    <string name="settings_history_empty">इतिहास पहले से खाली है</string>
+    <plurals name="settings_history_cleared">
+        <item quantity="one">%d आइटम साफ़ किया गया</item>
+        <item quantity="other">%d आइटम साफ़ किए गए</item>
+    </plurals>
+    <string name="settings_no_app_found">इसे खोलने के लिए कोई ऐप नहीं मिला</string>
+    <string name="settings_play_unavailable">Google Play नहीं खुल सका</string>
+
+    <string name="settings_clear_title">पूरा इतिहास साफ़ करें?</string>
+    <string name="settings_clear_message">इससे यह सब इस डिवाइस से हट जाएगा। इसे वापस नहीं किया जा सकता।</string>
+    <plurals name="settings_clear_scanned">
+        <item quantity="one">%d स्कैन किया कोड</item>
+        <item quantity="other">%d स्कैन किए कोड</item>
+    </plurals>
+    <plurals name="settings_clear_created">
+        <item quantity="one">%d बनाया कोड</item>
+        <item quantity="other">%d बनाए कोड</item>
+    </plurals>
+    <string name="settings_clear_keep_favorites">मेरे पसंदीदा रखें</string>
+    <string name="settings_clear_confirm">सब साफ़ करें</string>
+
+    <string name="settings_language_search">भाषाएं खोजें</string>
+    <string name="settings_language_no_match">कोई मेल खाती भाषा नहीं</string>
+
+    <string name="settings_help_title">सहायता और FAQ</string>
+    <string name="settings_contact_support">सहायता से संपर्क करें</string>
+    <string name="settings_faq_expanded">खुला</string>
+    <string name="settings_faq_collapsed">बंद</string>
+    <string name="settings_faq_wont_scan_q">मेरा कोड स्कैन क्यों नहीं हो रहा?</string>
+    <string name="settings_faq_wont_scan_a">फ़ोन को 15 से 30 सेमी दूर रखें, फ़्लैश से रोशनी बढ़ाएं और कोड को फ़्रेम के अंदर सीधा रखें। खराब कोड को दो बार कोशिश करनी पड़ सकती है।</string>
+    <string name="settings_faq_offline_q">क्या मैं बिना इंटरनेट के स्कैन कर सकता हूं?</string>
+    <string name="settings_faq_offline_a">हां। स्कैन करना और कोड बनाना ऑफ़लाइन काम करता है। इंटरनेट सिर्फ़ लिंक खोलने या प्रोडक्ट खोजने के लिए चाहिए।</string>
+    <string name="settings_faq_colors_q">कोड के रंग कैसे बदलूं?</string>
+    <string name="settings_faq_colors_a">कोड बनाने के बाद कस्टमाइज़ करें पर टैप करें और रंग टैब में रंग चुनें। कंट्रास्ट अच्छा रखें ताकि कोड आसानी से स्कैन हो।</string>
+    <string name="settings_faq_history_q">मेरा इतिहास कहां सहेजा जाता है?</string>
+    <string name="settings_faq_history_a">सिर्फ़ आपके फ़ोन पर। कुछ भी अपलोड नहीं होता। आप सेटिंग में एक आइटम हटा सकते हैं या सब कुछ साफ़ कर सकते हैं।</string>
+    <string name="settings_faq_photo_q">फ़ोटो से स्कैन कैसे करूं?</string>
+    <string name="settings_faq_photo_a">स्कैन स्क्रीन पर गैलरी बटन टैप करें और कोई इमेज चुनें। ऐप उसमें मौजूद कोई भी कोड पढ़ लेता है। फ़ोटो कभी आपके फ़ोन से बाहर नहीं जाती।</string>
+    <string name="settings_faq_auto_open_q">लिंक अपने आप क्यों नहीं खुलता?</string>
+    <string name="settings_faq_auto_open_a">आपकी सुरक्षा के लिए लिंक सिर्फ़ टैप करने पर खुलते हैं। आप सेटिंग में लिंक अपने आप खोलें चालू कर सकते हैं, लेकिन पहले पता जांच लें।</string>
+    <string name="settings_faq_wifi_q">कोड से Wi-Fi से कैसे जुड़ें?</string>
+    <string name="settings_faq_wifi_a">Wi-Fi कोड स्कैन करें, फिर कनेक्ट करें पर टैप करें। नेटवर्क से जुड़ने से पहले Android लोकेशन अनुमति मांग सकता है। आप पासवर्ड कॉपी भी कर सकते हैं।</string>
+    <string name="settings_faq_types_q">मैं कौन से कोड स्कैन कर सकता हूं?</string>
+    <string name="settings_faq_types_a">QR कोड और आम बारकोड जैसे EAN, UPC, Code 128, Code 39, Data Matrix, PDF417 और Aztec।</string>
+    <string name="settings_faq_export_q">अपना इतिहास कैसे एक्सपोर्ट करूं?</string>
+    <string name="settings_faq_export_a">सेटिंग खोलें, फिर इतिहास एक्सपोर्ट करें। CSV, JSON या टेक्स्ट चुनें, फिर फ़ाइल सहेजें या शेयर करें।</string>
+    <string name="settings_faq_language_q">भाषा कैसे बदलूं?</string>
+    <string name="settings_faq_language_a">सेटिंग खोलें, फिर भाषा, और कोई एक चुनें। ऐप तुरंत बदल जाता है।</string>
+
+    <string name="settings_privacy_title">गोपनीयता</string>
+    <string name="settings_privacy_hero_title">आपके स्कैन आपके फ़ोन पर ही रहते हैं</string>
+    <string name="settings_privacy_hero_text">हम कोड, फ़ोटो या इतिहास अपलोड नहीं करते।</string>
+    <string name="settings_privacy_camera">सिर्फ़ स्कैन करते समय</string>
+    <string name="settings_privacy_photos">सिर्फ़ वे इमेज जो आप चुनते हैं</string>
+    <string name="settings_privacy_history">लोकल रूप से सहेजा, हटाया जा सकता है</string>
+    <string name="settings_privacy_history_title">इतिहास</string>
+    <string name="settings_privacy_note">प्रोडक्ट खोज में सिर्फ़ बारकोड नंबर किसी खोज वेबसाइट को भेजा जाता है, और सिर्फ़ तब जब आप खोजें पर टैप करते हैं। विज्ञापन, यदि दिखाए जाएं, तो विज्ञापन आईडी का उपयोग कर सकते हैं जिसे आप Android सेटिंग में रीसेट कर सकते हैं।</string>
+    <string name="settings_privacy_read_full">पूरी नीति पढ़ें</string>
+
+    <string name="settings_feedback_title">फ़ीडबैक भेजें</string>
+    <string name="settings_feedback_rating_label">आप ऐप को कैसे रेट करेंगे?</string>
+    <string name="settings_feedback_star">5 में से %1$d रेट करें</string>
+    <string name="settings_feedback_topic_scanning">स्कैनिंग</string>
+    <string name="settings_feedback_topic_creating">कोड बनाना</string>
+    <string name="settings_feedback_topic_design">डिज़ाइन</string>
+    <string name="settings_feedback_topic_other">अन्य</string>
+    <string name="settings_feedback_message_label">हम क्या सुधार सकते हैं?</string>
+    <string name="settings_feedback_email_label">ईमेल (वैकल्पिक)</string>
+    <string name="settings_feedback_email_error">मान्य ईमेल पता डालें</string>
+    <string name="settings_feedback_send">फ़ीडबैक भेजें</string>
+    <string name="settings_feedback_no_mail_app">कोई ईमेल ऐप नहीं मिला। %1$s को लिखें।</string>
+
+    <string name="settings_about_title">जानकारी</string>
+    <string name="settings_about_version">वर्शन %1$s (बिल्ड %2$d)</string>
+    <string name="settings_about_licenses">ओपन सोर्स लाइसेंस</string>
+    <string name="settings_about_terms">उपयोग की शर्तें</string>
+    <string name="settings_about_disclaimer">यह ऐप QR कोड और बारकोड स्कैन करने और बनाने की एक यूटिलिटी है। यह भुगतान, बैंकिंग या वित्तीय सेवाएं नहीं देता।</string>
+    <string name="settings_share_text">%1$s आज़माएं: %2$s</string>
+
+    <string name="settings_export_title">इतिहास एक्सपोर्ट करें</string>
+    <string name="settings_export_include">शामिल करें</string>
+    <string name="settings_export_scanned">स्कैन किए कोड (%1$d)</string>
+    <string name="settings_export_created">बनाए कोड (%1$d)</string>
+    <string name="settings_export_favorites">सिर्फ़ पसंदीदा</string>
+    <string name="settings_export_format">फ़ॉर्मैट</string>
+    <string name="settings_export_format_csv">CSV</string>
+    <string name="settings_export_format_json">JSON</string>
+    <string name="settings_export_format_text">टेक्स्ट</string>
+    <string name="settings_export_note">फ़ाइल आपकी चुनी जगह पर सहेजी जाती है या आपके चुने ऐप के साथ शेयर होती है। इसे कहीं अपलोड नहीं किया जाता।</string>
+    <string name="settings_export_nothing">एक्सपोर्ट करने के लिए कुछ नहीं</string>
+    <plurals name="settings_export_summary">
+        <item quantity="one">%d आइटम एक्सपोर्ट होगा</item>
+        <item quantity="other">%d आइटम एक्सपोर्ट होंगे</item>
+    </plurals>
+    <string name="settings_export_save">फ़ाइल सहेजें</string>
+    <string name="settings_export_share">शेयर करें</string>
+    <string name="settings_export_share_title">इतिहास शेयर करें</string>
+    <string name="settings_export_saved">फ़ाइल सहेजी गई</string>
+    <string name="settings_export_failed">फ़ाइल एक्सपोर्ट नहीं हो सकी</string>
+</resources>

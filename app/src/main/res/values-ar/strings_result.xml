@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="result_title_website">رابط موقع ويب</string>
+    <string name="result_title_text">نص</string>
+    <string name="result_title_contact">جهة اتصال</string>
+    <string name="result_title_wifi">شبكة Wi-Fi</string>
+    <string name="result_title_event">حدث</string>
+    <string name="result_title_phone">رقم الهاتف</string>
+    <string name="result_title_email">بريد إلكتروني</string>
+    <string name="result_title_sms">SMS</string>
+    <string name="result_title_location">موقع</string>
+    <string name="result_title_product">منتج</string>
+    <string name="result_title_unknown">البيانات الممسوحة</string>
+    <string name="result_title_product_search">البحث عن منتج</string>
+
+    <string name="result_badge_website">موقع ويب</string>
+    <string name="result_badge_text">نص</string>
+    <string name="result_badge_contact">جهة اتصال</string>
+    <string name="result_badge_phone">هاتف</string>
+    <string name="result_badge_email">بريد إلكتروني</string>
+    <string name="result_badge_sms">SMS</string>
+    <string name="result_badge_location">موقع</string>
+    <string name="result_badge_event">حدث</string>
+    <string name="result_badge_wifi">Wi-Fi</string>
+    <string name="result_badge_product">منتج</string>
+    <string name="result_badge_unknown">أخرى</string>
+    <string name="result_badge_created">منشأ</string>
+
+    <string name="result_when_today">اليوم، %1$s</string>
+    <string name="result_when_yesterday">أمس، %1$s</string>
+    <string name="result_when_date">%1$s · %2$s</string>
+    <string name="result_caption">%1$s · %2$s</string>
+    <string name="result_kind_qr">رمز QR</string>
+    <string name="result_kind_barcode">باركود</string>
+
+    <string name="result_label_type">النوع</string>
+    <string name="result_label_format">الصيغة</string>
+    <string name="result_label_source">المصدر</string>
+    <string name="result_source_camera">الكاميرا</string>
+    <string name="result_source_image">صورة</string>
+    <string name="result_source_created">منشأ</string>
+    <string name="result_favorite">مفضل</string>
+    <string name="result_favorited">في المفضلة</string>
+    <string name="result_not_found_title">لا شيء لعرضه</string>
+    <string name="result_not_found_message">لم يعد هذا العنصر في سجلك.</string>
+
+    <string name="result_website_opens">يفتح</string>
+    <string name="result_website_https">https</string>
+    <string name="result_website_http">http</string>
+    <string name="result_website_secure">اتصال آمن</string>
+    <string name="result_website_not_secure">غير آمن</string>
+    <string name="result_website_check_title">تحقق من الرابط قبل فتحه</string>
+    <string name="result_website_check_body">تأكد من أن العنوان يطابق الجهة التي أعطتك الرمز. احذر من صفحات تسجيل الدخول.</string>
+    <string name="result_website_type_value">عنوان ويب (URL)</string>
+    <string name="result_website_full_link">الرابط الكامل</string>
+    <string name="result_action_open_link">فتح الرابط</string>
+
+    <string name="result_text_content">المحتوى</string>
+    <plurals name="result_characters">
+        <item quantity="zero">لا أحرف</item>
+        <item quantity="one">حرف واحد</item>
+        <item quantity="two">حرفان</item>
+        <item quantity="few">%d أحرف</item>
+        <item quantity="many">%d حرفًا</item>
+        <item quantity="other">%d حرف</item>
+    </plurals>
+    <string name="result_text_stats">%1$s · اضغط مطولًا للتحديد</string>
+    <string name="result_text_type_value">نص عادي</string>
+    <string name="result_action_copy_text">نسخ النص</string>
+
+    <string name="result_contact_phone">هاتف</string>
+    <string name="result_contact_email">بريد إلكتروني</string>
+    <string name="result_contact_company">الشركة</string>
+    <string name="result_contact_website">موقع ويب</string>
+    <string name="result_contact_address">العنوان</string>
+    <string name="result_contact_note">ملاحظة</string>
+    <string name="result_action_add_contact">إضافة إلى جهات الاتصال</string>
+
+    <string name="result_phone_label">رقم الهاتف</string>
+    <string name="result_phone_dialer_note">يفتح الاتصال تطبيق الهاتف والرقم مُدخل مسبقًا. لا يُجرى أي اتصال حتى تضغط على اتصال.</string>
+    <string name="result_action_call">اتصال</string>
+    <string name="result_action_send_sms">إرسال SMS</string>
+    <string name="result_action_add_contact_short">إضافة جهة اتصال</string>
+
+    <string name="result_email_to_label">إلى</string>
+    <string name="result_email_subject">الموضوع</string>
+    <string name="result_email_message">الرسالة</string>
+    <string name="result_action_compose_email">كتابة بريد</string>
+    <string name="result_action_copy_address">نسخ العنوان</string>
+
+    <string name="result_sms_to">إلى</string>
+    <string name="result_sms_note">قد تُطبَّق رسوم الرسائل المعتادة من مشغّل الاتصالات عند الإرسال.</string>
+    <string name="result_action_open_messages">فتح في الرسائل</string>
+
+    <string name="result_location_map_description">معاينة الخريطة</string>
+    <string name="result_location_name">الاسم</string>
+    <string name="result_location_latitude">خط العرض</string>
+    <string name="result_location_longitude">خط الطول</string>
+    <string name="result_action_open_maps">فتح في الخرائط</string>
+    <string name="result_action_copy_coordinates">نسخ الإحداثيات</string>
+
+    <string name="result_event_starts">البداية</string>
+    <string name="result_event_ends">النهاية</string>
+    <string name="result_event_where">المكان</string>
+    <string name="result_event_description">الوصف</string>
+    <string name="result_event_all_day">طوال اليوم</string>
+    <string name="result_action_add_calendar">إضافة إلى التقويم</string>
+    <string name="result_action_directions">الاتجاهات</string>
+
+    <string name="result_wifi_network_name">اسم الشبكة</string>
+    <string name="result_wifi_security_wpa">WPA/WPA2/WPA3</string>
+    <string name="result_wifi_security_wep">WEP</string>
+    <string name="result_wifi_security_none">شبكة مفتوحة</string>
+    <string name="result_wifi_visible">شبكة ظاهرة</string>
+    <string name="result_wifi_hidden">شبكة مخفية</string>
+    <string name="result_wifi_password">كلمة المرور</string>
+    <string name="result_wifi_no_password">لا تحتاج إلى كلمة مرور</string>
+    <string name="result_wifi_info_title">يستخدم الاتصال مطالبة من Android</string>
+    <string name="result_wifi_info_body">تؤكد الاتصال في مربع حوار النظام. تطلب بعض الأجهزة إذن الموقع أولًا.</string>
+    <string name="result_wifi_why_location">لماذا الموقع؟</string>
+    <string name="result_action_copy_password">نسخ كلمة المرور</string>
+    <string name="result_action_connect">اتصال</string>
+    <string name="result_wifi_connecting_title">جارٍ الاتصال بـ %1$s</string>
+    <string name="result_wifi_connecting_body">يستغرق هذا عادةً بضع ثوانٍ</string>
+    <string name="result_wifi_connected_title">تم الاتصال</string>
+    <string name="result_wifi_connected_body">أنت الآن على %1$s</string>
+    <string name="result_wifi_saved_title">تم حفظ الشبكة</string>
+    <string name="result_wifi_saved_body">سيتصل هاتفك بـ %1$s عندما تكون في النطاق.</string>
+    <string name="result_wifi_saved_to">تم الحفظ في</string>
+    <string name="result_wifi_saved_to_history">السجل</string>
+    <string name="result_wifi_network">الشبكة</string>
+    <string name="result_wifi_security">الأمان</string>
+    <string name="result_wifi_failed_title">تعذّر الاتصال</string>
+    <string name="result_wifi_failed_unavailable">قد تكون كلمة المرور خاطئة، أو الشبكة خارج النطاق.</string>
+    <string name="result_wifi_failed_permission">لم يُمنح إذن الموقع، لذا لم يتمكن Android من بدء الاتصال. ما زال بإمكانك نسخ كلمة المرور.</string>
+    <string name="result_wifi_failed_unsupported">لا يمكن لتطبيق الاتصال بهذا النوع من الأمان في هذا الإصدار من Android. ما زال بإمكانك نسخ كلمة المرور.</string>
+    <string name="result_wifi_failed_invalid_password">كلمة المرور غير صالحة لهذا النوع من الشبكات.</string>
+    <string name="result_wifi_failed_disabled">Wi-Fi متوقف. شغّله وحاول مرة أخرى.</string>
+    <string name="result_wifi_failed_error">حدث خطأ أثناء الاتصال.</string>
+
+    <string name="result_product_barcode">باركود</string>
+    <string name="result_product_number">الرقم</string>
+    <string name="result_product_scanned">تم مسحه</string>
+    <string name="result_product_disclaimer">تأتي النتائج من مواقع خارجية. قد تختلف الأسعار والمراجعات والتفاصيل حسب المنطقة والوقت، وهذا التطبيق غير تابع لها.</string>
+    <string name="result_action_search_product">البحث عن المنتج على الإنترنت</string>
+    <string name="result_product_search_on">البحث في</string>
+    <string name="result_product_google">Google</string>
+    <string name="result_product_google_hint">نتائج الويب</string>
+    <string name="result_product_off">Open Food Facts</string>
+    <string name="result_product_off_hint">المكوّنات والتغذية</string>
+    <string name="result_product_amazon">Amazon</string>
+    <string name="result_product_amazon_hint">الأسعار والمراجعات</string>
+    <string name="result_product_search_note">تأتي النتائج من مواقع خارجية. يُرسل رقم الباركود فقط، وفقط عندما تختار موقعًا.</string>
+    <string name="result_product_offline_title">أنت غير متصل بالإنترنت</string>
+    <string name="result_product_offline_body">تحتاج تفاصيل المنتج إلى اتصال بالإنترنت. ما زال مسح الرموز وإنشاؤها يعملان بدونه.</string>
+    <string name="result_action_copy_number">نسخ الرقم</string>
+
+    <string name="result_unknown_raw">بيانات خام</string>
+    <string name="result_unknown_view_text">نص</string>
+    <string name="result_unknown_view_hex">Hex</string>
+    <string name="result_unknown_not_recognized">%1$s · تعذّر التعرف على نوع محدد</string>
+    <string name="result_unknown_encoding">الترميز</string>
+    <string name="result_unknown_encoding_value">نص UTF-8</string>
+    <string name="result_unknown_hex_truncated">عرض أول %1$d من %2$d بايت</string>
+    <string name="result_action_copy_data">نسخ البيانات</string>
+
+    <string name="result_unsafe_title_unsafe">قد يكون هذا الرابط غير آمن</string>
+    <string name="result_unsafe_title_caution">تحقق من هذا الرابط أولًا</string>
+    <string name="result_unsafe_body_unsafe">وجدت الفحوصات دون اتصال علامات على أن هذا العنوان قد يحاول خداعك. لم يُرسل أي شيء إلى أي مكان.</string>
+    <string name="result_unsafe_body_caution">بعض الأمور في هذا العنوان تستحق نظرة ثانية. لم يُرسل أي شيء إلى أي مكان.</string>
+    <string name="result_unsafe_go_back">العودة إلى الأمان</string>
+    <string name="result_unsafe_copy">نسخ الرابط بدلًا من ذلك</string>
+    <string name="result_unsafe_open_anyway">فتح على أي حال</string>
+    <string name="result_risk_not_https">غير آمن</string>
+    <string name="result_risk_not_https_detail">يستخدم http وليس https</string>
+    <string name="result_risk_lookalike">مشابه</string>
+    <string name="result_risk_lookalike_detail">يشبه %1$s</string>
+    <string name="result_risk_punycode">أحرف غريبة</string>
+    <string name="result_risk_punycode_detail">يستخدم العنوان أحرفًا غير معتادة قد تقلّد حروفًا أخرى</string>
+    <string name="result_risk_tld">امتداد خطِر</string>
+    <string name="result_risk_tld_detail">غالبًا ما تُستخدم العناوين المنتهية بـ .%1$s في الاحتيال</string>
+    <string name="result_risk_shortener">رابط مختصر</string>
+    <string name="result_risk_shortener_detail">%1$s يخفي الوجهة الحقيقية</string>
+    <string name="result_risk_ip">عنوان IP</string>
+    <string name="result_risk_ip_detail">يذهب إلى رقم بدلًا من اسم موقع ويب</string>
+    <string name="result_risk_userinfo">تسجيل دخول مخفي</string>
+    <string name="result_risk_userinfo_detail">النص قبل @ مجرد تمويه؛ الموقع الحقيقي يأتي بعده</string>
+    <string name="result_risk_subdomains">عنوان طويل</string>
+    <string name="result_risk_subdomains_detail">يتكوّن العنوان من %1$s أجزاء، وهذا غير معتاد</string>
+    <string name="result_risk_scheme">ليس رابط ويب</string>
+    <string name="result_risk_scheme_detail">يستخدم %1$s بدلًا من http أو https</string>
+    <string name="result_risk_long">طويل جدًا</string>
+    <string name="result_risk_long_detail">طول الرابط %1$s حرفًا</string>
+
+    <string name="result_share_title">مشاركة</string>
+    <string name="result_share_as_text">مشاركة كنص</string>
+    <string name="result_share_as_image">مشاركة كصورة</string>
+    <string name="result_action_share_text">مشاركة</string>
+
+    <string name="result_note_label">ملاحظة</string>
+    <string name="result_note_placeholder">أضف ملاحظة أو تسمية</string>
+    <string name="result_note_helper">محفوظة على هذا الجهاز فقط</string>
+    <string name="result_action_edit_style">تعديل النمط</string>
+    <string name="result_delete_title_scan">حذف عملية المسح هذه؟</string>
+    <string name="result_delete_title_created">حذف هذا الرمز؟</string>
+    <string name="result_delete_message">\"%1$s\" سيُزال من سجلك على هذا الجهاز.</string>
+
+    <string name="result_msg_no_app">لم يُعثر على تطبيق لفتح هذا</string>
+    <string name="result_msg_cannot_open">لا يمكن فتح هذا</string>
+    <string name="result_msg_still_offline">ما زلت غير متصل. تحقق من اتصالك وحاول مرة أخرى.</string>
+</resources>

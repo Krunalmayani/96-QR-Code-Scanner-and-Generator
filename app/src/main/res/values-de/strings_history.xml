@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hist_title">Verlauf</string>
+    <string name="hist_tab_scanned">Gescannt</string>
+    <string name="hist_tab_created">Erstellt</string>
+    <string name="hist_search_placeholder">Im Verlauf suchen</string>
+
+    <string name="hist_chip_all">Alle</string>
+    <string name="hist_chip_favorites">Favoriten</string>
+    <string name="hist_chip_favorites_count">Favoriten · %1$d</string>
+    <string name="hist_chip_links">Links</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">Kontakte</string>
+    <string name="hist_chip_text">Text</string>
+    <string name="hist_chip_phone">Telefon</string>
+    <string name="hist_chip_email">E-Mail</string>
+    <string name="hist_chip_location">Standort</string>
+    <string name="hist_chip_events">Termine</string>
+    <string name="hist_chip_products">Produkte</string>
+
+    <string name="hist_day_today">Heute</string>
+    <string name="hist_day_yesterday">Gestern</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">Website</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">Kontakt</string>
+    <string name="hist_type_text">Text</string>
+    <string name="hist_type_phone">Telefon</string>
+    <string name="hist_type_email">E-Mail</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">Standort</string>
+    <string name="hist_type_event">Termin</string>
+    <string name="hist_type_product">Produkt</string>
+    <string name="hist_type_unknown">Sonstiges</string>
+    <plurals name="hist_search_results">
+        <item quantity="one">%d Ergebnis</item>
+        <item quantity="other">%d Ergebnisse</item>
+    </plurals>
+
+    <string name="hist_cd_select_items">Elemente auswählen</string>
+    <string name="hist_cd_exit_selection">Auswahl beenden</string>
+    <string name="hist_cd_select_all">Alle auswählen</string>
+    <string name="hist_cd_favorite_selected">Auswahl zu Favoriten hinzufügen</string>
+    <string name="hist_cd_close_search">Suche schließen</string>
+    <string name="hist_cd_select_row">Auswählen</string>
+    <string name="hist_cd_open_row">Öffnen</string>
+    <string name="hist_menu_export_history">Verlauf exportieren</string>
+    <string name="hist_menu_export_selected">Als CSV exportieren</string>
+    <plurals name="hist_selected_count">
+        <item quantity="one">%d ausgewählt</item>
+        <item quantity="other">%d ausgewählt</item>
+    </plurals>
+
+    <plurals name="hist_deleted_scans">
+        <item quantity="one">Scan gelöscht</item>
+        <item quantity="other">%d Scans gelöscht</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="one">Code gelöscht</item>
+        <item quantity="other">%d Codes gelöscht</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="one">Element gelöscht</item>
+        <item quantity="other">%d Elemente gelöscht</item>
+    </plurals>
+
+    <string name="hist_share_chooser_title">Verlauf teilen</string>
+    <string name="hist_export_chooser_title">Verlauf exportieren</string>
+    <string name="hist_share_failed">Diese Elemente konnten nicht geteilt werden</string>
+    <string name="hist_export_failed">Diese Elemente konnten nicht exportiert werden</string>
+
+    <string name="hist_empty_scanned_title">Noch keine Scans</string>
+    <string name="hist_empty_scanned_message">Gescannte Codes erscheinen hier, nur auf diesem Gerät gespeichert.</string>
+    <string name="hist_empty_scanned_action">Scannen starten</string>
+    <string name="hist_empty_created_title">Noch nichts erstellt</string>
+    <string name="hist_empty_created_message">Erstellte Codes erscheinen hier, nur auf diesem Gerät gespeichert.</string>
+    <string name="hist_empty_created_action">Code erstellen</string>
+    <string name="hist_empty_favorites_title">Noch keine Favoriten</string>
+    <string name="hist_empty_favorites_message">Auf den Stern bei einem Scan oder erstellten Code tippen, um ihn schnell griffbereit zu haben.</string>
+    <string name="hist_empty_favorites_action">Verlauf durchsuchen</string>
+    <string name="hist_empty_filter_title">Nichts von diesem Typ</string>
+    <string name="hist_empty_filter_message">Codes dieses Typs erscheinen hier, sobald einer gescannt oder erstellt wird.</string>
+    <string name="hist_empty_filter_action">Alles anzeigen</string>
+    <string name="hist_empty_search_title">Keine Ergebnisse</string>
+    <string name="hist_empty_search_message">Nichts passt zu „%1$s“. Anderes Wort versuchen.</string>
+</resources>

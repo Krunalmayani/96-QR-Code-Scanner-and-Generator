@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="system_rate_title">Le scanner vous plaît ?</string>
+    <string name="system_rate_body">Une note rapide aide d’autres personnes à découvrir l’appli.</string>
+    <string name="system_rate_action_play">Noter sur Google Play</string>
+    <string name="system_rate_action_feedback">Envoyer un avis</string>
+    <string name="system_rate_later">Plus tard</string>
+    <string name="system_rate_stars_group">Note</string>
+    <plurals name="system_rate_star">
+        <item quantity="one">%d étoile</item>
+        <item quantity="many">%d d’étoiles</item>
+        <item quantity="other">%d étoiles</item>
+    </plurals>
+    <string name="system_update_title">Mise à jour disponible</string>
+    <string name="system_update_body">Une nouvelle version est disponible avec des améliorations et des correctifs.</string>
+    <string name="system_update_action">Mettre à jour</string>
+    <string name="system_update_later">Plus tard</string>
+    <string name="system_update_ready_title">Mise à jour téléchargée</string>
+    <string name="system_update_ready_body">Redémarrez l’appli pour terminer l’installation de la nouvelle version.</string>
+    <string name="system_update_ready_action">Redémarrer</string>
+</resources>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="result_title_website">वेबसाइट लिंक</string>
+    <string name="result_title_text">टेक्स्ट</string>
+    <string name="result_title_contact">संपर्क</string>
+    <string name="result_title_wifi">Wi-Fi नेटवर्क</string>
+    <string name="result_title_event">इवेंट</string>
+    <string name="result_title_phone">फ़ोन नंबर</string>
+    <string name="result_title_email">ईमेल</string>
+    <string name="result_title_sms">SMS</string>
+    <string name="result_title_location">लोकेशन</string>
+    <string name="result_title_product">प्रोडक्ट</string>
+    <string name="result_title_unknown">स्कैन किया डेटा</string>
+    <string name="result_title_product_search">प्रोडक्ट खोजें</string>
+
+    <string name="result_badge_website">वेबसाइट</string>
+    <string name="result_badge_text">टेक्स्ट</string>
+    <string name="result_badge_contact">संपर्क</string>
+    <string name="result_badge_phone">फ़ोन</string>
+    <string name="result_badge_email">ईमेल</string>
+    <string name="result_badge_sms">SMS</string>
+    <string name="result_badge_location">लोकेशन</string>
+    <string name="result_badge_event">इवेंट</string>
+    <string name="result_badge_wifi">Wi-Fi</string>
+    <string name="result_badge_product">प्रोडक्ट</string>
+    <string name="result_badge_unknown">अन्य</string>
+    <string name="result_badge_created">बनाया गया</string>
+
+    <string name="result_when_today">आज, %1$s</string>
+    <string name="result_when_yesterday">कल, %1$s</string>
+    <string name="result_when_date">%1$s · %2$s</string>
+    <string name="result_caption">%1$s · %2$s</string>
+    <string name="result_kind_qr">QR कोड</string>
+    <string name="result_kind_barcode">बारकोड</string>
+
+    <string name="result_label_type">प्रकार</string>
+    <string name="result_label_format">फ़ॉर्मैट</string>
+    <string name="result_label_source">स्रोत</string>
+    <string name="result_source_camera">कैमरा</string>
+    <string name="result_source_image">इमेज</string>
+    <string name="result_source_created">बनाया गया</string>
+    <string name="result_favorite">पसंदीदा</string>
+    <string name="result_favorited">पसंदीदा में जोड़ा</string>
+    <string name="result_not_found_title">दिखाने के लिए कुछ नहीं</string>
+    <string name="result_not_found_message">यह आइटम अब आपके इतिहास में नहीं है।</string>
+
+    <string name="result_website_opens">खुलेगा</string>
+    <string name="result_website_https">https</string>
+    <string name="result_website_http">http</string>
+    <string name="result_website_secure">सुरक्षित कनेक्शन</string>
+    <string name="result_website_not_secure">सुरक्षित नहीं</string>
+    <string name="result_website_check_title">खोलने से पहले लिंक जांचें</string>
+    <string name="result_website_check_body">देखें कि पता उसी से मेल खाता है जिसने आपको कोड दिया। लॉगिन पेज से सावधान रहें।</string>
+    <string name="result_website_type_value">वेब पता (URL)</string>
+    <string name="result_website_full_link">पूरा लिंक</string>
+    <string name="result_action_open_link">लिंक खोलें</string>
+
+    <string name="result_text_content">सामग्री</string>
+    <plurals name="result_characters">
+        <item quantity="one">%d अक्षर</item>
+        <item quantity="other">%d अक्षर</item>
+    </plurals>
+    <string name="result_text_stats">%1$s · चुनने के लिए देर तक दबाएं</string>
+    <string name="result_text_type_value">सादा टेक्स्ट</string>
+    <string name="result_action_copy_text">टेक्स्ट कॉपी करें</string>
+
+    <string name="result_contact_phone">फ़ोन</string>
+    <string name="result_contact_email">ईमेल</string>
+    <string name="result_contact_company">कंपनी</string>
+    <string name="result_contact_website">वेबसाइट</string>
+    <string name="result_contact_address">पता</string>
+    <string name="result_contact_note">नोट</string>
+    <string name="result_action_add_contact">संपर्क में जोड़ें</string>
+
+    <string name="result_phone_label">फ़ोन नंबर</string>
+    <string name="result_phone_dialer_note">कॉल करने पर डायलर इस नंबर के साथ खुलता है। जब तक आप कॉल नहीं दबाते, कुछ डायल नहीं होता।</string>
+    <string name="result_action_call">कॉल करें</string>
+    <string name="result_action_send_sms">SMS भेजें</string>
+    <string name="result_action_add_contact_short">संपर्क जोड़ें</string>
+
+    <string name="result_email_to_label">प्रति</string>
+    <string name="result_email_subject">विषय</string>
+    <string name="result_email_message">संदेश</string>
+    <string name="result_action_compose_email">ईमेल लिखें</string>
+    <string name="result_action_copy_address">पता कॉपी करें</string>
+
+    <string name="result_sms_to">प्रति</string>
+    <string name="result_sms_note">भेजते समय आपके कैरियर के सामान्य मैसेजिंग शुल्क लग सकते हैं।</string>
+    <string name="result_action_open_messages">संदेश में खोलें</string>
+
+    <string name="result_location_map_description">मैप प्रीव्यू</string>
+    <string name="result_location_name">नाम</string>
+    <string name="result_location_latitude">अक्षांश</string>
+    <string name="result_location_longitude">देशांतर</string>
+    <string name="result_action_open_maps">Maps में खोलें</string>
+    <string name="result_action_copy_coordinates">निर्देशांक कॉपी करें</string>
+
+    <string name="result_event_starts">शुरू</string>
+    <string name="result_event_ends">समाप्त</string>
+    <string name="result_event_where">कहां</string>
+    <string name="result_event_description">विवरण</string>
+    <string name="result_event_all_day">पूरे दिन</string>
+    <string name="result_action_add_calendar">कैलेंडर में जोड़ें</string>
+    <string name="result_action_directions">रास्ता देखें</string>
+
+    <string name="result_wifi_network_name">नेटवर्क का नाम</string>
+    <string name="result_wifi_security_wpa">WPA/WPA2/WPA3</string>
+    <string name="result_wifi_security_wep">WEP</string>
+    <string name="result_wifi_security_none">खुला नेटवर्क</string>
+    <string name="result_wifi_visible">दिखने वाला नेटवर्क</string>
+    <string name="result_wifi_hidden">छिपा हुआ नेटवर्क</string>
+    <string name="result_wifi_password">पासवर्ड</string>
+    <string name="result_wifi_no_password">पासवर्ड की ज़रूरत नहीं</string>
+    <string name="result_wifi_info_title">कनेक्ट करने के लिए Android का प्रॉम्प्ट आता है</string>
+    <string name="result_wifi_info_body">आप सिस्टम डायलॉग में कनेक्शन की पुष्टि करते हैं। कुछ डिवाइस पहले लोकेशन अनुमति मांगते हैं।</string>
+    <string name="result_wifi_why_location">लोकेशन क्यों?</string>
+    <string name="result_action_copy_password">पासवर्ड कॉपी करें</string>
+    <string name="result_action_connect">कनेक्ट करें</string>
+    <string name="result_wifi_connecting_title">%1$s से कनेक्ट हो रहा है</string>
+    <string name="result_wifi_connecting_body">इसमें आमतौर पर कुछ सेकंड लगते हैं</string>
+    <string name="result_wifi_connected_title">कनेक्ट हो गया</string>
+    <string name="result_wifi_connected_body">आप अब %1$s पर हैं</string>
+    <string name="result_wifi_saved_title">नेटवर्क सहेजा गया</string>
+    <string name="result_wifi_saved_body">रेंज में आने पर आपका फ़ोन %1$s से जुड़ जाएगा।</string>
+    <string name="result_wifi_saved_to">यहां सहेजा गया</string>
+    <string name="result_wifi_saved_to_history">इतिहास</string>
+    <string name="result_wifi_network">नेटवर्क</string>
+    <string name="result_wifi_security">सुरक्षा</string>
+    <string name="result_wifi_failed_title">कनेक्ट नहीं हो सका</string>
+    <string name="result_wifi_failed_unavailable">हो सकता है पासवर्ड गलत हो, या नेटवर्क रेंज से बाहर हो।</string>
+    <string name="result_wifi_failed_permission">लोकेशन अनुमति नहीं मिली, इसलिए Android कनेक्शन शुरू नहीं कर सका। आप अब भी पासवर्ड कॉपी कर सकते हैं।</string>
+    <string name="result_wifi_failed_unsupported">इस Android वर्शन पर कोई ऐप इस सुरक्षा प्रकार से नहीं जुड़ सकता। आप अब भी पासवर्ड कॉपी कर सकते हैं।</string>
+    <string name="result_wifi_failed_invalid_password">यह पासवर्ड इस प्रकार के नेटवर्क के लिए मान्य नहीं है।</string>
+    <string name="result_wifi_failed_disabled">Wi-Fi बंद है। उसे चालू करें और फिर कोशिश करें।</string>
+    <string name="result_wifi_failed_error">कनेक्ट करते समय कुछ गड़बड़ हो गई।</string>
+
+    <string name="result_product_barcode">बारकोड</string>
+    <string name="result_product_number">नंबर</string>
+    <string name="result_product_scanned">स्कैन किया गया</string>
+    <string name="result_product_disclaimer">परिणाम बाहरी वेबसाइटों से आते हैं। कीमतें, रिव्यू और जानकारी क्षेत्र और समय के अनुसार अलग हो सकती हैं, और यह ऐप उनसे जुड़ा हुआ नहीं है।</string>
+    <string name="result_action_search_product">प्रोडक्ट ऑनलाइन खोजें</string>
+    <string name="result_product_search_on">यहां खोजें</string>
+    <string name="result_product_google">Google</string>
+    <string name="result_product_google_hint">वेब परिणाम</string>
+    <string name="result_product_off">Open Food Facts</string>
+    <string name="result_product_off_hint">सामग्री और पोषण</string>
+    <string name="result_product_amazon">Amazon</string>
+    <string name="result_product_amazon_hint">कीमतें और रिव्यू</string>
+    <string name="result_product_search_note">परिणाम बाहरी वेबसाइटों से आते हैं। सिर्फ़ बारकोड नंबर भेजा जाता है, और सिर्फ़ तब जब आप कोई साइट चुनते हैं।</string>
+    <string name="result_product_offline_title">आप ऑफ़लाइन हैं</string>
+    <string name="result_product_offline_body">प्रोडक्ट की जानकारी के लिए इंटरनेट चाहिए। कोड स्कैन करना और बनाना इसके बिना भी काम करता है।</string>
+    <string name="result_action_copy_number">नंबर कॉपी करें</string>
+
+    <string name="result_unknown_raw">रॉ डेटा</string>
+    <string name="result_unknown_view_text">टेक्स्ट</string>
+    <string name="result_unknown_view_hex">Hex</string>
+    <string name="result_unknown_not_recognized">%1$s · हम कोई खास प्रकार नहीं पहचान सके</string>
+    <string name="result_unknown_encoding">एन्कोडिंग</string>
+    <string name="result_unknown_encoding_value">UTF-8 टेक्स्ट</string>
+    <string name="result_unknown_hex_truncated">%2$d में से पहले %1$d बाइट दिखाए जा रहे हैं</string>
+    <string name="result_action_copy_data">डेटा कॉपी करें</string>
+
+    <string name="result_unsafe_title_unsafe">यह लिंक असुरक्षित हो सकता है</string>
+    <string name="result_unsafe_title_caution">पहले यह लिंक जांचें</string>
+    <string name="result_unsafe_body_unsafe">ऑफ़लाइन जांच में ऐसे संकेत मिले कि यह पता आपको धोखा देने की कोशिश कर सकता है। कहीं कुछ नहीं भेजा गया।</string>
+    <string name="result_unsafe_body_caution">इस पते की कुछ बातें दोबारा देखने लायक हैं। कहीं कुछ नहीं भेजा गया।</string>
+    <string name="result_unsafe_go_back">सुरक्षित जगह लौटें</string>
+    <string name="result_unsafe_copy">इसके बजाय लिंक कॉपी करें</string>
+    <string name="result_unsafe_open_anyway">फिर भी खोलें</string>
+    <string name="result_risk_not_https">सुरक्षित नहीं</string>
+    <string name="result_risk_not_https_detail">https नहीं, http इस्तेमाल करता है</string>
+    <string name="result_risk_lookalike">हमशक्ल</string>
+    <string name="result_risk_lookalike_detail">%1$s जैसा दिखता है</string>
+    <string name="result_risk_punycode">अजीब अक्षर</string>
+    <string name="result_risk_punycode_detail">पते में ऐसे असामान्य अक्षर हैं जो दूसरे अक्षरों की नकल कर सकते हैं</string>
+    <string name="result_risk_tld">जोखिम भरा अंत</string>
+    <string name="result_risk_tld_detail">.%1$s पर खत्म होने वाले पते अक्सर ठगी में इस्तेमाल होते हैं</string>
+    <string name="result_risk_shortener">छोटा लिंक</string>
+    <string name="result_risk_shortener_detail">%1$s असली गंतव्य छिपाता है</string>
+    <string name="result_risk_ip">IP पता</string>
+    <string name="result_risk_ip_detail">वेबसाइट के नाम की जगह एक नंबर पर जाता है</string>
+    <string name="result_risk_userinfo">छिपा हुआ लॉगिन</string>
+    <string name="result_risk_userinfo_detail">\@ से पहले का टेक्स्ट भ्रम पैदा करने के लिए है; असली साइट उसके बाद आती है</string>
+    <string name="result_risk_subdomains">लंबा पता</string>
+    <string name="result_risk_subdomains_detail">पते में %1$s हिस्से हैं, जो असामान्य है</string>
+    <string name="result_risk_scheme">वेब लिंक नहीं है</string>
+    <string name="result_risk_scheme_detail">http या https की जगह %1$s इस्तेमाल करता है</string>
+    <string name="result_risk_long">बहुत लंबा</string>
+    <string name="result_risk_long_detail">लिंक %1$s अक्षरों का है</string>
+
+    <string name="result_share_title">शेयर करें</string>
+    <string name="result_share_as_text">टेक्स्ट के रूप में शेयर करें</string>
+    <string name="result_share_as_image">इमेज के रूप में शेयर करें</string>
+    <string name="result_action_share_text">शेयर करें</string>
+
+    <string name="result_note_label">नोट</string>
+    <string name="result_note_placeholder">नोट या लेबल जोड़ें</string>
+    <string name="result_note_helper">सिर्फ़ इसी डिवाइस पर सहेजा गया</string>
+    <string name="result_action_edit_style">स्टाइल बदलें</string>
+    <string name="result_delete_title_scan">यह स्कैन हटाएं?</string>
+    <string name="result_delete_title_created">यह कोड हटाएं?</string>
+    <string name="result_delete_message">\"%1$s\" इस डिवाइस पर आपके इतिहास से हटा दिया जाएगा।</string>
+
+    <string name="result_msg_no_app">इसे खोलने के लिए कोई ऐप नहीं मिला</string>
+    <string name="result_msg_cannot_open">इसे खोला नहीं जा सकता</string>
+    <string name="result_msg_still_offline">अब भी ऑफ़लाइन हैं। अपना कनेक्शन जांचें और फिर कोशिश करें।</string>
+</resources>

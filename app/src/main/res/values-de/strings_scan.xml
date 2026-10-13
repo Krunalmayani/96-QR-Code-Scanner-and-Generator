@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="scan_title">Scannen</string>
+    <string name="scan_flash_on">Blitz an</string>
+    <string name="scan_flash_off">Blitz aus</string>
+    <string name="scan_switch_camera">Kamera wechseln</string>
+    <string name="scan_settings">Einstellungen</string>
+    <string name="scan_hint_qr">Code im Rahmen ausrichten</string>
+    <string name="scan_hint_barcode">Ruhig halten und den Barcode in den Rahmen bringen</string>
+    <string name="scan_mode_qr">QR-Code</string>
+    <string name="scan_mode_barcode">Barcode</string>
+    <string name="scan_mode_all">Alle</string>
+    <string name="scan_zoom">Zoom</string>
+    <string name="scan_zoom_min">1x</string>
+    <string name="scan_zoom_max">%1$dx</string>
+    <string name="scan_from_gallery">Aus Galerie scannen</string>
+
+    <string name="scan_batch_chip">Serie</string>
+    <string name="scan_batch_title">Serienscan</string>
+    <string name="scan_batch_close">Serienscan schließen</string>
+    <string name="scan_batch_sheet_title">Diese Serie</string>
+    <string name="scan_batch_newest_first">Neueste zuerst</string>
+    <string name="scan_batch_empty">Gescannte Codes erscheinen hier.</string>
+    <string name="scan_batch_finish">Serie beenden</string>
+    <plurals name="scan_batch_count">
+        <item quantity="one">%1$d Code gescannt</item>
+        <item quantity="other">%1$d Codes gescannt</item>
+    </plurals>
+
+    <string name="scan_quick_just_now">Gerade eben</string>
+    <string name="scan_quick_open_result">Ergebnis öffnen</string>
+    <string name="scan_quick_keep_scanning">Weiter scannen</string>
+    <string name="scan_quick_check_address">Adresse vor dem Öffnen prüfen.</string>
+    <string name="scan_row_subtitle">%1$s · %2$s</string>
+
+    <string name="scan_type_website">Website</string>
+    <string name="scan_type_text">Text</string>
+    <string name="scan_type_contact">Kontakt</string>
+    <string name="scan_type_phone">Telefon</string>
+    <string name="scan_type_email">E-Mail</string>
+    <string name="scan_type_sms">SMS</string>
+    <string name="scan_type_location">Standort</string>
+    <string name="scan_type_event">Termin</string>
+    <string name="scan_type_wifi">Wi-Fi</string>
+    <string name="scan_type_product">Produkt</string>
+    <string name="scan_type_unknown">Unbekannt</string>
+
+    <string name="scan_denied_title">Kamerazugriff ist aus</string>
+    <string name="scan_denied_message_request">Kamerazugriff erlauben, um Codes live zu scannen. Codes lassen sich weiterhin aus gespeicherten Bildern scannen.</string>
+    <string name="scan_denied_message_settings">Die Kameraberechtigung in den Android-Einstellungen aktivieren, um Codes live zu scannen. Codes lassen sich weiterhin aus gespeicherten Bildern scannen.</string>
+    <string name="scan_request_again">Erneut anfragen</string>
+    <string name="scan_open_settings">Einstellungen öffnen</string>
+    <string name="scan_denied_steps">Einstellungen, dann Berechtigungen, dann Kamera, dann Nur während der Nutzung der App zulassen.</string>
+    <string name="scan_unavailable_title">Kamera nicht verfügbar</string>
+    <string name="scan_unavailable_message">Die Kamera konnte nicht gestartet werden. Andere Apps schließen, die sie verwenden, und erneut versuchen.</string>
+
+    <string name="scan_image_choose_title">Bild auswählen</string>
+    <string name="scan_image_choose_message">Einen Screenshot oder ein Foto mit einem QR-Code oder Barcode auswählen.</string>
+    <string name="scan_image_choose_button">Bild auswählen</string>
+    <string name="scan_image_preview">Ausgewähltes Bild</string>
+    <string name="scan_image_reading_title">Bild wird gelesen</string>
+    <string name="scan_image_cancel">Abbrechen</string>
+    <string name="scan_image_processing_title">Suche nach Codes</string>
+    <string name="scan_image_processing_message">Das Bild wird nach QR-Codes und Barcodes durchsucht. Das dauert einen Moment.</string>
+    <string name="scan_image_result_title">Scanergebnis</string>
+    <string name="scan_image_from_image">Aus Bild · Gerade eben</string>
+    <string name="scan_image_pick_one">Den Code auswählen, der geöffnet werden soll.</string>
+    <string name="scan_image_open_result">Ergebnis öffnen</string>
+    <plurals name="scan_image_codes_found">
+        <item quantity="one">%1$d Code gefunden</item>
+        <item quantity="other">%1$d Codes gefunden</item>
+    </plurals>
+    <string name="scan_nocode_title">Kein QR-Code oder Barcode gefunden</string>
+    <string name="scan_nocode_message">In diesem Bild konnte kein Code gelesen werden. Ein paar schnelle Prüfungen können helfen.</string>
+    <string name="scan_nocode_tip_visible">Darauf achten, dass der ganze Code samt weißem Rand sichtbar ist.</string>
+    <string name="scan_nocode_tip_quality">Spiegelungen, Unschärfe und zu enge Ausschnitte vermeiden.</string>
+    <string name="scan_nocode_tip_resolution">Ein Original mit höherer Auflösung oder einen Screenshot versuchen.</string>
+    <string name="scan_nocode_try_another">Anderes Bild versuchen</string>
+    <string name="scan_nocode_use_camera">Stattdessen Kamera nutzen</string>
+    <string name="scan_unreadable_title">Dieses Bild konnte nicht geöffnet werden</string>
+    <string name="scan_unreadable_message">Die Datei ist möglicherweise beschädigt oder in einem nicht unterstützten Format. Ein anderes Bild versuchen.</string>
+</resources>

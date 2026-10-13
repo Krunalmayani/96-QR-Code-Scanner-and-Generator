@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="perm_camera_screen_title">Autoriser l’accès à l’appareil photo</string>
+    <string name="perm_camera_screen_body">L’appareil photo sert uniquement à lire les QR codes et codes-barres tant que l’écran de scan est ouvert.</string>
+    <string name="perm_camera_point1_title">Scannez en un geste</string>
+    <string name="perm_camera_point1_body">Les codes sont lus dès qu’ils sont dans le cadre.</string>
+    <string name="perm_camera_point2_title">Pas d’appareil photo ? Pas de problème</string>
+    <string name="perm_camera_point2_body">Vous pouvez toujours scanner des codes depuis des images enregistrées.</string>
+    <string name="perm_camera_point3_title">Modifiable à tout moment</string>
+    <string name="perm_camera_point3_body">Gérez l’accès dans les réglages d’Android.</string>
+    <string name="perm_camera_allow">Autoriser l’appareil photo</string>
+    <string name="perm_not_now">Pas maintenant</string>
+    <string name="perm_camera_dialog_title">Accès à l’appareil photo requis</string>
+    <string name="perm_camera_dialog_body">Pour lire un QR code ou un code-barres, l’appli a besoin de votre appareil photo. Il n’est utilisé que lorsque l’écran de scan est ouvert.</string>
+    <string name="perm_continue">Continuer</string>
+    <string name="perm_photos_title">Autoriser l’accès aux photos</string>
+    <string name="perm_photos_body">Pour lire un code depuis une image enregistrée, choisissez une photo dans votre galerie. Seule l’image choisie est lue.</string>
+    <string name="perm_photos_choose">Choisir une photo</string>
+    <string name="perm_photos_cancel">Annuler</string>
+    <string name="perm_location_title">Pourquoi la localisation ?</string>
+    <string name="perm_location_body">Sur certaines versions d’Android, rejoindre un réseau Wi-Fi à partir d’un code nécessite l’autorisation de localisation. C’est Android qui l’exige pour les connexions Wi-Fi, pas cette appli.</string>
+    <string name="perm_location_point1">Utilisée uniquement pour autoriser la connexion</string>
+    <string name="perm_location_point2">Vous pouvez toujours copier le mot de passe</string>
+</resources>

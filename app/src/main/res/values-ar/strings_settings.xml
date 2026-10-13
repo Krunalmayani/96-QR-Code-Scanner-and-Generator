@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_section_scanning">المسح</string>
+    <string name="settings_section_appearance">المظهر</string>
+    <string name="settings_section_privacy">الخصوصية والبيانات</string>
+    <string name="settings_section_about">حول التطبيق والدعم</string>
+
+    <string name="settings_vibrate">اهتزاز عند المسح</string>
+    <string name="settings_beep">صوت التنبيه</string>
+    <string name="settings_flash_on_start">تشغيل الفلاش عند البدء</string>
+    <string name="settings_auto_open">فتح الروابط تلقائيًا</string>
+    <string name="settings_auto_open_hint">متوقف افتراضيًا. تُفتح الروابط عند النقر عليها فقط.</string>
+    <string name="settings_continuous">وضع المسح المتواصل</string>
+    <string name="settings_continuous_hint">واصل المسح بعد كل رمز.</string>
+    <string name="settings_scan_area">منطقة المسح</string>
+    <string name="settings_scan_area_hint">اقرأ الرموز داخل الإطار فقط، أو في أي مكان على الشاشة.</string>
+    <string name="settings_scan_area_frame">الإطار فقط</string>
+    <string name="settings_scan_area_full">ملء الشاشة</string>
+
+    <string name="settings_sites_title">ترتيب البحث عن المنتجات</string>
+    <string name="settings_sites_hint">تُعرض المواقع بهذا الترتيب عند البحث عن باركود.</string>
+    <string name="settings_site_move_up">نقل %1$s لأعلى</string>
+    <string name="settings_site_move_down">نقل %1$s لأسفل</string>
+
+    <string name="settings_theme">السمة</string>
+    <string name="settings_theme_system">افتراضي النظام</string>
+    <string name="settings_theme_light">فاتح</string>
+    <string name="settings_theme_dark">داكن</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_language_system">افتراضي النظام</string>
+
+    <string name="settings_privacy_banner_title">يُخزَّن السجل على جهازك فقط</string>
+    <string name="settings_privacy_banner_text">يمكنك حذف عنصر واحد أو كل شيء في أي وقت.</string>
+    <string name="settings_perm_camera">الكاميرا</string>
+    <string name="settings_perm_camera_hint">قراءة رموز QR والباركود</string>
+    <string name="settings_perm_photos">الصور</string>
+    <string name="settings_perm_photos_hint">مسح الرموز من الصور المحفوظة</string>
+    <string name="settings_perm_location">الموقع</string>
+    <string name="settings_perm_location_hint">فقط إذا طلبه Android عند الاتصال برمز Wi-Fi</string>
+    <string name="settings_perm_internet">الإنترنت</string>
+    <string name="settings_perm_internet_hint">فتح المواقع وعمليات البحث في متصفحك</string>
+    <string name="settings_manage_android">إدارة من إعدادات Android</string>
+    <string name="settings_save_history">حفظ سجل المسح</string>
+    <string name="settings_save_history_hint">أوقفه لإبقاء عمليات المسح الجديدة خارج السجل.</string>
+    <string name="settings_analytics">مشاركة بيانات الاستخدام المجهولة</string>
+    <string name="settings_analytics_hint">يساعد على تحسين التطبيق. لا يتضمن رموزك أبدًا.</string>
+    <string name="settings_clear_history">مسح السجل</string>
+    <string name="settings_export_history">تصدير السجل</string>
+    <string name="settings_privacy_summary">ملخص الخصوصية</string>
+    <string name="settings_privacy_policy_web">سياسة الخصوصية الكاملة</string>
+
+    <string name="settings_help">المساعدة والأسئلة الشائعة</string>
+    <string name="settings_feedback">إرسال ملاحظات</string>
+    <string name="settings_rate">قيّم على Google Play</string>
+    <string name="settings_share_app">مشاركة هذا التطبيق</string>
+    <string name="settings_about">حول</string>
+
+    <string name="settings_history_empty">السجل فارغ بالفعل</string>
+    <plurals name="settings_history_cleared">
+        <item quantity="zero">لم يُمسح أي عنصر</item>
+        <item quantity="one">تم مسح عنصر واحد</item>
+        <item quantity="two">تم مسح عنصرين</item>
+        <item quantity="few">تم مسح %d عناصر</item>
+        <item quantity="many">تم مسح %d عنصرًا</item>
+        <item quantity="other">تم مسح %d عنصر</item>
+    </plurals>
+    <string name="settings_no_app_found">لم يُعثر على تطبيق لفتح هذا</string>
+    <string name="settings_play_unavailable">تعذّر فتح Google Play</string>
+
+    <string name="settings_clear_title">مسح كل السجل؟</string>
+    <string name="settings_clear_message">سيؤدي هذا إلى إزالة ما يلي من هذا الجهاز. لا يمكن التراجع عن ذلك.</string>
+    <plurals name="settings_clear_scanned">
+        <item quantity="zero">لا رموز ممسوحة</item>
+        <item quantity="one">رمز ممسوح واحد</item>
+        <item quantity="two">رمزان ممسوحان</item>
+        <item quantity="few">%d رموز ممسوحة</item>
+        <item quantity="many">%d رمزًا ممسوحًا</item>
+        <item quantity="other">%d رمز ممسوح</item>
+    </plurals>
+    <plurals name="settings_clear_created">
+        <item quantity="zero">لا رموز منشأة</item>
+        <item quantity="one">رمز منشأ واحد</item>
+        <item quantity="two">رمزان منشآن</item>
+        <item quantity="few">%d رموز منشأة</item>
+        <item quantity="many">%d رمزًا منشأً</item>
+        <item quantity="other">%d رمز منشأ</item>
+    </plurals>
+    <string name="settings_clear_keep_favorites">الاحتفاظ بمفضلتي</string>
+    <string name="settings_clear_confirm">مسح الكل</string>
+
+    <string name="settings_language_search">البحث عن لغات</string>
+    <string name="settings_language_no_match">لا توجد لغة مطابقة</string>
+
+    <string name="settings_help_title">المساعدة والأسئلة الشائعة</string>
+    <string name="settings_contact_support">الاتصال بالدعم</string>
+    <string name="settings_faq_expanded">موسّع</string>
+    <string name="settings_faq_collapsed">مطوي</string>
+    <string name="settings_faq_wont_scan_q">لماذا لا يُمسح رمزي؟</string>
+    <string name="settings_faq_wont_scan_a">أبقِ الهاتف على بعد 15 إلى 30 سم، وأضف إضاءة بالفلاش، وأبقِ الرمز مسطحًا داخل الإطار. قد تحتاج الرموز التالفة إلى محاولة ثانية.</string>
+    <string name="settings_faq_offline_q">هل يمكنني المسح دون إنترنت؟</string>
+    <string name="settings_faq_offline_a">نعم. يعمل مسح الرموز وإنشاؤها دون اتصال. تحتاج إلى اتصال فقط لفتح رابط أو البحث عن منتج.</string>
+    <string name="settings_faq_colors_q">كيف أغيّر ألوان الرمز؟</string>
+    <string name="settings_faq_colors_a">بعد إنشاء رمز، اضغط على تخصيص واختر الألوان من تبويب الألوان. حافظ على تباين قوي ليبقى الرمز سهل المسح.</string>
+    <string name="settings_faq_history_q">أين يُخزَّن سجلي؟</string>
+    <string name="settings_faq_history_a">على هاتفك فقط. لا يُرفع أي شيء. يمكنك حذف عنصر واحد أو مسح كل شيء من الإعدادات.</string>
+    <string name="settings_faq_photo_q">كيف أمسح من صورة؟</string>
+    <string name="settings_faq_photo_a">في شاشة المسح اضغط على زر المعرض واختر صورة. يقرأ التطبيق أي رمز فيها. لا تغادر الصور هاتفك أبدًا.</string>
+    <string name="settings_faq_auto_open_q">لماذا لا يُفتح الرابط من تلقاء نفسه؟</string>
+    <string name="settings_faq_auto_open_a">لأمانك، لا تُفتح الروابط إلا عند النقر عليها. يمكنك تفعيل فتح الروابط تلقائيًا من الإعدادات، لكن تحقق من العنوان أولًا.</string>
+    <string name="settings_faq_wifi_q">كيف أتصل بشبكة Wi-Fi من رمز؟</string>
+    <string name="settings_faq_wifi_a">امسح رمز Wi-Fi ثم اضغط على اتصال. قد يطلب Android إذن الموقع قبل الاتصال بالشبكة. يمكنك أيضًا نسخ كلمة المرور.</string>
+    <string name="settings_faq_types_q">ما الرموز التي يمكنني مسحها؟</string>
+    <string name="settings_faq_types_a">رموز QR والباركود الشائعة مثل EAN وUPC وCode 128 وCode 39 وData Matrix وPDF417 وAztec.</string>
+    <string name="settings_faq_export_q">كيف أصدّر سجلي؟</string>
+    <string name="settings_faq_export_a">افتح الإعدادات ثم تصدير السجل. اختر CSV أو JSON أو نص، ثم احفظ الملف أو شاركه.</string>
+    <string name="settings_faq_language_q">كيف أغيّر اللغة؟</string>
+    <string name="settings_faq_language_a">افتح الإعدادات ثم اللغة، واختر لغة. يتغير التطبيق فورًا.</string>
+
+    <string name="settings_privacy_title">الخصوصية</string>
+    <string name="settings_privacy_hero_title">تبقى عمليات مسحك على هاتفك</string>
+    <string name="settings_privacy_hero_text">لا نرفع الرموز أو الصور أو السجل.</string>
+    <string name="settings_privacy_camera">أثناء المسح فقط</string>
+    <string name="settings_privacy_photos">الصور التي تختارها فقط</string>
+    <string name="settings_privacy_history">مخزّن محليًا، ويمكن حذفه</string>
+    <string name="settings_privacy_history_title">السجل</string>
+    <string name="settings_privacy_note">تُرسل عمليات البحث عن المنتجات رقم الباركود فقط إلى موقع بحث، وفقط عندما تضغط على بحث. قد تستخدم الإعلانات، إن عُرضت، معرّف إعلانات يمكنك إعادة تعيينه في إعدادات Android.</string>
+    <string name="settings_privacy_read_full">قراءة السياسة الكاملة</string>
+
+    <string name="settings_feedback_title">إرسال ملاحظات</string>
+    <string name="settings_feedback_rating_label">كيف تقيّم التطبيق؟</string>
+    <string name="settings_feedback_star">التقييم %1$d من 5</string>
+    <string name="settings_feedback_topic_scanning">المسح</string>
+    <string name="settings_feedback_topic_creating">الإنشاء</string>
+    <string name="settings_feedback_topic_design">التصميم</string>
+    <string name="settings_feedback_topic_other">أخرى</string>
+    <string name="settings_feedback_message_label">ما الذي يمكننا تحسينه؟</string>
+    <string name="settings_feedback_email_label">البريد الإلكتروني (اختياري)</string>
+    <string name="settings_feedback_email_error">أدخل بريدًا إلكترونيًا صالحًا</string>
+    <string name="settings_feedback_send">إرسال الملاحظات</string>
+    <string name="settings_feedback_no_mail_app">لم يُعثر على تطبيق بريد. راسل %1$s.</string>
+
+    <string name="settings_about_title">حول</string>
+    <string name="settings_about_version">الإصدار %1$s (الإنشاء %2$d)</string>
+    <string name="settings_about_licenses">تراخيص المصدر المفتوح</string>
+    <string name="settings_about_terms">شروط الاستخدام</string>
+    <string name="settings_about_disclaimer">هذا التطبيق أداة لمسح رموز QR والباركود وإنشائها. ولا يقدّم خدمات دفع أو خدمات مصرفية أو مالية.</string>
+    <string name="settings_share_text">جرّب %1$s: %2$s</string>
+
+    <string name="settings_export_title">تصدير السجل</string>
+    <string name="settings_export_include">تضمين</string>
+    <string name="settings_export_scanned">الرموز الممسوحة (%1$d)</string>
+    <string name="settings_export_created">الرموز المنشأة (%1$d)</string>
+    <string name="settings_export_favorites">المفضلة فقط</string>
+    <string name="settings_export_format">الصيغة</string>
+    <string name="settings_export_format_csv">CSV</string>
+    <string name="settings_export_format_json">JSON</string>
+    <string name="settings_export_format_text">نص</string>
+    <string name="settings_export_note">يُحفظ الملف في المكان الذي تختاره أو يُشارك مع تطبيق تختاره. لا يُرفع إلى أي مكان.</string>
+    <string name="settings_export_nothing">لا شيء للتصدير</string>
+    <plurals name="settings_export_summary">
+        <item quantity="zero">لن يُصدَّر أي عنصر</item>
+        <item quantity="one">سيُصدَّر عنصر واحد</item>
+        <item quantity="two">سيُصدَّر عنصران</item>
+        <item quantity="few">سيُصدَّر %d عناصر</item>
+        <item quantity="many">سيُصدَّر %d عنصرًا</item>
+        <item quantity="other">سيُصدَّر %d عنصر</item>
+    </plurals>
+    <string name="settings_export_save">حفظ الملف</string>
+    <string name="settings_export_share">مشاركة</string>
+    <string name="settings_export_share_title">مشاركة السجل</string>
+    <string name="settings_export_saved">تم حفظ الملف</string>
+    <string name="settings_export_failed">تعذّر تصدير الملف</string>
+</resources>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hist_title">Historique</string>
+    <string name="hist_tab_scanned">Scannés</string>
+    <string name="hist_tab_created">Créés</string>
+    <string name="hist_search_placeholder">Rechercher dans l’historique</string>
+
+    <string name="hist_chip_all">Tout</string>
+    <string name="hist_chip_favorites">Favoris</string>
+    <string name="hist_chip_favorites_count">Favoris · %1$d</string>
+    <string name="hist_chip_links">Liens</string>
+    <string name="hist_chip_wifi">Wi-Fi</string>
+    <string name="hist_chip_contacts">Contacts</string>
+    <string name="hist_chip_text">Texte</string>
+    <string name="hist_chip_phone">Téléphone</string>
+    <string name="hist_chip_email">E-mail</string>
+    <string name="hist_chip_location">Lieu</string>
+    <string name="hist_chip_events">Événements</string>
+    <string name="hist_chip_products">Produits</string>
+
+    <string name="hist_day_today">Aujourd’hui</string>
+    <string name="hist_day_yesterday">Hier</string>
+    <string name="hist_row_subtitle">%1$s · %2$s</string>
+    <string name="hist_type_website">Site web</string>
+    <string name="hist_type_wifi">Wi-Fi</string>
+    <string name="hist_type_contact">Contact</string>
+    <string name="hist_type_text">Texte</string>
+    <string name="hist_type_phone">Téléphone</string>
+    <string name="hist_type_email">E-mail</string>
+    <string name="hist_type_sms">SMS</string>
+    <string name="hist_type_location">Lieu</string>
+    <string name="hist_type_event">Événement</string>
+    <string name="hist_type_product">Produit</string>
+    <string name="hist_type_unknown">Autre</string>
+    <plurals name="hist_search_results">
+        <item quantity="one">%d résultat</item>
+        <item quantity="many">%d de résultats</item>
+        <item quantity="other">%d résultats</item>
+    </plurals>
+
+    <string name="hist_cd_select_items">Sélectionner des éléments</string>
+    <string name="hist_cd_exit_selection">Quitter la sélection</string>
+    <string name="hist_cd_select_all">Tout sélectionner</string>
+    <string name="hist_cd_favorite_selected">Ajouter la sélection aux favoris</string>
+    <string name="hist_cd_close_search">Fermer la recherche</string>
+    <string name="hist_cd_select_row">Sélectionner</string>
+    <string name="hist_cd_open_row">Ouvrir</string>
+    <string name="hist_menu_export_history">Exporter l’historique</string>
+    <string name="hist_menu_export_selected">Exporter en CSV</string>
+    <plurals name="hist_selected_count">
+        <item quantity="one">%d sélectionné</item>
+        <item quantity="many">%d sélectionnés</item>
+        <item quantity="other">%d sélectionnés</item>
+    </plurals>
+
+    <plurals name="hist_deleted_scans">
+        <item quantity="one">Scan supprimé</item>
+        <item quantity="many">%d de scans supprimés</item>
+        <item quantity="other">%d scans supprimés</item>
+    </plurals>
+    <plurals name="hist_deleted_codes">
+        <item quantity="one">Code supprimé</item>
+        <item quantity="many">%d de codes supprimés</item>
+        <item quantity="other">%d codes supprimés</item>
+    </plurals>
+    <plurals name="hist_deleted_items">
+        <item quantity="one">Élément supprimé</item>
+        <item quantity="many">%d d’éléments supprimés</item>
+        <item quantity="other">%d éléments supprimés</item>
+    </plurals>
+
+    <string name="hist_share_chooser_title">Partager l’historique</string>
+    <string name="hist_export_chooser_title">Exporter l’historique</string>
+    <string name="hist_share_failed">Impossible de partager ces éléments</string>
+    <string name="hist_export_failed">Impossible d’exporter ces éléments</string>
+
+    <string name="hist_empty_scanned_title">Aucun scan pour l’instant</string>
+    <string name="hist_empty_scanned_message">Les codes que vous scannez apparaissent ici, enregistrés uniquement sur cet appareil.</string>
+    <string name="hist_empty_scanned_action">Commencer à scanner</string>
+    <string name="hist_empty_created_title">Rien de créé pour l’instant</string>
+    <string name="hist_empty_created_message">Les codes que vous créez apparaissent ici, enregistrés uniquement sur cet appareil.</string>
+    <string name="hist_empty_created_action">Créer un code</string>
+    <string name="hist_empty_favorites_title">Aucun favori pour l’instant</string>
+    <string name="hist_empty_favorites_message">Touchez l’étoile sur un scan ou un code créé pour le garder à portée de main.</string>
+    <string name="hist_empty_favorites_action">Parcourir l’historique</string>
+    <string name="hist_empty_filter_title">Rien de ce type</string>
+    <string name="hist_empty_filter_message">Les codes de ce type apparaîtront ici dès que vous en scannerez ou en créerez un.</string>
+    <string name="hist_empty_filter_action">Tout afficher</string>
+    <string name="hist_empty_search_title">Aucun résultat</string>
+    <string name="hist_empty_search_message">Rien ne correspond à « %1$s ». Essayez un autre mot.</string>
+</resources>
