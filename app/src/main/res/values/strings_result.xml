@@ -78,8 +78,6 @@
     <string name="result_contact_address">Address</string>
     <string name="result_contact_note">Note</string>
     <string name="result_action_add_contact">Add to contacts</string>
-    <string name="result_call_number">Call %1$s</string>
-    <string name="result_email_to">Email %1$s</string>
 
     <!-- s20 Phone -->
     <string name="result_phone_label">Phone number</string>

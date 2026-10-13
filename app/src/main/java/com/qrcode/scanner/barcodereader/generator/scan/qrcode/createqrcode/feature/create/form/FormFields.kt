@@ -3,7 +3,6 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feat
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PasswordVisibilityToggle
@@ -233,7 +233,7 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
                 onSelect = { onSpec(spec.copy(security = WifiSecurities[it])) },
             )
         }
-        AppCard(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)) {
+        CardGroup {
             SettingsSwitchRow(
                 title = stringResource(R.string.create_wifi_hidden),
                 subtitle = stringResource(R.string.create_wifi_hidden_hint),

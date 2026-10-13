@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -43,6 +44,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.featu
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.tone
 
 private const val GRID_COLUMNS = 3
+private val EmptyStateHeight = 320.dp
 
 @Composable
 fun CreateHubRoute(
@@ -104,7 +106,7 @@ fun CreateHubScreen(
                         icon = AppIcons.Search,
                         title = stringResource(R.string.create_hub_no_results),
                         message = stringResource(R.string.create_hub_no_results_hint),
-                        modifier = Modifier.padding(top = 32.dp),
+                        modifier = Modifier.height(EmptyStateHeight),
                     )
                 }
             }

@@ -46,6 +46,7 @@ import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.PhotoLibrary
 import androidx.compose.material.icons.rounded.Public
 import androidx.compose.material.icons.rounded.QrCode2
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Search
@@ -67,6 +68,7 @@ import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material.icons.rounded.Wifi
+import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material.icons.rounded.ZoomIn
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -125,6 +127,8 @@ object AppIcons {
     val Notes: ImageVector = Icons.Rounded.Notes
     val Person: ImageVector = Icons.Rounded.Person
     val Wifi: ImageVector = Icons.Rounded.Wifi
+    val WifiOff: ImageVector = Icons.Rounded.WifiOff
+    val Refresh: ImageVector = Icons.Rounded.Refresh
     val Calendar: ImageVector = Icons.Rounded.CalendarMonth
     val Event: ImageVector = Icons.Rounded.Event
     val Phone: ImageVector = Icons.Rounded.Phone
