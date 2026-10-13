@@ -23,10 +23,10 @@ class VectorBuilderTest {
             val xs = ArrayList<Float>()
             val ys = ArrayList<Float>()
             for (c in shape.commands) when (c) {
-                is PathCommand.MoveTo -> { xs += c.x\\; ys += c.y }
-                is PathCommand.LineTo -> { xs += c.x\\; ys += c.y }
-                is PathCommand.QuadTo -> { xs += c.x\\; ys += c.y }
-                is PathCommand.ArcTo -> { xs += c.cx - c.r\\; xs += c.cx + c.r\\; ys += c.cy - c.r\\; ys += c.cy + c.r }
+                is PathCommand.MoveTo -> { xs += c.x; ys += c.y }
+                is PathCommand.LineTo -> { xs += c.x; ys += c.y }
+                is PathCommand.QuadTo -> { xs += c.x; ys += c.y }
+                is PathCommand.ArcTo -> { xs += c.cx - c.r; xs += c.cx + c.r; ys += c.cy - c.r; ys += c.cy + c.r }
                 PathCommand.Close -> Unit
             }
             floatArrayOf(xs.min(), ys.min(), xs.max(), ys.max())
@@ -113,14 +113,14 @@ class VectorBuilderTest {
     @Test fun gradientEndpoints() {
         val g = ShapePaint.LinearGradient(0, 0, 0f)
         val h = g.endpoints(100f, 50f)
-        assertEquals(0f, h.x0, 0.001f)\\; assertEquals(25f, h.y0, 0.001f)
-        assertEquals(100f, h.x1, 0.001f)\\; assertEquals(25f, h.y1, 0.001f)
+        assertEquals(0f, h.x0, 0.001f); assertEquals(25f, h.y0, 0.001f)
+        assertEquals(100f, h.x1, 0.001f); assertEquals(25f, h.y1, 0.001f)
         val v = ShapePaint.LinearGradient(0, 0, 90f).endpoints(100f, 50f)
-        assertEquals(50f, v.x0, 0.01f)\\; assertEquals(0f, v.y0, 0.01f)
+        assertEquals(50f, v.x0, 0.01f); assertEquals(0f, v.y0, 0.01f)
         assertEquals(50f, v.y1, 0.01f)
         val d = ShapePaint.LinearGradient(0, 0, 45f).endpoints(100f, 100f)
-        assertEquals(0f, d.x0, 0.01f)\\; assertEquals(0f, d.y0, 0.01f)
-        assertEquals(100f, d.x1, 0.01f)\\; assertEquals(100f, d.y1, 0.01f)
+        assertEquals(0f, d.x0, 0.01f); assertEquals(0f, d.y0, 0.01f)
+        assertEquals(100f, d.x1, 0.01f); assertEquals(100f, d.y1, 0.01f)
     }
 
     // ---- logo ----

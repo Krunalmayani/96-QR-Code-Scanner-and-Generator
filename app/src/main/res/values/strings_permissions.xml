@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- s05 Camera permission rationale, full screen (onboarding) -->
+    <string name="perm_camera_screen_title">Allow camera access</string>
+    <string name="perm_camera_screen_body">The camera is used only to read QR codes and barcodes while the scan screen is open.</string>
+    <string name="perm_camera_point1_title">Scan in one tap</string>
+    <string name="perm_camera_point1_body">Codes are read as soon as they are in frame.</string>
+    <string name="perm_camera_point2_title">No camera? No problem</string>
+    <string name="perm_camera_point2_body">You can still scan codes from saved images.</string>
+    <string name="perm_camera_point3_title">Change it any time</string>
+    <string name="perm_camera_point3_body">Manage access in Android settings.</string>
+    <string name="perm_camera_allow">Allow camera</string>
+    <string name="perm_not_now">Not now</string>
+    <!-- s64 Camera permission rationale, dialog -->
+    <string name="perm_camera_dialog_title">Camera access needed</string>
+    <string name="perm_camera_dialog_body">To read a QR code or barcode, the app needs your camera. It is used only while the scan screen is open.</string>
+    <string name="perm_continue">Continue</string>
+    <!-- s65 Photos permission rationale -->
+    <string name="perm_photos_title">Allow access to photos</string>
+    <string name="perm_photos_body">To read a code from a saved image, choose a photo from your gallery. Only the image you pick is read.</string>
+    <string name="perm_photos_choose">Choose photo</string>
+    <string name="perm_photos_cancel">Cancel</string>
+    <!-- s66 Location for Wi-Fi connect -->
+    <string name="perm_location_title">Why Location?</string>
+    <string name="perm_location_body">On some Android versions, joining a Wi-Fi network from a code needs the Location permission. Android requires it for Wi-Fi connections, not this app.</string>
+    <string name="perm_location_point1">Used only to allow the connection</string>
+    <string name="perm_location_point2">You can still copy the password instead</string>
+</resources>

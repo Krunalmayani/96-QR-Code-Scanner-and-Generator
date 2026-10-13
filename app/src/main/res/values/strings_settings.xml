@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Placeholders: replace before publishing. -->
+    <string name="settings_support_email" translatable="false">support@example.com</string>
+    <string name="settings_terms_url" translatable="false">https://example.com/terms</string>
+    <string name="settings_made_by" translatable="false">Made by your studio name</string>
+
+    <!-- Main screen (s54, s55, s56, s77) -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_section_scanning">Scanning</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_privacy">Privacy and data</string>
+    <string name="settings_section_about">About and support</string>
+
+    <string name="settings_vibrate">Vibrate on scan</string>
+    <string name="settings_beep">Beep sound</string>
+    <string name="settings_flash_on_start">Flash on start</string>
+    <string name="settings_auto_open">Open links automatically</string>
+    <string name="settings_auto_open_hint">Off by default. Links open only when you tap.</string>
+    <string name="settings_continuous">Continuous scan mode</string>
+    <string name="settings_continuous_hint">Keep scanning after each code.</string>
+    <string name="settings_scan_area">Scan area</string>
+    <string name="settings_scan_area_hint">Read codes only inside the frame, or anywhere on screen.</string>
+    <string name="settings_scan_area_frame">Frame only</string>
+    <string name="settings_scan_area_full">Full screen</string>
+
+    <string name="settings_sites_title">Product search order</string>
+    <string name="settings_sites_hint">Sites are offered in this order when you look up a barcode.</string>
+    <string name="settings_site_google" translatable="false">Google</string>
+    <string name="settings_site_open_food_facts" translatable="false">Open Food Facts</string>
+    <string name="settings_site_amazon" translatable="false">Amazon</string>
+    <string name="settings_site_move_up">Move %1$s up</string>
+    <string name="settings_site_move_down">Move %1$s down</string>
+
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_system">System default</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">System default</string>
+
+    <string name="settings_privacy_banner_title">History is stored only on your device</string>
+    <string name="settings_privacy_banner_text">You can delete one item or everything at any time.</string>
+    <string name="settings_perm_camera">Camera</string>
+    <string name="settings_perm_camera_hint">Read QR codes and barcodes</string>
+    <string name="settings_perm_photos">Photos</string>
+    <string name="settings_perm_photos_hint">Scan codes from saved images</string>
+    <string name="settings_perm_location">Location</string>
+    <string name="settings_perm_location_hint">Only if Android asks when connecting to a Wi-Fi code</string>
+    <string name="settings_perm_internet">Internet</string>
+    <string name="settings_perm_internet_hint">Open websites and searches in your browser</string>
+    <string name="settings_manage_android">Manage in Android settings</string>
+    <string name="settings_save_history">Save scan history</string>
+    <string name="settings_save_history_hint">Turn off to keep new scans out of History.</string>
+    <string name="settings_analytics">Share anonymous usage data</string>
+    <string name="settings_analytics_hint">Helps improve the app. Never includes your codes.</string>
+    <string name="settings_clear_history">Clear history</string>
+    <string name="settings_export_history">Export history</string>
+    <string name="settings_privacy_summary">Privacy summary</string>
+    <string name="settings_privacy_policy_web">Full privacy policy</string>
+
+    <string name="settings_help">Help and FAQ</string>
+    <string name="settings_feedback">Send feedback</string>
+    <string name="settings_rate">Rate on Google Play</string>
+    <string name="settings_share_app">Share this app</string>
+    <string name="settings_about">About</string>
+    <string name="settings_debug_gallery" translatable="false">Component gallery</string>
+
+    <string name="settings_history_empty">History is already empty</string>
+    <plurals name="settings_history_cleared">
+        <item quantity="one">Cleared %d item</item>
+        <item quantity="other">Cleared %d items</item>
+    </plurals>
+    <string name="settings_no_app_found">No app found to open this</string>
+    <string name="settings_play_unavailable">Could not open Google Play</string>
+
+    <!-- Clear history dialog (s68) -->
+    <string name="settings_clear_title">Clear all history?</string>
+    <string name="settings_clear_message">This removes the following from this device. It cannot be undone.</string>
+    <plurals name="settings_clear_scanned">
+        <item quantity="one">%d scanned code</item>
+        <item quantity="other">%d scanned codes</item>
+    </plurals>
+    <plurals name="settings_clear_created">
+        <item quantity="one">%d created code</item>
+        <item quantity="other">%d created codes</item>
+    </plurals>
+    <string name="settings_clear_keep_favorites">Keep my favorites</string>
+    <string name="settings_clear_confirm">Clear all</string>
+
+    <!-- Pickers (s57, s58) -->
+    <string name="settings_language_search">Search languages</string>
+    <string name="settings_language_no_match">No matching language</string>
+
+    <!-- Help and FAQ (s59) -->
+    <string name="settings_help_title">Help and FAQ</string>
+    <string name="settings_contact_support">Contact support</string>
+    <string name="settings_faq_expanded">Expanded</string>
+    <string name="settings_faq_collapsed">Collapsed</string>
+    <string name="settings_faq_wont_scan_q">Why will my code not scan?</string>
+    <string name="settings_faq_wont_scan_a">Hold the phone 15 to 30 cm away, add light with the flash, and keep the code flat inside the frame. Damaged codes may need a second try.</string>
+    <string name="settings_faq_offline_q">Can I scan without internet?</string>
+    <string name="settings_faq_offline_a">Yes. Scanning and creating codes work offline. You only need a connection to open a link or look up a product.</string>
+    <string name="settings_faq_colors_q">How do I change the code colors?</string>
+    <string name="settings_faq_colors_a">After you create a code, tap Customize and pick colors in the Colors tab. Keep strong contrast so the code stays easy to scan.</string>
+    <string name="settings_faq_history_q">Where is my history stored?</string>
+    <string name="settings_faq_history_a">Only on your phone. Nothing is uploaded. You can delete one item or clear everything in Settings.</string>
+    <string name="settings_faq_photo_q">How do I scan from a photo?</string>
+    <string name="settings_faq_photo_a">On the Scan screen tap the gallery button and pick an image. The app reads any code in it. Photos never leave your phone.</string>
+    <string name="settings_faq_auto_open_q">Why does a link not open by itself?</string>
+    <string name="settings_faq_auto_open_a">For your safety, links open only when you tap them. You can turn on Open links automatically in Settings, but check the address first.</string>
+    <string name="settings_faq_wifi_q">How do I join Wi-Fi from a code?</string>
+    <string name="settings_faq_wifi_a">Scan the Wi-Fi code, then tap Connect. Android may ask for location permission before it joins a network. You can also copy the password.</string>
+    <string name="settings_faq_types_q">Which codes can I scan?</string>
+    <string name="settings_faq_types_a">QR codes and common barcodes such as EAN, UPC, Code 128, Code 39, Data Matrix, PDF417 and Aztec.</string>
+    <string name="settings_faq_export_q">How do I export my history?</string>
+    <string name="settings_faq_export_a">Open Settings, then Export history. Choose CSV, JSON or Text, then save the file or share it.</string>
+    <string name="settings_faq_language_q">How do I change the language?</string>
+    <string name="settings_faq_language_a">Open Settings, then Language, and pick one. The app switches right away.</string>
+
+    <!-- Privacy summary (s60) -->
+    <string name="settings_privacy_title">Privacy</string>
+    <string name="settings_privacy_hero_title">Your scans stay on your phone</string>
+    <string name="settings_privacy_hero_text">We do not upload codes, photos or history.</string>
+    <string name="settings_privacy_camera">Only while scanning</string>
+    <string name="settings_privacy_photos">Only images you pick</string>
+    <string name="settings_privacy_history">Stored locally, deletable</string>
+    <string name="settings_privacy_history_title">History</string>
+    <string name="settings_privacy_note">Product lookups send only the barcode number to a search website, and only when you tap Search. Ads, if shown, may use an advertising ID that you can reset in Android settings.</string>
+    <string name="settings_privacy_read_full">Read full policy</string>
+
+    <!-- Send feedback (s61) -->
+    <string name="settings_feedback_title">Send feedback</string>
+    <string name="settings_feedback_rating_label">How would you rate the app?</string>
+    <string name="settings_feedback_star">Rate %1$d out of 5</string>
+    <string name="settings_feedback_topic_scanning">Scanning</string>
+    <string name="settings_feedback_topic_creating">Creating</string>
+    <string name="settings_feedback_topic_design">Design</string>
+    <string name="settings_feedback_topic_other">Other</string>
+    <string name="settings_feedback_message_label">What can we improve?</string>
+    <string name="settings_feedback_email_label">Email (optional)</string>
+    <string name="settings_feedback_email_hint" translatable="false">you@example.com</string>
+    <string name="settings_feedback_email_error">Enter a valid email address</string>
+    <string name="settings_feedback_send">Send feedback</string>
+    <string name="settings_feedback_no_mail_app">No email app found. Write to %1$s.</string>
+
+    <!-- About (s62) -->
+    <string name="settings_about_title">About</string>
+    <string name="settings_about_version">Version %1$s (build %2$d)</string>
+    <string name="settings_about_licenses">Open source licenses</string>
+    <string name="settings_about_terms">Terms of use</string>
+    <string name="settings_about_disclaimer">This app is a utility for scanning and creating QR codes and barcodes. It does not provide payment, banking or financial services.</string>
+    <string name="settings_share_text">Try %1$s: %2$s</string>
+
+    <!-- Export history (s63) -->
+    <string name="settings_export_title">Export history</string>
+    <string name="settings_export_include">Include</string>
+    <string name="settings_export_scanned">Scanned codes (%1$d)</string>
+    <string name="settings_export_created">Created codes (%1$d)</string>
+    <string name="settings_export_favorites">Favorites only</string>
+    <string name="settings_export_format">Format</string>
+    <string name="settings_export_format_csv">CSV</string>
+    <string name="settings_export_format_json">JSON</string>
+    <string name="settings_export_format_text">Text</string>
+    <string name="settings_export_note">The file is saved where you choose or shared to an app you choose. It is not uploaded anywhere.</string>
+    <string name="settings_export_nothing">Nothing to export</string>
+    <plurals name="settings_export_summary">
+        <item quantity="one">%d item will be exported</item>
+        <item quantity="other">%d items will be exported</item>
+    </plurals>
+    <string name="settings_export_save">Save file</string>
+    <string name="settings_export_share">Share</string>
+    <string name="settings_export_share_title">Share history</string>
+    <string name="settings_export_saved">File saved</string>
+    <string name="settings_export_failed">Could not export the file</string>
+</resources>

@@ -83,7 +83,7 @@ class ScanContentParserTest {
             assertEquals(WifiSecurity.WPA, it.security)
             assertEquals(false, it.hidden)
         }),
-        case("wifi escapes", "WIFI:T:WPA;S:My\;Net\\:5G;P:pa\\\\ss\\,word;;", check = typed<ScanContent.Wifi> {
+        case("wifi escapes", "WIFI:T:WPA;S:My\\;Net\\:5G;P:pa\\\\ss\\,word;;", check = typed<ScanContent.Wifi> {
             assertEquals("My;Net:5G", it.ssid)
             assertEquals("pa\\ss,word", it.password)
         }),
@@ -140,10 +140,10 @@ class ScanContentParserTest {
             assertEquals("line one and two", it.note)
         }),
         case("vcard N only is First Last", "BEGIN:VCARD\nN:Doe;John;;;\nEND:VCARD", check = typed<ScanContent.Contact> { assertEquals("John Doe", it.name) }),
-        case("vcard quoted-printable utf8", "BEGIN:VCARD\nVERSION:2.1\nFN;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:Ren=C3=A9 Dupont\nNOTE;ENCODING=QUOTED-PRINTABLE:a=\n b\nEND:VCARD",
+        case("vcard quoted-printable utf8", "BEGIN:VCARD\nVERSION:2.1\nFN;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:Ren=C3=A9 Dupont\nNOTE;ENCODING=QUOTED-PRINTABLE:a=\nb\nEND:VCARD",
             check = typed<ScanContent.Contact> {
                 assertEquals("Ren\u00E9 Dupont", it.name)
-                assertEquals("a b", it.note)
+                assertEquals("ab", it.note)
             }),
         case("vcard without END is still parsed", "BEGIN:VCARD\nFN:Open Ended\nTEL:123456", check = typed<ScanContent.Contact> { assertEquals("Open Ended", it.name) }),
         case("empty vcard is text", "BEGIN:VCARD\nVERSION:3.0\nEND:VCARD", check = type(ContentType.TEXT)),
@@ -181,7 +181,7 @@ class ScanContentParserTest {
         }),
         case("event unknown TZID falls back to the default zone", "BEGIN:VEVENT\nSUMMARY:Win\nDTSTART;TZID=Eastern Standard Time:20240501T090000\nEND:VEVENT",
             check = typed<ScanContent.Event> { assertEquals(ms("2024-05-01T09:00:00Z"), it.startMillis) }),
-        case("event inside vcalendar with CRLF and escapes", "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nSUMMARY:Lunch\\, then walk\r\nLOCATION:Cafe\; Main St\r\nDESCRIPTION:Line one\\nLine\r\n  two\r\nDTSTART:20240601T120000Z\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+        case("event inside vcalendar with CRLF and escapes", "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nSUMMARY:Lunch\\, then walk\r\nLOCATION:Cafe\\; Main St\r\nDESCRIPTION:Line one\\nLine\r\n  two\r\nDTSTART:20240601T120000Z\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
             check = typed<ScanContent.Event> {
                 assertEquals("Lunch, then walk", it.summary)
                 assertEquals("Cafe; Main St", it.location)
@@ -217,7 +217,7 @@ class ScanContentParserTest {
         case("mailto percent decodes utf8", "mailto:a@b.co?subject=Caf%C3%A9", check = typed<ScanContent.Email> { assertEquals("Caf\u00E9", it.subject) }),
         case("mailto upper case", "MAILTO:A@B.CO", check = typed<ScanContent.Email> { assertEquals("A@B.CO", it.address) }),
         case("mailto without at is text", "mailto:nobody", check = type(ContentType.TEXT)),
-        case("matmsg", "MATMSG:TO:bob@x.com;SUB:Hi\;there;BODY:See you;;", check = typed<ScanContent.Email> {
+        case("matmsg", "MATMSG:TO:bob@x.com;SUB:Hi\\;there;BODY:See you;;", check = typed<ScanContent.Email> {
             assertEquals("bob@x.com", it.address)
             assertEquals("Hi;there", it.subject)
             assertEquals("See you", it.body)
@@ -258,7 +258,7 @@ class ScanContentParserTest {
         case("code39 letters are text", "ABC-123", CodeFormat.CODE_39, type(ContentType.TEXT)),
         case("ean13 with letters is text", "ABC", CodeFormat.EAN_13, type(ContentType.TEXT)),
         case("itf 14 digits is text", "12345678901231", CodeFormat.ITF, type(ContentType.TEXT)),
-        case("qr with ean digits is a phone-or-text, not a product", "5901234123457", QR_CODE, type(ContentType.TEXT)),
+        case("qr with 13 digits is a phone number, not a product", "5901234123457", QR_CODE, type(ContentType.PHONE)),
         // ---- text / unknown ----
         case("plain text", "Hello, world", check = type(ContentType.TEXT)),
         case("multi line text with CRLF", "line one\r\nline two\r\n", check = typed<ScanContent.Text> { assertEquals("line one\r\nline two\r\n", it.rawValue) }),

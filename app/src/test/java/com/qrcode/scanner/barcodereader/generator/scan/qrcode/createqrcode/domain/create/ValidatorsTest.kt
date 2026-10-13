@@ -96,7 +96,7 @@ class ValidatorsTest {
         ok(Validators.wifiPassword("0123456789abcdef0123456789", WifiSecurity.WEP))
         bad(FieldError.PasswordTooShort(5), Validators.wifiPassword("abcd", WifiSecurity.WEP))
         bad(FieldError.PasswordTooShort(10), Validators.wifiPassword("abcdef", WifiSecurity.WEP))
-        bad(FieldError.PasswordTooShort(10), Validators.wifiPassword("abcdefghij", WifiSecurity.WEP))
+        bad(FieldError.PasswordTooShort(13), Validators.wifiPassword("abcdefghij", WifiSecurity.WEP))
         bad(FieldError.PasswordTooShort(26), Validators.wifiPassword("abcdefghijklmn", WifiSecurity.WEP))
         bad(FieldError.TooLong(26), Validators.wifiPassword("a".repeat(27), WifiSecurity.WEP))
     }

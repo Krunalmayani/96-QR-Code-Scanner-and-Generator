@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.EnumSource
 class RoundTripTest {
     private fun sample(type: CreateType): CreateSpec = when (type) {
         CreateType.WEBSITE -> CreateSpec.Website("brewhouse-coffee.com/menu?table=12&x=café")
-        CreateType.TEXT -> CreateSpec.Text("Meeting notes: ship v2.4 on Friday.\nGrüße 日本語 😀\\; done,")
+        CreateType.TEXT -> CreateSpec.Text("Meeting notes: ship v2.4 on Friday.\nGrüße 日本語 😀; done,")
         CreateType.CONTACT -> CreateSpec.Contact(
             name = "Sophie Lambert",
             organization = "Lumen Studio",
@@ -25,9 +25,9 @@ class RoundTripTest {
             email = "sophie.lambert@lumen.studio",
             address = "48 Market Street, Suite 6\nAustin, TX 78701",
             website = "lumen.studio",
-            note = "Met at the fair\\; call back",
+            note = "Met at the fair; call back",
         )
-        CreateType.WIFI -> CreateSpec.Wifi("Cafe\\;Nova:Guest", "p\"ass,w\\ord1", WifiSecurity.WPA, hidden = true)
+        CreateType.WIFI -> CreateSpec.Wifi("Cafe;Nova:Guest", "p\"ass,w\\ord1", WifiSecurity.WPA, hidden = true)
         CreateType.EMAIL -> CreateSpec.Email("hello@lumen.studio", "Hello & welcome", "Line 1\nLine 2 café")
         CreateType.PHONE -> CreateSpec.Phone("(206) 555-0198")
         CreateType.SMS -> CreateSpec.Sms("+1 415 555 0142", "Running late: see you at 6")

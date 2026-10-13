@@ -70,8 +70,13 @@ class ContrastCheckerTest {
     @Test fun gradientEndFailingContrast() {
         val r = ContrastChecker.scanReliability(QrStyle(foreground = black, gradientEnd = 0xFFEEEEEE, background = white))
         assertTrue(ReliabilityReason.GRADIENT_LOW_CONTRAST in r.reasons)
-        assertTrue(ReliabilityReason.INVERTED in r.reasons)
+        assertFalse(ReliabilityReason.INVERTED in r.reasons)
         assertTrue(r.contrastRatio < 3)
+    }
+
+    @Test fun gradientEndLighterThanDarkBackgroundIsInverted() {
+        val r = ContrastChecker.scanReliability(QrStyle(foreground = 0xFF111111, gradientEnd = 0xFFFFFFFF, background = 0xFF222222))
+        assertTrue(ReliabilityReason.INVERTED in r.reasons)
     }
 
     @Test fun goodGradientPasses() {

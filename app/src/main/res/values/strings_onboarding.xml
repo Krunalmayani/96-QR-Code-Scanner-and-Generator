@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- s02 Slide 1, scan -->
+    <string name="onb_slide1_title">Scan any QR code or barcode instantly</string>
+    <string name="onb_slide1_body">Point your camera at a code. Links, Wi-Fi, contacts, events and products are recognized right away.</string>
+    <string name="onb_slide1_chip">Code found</string>
+    <!-- s03 Slide 2, create -->
+    <string name="onb_slide2_title">Create QR codes for links, Wi-Fi, contacts and more</string>
+    <string name="onb_slide2_body">Pick a type, fill in the details, then customize colors and shapes before you save or share.</string>
+    <!-- s04 Slide 3, privacy -->
+    <string name="onb_slide3_title">History stays on your device, private by design</string>
+    <string name="onb_slide3_body">Your scans are saved locally. Add favorites, delete one item, or clear everything whenever you like.</string>
+    <string name="onb_slide3_chip_saved">Saved on this device</string>
+    <string name="onb_slide3_chip_delete">Delete any time</string>
+    <!-- Controls -->
+    <string name="onb_get_started">Get started</string>
+    <string name="onb_page_indicator">Page %1$d of %2$d</string>
+</resources>

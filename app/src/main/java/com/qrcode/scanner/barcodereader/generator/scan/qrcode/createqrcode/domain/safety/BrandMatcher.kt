@@ -50,10 +50,12 @@ internal object BrandMatcher {
 
     private fun maxEdits(brandLength: Int): Int = if (brandLength <= 6) 1 else 2
 
-    /** `paypal-login.com`: a long brand name as one hyphen separated token. */
+    /** `paypal-login.com`, `appleid-verify.com`: a brand name (5+ letters) as, or at the edge of, a hyphen separated token. */
     private fun hyphenToken(label: String, brand: String): Boolean {
         if (brand.length < 5 || '-' !in label) return false
-        return label.split('-').any { it.isNotEmpty() && variants(it).contains(brand) }
+        return label.split('-').any { token ->
+            token.isNotEmpty() && variants(token).any { it == brand || it.startsWith(brand) || it.endsWith(brand) }
+        }
     }
 
     /** `securepaypal.com`, `amazonprime.net`: a long brand name glued to other words. */
