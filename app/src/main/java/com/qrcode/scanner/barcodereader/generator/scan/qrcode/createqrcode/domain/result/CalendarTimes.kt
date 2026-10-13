@@ -26,5 +26,17 @@ object CalendarTimes {
         return CalendarWindow(startMillis, end)
     }
 
+    /**
+     * End shown on the result card. All-day events store an exclusive end (midnight after the last day), so the last
+     * day is shown instead, and nothing is shown for a one-day event. Timed events show their end when it is after
+     * the start.
+     */
+    fun displayEnd(startMillis: Long?, endMillis: Long?, allDay: Boolean): Long? {
+        if (startMillis == null || endMillis == null) return null
+        if (!allDay) return endMillis.takeIf { it > startMillis }
+        val lastDay = floorToUtcDay(endMillis) - DAY_MILLIS
+        return lastDay.takeIf { it > floorToUtcDay(startMillis) }
+    }
+
     private fun floorToUtcDay(millis: Long): Long = Math.floorDiv(millis, DAY_MILLIS) * DAY_MILLIS
 }

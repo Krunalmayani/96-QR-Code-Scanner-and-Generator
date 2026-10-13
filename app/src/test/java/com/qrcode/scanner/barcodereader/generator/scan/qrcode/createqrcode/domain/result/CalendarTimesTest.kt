@@ -43,4 +43,20 @@ class CalendarTimesTest {
     fun `negative epoch values floor towards the earlier day`() {
         assertEquals(CalendarWindow(-day, 0L), CalendarTimes.window(-1L, null, true))
     }
+
+    @Test
+    fun `display end hides the end of a one day event and shows the last day of a longer one`() {
+        assertEquals(null, CalendarTimes.displayEnd(null, midnight + day, true))
+        assertEquals(null, CalendarTimes.displayEnd(midnight, null, true))
+        assertEquals(null, CalendarTimes.displayEnd(midnight, midnight + day, true))
+        assertEquals(midnight + 2 * day, CalendarTimes.displayEnd(midnight, midnight + 3 * day, true))
+    }
+
+    @Test
+    fun `display end of a timed event needs an end after the start`() {
+        val start = midnight + 9 * hour
+        assertEquals(start + hour, CalendarTimes.displayEnd(start, start + hour, false))
+        assertEquals(null, CalendarTimes.displayEnd(start, start, false))
+        assertEquals(null, CalendarTimes.displayEnd(start, start - 1, false))
+    }
 }
