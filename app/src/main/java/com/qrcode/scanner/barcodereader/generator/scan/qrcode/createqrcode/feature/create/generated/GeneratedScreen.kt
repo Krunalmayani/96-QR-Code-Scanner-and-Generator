@@ -1,16 +1,5 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.generated
 
-import android.Manifest
-import android.content.ActivityNotFoundException
-import android.content.ClipData
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,27 +15,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.LocalAdController
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ActionBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
@@ -83,102 +60,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.labelRes
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.CodeCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.rememberLogoBitmap
-import kotlinx.coroutines.launch
 
 private val CodeCardMaxWidth = 280.dp
 private val ToastBottomOffset = 96.dp
-
-@StringRes
-private fun GeneratedMessage.textRes(): Int = when (this) {
-    GeneratedMessage.SAVED_TO_GALLERY -> R.string.create_toast_saved_gallery
-    GeneratedMessage.SAVED_TO_DOWNLOADS -> R.string.create_toast_saved_downloads
-    GeneratedMessage.COPIED -> R.string.common_copied
-    GeneratedMessage.SAVE_FAILED -> R.string.create_error_save_failed
-    GeneratedMessage.SHARE_FAILED -> R.string.create_error_share_failed
-    GeneratedMessage.PERMISSION_DENIED -> R.string.create_error_storage_permission
-    GeneratedMessage.LOGO_FAILED -> R.string.create_error_logo_failed
-}
-
-/**
- * Entry of the Generated destination: wires the ViewModel to the Android pieces the screen needs (permission request,
- * Photo Picker, clipboard, share sheet) and counts the ad impression once when the result is first shown.
- */
-@Composable
-fun GeneratedRoute(
-    onBack: () -> Unit,
-    viewModel: GeneratedViewModel = hiltViewModel(),
-) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-    val clipboard = LocalClipboardManager.current
-    val scope = rememberCoroutineScope()
-    val toast = rememberToastState()
-    val snackbar = remember { SnackbarHostState() }
-
-    val adController = LocalAdController.current
-    var adCounted by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(state.status) {
-        if (state.status == GeneratedStatus.READY && !adCounted) {
-            adCounted = true
-            adController.onResultShown()
-        }
-    }
-
-    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-        viewModel.onEvent(GeneratedEvent.StoragePermissionResult(granted))
-    }
-    val logoLauncher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) viewModel.onEvent(GeneratedEvent.LogoPicked(uri.toString()))
-    }
-
-    LaunchedEffect(viewModel) {
-        viewModel.effects.collect { effect ->
-            when (effect) {
-                is GeneratedEffect.Message -> {
-                    val text = context.getString(effect.message.textRes())
-                    scope.launch { if (effect.message.isSuccess) toast.show(text) else snackbar.showSnackbar(text) }
-                }
-                is GeneratedEffect.ShareFile -> {
-                    if (!startShare(context, effect.uri, effect.mimeType)) {
-                        scope.launch { snackbar.showSnackbar(context.getString(R.string.create_error_share_failed)) }
-                    }
-                }
-                is GeneratedEffect.CopyText -> {
-                    clipboard.setText(AnnotatedString(effect.text))
-                    scope.launch { toast.show(context.getString(R.string.common_copied)) }
-                }
-                GeneratedEffect.RequestStoragePermission -> permissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }
-        }
-    }
-
-    GeneratedScreen(
-        state = state,
-        onEvent = viewModel::onEvent,
-        onBack = onBack,
-        onPickLogo = { logoLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
-        toastState = toast,
-        snackbarHostState = snackbar,
-    )
-}
-
-/** Opens the system share sheet for [uri]; false when no app can handle it. */
-private fun startShare(context: Context, uri: String, mimeType: String): Boolean {
-    val stream = Uri.parse(uri)
-    val send = Intent(Intent.ACTION_SEND).apply {
-        type = mimeType
-        putExtra(Intent.EXTRA_STREAM, stream)
-        clipData = ClipData.newRawUri(null, stream)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
-    val chooser = Intent.createChooser(send, context.getString(R.string.create_share_chooser_title))
-    return try {
-        context.startActivity(chooser)
-        true
-    } catch (e: ActivityNotFoundException) {
-        false
-    }
-}
 
 /** Generated code (design s40, barcode s44) and, one tap away, the customize editor (s41 to s43). */
 @Composable
@@ -191,7 +75,6 @@ fun GeneratedScreen(
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
 ) {
-    BackHandler(enabled = state.editing) { onEvent(GeneratedEvent.CloseEditor) }
     Box(modifier.fillMaxSize()) {
         when (state.status) {
             GeneratedStatus.LOADING -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { LoadingSpinner() }
@@ -234,7 +117,9 @@ private fun ResultContent(state: GeneratedUiState, onEvent: (GeneratedEvent) -> 
     AppScaffold(
         topBar = {
             AppTopBar(
-                title = stringResource(if (state.isBarcode) R.string.create_generated_title_barcode else R.string.create_generated_title_qr),
+                title = stringResource(
+                    if (state.isBarcode) R.string.create_generated_title_barcode else R.string.create_generated_title_qr,
+                ),
                 onBack = onBack,
                 actions = {
                     IconButtonRounded(
@@ -283,7 +168,11 @@ private fun ResultContent(state: GeneratedUiState, onEvent: (GeneratedEvent) -> 
 @Composable
 private fun PreviewCard(state: GeneratedUiState, record: ScanRecord, logo: ImageBitmap?) {
     AppCard(contentPadding = PaddingValues(20.dp)) {
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp)) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
             CodeCard(
                 image = state.image,
                 logo = logo,
@@ -338,11 +227,17 @@ private fun DetailsCard(state: GeneratedUiState, record: ScanRecord) {
         val check = state.checkDigit
         if (check != null) {
             val verdict = stringResource(if (check.valid) R.string.create_details_valid else R.string.create_details_invalid)
-            KeyValueRow(stringResource(R.string.create_details_check_digit), stringResource(R.string.create_details_check_digit_value, check.digit, verdict))
+            KeyValueRow(
+                stringResource(R.string.create_details_check_digit),
+                stringResource(R.string.create_details_check_digit_value, check.digit, verdict),
+            )
         }
         val size = state.pixelSize
         if (size != null) {
-            KeyValueRow(stringResource(R.string.create_details_size), stringResource(R.string.create_details_size_value, size.width, size.height))
+            KeyValueRow(
+                stringResource(R.string.create_details_size),
+                stringResource(R.string.create_details_size_value, size.width, size.height),
+            )
         }
         KeyValueRow(
             stringResource(R.string.create_details_saved_to),
@@ -387,7 +282,11 @@ private val shapedRecord = sampleRecord(
     CodeFormat.QR_CODE,
     QrStyle(foreground = 0xFF4F46E5, dotShape = DotShape.DOTS, eyeShape = EyeShape.LEAF, errorCorrection = ErrorCorrection.M),
 )
-private val framedRecord = sampleRecord(SAMPLE_URL, CodeFormat.QR_CODE, QrStyle(foreground = 0xFF4F46E5, frameText = "Scan me", errorCorrection = ErrorCorrection.H))
+private val framedRecord = sampleRecord(
+    SAMPLE_URL,
+    CodeFormat.QR_CODE,
+    QrStyle(foreground = 0xFF4F46E5, frameText = "Scan me", errorCorrection = ErrorCorrection.H),
+)
 private val lowContrastRecord = sampleRecord(SAMPLE_URL, CodeFormat.QR_CODE, QrStyle(foreground = 0xFFBBBBBB))
 private val barcodeRecord = sampleRecord(SAMPLE_EAN, CodeFormat.EAN_13, QrStyle())
 

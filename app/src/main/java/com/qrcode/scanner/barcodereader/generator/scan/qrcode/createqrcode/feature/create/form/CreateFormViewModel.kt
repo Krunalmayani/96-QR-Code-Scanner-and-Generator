@@ -183,6 +183,7 @@ class CreateFormViewModel @Inject constructor(
         return base.copy(spec = spec, errors = errors, density = density, barcodeStatus = status, barcodePreview = preview)
     }
 
+    @Suppress("TooGenericExceptionCaught")
     private fun generate() {
         val current = _state.value
         val spec = current.spec ?: return

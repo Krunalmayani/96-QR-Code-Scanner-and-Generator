@@ -109,7 +109,12 @@ internal fun ColorControls(
             SectionLabel(stringResource(R.string.create_colors_code))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (CodeSwatch.fromArgb(style.foreground) == null) {
-                    ColorSwatch(style.foreground.toColor(), selected = true, onClick = {}, contentDescription = ColorHex.format(style.foreground))
+                    ColorSwatch(
+                        color = style.foreground.toColor(),
+                        selected = true,
+                        onClick = {},
+                        contentDescription = ColorHex.format(style.foreground),
+                    )
                 }
                 for (swatch in CodeSwatch.entries) {
                     ColorSwatch(
@@ -126,7 +131,12 @@ internal fun ColorControls(
             SectionLabel(stringResource(R.string.create_colors_background))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 if (BackgroundSwatch.fromArgb(style.background) == null) {
-                    ColorSwatch(style.background.toColor(), selected = true, onClick = {}, contentDescription = ColorHex.format(style.background))
+                    ColorSwatch(
+                        color = style.background.toColor(),
+                        selected = true,
+                        onClick = {},
+                        contentDescription = ColorHex.format(style.background),
+                    )
                 }
                 for (swatch in BackgroundSwatch.entries) {
                     ColorSwatch(
@@ -154,7 +164,8 @@ private fun GradientControls(foreground: Long, gradientEnd: Long?, onEdit: (Styl
                 subtitle = stringResource(R.string.create_colors_gradient_hint),
                 checked = gradientEnd != null,
                 onCheckedChange = { on ->
-                    onEdit(if (on) StyleEdit.Gradient(GradientPreset.match(foreground, gradientEnd) ?: GradientPreset.entries.first()) else StyleEdit.GradientEnd(null))
+                    val preset = GradientPreset.match(foreground, gradientEnd) ?: GradientPreset.entries.first()
+                    onEdit(if (on) StyleEdit.Gradient(preset) else StyleEdit.GradientEnd(null))
                 },
             )
         }
@@ -234,7 +245,10 @@ internal fun ReliabilityMessage(reliability: ScanReliability) {
                 modifier = Modifier.padding(horizontal = 4.dp),
             )
         }
-        KeyValueRow(label = stringResource(R.string.create_colors_contrast_ratio), value = stringResource(R.string.create_colors_ratio_value, ratio))
+        KeyValueRow(
+            label = stringResource(R.string.create_colors_contrast_ratio),
+            value = stringResource(R.string.create_colors_ratio_value, ratio),
+        )
     }
 }
 
@@ -265,8 +279,17 @@ internal fun BarcodeOptions(
             )
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.create_barcode_bar_height), style = AppTheme.type.title, color = AppTheme.colors.ink, modifier = Modifier.weight(1f))
-            Text(stringResource(R.string.create_percent, style.barHeightPercent), style = AppTheme.type.bodyStrong, color = AppTheme.colors.inkSecondary)
+            Text(
+                stringResource(R.string.create_barcode_bar_height),
+                style = AppTheme.type.title,
+                color = AppTheme.colors.ink,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                stringResource(R.string.create_percent, style.barHeightPercent),
+                style = AppTheme.type.bodyStrong,
+                color = AppTheme.colors.inkSecondary,
+            )
         }
         AppSlider(
             value = style.barHeightPercent.toFloat(),

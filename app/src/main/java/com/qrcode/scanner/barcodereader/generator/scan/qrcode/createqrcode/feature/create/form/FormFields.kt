@@ -78,7 +78,12 @@ internal fun TextFields(spec: CreateSpec.Text, density: DensityLevel?, host: For
                 last = true,
             )
             Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 6.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(stringResource(R.string.create_text_hint), style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary, modifier = Modifier.weight(1f))
+                Text(
+                    stringResource(R.string.create_text_hint),
+                    style = AppTheme.type.caption,
+                    color = AppTheme.colors.inkSecondary,
+                    modifier = Modifier.weight(1f),
+                )
                 Text(
                     stringResource(R.string.create_text_counter, spec.text.length, Limits.TEXT),
                     style = AppTheme.type.caption,
@@ -226,7 +231,12 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
             )
         }
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(stringResource(R.string.create_field_security), style = AppTheme.type.label, color = AppTheme.colors.inkSecondary, modifier = Modifier.padding(horizontal = 4.dp))
+            Text(
+                stringResource(R.string.create_field_security),
+                style = AppTheme.type.label,
+                color = AppTheme.colors.inkSecondary,
+                modifier = Modifier.padding(horizontal = 4.dp),
+            )
             SegmentedControl(
                 options = WifiSecurities.map { stringResource(it.labelRes()) },
                 selectedIndex = WifiSecurities.indexOf(spec.security),

@@ -150,7 +150,10 @@ class GeneratedViewModel @Inject constructor(
         flushPendingStyle()
     }
 
-    /** Writes a style change that is still waiting for its debounce. Runs on the application scope: viewModelScope is gone when the screen is left. */
+    /**
+     * Writes a style change that is still waiting for its debounce. Runs on the application scope,
+     * because viewModelScope is already cancelled when the screen is left.
+     */
     internal fun flushPendingStyle() {
         val pending = unsavedStyle ?: return
         unsavedStyle = null
@@ -159,7 +162,7 @@ class GeneratedViewModel @Inject constructor(
 
     fun onEvent(event: GeneratedEvent) {
         when (event) {
-            GeneratedEvent.ToggleFavorite -> viewModelScope.launch { toggleFavorite(recordId)?.let { analytics.log(Events.FAVORITE_TOGGLE) } }
+            GeneratedEvent.ToggleFavorite -> toggleFavoriteFlag()
             is GeneratedEvent.OpenEditor -> _state.update { it.copy(editing = true, tab = event.tab) }
             GeneratedEvent.CloseEditor -> closeEditor()
             is GeneratedEvent.SelectTab -> _state.update { it.copy(tab = event.tab) }
@@ -170,6 +173,12 @@ class GeneratedViewModel @Inject constructor(
             is GeneratedEvent.StoragePermissionResult -> onPermission(event.granted)
             GeneratedEvent.Share -> share()
             GeneratedEvent.Copy -> copy()
+        }
+    }
+
+    private fun toggleFavoriteFlag() {
+        viewModelScope.launch {
+            if (toggleFavorite(recordId) != null) analytics.log(Events.FAVORITE_TOGGLE)
         }
     }
 

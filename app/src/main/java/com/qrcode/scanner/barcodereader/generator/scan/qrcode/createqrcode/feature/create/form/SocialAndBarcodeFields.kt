@@ -57,6 +57,7 @@ private fun SocialPlatform.labelRes(): Int = when (this) {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
+    val phoneBased = spec.platform.isPhoneBased
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column {
             SectionLabel(stringResource(R.string.create_social_platform))
@@ -77,9 +78,9 @@ internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: 
             field = FormField.HANDLE,
             value = spec.handle,
             onValueChange = { onSpec(spec.copy(handle = it)) },
-            label = stringResource(if (spec.platform.isPhoneBased) R.string.create_field_social_phone else R.string.create_field_username),
-            helper = stringResource(if (spec.platform.isPhoneBased) R.string.create_helper_social_phone else R.string.create_helper_username),
-            keyboardType = if (spec.platform.isPhoneBased) KeyboardType.Phone else KeyboardType.Text,
+            label = stringResource(if (phoneBased) R.string.create_field_social_phone else R.string.create_field_username),
+            helper = stringResource(if (phoneBased) R.string.create_helper_social_phone else R.string.create_helper_username),
+            keyboardType = if (phoneBased) KeyboardType.Phone else KeyboardType.Text,
             last = true,
         )
         if (spec.handle.isNotBlank() && FormField.HANDLE !in host.invalid) {
@@ -88,8 +89,18 @@ internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: 
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     IconTile(AppIcons.Social)
                     Column(Modifier.weight(1f)) {
-                        Text(stringResource(R.string.create_social_will_open), style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary)
-                        Text(target, style = AppTheme.type.title, color = AppTheme.colors.ink, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            stringResource(R.string.create_social_will_open),
+                            style = AppTheme.type.caption,
+                            color = AppTheme.colors.inkSecondary,
+                        )
+                        Text(
+                            target,
+                            style = AppTheme.type.title,
+                            color = AppTheme.colors.ink,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
                 }
             }

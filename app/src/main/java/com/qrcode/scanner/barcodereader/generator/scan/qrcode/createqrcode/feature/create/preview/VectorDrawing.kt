@@ -108,7 +108,12 @@ internal fun VectorShape.Path.toComposePath(s: Float): Path {
                 y = command.y
             }
             is PathCommand.ArcTo -> {
-                val oval = Rect((command.cx - command.r) * s, (command.cy - command.r) * s, (command.cx + command.r) * s, (command.cy + command.r) * s)
+                val oval = Rect(
+                    left = (command.cx - command.r) * s,
+                    top = (command.cy - command.r) * s,
+                    right = (command.cx + command.r) * s,
+                    bottom = (command.cy + command.r) * s,
+                )
                 path.arcTo(oval, command.startAngleDegrees, command.sweepAngleDegrees, false)
                 val end = Math.toRadians((command.startAngleDegrees + command.sweepAngleDegrees).toDouble())
                 x = command.cx + command.r * cos(end).toFloat()

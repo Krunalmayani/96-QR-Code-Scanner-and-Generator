@@ -22,7 +22,7 @@ sealed interface SaveOutcome {
 
 /** Draws a code into the bytes of PNG, JPG, SVG or PDF. All Android drawing sits behind this interface. */
 interface CodeBitmapRenderer {
-    /** @throws com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.CodeEncodeException when the payload cannot be encoded. */
+    /** Throws `CodeEncodeException` (domain.create) when the payload cannot be encoded in the job's format. */
     suspend fun render(job: ExportJob): ExportedFile
 }
 

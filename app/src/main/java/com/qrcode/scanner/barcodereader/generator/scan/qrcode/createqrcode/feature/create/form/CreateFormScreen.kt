@@ -75,7 +75,10 @@ fun CreateFormRoute(
     )
 }
 
-/** One screen for every Create form (design s32 to s39): the fields come from [CreateFormUiState.spec], Generate stays disabled until it validates. */
+/**
+ * One screen for every Create form (design s32 to s39): the fields come from [CreateFormUiState.spec] and
+ * Generate stays disabled until the form validates.
+ */
 @Composable
 fun CreateFormScreen(
     state: CreateFormUiState,
@@ -175,7 +178,10 @@ private fun FormFields(
 
 @Composable
 private fun UnknownTypeScreen(onBack: () -> Unit, modifier: Modifier = Modifier) {
-    AppScaffold(modifier = modifier, topBar = { AppTopBar(title = stringResource(R.string.create_hub_title), onBack = onBack) }) { padding ->
+    AppScaffold(
+        modifier = modifier,
+        topBar = { AppTopBar(title = stringResource(R.string.create_hub_title), onBack = onBack) },
+    ) { padding ->
         EmptyState(
             icon = AppIcons.Warning,
             title = stringResource(R.string.create_unknown_type_title),
@@ -201,9 +207,13 @@ private fun PreviewForm(dark: Boolean, state: CreateFormUiState) {
 private val websiteError = previewState(CreateSpec.Website("brewhouse coffee"), setOf(FormField.URL))
 private val textState = previewState(CreateSpec.Text("Meeting notes: ship v2.4 on Friday.")).copy(density = DensityLevel.LOW)
 private val phoneState = previewState(CreateSpec.Phone("(206) 555-0198"))
-private val contactState = previewState(CreateSpec.Contact(name = "Sophie Lambert", phone = "+1 (415) 555-0142", email = "sophie@lumen.studio"))
+private val contactState = previewState(
+    CreateSpec.Contact(name = "Sophie Lambert", phone = "+1 (415) 555-0142", email = "sophie@lumen.studio"),
+)
 private val wifiState = previewState(CreateSpec.Wifi(ssid = "CafeNova_Guest", password = "guestpass123"))
-private val eventState = previewState(EventTimes.blankEvent(1_800_000_000_000L, TimeZone.getTimeZone("UTC")).copy(title = "Product Launch Meetup"))
+private val eventState = previewState(
+    EventTimes.blankEvent(1_800_000_000_000L, TimeZone.getTimeZone("UTC")).copy(title = "Product Launch Meetup"),
+)
 private val socialState = previewState(CreateSpec.Social(handle = "lumen.studio"))
 private val barcodeState = previewState(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345"))
     .copy(barcodeStatus = BarcodeStatus.CheckDigitWillBeAdded(7))

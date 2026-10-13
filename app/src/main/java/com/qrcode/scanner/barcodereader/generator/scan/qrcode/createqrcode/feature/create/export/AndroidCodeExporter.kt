@@ -40,6 +40,7 @@ class AndroidCodeExporter @Inject constructor(
         Build.VERSION.SDK_INT < Build.VERSION_CODES.Q &&
             ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun saveToGallery(job: ExportJob, fileName: String): SaveOutcome = withContext(io) {
         try {
             val file = renderer.render(job)
@@ -58,6 +59,7 @@ class AndroidCodeExporter @Inject constructor(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun createShareFile(job: ExportJob, fileName: String): ShareFile? = withContext(io) {
         try {
             val file = renderer.render(job)

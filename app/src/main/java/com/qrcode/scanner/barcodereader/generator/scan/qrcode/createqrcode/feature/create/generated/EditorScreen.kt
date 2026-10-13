@@ -102,7 +102,7 @@ private fun ErrorCorrection.labelRes(): Int = when (this) {
     ErrorCorrection.H -> R.string.create_ec_high
 }
 
-/** The customize editor (design s41 to s43, barcode variant s44): the live preview on top, a sheet with the Colors / Shapes / Extras tabs below. */
+/** The customize editor (design s41 to s43, barcode s44): live preview on top, a sheet with the Colors / Shapes / Extras tabs below. */
 @Composable
 internal fun EditorScreen(
     state: GeneratedUiState,
@@ -326,7 +326,11 @@ private fun CustomFrameField(initial: String, onEdit: (StyleEdit) -> Unit) {
         },
         label = stringResource(R.string.create_frame_text_label),
         modifier = Modifier.padding(top = 12.dp),
-        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters, keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Characters,
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Done,
+        ),
     )
 }
 
@@ -363,8 +367,17 @@ private fun ExportControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
     val points = ExportSizes.points
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(stringResource(R.string.create_extras_export_size), style = AppTheme.type.title, color = AppTheme.colors.ink, modifier = Modifier.weight(1f))
-            Text(stringResource(R.string.create_px, style.exportSizePx), style = AppTheme.type.bodyStrong, color = AppTheme.colors.inkSecondary)
+            Text(
+                stringResource(R.string.create_extras_export_size),
+                style = AppTheme.type.title,
+                color = AppTheme.colors.ink,
+                modifier = Modifier.weight(1f),
+            )
+            Text(
+                stringResource(R.string.create_px, style.exportSizePx),
+                style = AppTheme.type.bodyStrong,
+                color = AppTheme.colors.inkSecondary,
+            )
         }
         AppSlider(
             value = ExportSizes.indexOf(style.exportSizePx).toFloat(),
@@ -408,7 +421,11 @@ private fun CustomColorDialog(initial: Long, onApply: (Long) -> Unit, onDismiss:
             onValueChange = { text = it.take(HEX_FIELD_MAX) },
             label = stringResource(R.string.create_custom_color_label),
             error = if (parsed == null) stringResource(R.string.create_custom_color_invalid) else null,
-            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters, keyboardType = KeyboardType.Ascii, imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Characters,
+                keyboardType = KeyboardType.Ascii,
+                imeAction = ImeAction.Done,
+            ),
         )
     }
 }

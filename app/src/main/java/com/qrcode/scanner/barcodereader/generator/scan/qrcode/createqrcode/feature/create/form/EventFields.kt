@@ -133,7 +133,12 @@ private fun DateTimeRow(
 ) {
     val notSet = stringResource(R.string.create_event_not_set)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(heading.uppercase(), style = AppTheme.type.label, color = AppTheme.colors.inkSecondary, modifier = Modifier.padding(horizontal = 4.dp))
+        Text(
+            heading.uppercase(),
+            style = AppTheme.type.label,
+            color = AppTheme.colors.inkSecondary,
+            modifier = Modifier.padding(horizontal = 4.dp),
+        )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             PickerField(
                 label = stringResource(R.string.create_event_date),

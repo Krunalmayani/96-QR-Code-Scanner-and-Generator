@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.di.IoDispatcher
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.LogoDecoder
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.ImageSampling
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
@@ -22,6 +22,7 @@ class AndroidLogoStore @Inject constructor(
     @IoDispatcher private val io: CoroutineDispatcher,
 ) : LogoStore {
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun import(source: String): String? = withContext(io) {
         try {
             val bitmap = decodeScaled(Uri.parse(source)) ?: return@withContext null
@@ -53,7 +54,7 @@ class AndroidLogoStore @Inject constructor(
         resolver.openInputStream(source)?.use { BitmapFactory.decodeStream(it, null, bounds) }
         if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
         val options = BitmapFactory.Options().apply {
-            inSampleSize = LogoDecoder.sampleSizeFor(max(bounds.outWidth, bounds.outHeight), LogoDecoder.MAX_SIDE)
+            inSampleSize = ImageSampling.sampleSize(max(bounds.outWidth, bounds.outHeight))
         }
         return resolver.openInputStream(source)?.use { BitmapFactory.decodeStream(it, null, options) }
     }

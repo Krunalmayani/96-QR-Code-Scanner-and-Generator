@@ -139,7 +139,7 @@ fun InfoBanner(
 private fun EmptyStatePreview() {
     AppTheme(dark = false) {
         Box(Modifier.background(AppTheme.colors.background)) {
-            EmptyState(AppIcons.History, "No scans yet", "Scan a code and it shows up here.", action = { PrimaryButton("Scan a code", {}) })
+            EmptyState(AppIcons.History, "No scans yet", message = "Scan a code and it shows up here.", action = { PrimaryButton("Scan a code", {}) })
         }
     }
 }
@@ -149,7 +149,7 @@ private fun EmptyStatePreview() {
 private fun EmptyStatePreviewDark() {
     AppTheme(dark = true) {
         Box(Modifier.background(AppTheme.colors.background)) {
-            EmptyState(AppIcons.Star, "No favorites", "Tap the star on any result to keep it here.")
+            EmptyState(AppIcons.Star, "No favorites", message = "Tap the star on any result to keep it here.")
         }
     }
 }
