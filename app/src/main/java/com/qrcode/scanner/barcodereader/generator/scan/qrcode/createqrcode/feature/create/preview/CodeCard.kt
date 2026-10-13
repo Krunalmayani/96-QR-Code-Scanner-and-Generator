@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -43,7 +45,8 @@ fun VectorCodeImage(
 
 /**
  * White card holding a code. [image] null (the content cannot be encoded) shows a neutral placeholder of the same
- * square shape. The card's size follows the code's aspect ratio, so it never stretches.
+ * square shape. The card's size follows the code's aspect ratio, so it never stretches. QR codes use the default
+ * 12dp padding and radius 20 (design s40); barcodes pass a wider shape and padding (design s44: 16 x 12, radius 16).
  */
 @Composable
 fun CodeCard(
@@ -51,15 +54,16 @@ fun CodeCard(
     logo: ImageBitmap?,
     contentDescription: String,
     modifier: Modifier = Modifier,
+    shape: Shape = AppTheme.shapes.card,
+    contentPadding: PaddingValues = PaddingValues(12.dp),
 ) {
-    val shape = AppTheme.shapes.card
     Box(
         modifier =
             modifier
                 .clip(shape)
                 .background(PaperColor)
                 .border(1.dp, AppTheme.colors.outline, shape)
-                .padding(12.dp),
+                .padding(contentPadding),
         contentAlignment = Alignment.Center,
     ) {
         if (image != null) {

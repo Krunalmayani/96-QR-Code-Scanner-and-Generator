@@ -37,6 +37,9 @@ import kotlinx.coroutines.launch
 private val ControlsHeight = 160.dp
 private val ControlsExtraBottom = 28.dp
 private val HintGap = 20.dp
+
+/** The barcode frame (s07) leaves a wider gap before the hint than the square QR frame (s06). */
+private val WideHintGap = 28.dp
 private val HintHeight = 36.dp
 
 /**
@@ -105,7 +108,7 @@ private fun BoxScope.ScanOverlayContent(
     val frame = with(density) { viewfinderRect(width.toPx(), height.toPx(), density.density, shape) }
     val frameBottom = with(density) { frame.bottom.toDp() }
     val bottomInset = LocalBottomBarInset.current + ControlsExtraBottom
-    val hintTop = frameBottom + HintGap
+    val hintTop = frameBottom + if (state.mode.wideFrame) WideHintGap else HintGap
     val room = hintTop + HintHeight < height - bottomInset - ControlsHeight
 
     if (state.batchMode) BatchTopBar(onEvent) else ScanTopBar(state, capabilities.hasFlash, onEvent)

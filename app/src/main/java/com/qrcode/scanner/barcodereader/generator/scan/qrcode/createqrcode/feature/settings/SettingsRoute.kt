@@ -77,6 +77,7 @@ fun SettingsRoute(navigation: SettingsNavigation, viewModel: SettingsViewModel =
         actions = actions,
         snackbarHostState = snackbar,
         versionName = BuildConfig.VERSION_NAME,
+        versionCode = BuildConfig.VERSION_CODE,
     )
 
     state.clearDialog?.let { dialog ->

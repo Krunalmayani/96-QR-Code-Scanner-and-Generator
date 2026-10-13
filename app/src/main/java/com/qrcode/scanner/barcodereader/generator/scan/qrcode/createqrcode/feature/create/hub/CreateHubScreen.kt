@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -44,7 +44,10 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.featu
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.tone
 
 private const val GRID_COLUMNS = 3
-private val EmptyStateHeight = 320.dp
+private val EmptyStateMinHeight = 320.dp
+
+/** Extra space above a section label: with the 10dp grid gap and the label's own 8dp it makes the artboard's 20dp. */
+private val SectionGap = 2.dp
 
 @Composable
 fun CreateHubRoute(
@@ -93,11 +96,11 @@ fun CreateHubScreen(
                 fullWidth { RecentRow(state.recent, labelOf, onOpenType) }
             }
             if (visibleTypes.isNotEmpty()) {
-                fullWidth { SectionLabel(stringResource(R.string.create_hub_all_types), Modifier.padding(top = 8.dp)) }
+                fullWidth { SectionLabel(stringResource(R.string.create_hub_all_types), Modifier.padding(top = SectionGap)) }
                 typeTiles(visibleTypes, labelOf, onOpenType)
             }
             if (visibleBarcodes.isNotEmpty()) {
-                fullWidth { SectionLabel(stringResource(R.string.create_hub_barcodes), Modifier.padding(top = 8.dp)) }
+                fullWidth { SectionLabel(stringResource(R.string.create_hub_barcodes), Modifier.padding(top = SectionGap)) }
                 typeTiles(visibleBarcodes, labelOf, onOpenType)
             }
             if (visibleTypes.isEmpty() && visibleBarcodes.isEmpty()) {
@@ -106,7 +109,7 @@ fun CreateHubScreen(
                         icon = AppIcons.Search,
                         title = stringResource(R.string.create_hub_no_results),
                         message = stringResource(R.string.create_hub_no_results_hint),
-                        modifier = Modifier.height(EmptyStateHeight),
+                        modifier = Modifier.heightIn(min = EmptyStateMinHeight),
                     )
                 }
             }
@@ -135,7 +138,7 @@ private fun RecentRow(
     onOpenType: (CreateType) -> Unit,
 ) {
     Column(Modifier.fillMaxWidth()) {
-        SectionLabel(stringResource(R.string.create_hub_recent), Modifier.padding(top = 8.dp))
+        SectionLabel(stringResource(R.string.create_hub_recent))
         ChipRow(
             chips = recent.map { ChipItem(labelOf(it), selected = false, icon = it.icon()) },
             onChipClick = { index -> recent.getOrNull(index)?.let(onOpenType) },
@@ -184,14 +187,46 @@ private fun S31_CreateHub_Light() {
     }
 }
 
-@Preview(name = "S75_CreateHub_Dark", widthDp = 360, heightDp = 800)
+@Preview(name = "S31_CreateHub_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S75_CreateHub_Dark() {
+private fun S31_CreateHub_Dark() {
     AppTheme(dark = true) {
         CreateHubScreen(
             state = CreateHubUiState(recent = listOf(CreateType.WEBSITE, CreateType.WIFI, CreateType.CONTACT)),
             onEvent = {},
             onOpenType = {},
         )
+    }
+}
+
+@Preview(name = "S75_CreateHub_Light", widthDp = 360, heightDp = 800)
+@Composable
+private fun S75_CreateHub_Light() {
+    AppTheme(dark = false) {
+        CreateHubScreen(state = CreateHubUiState(), onEvent = {}, onOpenType = {})
+    }
+}
+
+@Preview(name = "S75_CreateHub_Dark", widthDp = 360, heightDp = 800)
+@Composable
+private fun S75_CreateHub_Dark() {
+    AppTheme(dark = true) {
+        CreateHubScreen(state = CreateHubUiState(), onEvent = {}, onOpenType = {})
+    }
+}
+
+@Preview(name = "S31_CreateHubNoResults_Light", widthDp = 360, heightDp = 800)
+@Composable
+private fun S31_CreateHubNoResults_Light() {
+    AppTheme(dark = false) {
+        CreateHubScreen(state = CreateHubUiState(query = "zzz"), onEvent = {}, onOpenType = {})
+    }
+}
+
+@Preview(name = "S31_CreateHubNoResults_Dark", widthDp = 360, heightDp = 800)
+@Composable
+private fun S31_CreateHubNoResults_Dark() {
+    AppTheme(dark = true) {
+        CreateHubScreen(state = CreateHubUiState(query = "zzz"), onEvent = {}, onOpenType = {})
     }
 }

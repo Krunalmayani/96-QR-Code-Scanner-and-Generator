@@ -205,9 +205,9 @@
     <string name="result_risk_long_detail">The link is %1$s characters long</string>
 
     <!-- s29 Share sheet -->
-    <string name="result_share_title">Share</string>
-    <string name="result_share_as_text">Share as text</string>
-    <string name="result_share_as_image">Share as image</string>
+    <string name="result_share_title">Share as</string>
+    <string name="result_share_as_text">Text</string>
+    <string name="result_share_as_image">Image</string>
     <string name="result_action_share_text">Share</string>
 
     <!-- s50 History detail, s67 delete -->
@@ -223,4 +223,16 @@
     <string name="result_msg_no_app">No app found to open this</string>
     <string name="result_msg_cannot_open">This can\'t be opened</string>
     <string name="result_msg_still_offline">Still offline. Check your connection and try again.</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">Add to favorites</string>
+    <string name="result_favorite_remove">Remove from favorites</string>
+    <string name="result_action_search_web">Search web</string>
+    <string name="result_action_share_qr_image">Share QR image</string>
+    <string name="result_action_save_image">Save image</string>
+    <string name="result_action_email">Email</string>
+    <string name="result_share_save">Save</string>
+    <string name="result_share_email">Email</string>
+    <string name="result_share_message">Message</string>
+    <string name="result_share_more_apps">More apps</string>
 </resources>

@@ -90,4 +90,11 @@
     <string name="hist_empty_filter_action">Show everything</string>
     <string name="hist_empty_search_title">No results</string>
     <string name="hist_empty_search_message">Nothing matches “%1$s”. Try a different word.</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">Favorite</string>
+    <string name="hist_action_delete_count">Delete %1$d</string>
+    <string name="hist_section_starred">Starred</string>
+    <string name="hist_favorites_hint">Tap a star to remove an item from favorites.</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s, %3$s</string>
 </resources>

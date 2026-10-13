@@ -62,7 +62,7 @@ fun CreateType.icon(): ImageVector =
         CreateType.SMS -> AppIcons.Sms
         CreateType.LOCATION -> AppIcons.Location
         CreateType.EVENT -> AppIcons.Calendar
-        CreateType.SOCIAL -> AppIcons.Social
+        CreateType.SOCIAL -> AppIcons.Share
         CreateType.APP_STORE -> AppIcons.Apps
         else -> AppIcons.Barcode
     }

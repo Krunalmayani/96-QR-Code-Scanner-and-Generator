@@ -34,6 +34,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.error
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
@@ -65,7 +68,7 @@ internal fun EventFields(
     onEvent: (CreateFormEvent) -> Unit,
 ) {
     var picker by remember { mutableStateOf<OpenPicker?>(null) }
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         FormTextField(
             host,
             FormField.TITLE,
@@ -76,7 +79,7 @@ internal fun EventFields(
         )
         AllDayRow(checked = spec.allDay, onCheckedChange = { onEvent(CreateFormEvent.SetAllDay(it)) })
         DateTimeRow(
-            heading = stringResource(R.string.create_event_starts),
+            title = stringResource(R.string.create_event_starts),
             millis = spec.startMillis,
             allDay = spec.allDay,
             error = host.errors[FormField.START],
@@ -84,7 +87,7 @@ internal fun EventFields(
             onPickTime = { picker = OpenPicker(start = true, time = true) },
         )
         DateTimeRow(
-            heading = stringResource(R.string.create_event_ends),
+            title = stringResource(R.string.create_event_ends),
             millis = spec.endMillis,
             allDay = spec.allDay,
             error = host.errors[FormField.END],
@@ -137,7 +140,7 @@ private fun AllDayRow(checked: Boolean, onCheckedChange: (Boolean) -> Unit) {
 
 @Composable
 private fun DateTimeRow(
-    heading: String,
+    title: String,
     millis: Long?,
     allDay: Boolean,
     error: String?,
@@ -145,12 +148,12 @@ private fun DateTimeRow(
     onPickTime: () -> Unit,
 ) {
     val notSet = stringResource(R.string.create_event_not_set)
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(
-            heading.uppercase(),
+            title.uppercase(),
             style = AppTheme.type.label,
             color = AppTheme.colors.inkSecondary,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(horizontal = 4.dp).semantics { heading() },
         )
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             PickerField(
@@ -158,7 +161,7 @@ private fun DateTimeRow(
                 value = millis?.let { EventFormat.date(it, allDay) } ?: notSet,
                 icon = AppIcons.Calendar,
                 onClick = onPickDate,
-                hasError = error != null,
+                error = error,
                 modifier = Modifier.weight(1f),
             )
             if (!allDay) {
@@ -167,7 +170,8 @@ private fun DateTimeRow(
                     value = millis?.let { EventFormat.time(it) } ?: notSet,
                     icon = AppIcons.History,
                     onClick = onPickTime,
-                    hasError = error != null,
+                    error = error,
+                    linkError = false,
                     modifier = Modifier.width(TimeFieldWidth),
                 )
             }
@@ -178,18 +182,20 @@ private fun DateTimeRow(
     }
 }
 
-/** Looks like a text field but opens a picker when tapped. */
+/** Looks like a text field but opens a picker when tapped. [linkError] puts the error text on this field for screen readers (once per date + time pair). */
 @Composable
 private fun PickerField(
     label: String,
     value: String,
     icon: ImageVector,
     onClick: () -> Unit,
-    hasError: Boolean,
+    error: String?,
     modifier: Modifier = Modifier,
+    linkError: Boolean = true,
 ) {
     val colors = AppTheme.colors
     val shape = AppTheme.shapes.field
+    val hasError = error != null
     Row(
         modifier =
             modifier
@@ -198,6 +204,7 @@ private fun PickerField(
                 .background(colors.surface)
                 .border(1.5.dp, if (hasError) colors.error else colors.outline, shape)
                 .clickable(role = Role.Button, onClick = onClick)
+                .semantics { if (error != null && linkError) error(error) }
                 .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -206,7 +213,7 @@ private fun PickerField(
             Text(label, style = AppTheme.type.fieldLabel, color = if (hasError) colors.error else colors.inkSecondary)
             Text(value, style = AppTheme.type.input, color = colors.ink, maxLines = 1)
         }
-        Icon(icon, contentDescription = null, tint = colors.inkSecondary, modifier = Modifier.size(20.dp))
+        Icon(icon, contentDescription = null, tint = colors.inkSecondary, modifier = Modifier.size(24.dp))
     }
 }
 

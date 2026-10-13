@@ -4,9 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -19,9 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
@@ -30,14 +37,14 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SmallButton
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PrimaryButton
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanContent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanRecord
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.ProductSite
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.BarcodeNumber
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.GeneratedCodePreview
 
 /** s24: the barcode number and its format, with the external-websites disclaimer. */
 @Composable
@@ -46,15 +53,23 @@ internal fun ProductContent(content: ScanContent.Product, record: ScanRecord) {
     val scannedAt = rememberWhenText(record.createdAt)
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         AppCard(Modifier.fillMaxWidth()) {
-            OverlineLabel(stringResource(R.string.result_product_barcode), Modifier.fillMaxWidth())
-            SelectionContainer {
-                Text(
-                    grouped,
-                    style = AppTheme.type.mono.copy(fontSize = 22.sp, lineHeight = 30.sp, fontWeight = FontWeight.Bold),
-                    color = AppTheme.colors.ink,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(top = 8.dp),
-                )
+            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                GeneratedCodePreview(record, Modifier.width(BARCODE_WIDTH))
+                SelectionContainer {
+                    Text(
+                        grouped,
+                        style =
+                            AppTheme.type.mono.copy(
+                                fontSize = 22.sp,
+                                lineHeight = 30.sp,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = 0.06.em,
+                            ),
+                        color = AppTheme.colors.ink,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 12.dp),
+                    )
+                }
             }
         }
         DetailsCard(
@@ -78,12 +93,17 @@ internal fun ProductSearchContent(
 ) {
     val grouped = remember(content.number, content.format) { BarcodeNumber.group(content.number, content.format) }
     Column(
-        modifier.verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier.verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         AppCard(Modifier.fillMaxWidth()) {
             OverlineLabel(stringResource(R.string.result_product_barcode))
-            Text(grouped, style = AppTheme.type.titleLarge, color = AppTheme.colors.ink, modifier = Modifier.padding(top = 4.dp))
+            Text(
+                grouped,
+                style = if (product.online) AppTheme.type.titleLarge else AppTheme.type.headline.copy(fontSize = 26.sp, lineHeight = 32.sp),
+                color = AppTheme.colors.ink,
+                modifier = Modifier.padding(top = 4.dp),
+            )
             if (!product.online) {
                 Text(
                     content.format.displayName,
@@ -116,7 +136,7 @@ internal fun ProductSearchContent(
 
 @Composable
 private fun SiteList(sites: List<ProductSiteLink>, onEvent: (ResultEvent) -> Unit) {
-    SectionLabel(stringResource(R.string.result_product_search_on))
+    OverlineLabel(stringResource(R.string.result_product_search_on), Modifier.padding(horizontal = 4.dp).semantics { heading() })
     CardGroup {
         sites.forEachIndexed { index, link ->
             if (index > 0) AppDivider()
@@ -134,37 +154,44 @@ private fun SiteList(sites: List<ProductSiteLink>, onEvent: (ResultEvent) -> Uni
 @Composable
 private fun OfflineCard(onRetry: () -> Unit) {
     val c = AppTheme.colors
-    AppCard(Modifier.fillMaxWidth()) {
+    AppCard(Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 20.dp, vertical = 32.dp)) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 Modifier.size(64.dp).clip(CircleShape).background(c.primaryContainer),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(AppIcons.Wifi, contentDescription = null, tint = c.onPrimaryContainer, modifier = Modifier.size(32.dp))
+                Icon(AppIcons.WifiOff, contentDescription = null, tint = c.onPrimaryContainer, modifier = Modifier.size(32.dp))
             }
-            Text(
-                stringResource(R.string.result_product_offline_title),
-                style = AppTheme.type.titleLarge,
-                color = c.ink,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 16.dp),
-            )
-            Text(
-                stringResource(R.string.result_product_offline_body),
-                style = AppTheme.type.body,
-                color = c.inkSecondary,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 8.dp),
-            )
-            SmallButton(
+            Column(
+                Modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Text(
+                    stringResource(R.string.result_product_offline_title),
+                    style = AppTheme.type.titleLarge,
+                    color = c.ink,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 16.dp).semantics { heading() },
+                )
+                Text(
+                    stringResource(R.string.result_product_offline_body),
+                    style = AppTheme.type.body,
+                    color = c.inkSecondary,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+            }
+            PrimaryButton(
                 text = stringResource(R.string.common_retry),
                 onClick = onRetry,
                 modifier = Modifier.padding(top = 20.dp),
-                tonal = false,
+                leadingIcon = AppIcons.Refresh,
             )
         }
     }
 }
+
+private val BARCODE_WIDTH = 240.dp
 
 private fun ProductSite.nameRes(): Int =
     when (this) {

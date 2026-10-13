@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -25,6 +26,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
@@ -87,7 +89,7 @@ private fun BlockedTopBar(onOpenSettings: () -> Unit) {
 private fun BlockedHeader(block: CameraBlock) {
     val colors = AppTheme.colors
     Box(Modifier.size(144.dp).clip(CircleShape).background(colors.errorContainer), contentAlignment = Alignment.Center) {
-        Icon(AppIcons.Camera, contentDescription = null, tint = colors.error, modifier = Modifier.size(64.dp))
+        Icon(AppIcons.NoCamera, contentDescription = null, tint = colors.error, modifier = Modifier.size(64.dp))
     }
     val title = if (block == CameraBlock.Unavailable) R.string.scan_unavailable_title else R.string.scan_denied_title
     val message =
@@ -97,8 +99,19 @@ private fun BlockedHeader(block: CameraBlock) {
             CameraBlock.Unavailable -> R.string.scan_unavailable_message
         }
     Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        Text(stringResource(title), style = AppTheme.type.headline, color = colors.ink, textAlign = TextAlign.Center)
-        Text(stringResource(message), style = AppTheme.type.body, color = colors.inkSecondary, textAlign = TextAlign.Center)
+        Text(
+            stringResource(title),
+            style = AppTheme.type.display.copy(fontSize = 24.sp, lineHeight = 30.sp),
+            color = colors.ink,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.semantics { heading() },
+        )
+        Text(
+            stringResource(message),
+            style = AppTheme.type.body.copy(fontSize = 15.sp, lineHeight = 22.sp),
+            color = colors.inkSecondary,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -110,10 +123,15 @@ private fun BlockedActions(block: CameraBlock, onPrimary: () -> Unit, onPickImag
             CameraBlock.PermissionPermanentlyDenied -> R.string.scan_open_settings
             CameraBlock.Unavailable -> R.string.common_retry
         }
-    val icon = if (block == CameraBlock.PermissionPermanentlyDenied) AppIcons.SettingsGear else AppIcons.Camera
+    val icon = if (block == CameraBlock.PermissionPermanentlyDenied) AppIcons.Settings else AppIcons.Camera
     Column(Modifier.fillMaxWidth(), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        PrimaryButton(stringResource(primary), onPrimary, Modifier.fillMaxWidth(), leadingIcon = icon)
-        TonalButton(stringResource(R.string.scan_from_gallery), onPickImage, Modifier.fillMaxWidth(), leadingIcon = AppIcons.Gallery)
+        PrimaryButton(stringResource(primary), onPrimary, Modifier.fillMaxWidth().heightIn(min = 56.dp), leadingIcon = icon)
+        TonalButton(
+            stringResource(R.string.scan_from_gallery),
+            onPickImage,
+            Modifier.fillMaxWidth().heightIn(min = 56.dp),
+            leadingIcon = AppIcons.Image,
+        )
     }
 }
 

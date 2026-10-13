@@ -72,7 +72,7 @@ internal fun SlidePage(slide: OnboardingSlide, modifier: Modifier = Modifier) {
 @Composable
 private fun SlideText(slide: OnboardingSlide) {
     val c = AppTheme.colors
-    Column(Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 32.dp)) {
+    Column(Modifier.fillMaxWidth().padding(start = 24.dp, end = 24.dp, top = 36.dp)) {
         Text(
             text = stringResource(slide.title),
             style = AppTheme.type.display.copy(fontSize = 26.sp, lineHeight = 32.sp, fontWeight = FontWeight.ExtraBold),

@@ -54,6 +54,17 @@ sealed interface ResultEvent {
 
     data object ShareAsImage : ResultEvent
 
+    /** Share sheet "Email" / "Message": a compose window whose body is the share text. */
+    data object ShareViaEmail : ResultEvent
+
+    data object ShareViaMessage : ResultEvent
+
+    /** "Save image" (share sheet and created-code detail): the generated screen is where the PNG is saved. */
+    data object SaveImageClicked : ResultEvent
+
+    /** "Search web" for the content (website host, text or raw data) in a Custom Tab. */
+    data object SearchWebClicked : ResultEvent
+
     data object ShareSheetDismissed : ResultEvent
 
     data object FavoriteClicked : ResultEvent

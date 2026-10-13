@@ -6,13 +6,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,15 +30,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppDivider
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppOutlinedButton
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppScaffold
@@ -44,6 +50,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.EmptyState
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.LoadingSpinner
@@ -57,10 +64,13 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.scan.scanTypeAndFormat
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.scan.scanTypeIcon
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.scan.scanTypeLabel
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.scan.scanTypeTone
 
-/** Text colour on the teal "found" pill (design token `#06312B`). */
-private val OnHitColor = Color(0xFF06312B)
 private val ImageCardShape = RoundedCornerShape(28.dp)
+
+/** 15/22 paragraph under the headlines of s12 and s14. */
+private val BodyLarge: TextStyle
+    @Composable get() = AppTheme.type.body.copy(fontSize = 15.sp, lineHeight = 22.sp)
 
 /**
  * Scan from image (s11 to s14). Stateless. [image] draws the picked image into the given modifier so previews can
@@ -99,7 +109,7 @@ private fun IdleContent(onBack: () -> Unit, onChooseImage: () -> Unit, modifier:
                     PrimaryButton(
                         stringResource(R.string.scan_image_choose_button),
                         onChooseImage,
-                        leadingIcon = AppIcons.Gallery,
+                        leadingIcon = AppIcons.Image,
                     )
                 },
             )
@@ -118,38 +128,67 @@ private fun ProcessingContent(
 ) {
     AppScaffold(
         modifier = modifier,
-        topBar = { AppTopBar(stringResource(R.string.scan_image_reading_title), onBack = onCancel) },
+        topBar = { CancelTopBar(stringResource(R.string.scan_image_reading_title), onCancel) },
     ) { padding ->
         Column(Modifier.padding(padding).fillMaxSize().padding(horizontal = 24.dp)) {
-            ImageCard(state.imageUri, image, height = 380.dp) {
-                Box(Modifier.matchParentSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.Center) {
-                    Box(
-                        Modifier.size(96.dp).clip(RoundedCornerShape(28.dp)).background(AppTheme.colors.surface),
-                        contentAlignment = Alignment.Center,
-                    ) { LoadingSpinner(size = 40.dp) }
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                ImageCard(state.imageUri, image, height = 380.dp, modifier = Modifier.padding(top = 32.dp)) {
+                    Box(Modifier.matchParentSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.Center) {
+                        Box(
+                            Modifier.size(96.dp).clip(RoundedCornerShape(28.dp)).background(AppTheme.colors.surface),
+                            contentAlignment = Alignment.Center,
+                        ) { LoadingSpinner(size = 56.dp) }
+                    }
+                }
+                Column(
+                    Modifier.fillMaxWidth().padding(top = 32.dp).semantics { liveRegion = LiveRegionMode.Polite },
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        stringResource(R.string.scan_image_processing_title),
+                        style = AppTheme.type.headline,
+                        color = AppTheme.colors.ink,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        stringResource(R.string.scan_image_processing_message),
+                        style = BodyLarge,
+                        color = AppTheme.colors.inkSecondary,
+                        textAlign = TextAlign.Center,
+                    )
                 }
             }
-            Column(
-                Modifier.fillMaxWidth().padding(top = 32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Text(
-                    stringResource(R.string.scan_image_processing_title),
-                    style = AppTheme.type.headline,
-                    color = AppTheme.colors.ink,
-                    textAlign = TextAlign.Center,
-                )
-                Text(
-                    stringResource(R.string.scan_image_processing_message),
-                    style = AppTheme.type.body,
-                    color = AppTheme.colors.inkSecondary,
-                    textAlign = TextAlign.Center,
-                )
-            }
-            Box(Modifier.weight(1f))
-            AppOutlinedButton(stringResource(R.string.scan_image_cancel), onCancel, Modifier.fillMaxWidth().padding(bottom = 16.dp))
+            AppOutlinedButton(
+                stringResource(R.string.scan_image_cancel),
+                onCancel,
+                Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 32.dp).heightIn(min = 56.dp),
+            )
         }
+    }
+}
+
+/** Top bar of s12: a close (cancel) button instead of the usual back arrow, then the title. */
+@Composable
+private fun CancelTopBar(title: String, onCancel: () -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .statusBarsPadding()
+            .height(64.dp)
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButtonRounded(AppIcons.Close, stringResource(R.string.scan_image_cancel), onCancel)
+        Text(
+            title,
+            style = AppTheme.type.topBar,
+            color = AppTheme.colors.ink,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.weight(1f).semantics { heading() },
+        )
     }
 }
 
@@ -163,24 +202,24 @@ private fun FoundContent(
     image: @Composable (String, Modifier) -> Unit,
     modifier: Modifier,
 ) {
+    val single = state.codes.size == 1
     AppScaffold(modifier = modifier, topBar = { AppTopBar(stringResource(R.string.scan_image_result_title), onBack = onBack) }) { padding ->
-        Column(
-            Modifier
-                .padding(padding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp, vertical = 8.dp),
-        ) {
-            ImageCard(state.imageUri, image, height = 300.dp) {
-                FoundBadge(state.codes.size, Modifier.align(Alignment.TopStart).padding(12.dp))
-            }
-            Column(Modifier.padding(top = 20.dp)) {
-                if (state.codes.size == 1) {
-                    SingleFound(state.codes.first(), onOpen = { onCodeClick(0) })
-                } else {
-                    CodeChooser(state.codes, onCodeClick)
+        Column(Modifier.padding(top = padding.calculateTopPadding()).fillMaxSize()) {
+            Column(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
+            ) {
+                ImageCard(state.imageUri, image, height = 300.dp) {
+                    FoundBadge(state.codes.size, Modifier.align(Alignment.TopStart).padding(12.dp))
+                }
+                if (!single) {
+                    Column(Modifier.padding(top = 20.dp).navigationBarsPadding()) { CodeChooser(state.codes, onCodeClick) }
                 }
             }
+            if (single) SingleFoundPanel(state.codes.first(), onOpen = { onCodeClick(0) })
         }
     }
 }
@@ -190,9 +229,10 @@ private fun ImageCard(
     imageUri: String,
     image: @Composable (String, Modifier) -> Unit,
     height: Dp,
+    modifier: Modifier = Modifier,
     overlay: @Composable BoxScope.() -> Unit,
 ) {
-    Box(Modifier.fillMaxWidth().height(height).clip(ImageCardShape)) {
+    Box(modifier.fillMaxWidth().height(height).clip(ImageCardShape)) {
         image(imageUri, Modifier.matchParentSize())
         overlay()
     }
@@ -209,25 +249,40 @@ private fun FoundBadge(count: Int, modifier: Modifier) {
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(AppIcons.Check, contentDescription = null, tint = OnHitColor, modifier = Modifier.size(16.dp))
+        Icon(AppIcons.Check, contentDescription = null, tint = CameraColors.onHit, modifier = Modifier.size(16.dp))
         Text(
             pluralStringResource(R.plurals.scan_image_codes_found, count, count),
             style = AppTheme.type.captionStrong,
-            color = OnHitColor,
+            color = CameraColors.onHit,
             maxLines = 1,
         )
     }
 }
 
+/** Bottom panel of s13 for one code: type badge, what was found and the button that opens its result. */
 @Composable
-private fun SingleFound(code: FoundCode, onOpen: () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+private fun SingleFoundPanel(code: FoundCode, onOpen: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(AppTheme.shapes.sheet)
+            .background(AppTheme.colors.surface)
+            .navigationBarsPadding()
+            .padding(start = 24.dp, end = 24.dp, top = 20.dp, bottom = 20.dp),
+    ) {
         FoundHeader(code)
-        Text(code.title, style = AppTheme.type.headline, color = AppTheme.colors.ink, maxLines = 3)
+        Text(
+            code.title,
+            style = AppTheme.type.titleLarge,
+            color = AppTheme.colors.ink,
+            maxLines = 3,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(top = 12.dp),
+        )
         PrimaryButton(
             stringResource(R.string.scan_image_open_result),
             onOpen,
-            Modifier.fillMaxWidth().padding(top = 4.dp),
+            Modifier.fillMaxWidth().padding(top = 16.dp).heightIn(min = 52.dp),
             leadingIcon = AppIcons.OpenInNew,
         )
     }
@@ -235,10 +290,11 @@ private fun SingleFound(code: FoundCode, onOpen: () -> Unit) {
 
 @Composable
 private fun FoundHeader(code: FoundCode) {
-    Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-        IconTile(scanTypeIcon(code.type), tone = Tone.Primary)
+    val tone = scanTypeTone(code.type)
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        IconTile(scanTypeIcon(code.type), tone = tone)
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            AppBadge(scanTypeLabel(code.type))
+            AppBadge(scanTypeLabel(code.type), tone = tone)
             Text(stringResource(R.string.scan_image_from_image), style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary)
         }
     }
@@ -259,7 +315,7 @@ private fun CodeChooser(codes: List<FoundCode>, onCodeClick: (Int) -> Unit) {
                 ListRow(
                     title = code.title,
                     subtitle = scanTypeAndFormat(code.type, code.format),
-                    leading = { IconTile(scanTypeIcon(code.type), tone = Tone.Primary) },
+                    leading = { IconTile(scanTypeIcon(code.type), tone = scanTypeTone(code.type)) },
                     trailing = { Icon(AppIcons.Chevron, contentDescription = null, tint = AppTheme.colors.inkSecondary) },
                     onClick = { onCodeClick(index) },
                 )
@@ -281,7 +337,10 @@ private fun NoCodeContent(
 ) {
     AppScaffold(modifier = modifier, topBar = { AppTopBar(stringResource(R.string.scan_image_result_title), onBack = onBack) }) { padding ->
         Column(Modifier.padding(padding).fillMaxSize().padding(horizontal = 24.dp)) {
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(20.dp)) {
+            Column(
+                Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(top = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp),
+            ) {
                 ImageCard(state.imageUri, image, height = 200.dp) {
                     Box(Modifier.matchParentSize().background(AppTheme.colors.scrim), contentAlignment = Alignment.Center) {
                         Box(
@@ -300,12 +359,12 @@ private fun NoCodeContent(
                 NoCodeText(state.unreadable)
                 if (!state.unreadable) NoCodeTips()
             }
-            Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(Modifier.fillMaxWidth().padding(top = 12.dp, bottom = 32.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 PrimaryButton(
                     stringResource(R.string.scan_nocode_try_another),
                     onTryAnother,
-                    Modifier.fillMaxWidth(),
-                    leadingIcon = AppIcons.Gallery,
+                    Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                    leadingIcon = AppIcons.Image,
                 )
                 AppTextButton(
                     stringResource(R.string.scan_nocode_use_camera),
@@ -325,18 +384,18 @@ private fun NoCodeText(unreadable: Boolean) {
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
             stringResource(title),
-            style = AppTheme.type.headline,
+            style = AppTheme.type.display.copy(fontSize = 24.sp, lineHeight = 30.sp),
             color = AppTheme.colors.ink,
             textAlign = TextAlign.Center,
             modifier = Modifier.semantics { heading() },
         )
-        Text(stringResource(message), style = AppTheme.type.body, color = AppTheme.colors.inkSecondary, textAlign = TextAlign.Center)
+        Text(stringResource(message), style = BodyLarge, color = AppTheme.colors.inkSecondary, textAlign = TextAlign.Center)
     }
 }
 
 @Composable
 private fun NoCodeTips() {
-    AppCard(Modifier.fillMaxWidth(), contentPadding = PaddingValues(vertical = 4.dp)) {
+    CardGroup {
         TipRow(AppIcons.Scan, R.string.scan_nocode_tip_visible)
         AppDivider()
         TipRow(AppIcons.Image, R.string.scan_nocode_tip_quality)

@@ -12,6 +12,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.DayLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.HistoryChip
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.HistoryGrouper
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.SearchScope
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ContentType
 import java.time.Instant
@@ -87,7 +88,7 @@ internal fun SearchScope.labelRes(): Int =
 
 /** Locale-aware time and date formatting for rows and day headers. */
 internal class HistoryFormats(
-    zone: ZoneId,
+    private val zone: ZoneId,
 ) {
     private val timeFormat: DateTimeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT).withZone(zone)
     private val dateFormat: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
@@ -95,6 +96,12 @@ internal class HistoryFormats(
     fun time(epochMillis: Long): String = timeFormat.format(Instant.ofEpochMilli(epochMillis))
 
     fun date(day: LocalDate): String = dateFormat.format(day)
+
+    /** "Today", "Yesterday" or the calendar day of [epochMillis]; used where rows are not under a day header. */
+    fun dayLabel(epochMillis: Long): DayLabel {
+        val day = Instant.ofEpochMilli(epochMillis).atZone(zone).toLocalDate()
+        return HistoryGrouper.labelFor(day, LocalDate.now(zone))
+    }
 }
 
 @Composable

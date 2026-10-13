@@ -40,7 +40,8 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // HiltTestRunner (androidTest) extends AndroidJUnitRunner and swaps in HiltTestApplication.
+        testInstrumentationRunner = "com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.HiltTestRunner"
 
         // Google's public TEST ids. Replace per app (see README, "Going live").
         resValue("string", "admob_app_id", "ca-app-pub-3940256099942544~3347511713")
@@ -121,8 +122,27 @@ android {
     }
 
     testOptions {
-        unitTests.all { it.useJUnitPlatform() }
+        unitTests.all {
+            it.useJUnitPlatform()
+            // The architecture tests (src/test/.../architecture) scan sources, resources and the manifest from here.
+            it.systemProperty("repo.root", rootDir.absolutePath)
+        }
         unitTests.isReturnDefaultValues = true
+        // Gradle Managed Devices for `./gradlew pixel2Api24DebugAndroidTest` / `pixel6Api35DebugAndroidTest` (see docs/TESTING.md).
+        managedDevices {
+            localDevices {
+                create("pixel2Api24") {
+                    device = "Pixel 2"
+                    apiLevel = 24
+                    systemImageSource = "aosp"
+                }
+                create("pixel6Api35") {
+                    device = "Pixel 6"
+                    apiLevel = 35
+                    systemImageSource = "google"
+                }
+            }
+        }
     }
 
     sourceSets["androidTest"].assets.srcDir("$projectDir/schemas")
@@ -204,9 +224,13 @@ dependencies {
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.kotlinx.coroutines.test)
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test:runner:1.6.2")
-    androidTestImplementation("androidx.test:core-ktx:1.6.1")
-    androidTestImplementation("junit:junit:4.13.2")
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.core.ktx)
+    androidTestImplementation(libs.junit4)
+    // Hilt end-to-end tests: HiltAndroidRule, HiltTestApplication, @TestInstallIn.
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

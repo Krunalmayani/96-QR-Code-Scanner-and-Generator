@@ -26,6 +26,23 @@ data class HistoryUiState(
 ) {
     val isEmpty: Boolean get() = !loading && recordCount == 0
 
+    /**
+     * The tab itself has nothing to show (no scans or no created codes yet): the design (s49) then shows only the
+     * tab switcher and the empty state, without search or filter chips.
+     */
+    val tabIsEmpty: Boolean
+        get() =
+            isEmpty &&
+                !searchActive &&
+                (emptyKind == HistoryEmptyKind.SCANNED || emptyKind == HistoryEmptyKind.CREATED)
+
+    /**
+     * Favorites and typed searches show one flat card under a single label with dated subtitles (s48, s53)
+     * instead of day groups.
+     */
+    val flatResults: Boolean
+        get() = if (searchActive) appliedQuery.isNotBlank() else chip == HistoryChip.FAVORITES
+
     val visibleIds: Set<Long> get() = groups.flatMapTo(HashSet()) { group -> group.records.map { it.id } }
 }
 

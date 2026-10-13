@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Icon
@@ -32,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,8 +48,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 
 /** Small upper-case caption above a value ("OPENS", "PASSWORD"). */
 @Composable
-internal fun OverlineLabel(text: String, modifier: Modifier = Modifier) {
-    Text(text.uppercase(), style = AppTheme.type.label, color = AppTheme.colors.inkSecondary, modifier = modifier)
+internal fun OverlineLabel(text: String, modifier: Modifier = Modifier, textAlign: TextAlign? = null) {
+    Text(text.uppercase(), style = AppTheme.type.label, color = AppTheme.colors.inkSecondary, textAlign = textAlign, modifier = modifier)
 }
 
 /** One label / value line inside [DetailsCard]. [secondary] is an optional dimmer second line (time under a date). */
@@ -141,7 +143,7 @@ internal fun NoteBox(text: String, modifier: Modifier = Modifier) {
                 .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {
-        Icon(AppIcons.Info, contentDescription = null, tint = c.inkSecondary, modifier = Modifier.size(24.dp))
+        Icon(AppIcons.Info, contentDescription = null, tint = c.inkSecondary, modifier = Modifier.size(20.dp))
         Text(text, style = AppTheme.type.caption, color = c.inkSecondary, modifier = Modifier.weight(1f))
     }
 }
@@ -153,6 +155,7 @@ internal fun MessageBubble(text: String, modifier: Modifier = Modifier) {
     Box(
         modifier =
             modifier
+                .widthIn(max = 260.dp)
                 .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp, bottomEnd = 20.dp, bottomStart = 6.dp))
                 .background(c.primaryContainer)
                 .padding(horizontal = 16.dp, vertical = 14.dp),

@@ -6,6 +6,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -34,7 +36,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CheckboxRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PrimaryButton
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
@@ -105,7 +106,6 @@ fun ExportHistoryScreen(
     modifier: Modifier = Modifier,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
-    val formats = HistoryExportFormat.entries
     AppScaffold(
         modifier = modifier,
         topBar = { AppTopBar(title = stringResource(R.string.settings_export_title), onBack = onBack) },
@@ -115,66 +115,72 @@ fun ExportHistoryScreen(
                 AppOutlinedButton(
                     text = stringResource(R.string.settings_export_share),
                     onClick = { onEvent(ExportEvent.ShareClicked) },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).heightIn(min = 52.dp),
                     enabled = state.canExport,
                     leadingIcon = AppIcons.Share,
                 )
                 PrimaryButton(
                     text = stringResource(R.string.settings_export_save),
                     onClick = { onEvent(ExportEvent.SaveClicked) },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).heightIn(min = 52.dp),
                     enabled = state.canExport,
                     leadingIcon = AppIcons.Download,
                 )
             }
         },
     ) { padding ->
-        Column(
-            modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            AppCard {
-                SectionLabel(stringResource(R.string.settings_export_include))
-                CheckboxRow(
-                    label = stringResource(R.string.settings_export_scanned, state.counts.scanned),
-                    checked = state.selection.includeScanned,
-                    onCheckedChange = { onEvent(ExportEvent.SetIncludeScanned(it)) },
-                )
-                CheckboxRow(
-                    label = stringResource(R.string.settings_export_created, state.counts.created),
-                    checked = state.selection.includeCreated,
-                    onCheckedChange = { onEvent(ExportEvent.SetIncludeCreated(it)) },
-                )
-                CheckboxRow(
-                    label = stringResource(R.string.settings_export_favorites),
-                    checked = state.selection.favoritesOnly,
-                    onCheckedChange = { onEvent(ExportEvent.SetFavoritesOnly(it)) },
-                )
-            }
-            AppCard {
-                SectionLabel(stringResource(R.string.settings_export_format))
-                SegmentedControl(
-                    options = formats.map { stringResource(formatLabelRes(it)) },
-                    selectedIndex = formats.indexOf(state.format),
-                    onSelect = { onEvent(ExportEvent.SelectFormat(formats[it])) },
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-            }
-            Text(
-                text =
-                    if (state.itemCount > 0) {
-                        quantityString(R.plurals.settings_export_summary, state.itemCount)
-                    } else {
-                        stringResource(R.string.settings_export_nothing)
-                    },
-                style = AppTheme.type.bodyStrong,
-                color = AppTheme.colors.ink,
+        ExportForm(state, onEvent, Modifier.padding(padding))
+    }
+}
+
+@Composable
+private fun ExportForm(state: ExportUiState, onEvent: (ExportEvent) -> Unit, modifier: Modifier = Modifier) {
+    val formats = HistoryExportFormat.entries
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        AppCard {
+            CardLabel(stringResource(R.string.settings_export_include))
+            CheckboxRow(
+                label = stringResource(R.string.settings_export_scanned, state.counts.scanned),
+                checked = state.selection.includeScanned,
+                onCheckedChange = { onEvent(ExportEvent.SetIncludeScanned(it)) },
             )
+            CheckboxRow(
+                label = stringResource(R.string.settings_export_created, state.counts.created),
+                checked = state.selection.includeCreated,
+                onCheckedChange = { onEvent(ExportEvent.SetIncludeCreated(it)) },
+            )
+            CheckboxRow(
+                label = stringResource(R.string.settings_export_favorites),
+                checked = state.selection.favoritesOnly,
+                onCheckedChange = { onEvent(ExportEvent.SetFavoritesOnly(it)) },
+            )
+        }
+        AppCard {
+            CardLabel(stringResource(R.string.settings_export_format))
+            SegmentedControl(
+                options = formats.map { stringResource(formatLabelRes(it)) },
+                selectedIndex = formats.indexOf(state.format),
+                onSelect = { onEvent(ExportEvent.SelectFormat(formats[it])) },
+            )
+        }
+        Text(
+            text =
+                if (state.itemCount > 0) {
+                    quantityString(R.plurals.settings_export_summary, state.itemCount)
+                } else {
+                    stringResource(R.string.settings_export_nothing)
+                },
+            style = AppTheme.type.bodyStrong,
+            color = AppTheme.colors.ink,
+        )
+        AppCard(modifier = Modifier.fillMaxWidth()) {
             Text(
                 text = stringResource(R.string.settings_export_note),
                 style = AppTheme.type.body,

@@ -27,8 +27,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PrimaryButton
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ContentType
 
 /**
  * List sheet opened by "Done" in batch mode (s10). Every row was already saved to history when it was scanned;
@@ -59,7 +57,7 @@ fun BatchSheetContent(
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text(
                 stringResource(R.string.scan_batch_sheet_title),
-                style = AppTheme.type.titleLarge,
+                style = AppTheme.type.title,
                 color = AppTheme.colors.ink,
                 modifier = Modifier.semantics { heading() },
             )
@@ -73,7 +71,7 @@ fun BatchSheetContent(
         PrimaryButton(
             stringResource(R.string.scan_batch_finish),
             onFinish,
-            Modifier.fillMaxWidth().padding(top = 4.dp),
+            Modifier.fillMaxWidth().padding(top = 4.dp).heightIn(min = 56.dp),
             leadingIcon = AppIcons.Check,
         )
         AppTextButton(stringResource(R.string.scan_quick_keep_scanning), onKeepScanning, Modifier.fillMaxWidth())
@@ -88,7 +86,7 @@ private fun BatchRows(rows: List<BatchRow>, onRowClick: (Long) -> Unit) {
             ListRow(
                 title = row.title,
                 subtitle = scanTypeAndFormat(row.type, row.format),
-                leading = { IconTile(scanTypeIcon(row.type), tone = if (row.type == ContentType.PRODUCT) Tone.Warning else Tone.Primary) },
+                leading = { IconTile(scanTypeIcon(row.type), tone = scanTypeTone(row.type)) },
                 trailing = {
                     Icon(
                         AppIcons.Chevron,

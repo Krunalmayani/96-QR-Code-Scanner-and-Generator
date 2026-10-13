@@ -81,7 +81,7 @@ private fun LocationRationaleBody(onContinue: () -> Unit, onDismiss: () -> Unit)
         AppTextButton(
             text = stringResource(R.string.perm_not_now),
             onClick = onDismiss,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
         )
     }
 }

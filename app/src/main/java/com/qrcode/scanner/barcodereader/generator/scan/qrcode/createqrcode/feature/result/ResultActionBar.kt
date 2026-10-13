@@ -19,7 +19,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.WifiSecurity
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.WifiPhase
 
+/** A single pinned button is 52dp (s15 to s25); two side by side are 48dp (s16, s18, s25). */
 private val ButtonHeight = 52.dp
+private val PairHeight = 48.dp
 
 /** True when [state] shows an ActionBar at the bottom (s30 / s70 have none). */
 internal fun hasActionBar(state: ResultUiState): Boolean = state.record != null && !state.product.searchOpen
@@ -42,14 +44,19 @@ private fun RowScope.Primary(text: String, icon: ImageVector?, onClick: () -> Un
 }
 
 @Composable
-private fun RowScope.Tonal(text: String, icon: ImageVector?, onClick: () -> Unit) {
-    TonalButton(text, onClick, Modifier.weight(1f).heightIn(min = ButtonHeight), leadingIcon = icon)
+private fun RowScope.PairPrimary(text: String, icon: ImageVector?, onClick: () -> Unit) {
+    PrimaryButton(text, onClick, Modifier.weight(1f).heightIn(min = PairHeight), leadingIcon = icon)
 }
 
 @Composable
+private fun RowScope.PairTonal(text: String, icon: ImageVector?, onClick: () -> Unit) {
+    TonalButton(text, onClick, Modifier.weight(1f).heightIn(min = PairHeight), leadingIcon = icon)
+}
+
+/** s50: one full-width "Share QR image" (opens the share sheet). */
+@Composable
 private fun RowScope.CreatedButtons(onEvent: (ResultEvent) -> Unit) {
-    Tonal(stringResource(R.string.result_action_edit_style), AppIcons.Edit) { onEvent(ResultEvent.EditStyleClicked) }
-    Primary(stringResource(R.string.common_share), AppIcons.Share) { onEvent(ResultEvent.ShareClicked) }
+    Primary(stringResource(R.string.result_action_share_qr_image), AppIcons.Share) { onEvent(ResultEvent.ShareClicked) }
 }
 
 @Composable
@@ -59,10 +66,10 @@ private fun RowScope.WifiFlowButtons(state: ResultUiState, onEvent: (ResultEvent
             AppOutlinedButton(
                 stringResource(R.string.common_cancel),
                 { onEvent(ResultEvent.WifiCancel) },
-                Modifier.weight(1f).heightIn(min = ButtonHeight),
+                Modifier.weight(1f).heightIn(min = PairHeight),
             )
         WifiPhase.CONNECTED -> Primary(stringResource(R.string.common_done), null) { onEvent(ResultEvent.WifiDone) }
-        WifiPhase.FAILED -> Primary(stringResource(R.string.common_retry), null) { onEvent(ResultEvent.WifiRetry) }
+        WifiPhase.FAILED -> Primary(stringResource(R.string.common_retry), AppIcons.Refresh) { onEvent(ResultEvent.WifiRetry) }
         WifiPhase.IDLE -> Unit
     }
 }
@@ -73,8 +80,8 @@ private fun RowScope.TypeButtons(content: ScanContent, onEvent: (ResultEvent) ->
     when (content) {
         is ScanContent.Website -> Primary(stringResource(R.string.result_action_open_link), AppIcons.OpenInNew, primary)
         is ScanContent.Text -> {
-            Tonal(stringResource(R.string.result_action_copy_text), AppIcons.Copy) { onEvent(ResultEvent.CopyClicked) }
-            Primary(stringResource(R.string.result_action_share_text), AppIcons.Share) { onEvent(ResultEvent.ShareClicked) }
+            PairTonal(stringResource(R.string.result_action_copy_text), AppIcons.Copy) { onEvent(ResultEvent.CopyClicked) }
+            PairPrimary(stringResource(R.string.result_action_search_web), AppIcons.Search) { onEvent(ResultEvent.SearchWebClicked) }
         }
         is ScanContent.Contact -> Primary(stringResource(R.string.result_action_add_contact), AppIcons.Create, primary)
         is ScanContent.Wifi -> WifiButtons(content, onEvent)
@@ -85,8 +92,8 @@ private fun RowScope.TypeButtons(content: ScanContent, onEvent: (ResultEvent) ->
         is ScanContent.Location -> Primary(stringResource(R.string.result_action_open_maps), AppIcons.OpenInNew, primary)
         is ScanContent.Product -> Primary(stringResource(R.string.result_action_search_product), AppIcons.Search, primary)
         is ScanContent.Unknown -> {
-            Tonal(stringResource(R.string.common_share), AppIcons.Share) { onEvent(ResultEvent.ShareClicked) }
-            Primary(stringResource(R.string.result_action_copy_data), AppIcons.Copy) { onEvent(ResultEvent.CopyClicked) }
+            PairTonal(stringResource(R.string.common_share), AppIcons.Share) { onEvent(ResultEvent.ShareClicked) }
+            PairPrimary(stringResource(R.string.result_action_copy_data), AppIcons.Copy) { onEvent(ResultEvent.CopyClicked) }
         }
     }
 }
@@ -94,7 +101,9 @@ private fun RowScope.TypeButtons(content: ScanContent, onEvent: (ResultEvent) ->
 @Composable
 private fun RowScope.WifiButtons(content: ScanContent.Wifi, onEvent: (ResultEvent) -> Unit) {
     if (content.security != WifiSecurity.NONE && content.password.isNotEmpty()) {
-        Tonal(stringResource(R.string.result_action_copy_password), AppIcons.Copy) { onEvent(ResultEvent.WifiCopyPassword) }
+        PairTonal(stringResource(R.string.result_action_copy_password), AppIcons.Copy) { onEvent(ResultEvent.WifiCopyPassword) }
+        PairPrimary(stringResource(R.string.result_action_connect), AppIcons.Wifi) { onEvent(ResultEvent.WifiConnectClicked) }
+    } else {
+        Primary(stringResource(R.string.result_action_connect), AppIcons.Wifi) { onEvent(ResultEvent.WifiConnectClicked) }
     }
-    Primary(stringResource(R.string.result_action_connect), AppIcons.Wifi) { onEvent(ResultEvent.WifiConnectClicked) }
 }

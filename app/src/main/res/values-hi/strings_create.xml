@@ -73,6 +73,8 @@
     <string name="create_helper_phone">देश कोड शामिल करें, जैसे +1 206 555 0198</string>
     <string name="create_phone_valid">मान्य नंबर</string>
     <string name="create_field_full_name">नाम</string>
+    <string name="create_field_first_name">पहला नाम</string>
+    <string name="create_field_last_name">अंतिम नाम</string>
     <string name="create_field_mobile_phone">मोबाइल फ़ोन</string>
     <string name="create_field_email">ईमेल</string>
     <string name="create_field_company">कंपनी</string>

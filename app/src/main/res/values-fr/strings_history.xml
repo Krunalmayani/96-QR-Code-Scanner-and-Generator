@@ -88,4 +88,11 @@
     <string name="hist_empty_filter_action">Tout afficher</string>
     <string name="hist_empty_search_title">Aucun résultat</string>
     <string name="hist_empty_search_message">Rien ne correspond à « %1$s ». Essayez un autre mot.</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">Favori</string>
+    <string name="hist_action_delete_count">Supprimer %1$d</string>
+    <string name="hist_section_starred">Avec étoile</string>
+    <string name="hist_favorites_hint">Touchez l’étoile pour retirer un élément des favoris.</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s, %3$s</string>
 </resources>

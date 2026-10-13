@@ -8,9 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.BottomNavBar
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.BottomTab
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.LocalBottomBarInset
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.history.HistoryChip
@@ -121,6 +124,7 @@ private fun PreviewFrame(dark: Boolean, state: HistoryUiState, undoMessage: Stri
                     onCreateCode = {},
                     onOpenExportHistory = {},
                 )
+                BottomNavBar(selected = BottomTab.History, onSelect = {}, modifier = Modifier.align(Alignment.BottomCenter))
             }
         }
     }
@@ -214,11 +218,15 @@ private fun S53_HistorySearch_Light() = PreviewFrame(false, searchResults)
 @Composable
 private fun S53_HistorySearch_Dark() = PreviewFrame(true, searchResults)
 
-// s76 Dark history (the Scanned list in dark mode)
+// s76 Dark history (today's rows only: link, Wi-Fi, contact, e-mail)
+private val darkSamples: List<ScanRecord> =
+    scannedSamples.take(3) +
+        sample(7, ScanContent.Email("mailto:hello@northwind.studio", QR, "hello@northwind.studio"), at(0, 9, 10))
+
 @Preview(name = "S76_History_Light", widthDp = PHONE_W, heightDp = PHONE_H)
 @Composable
-private fun S76_History_Light() = PreviewFrame(false, stateOf(scannedSamples.take(4)))
+private fun S76_History_Light() = PreviewFrame(false, stateOf(darkSamples))
 
 @Preview(name = "S76_History_Dark", widthDp = PHONE_W, heightDp = PHONE_H)
 @Composable
-private fun S76_History_Dark() = PreviewFrame(true, stateOf(scannedSamples.take(4)))
+private fun S76_History_Dark() = PreviewFrame(true, stateOf(darkSamples))

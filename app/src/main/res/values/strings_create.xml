@@ -73,6 +73,8 @@
     <string name="create_helper_phone">Include the country code, like +1 206 555 0198</string>
     <string name="create_phone_valid">Valid number</string>
     <string name="create_field_full_name">Name</string>
+    <string name="create_field_first_name">First name</string>
+    <string name="create_field_last_name">Last name</string>
     <string name="create_field_mobile_phone">Mobile phone</string>
     <string name="create_field_email">Email</string>
     <string name="create_field_company">Company</string>
@@ -121,6 +123,13 @@
     <string name="create_social_youtube">YouTube</string>
     <string name="create_social_whatsapp">WhatsApp</string>
     <string name="create_social_telegram">Telegram</string>
+    <string name="create_social_mark_instagram" translatable="false">IG</string>
+    <string name="create_social_mark_facebook" translatable="false">f</string>
+    <string name="create_social_mark_x" translatable="false">X</string>
+    <string name="create_social_mark_linkedin" translatable="false">in</string>
+    <string name="create_social_mark_youtube" translatable="false">YT</string>
+    <string name="create_social_mark_whatsapp" translatable="false">WA</string>
+    <string name="create_social_mark_telegram" translatable="false">TG</string>
     <string name="create_field_username">Username</string>
     <string name="create_helper_username">Without the @</string>
     <string name="create_field_social_phone">Phone number</string>

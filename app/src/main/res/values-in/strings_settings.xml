@@ -4,7 +4,8 @@
     <string name="settings_title">Pengaturan</string>
     <string name="settings_section_scanning">Pemindaian</string>
     <string name="settings_section_appearance">Tampilan</string>
-    <string name="settings_section_privacy">Privasi dan data</string>
+    <string name="settings_section_privacy">Privasi dan izin</string>
+    <string name="settings_section_data">Data</string>
     <string name="settings_section_about">Tentang dan dukungan</string>
 
     <string name="settings_vibrate">Getar saat memindai</string>

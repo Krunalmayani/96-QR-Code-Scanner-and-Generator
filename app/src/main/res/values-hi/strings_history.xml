@@ -83,4 +83,11 @@
     <string name="hist_empty_filter_action">सब कुछ दिखाएं</string>
     <string name="hist_empty_search_title">कोई परिणाम नहीं</string>
     <string name="hist_empty_search_message">“%1$s” से कुछ मेल नहीं खाता। कोई दूसरा शब्द आज़माएं।</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">पसंदीदा</string>
+    <string name="hist_action_delete_count">%1$d हटाएं</string>
+    <string name="hist_section_starred">तारांकित</string>
+    <string name="hist_favorites_hint">किसी आइटम को पसंदीदा से हटाने के लिए तारे पर टैप करें।</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s, %3$s</string>
 </resources>

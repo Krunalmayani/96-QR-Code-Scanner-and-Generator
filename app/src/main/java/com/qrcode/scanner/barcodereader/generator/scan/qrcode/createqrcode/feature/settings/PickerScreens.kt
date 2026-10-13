@@ -27,8 +27,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSearchBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsRadioRow
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.repository.ThemeMode
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.Languages
@@ -59,24 +57,16 @@ fun ThemePickerScreen(
             CardGroup {
                 ThemeMode.entries.forEachIndexed { index, mode ->
                     if (index > 0) AppDivider()
-                    SettingsRadioRow(
+                    SettingsRadioItem(
                         title = stringResource(themeLabelRes(mode)),
                         selected = mode == selected,
                         onClick = { onSelect(mode) },
-                        icon = themeIcon(mode),
                     )
                 }
             }
         }
     }
 }
-
-private fun themeIcon(mode: ThemeMode) =
-    when (mode) {
-        ThemeMode.SYSTEM -> AppIcons.Palette
-        ThemeMode.LIGHT -> AppIcons.LightMode
-        ThemeMode.DARK -> AppIcons.DarkMode
-    }
 
 @Composable
 fun LanguagePickerRoute(onBack: () -> Unit, viewModel: AppearanceViewModel = hiltViewModel()) {
@@ -131,7 +121,7 @@ fun LanguagePickerScreen(
                 } else {
                     CardGroup {
                         if (showSystem) {
-                            SettingsRadioRow(
+                            SettingsLanguageItem(
                                 title = stringResource(R.string.settings_language_system),
                                 selected = selected == Languages.SYSTEM_TAG,
                                 onClick = { onSelect(Languages.SYSTEM_TAG) },
@@ -139,7 +129,7 @@ fun LanguagePickerScreen(
                         }
                         options.forEachIndexed { index, option ->
                             if (showSystem || index > 0) AppDivider()
-                            SettingsRadioRow(
+                            SettingsLanguageItem(
                                 title = option.nativeName,
                                 subtitle = option.englishName.takeIf { it != option.nativeName },
                                 selected = selected == option.tag,

@@ -145,6 +145,14 @@ private fun S09_CameraRequestAgain_Light() = PermissionPreviewHost(false, Camera
 @Composable
 private fun S09_CameraRequestAgain_Dark() = PermissionPreviewHost(true, CameraBlock.PermissionDenied)
 
+@Preview(name = "S09_CameraUnavailable_Light", widthDp = PreviewWidth, heightDp = PreviewHeight)
+@Composable
+private fun S09_CameraUnavailable_Light() = PermissionPreviewHost(false, CameraBlock.Unavailable)
+
+@Preview(name = "S09_CameraUnavailable_Dark", widthDp = PreviewWidth, heightDp = PreviewHeight)
+@Composable
+private fun S09_CameraUnavailable_Dark() = PermissionPreviewHost(true, CameraBlock.Unavailable)
+
 // S10: batch scan (the list sheet body is drawn in a panel)
 @Composable
 private fun BatchPanel() {

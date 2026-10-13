@@ -134,10 +134,11 @@ private fun Star(value: Int, filled: Boolean, selected: Boolean, onSelect: (Int)
                 .semantics { contentDescription = description },
         contentAlignment = Alignment.Center,
     ) {
+        // Filled vs outlined glyph carries the rating as well as the color, so it never relies on color alone.
         Icon(
-            imageVector = AppIcons.Star,
+            imageVector = if (filled) AppIcons.Star else AppIcons.StarOutline,
             contentDescription = null,
-            tint = if (filled) c.primary else c.outline,
+            tint = if (filled) c.primary else c.inkSecondary.copy(alpha = 0.5f),
             modifier = Modifier.size(36.dp),
         )
     }

@@ -89,7 +89,7 @@ object ExternalLauncher {
 
     private fun emailIntent(action: ExternalAction.ComposeEmail): Intent {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse(action.uri))
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(action.address))
+        if (action.address.isNotBlank()) intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(action.address))
         if (action.subject.isNotBlank()) intent.putExtra(Intent.EXTRA_SUBJECT, action.subject)
         if (action.body.isNotBlank()) intent.putExtra(Intent.EXTRA_TEXT, action.body)
         return intent

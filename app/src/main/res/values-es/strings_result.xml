@@ -189,9 +189,9 @@
     <string name="result_risk_long">Muy largo</string>
     <string name="result_risk_long_detail">El enlace tiene %1$s caracteres</string>
 
-    <string name="result_share_title">Compartir</string>
-    <string name="result_share_as_text">Compartir como texto</string>
-    <string name="result_share_as_image">Compartir como imagen</string>
+    <string name="result_share_title">Compartir como</string>
+    <string name="result_share_as_text">Texto</string>
+    <string name="result_share_as_image">Imagen</string>
     <string name="result_action_share_text">Compartir</string>
 
     <string name="result_note_label">Nota</string>
@@ -205,4 +205,16 @@
     <string name="result_msg_no_app">No se encontró ninguna app para abrirlo</string>
     <string name="result_msg_cannot_open">No se puede abrir</string>
     <string name="result_msg_still_offline">Sigues sin conexión. Revisa tu conexión e inténtalo de nuevo.</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">Añadir a favoritos</string>
+    <string name="result_favorite_remove">Quitar de favoritos</string>
+    <string name="result_action_search_web">Buscar en la web</string>
+    <string name="result_action_share_qr_image">Compartir imagen QR</string>
+    <string name="result_action_save_image">Guardar imagen</string>
+    <string name="result_action_email">Correo</string>
+    <string name="result_share_save">Guardar</string>
+    <string name="result_share_email">Correo</string>
+    <string name="result_share_message">Mensaje</string>
+    <string name="result_share_more_apps">Más apps</string>
 </resources>

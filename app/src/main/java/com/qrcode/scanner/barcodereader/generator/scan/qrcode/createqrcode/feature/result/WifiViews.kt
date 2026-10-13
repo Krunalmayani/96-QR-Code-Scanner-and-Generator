@@ -1,15 +1,23 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -18,21 +26,31 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppDivider
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.EmptyState
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonStyle
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IndeterminateBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.containerOf
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.contentOf
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanContent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.WifiSecurity
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.WifiFailure
@@ -65,7 +83,7 @@ private fun NetworkCard(content: ScanContent.Wifi) {
         SelectionContainer {
             Text(
                 content.ssid,
-                style = AppTheme.type.display.copy(fontSize = 26.sp, lineHeight = 32.sp),
+                style = AppTheme.type.headline.copy(fontSize = 26.sp, lineHeight = 32.sp, fontWeight = FontWeight.ExtraBold),
                 color = AppTheme.colors.ink,
                 modifier = Modifier.padding(top = 4.dp),
             )
@@ -142,16 +160,57 @@ internal fun WifiFlowContent(
     }
 }
 
+/**
+ * Body shared by s26 to s28: a 96dp disc, the heading and message (announced as a live region when the state changes),
+ * then [content]. Top-aligned like the artboards (64dp below the top bar).
+ */
+@Composable
+private fun WifiStateLayout(
+    icon: ImageVector,
+    tone: Tone,
+    title: String,
+    message: String,
+    modifier: Modifier,
+    content: @Composable ColumnScope.() -> Unit = {},
+) {
+    val c = AppTheme.colors
+    Column(
+        modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, end = 16.dp, top = 64.dp, bottom = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Box(Modifier.size(96.dp).clip(CircleShape).background(c.containerOf(tone)), contentAlignment = Alignment.Center) {
+            Icon(icon, contentDescription = null, tint = c.contentOf(tone), modifier = Modifier.size(44.dp))
+        }
+        Column(
+            Modifier.semantics(mergeDescendants = true) { liveRegion = LiveRegionMode.Polite },
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(
+                title,
+                style = AppTheme.type.headline,
+                color = c.ink,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.semantics { heading() },
+            )
+            Text(message, style = AppTheme.type.body, color = c.inkSecondary, textAlign = TextAlign.Center)
+        }
+        content()
+    }
+}
+
 @Composable
 private fun WifiConnecting(content: ScanContent.Wifi, modifier: Modifier) {
-    EmptyState(
+    WifiStateLayout(
         icon = AppIcons.Wifi,
+        tone = Tone.Success,
         title = stringResource(R.string.result_wifi_connecting_title, content.ssid),
         message = stringResource(R.string.result_wifi_connecting_body),
         modifier = modifier,
-        tone = Tone.Success,
-        action = { Box(Modifier.width(200.dp)) { IndeterminateBar() } },
-    )
+    ) {
+        Box(Modifier.width(200.dp)) { IndeterminateBar() }
+    }
 }
 
 @Composable
@@ -163,39 +222,41 @@ private fun WifiConnected(content: ScanContent.Wifi, state: ResultUiState, modif
     if (savedToHistory) {
         lines += DetailLine(stringResource(R.string.result_wifi_saved_to), stringResource(R.string.result_wifi_saved_to_history))
     }
-    EmptyState(
+    WifiStateLayout(
         icon = AppIcons.Check,
+        tone = Tone.Success,
         title = stringResource(if (saved) R.string.result_wifi_saved_title else R.string.result_wifi_connected_title),
         message = stringResource(if (saved) R.string.result_wifi_saved_body else R.string.result_wifi_connected_body, content.ssid),
         modifier = modifier,
-        tone = Tone.Success,
-        action = { Box(Modifier.fillMaxWidth()) { DetailsCard(lines) } },
-    )
+    ) {
+        DetailsCard(lines)
+    }
 }
 
 @Composable
 private fun WifiFailed(content: ScanContent.Wifi, state: ResultUiState, onEvent: (ResultEvent) -> Unit, modifier: Modifier) {
     val failure = state.wifi.failure
     val showPassword = content.security != WifiSecurity.NONE && content.password.isNotEmpty()
-    EmptyState(
+    WifiStateLayout(
         icon = AppIcons.Close,
+        tone = Tone.Error,
         title = stringResource(R.string.result_wifi_failed_title),
         message = stringResource((failure ?: WifiFailure.UNAVAILABLE).messageRes()),
         modifier = modifier,
-        tone = Tone.Error,
-        action = { FailedDetails(content, showPassword, onEvent) },
-    )
+    ) {
+        FailedDetails(content, showPassword, onEvent)
+    }
 }
 
 @Composable
 private fun FailedDetails(content: ScanContent.Wifi, showPassword: Boolean, onEvent: (ResultEvent) -> Unit) {
     AppCard(Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)) {
-        FailedRow(stringResource(R.string.result_wifi_network)) {
+        LabeledRow(stringResource(R.string.result_wifi_network)) {
             Text(content.ssid, style = AppTheme.type.bodyStrong, color = AppTheme.colors.ink, modifier = Modifier.weight(1f))
         }
         if (showPassword) {
             AppDivider()
-            FailedRow(stringResource(R.string.result_wifi_password)) {
+            LabeledRow(stringResource(R.string.result_wifi_password), vertical = 0.dp) {
                 SelectionContainer(Modifier.weight(1f)) {
                     Text(content.password, style = AppTheme.type.mono, color = AppTheme.colors.ink)
                 }
@@ -203,17 +264,52 @@ private fun FailedDetails(content: ScanContent.Wifi, showPassword: Boolean, onEv
                     icon = AppIcons.Copy,
                     contentDescription = stringResource(R.string.result_action_copy_password),
                     onClick = { onEvent(ResultEvent.WifiCopyPassword) },
-                    size = 40.dp,
                 )
             }
         }
     }
 }
 
+/** s50: a created Wi-Fi code in history lists network, security and the masked password in one card. */
 @Composable
-private fun FailedRow(label: String, content: @Composable RowScope.() -> Unit) {
+internal fun CreatedWifiContent(content: ScanContent.Wifi) {
+    var visible by rememberSaveable { mutableStateOf(false) }
+    val hasPassword = content.security != WifiSecurity.NONE && content.password.isNotEmpty()
+    AppCard(Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp)) {
+        LabeledRow(stringResource(R.string.result_wifi_network)) {
+            SelectionContainer(Modifier.weight(1f)) {
+                Text(content.ssid, style = AppTheme.type.bodyStrong, color = AppTheme.colors.ink)
+            }
+        }
+        AppDivider()
+        LabeledRow(stringResource(R.string.result_wifi_security)) {
+            Text(stringResource(content.security.labelRes()), style = AppTheme.type.bodyStrong, color = AppTheme.colors.ink)
+        }
+        AppDivider()
+        LabeledRow(stringResource(R.string.result_wifi_password), vertical = if (hasPassword) 0.dp else 12.dp) {
+            if (hasPassword) {
+                Text(
+                    text = if (visible) content.password else MASK_CHAR.repeat(MASK_LENGTH),
+                    style = AppTheme.type.mono.copy(letterSpacing = 0.1.em),
+                    color = AppTheme.colors.ink,
+                    modifier = Modifier.weight(1f),
+                )
+                IconButtonRounded(
+                    icon = if (visible) AppIcons.Hidden else AppIcons.Visible,
+                    contentDescription = stringResource(if (visible) R.string.common_hide_password else R.string.common_show_password),
+                    onClick = { visible = !visible },
+                )
+            } else {
+                Text(stringResource(R.string.result_wifi_no_password), style = AppTheme.type.bodyStrong, color = AppTheme.colors.ink)
+            }
+        }
+    }
+}
+
+@Composable
+private fun LabeledRow(label: String, vertical: Dp = 12.dp, content: @Composable RowScope.() -> Unit) {
     Row(
-        Modifier.fillMaxWidth().padding(vertical = 8.dp),
+        Modifier.fillMaxWidth().padding(vertical = vertical),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {

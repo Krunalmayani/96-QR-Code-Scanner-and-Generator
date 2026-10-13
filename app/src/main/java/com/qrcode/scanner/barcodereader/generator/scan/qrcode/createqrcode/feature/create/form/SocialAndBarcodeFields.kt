@@ -22,7 +22,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppChip
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
@@ -34,45 +33,25 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.CreateType
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.FormField
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.PayloadBuilder
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.SocialPlatform
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.CodeFormat
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.NoticeBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.labelRes
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.CodeCard
 
 private const val HTTPS_PREFIX = "https://"
 private val PreviewMaxWidth = 280.dp
 
-@StringRes
-private fun SocialPlatform.labelRes(): Int =
-    when (this) {
-        SocialPlatform.INSTAGRAM -> R.string.create_social_instagram
-        SocialPlatform.FACEBOOK -> R.string.create_social_facebook
-        SocialPlatform.X -> R.string.create_social_x
-        SocialPlatform.LINKEDIN -> R.string.create_social_linkedin
-        SocialPlatform.YOUTUBE -> R.string.create_social_youtube
-        SocialPlatform.WHATSAPP -> R.string.create_social_whatsapp
-        SocialPlatform.TELEGRAM -> R.string.create_social_telegram
-    }
-
-/** Social profile (design s38): platform chips, handle, and the live "The code will open ..." line. */
-@OptIn(ExperimentalLayoutApi::class)
+/** Social profile (design s38): platform tiles, handle, and the live "The code will open ..." line. */
 @Composable
 internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     val phoneBased = spec.platform.isPhoneBased
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Column {
             SectionLabel(stringResource(R.string.create_social_platform))
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                for (platform in SocialPlatform.entries) {
-                    val selected = platform == spec.platform
-                    AppChip(
-                        label = stringResource(platform.labelRes()),
-                        selected = selected,
-                        onClick = { onSpec(spec.copy(platform = platform)) },
-                        leadingIcon = if (selected) AppIcons.Check else null,
-                    )
-                }
-            }
+            SocialPlatformGrid(
+                selected = spec.platform,
+                onSelect = { onSpec(spec.copy(platform = it)) },
+            )
         }
         FormTextField(
             host = host,
@@ -88,7 +67,7 @@ internal fun SocialFields(spec: CreateSpec.Social, host: FormFieldHost, onSpec: 
             val target = PayloadBuilder.socialUrl(spec.platform, spec.handle).removePrefix(HTTPS_PREFIX)
             AppCard {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    IconTile(AppIcons.Social)
+                    IconTile(AppIcons.Share)
                     Column(Modifier.weight(1f)) {
                         Text(
                             stringResource(R.string.create_social_will_open),
@@ -190,7 +169,7 @@ internal fun BarcodeFields(
                 )
             }
         }
-        InfoBanner(stringResource(R.string.create_barcode_tip), tone = Tone.Primary, icon = AppIcons.Info)
+        NoticeBanner(stringResource(R.string.create_barcode_tip), tone = Tone.Primary, icon = AppIcons.Info)
     }
 }
 

@@ -2,11 +2,13 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feat
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -23,8 +25,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
@@ -34,24 +38,23 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanContent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanRecord
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanSource
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.ExternalActions
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.HexDump
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.LinkRiskReasons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.UrlDisplay
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.LinkSafetyResult
 
 /** Content card(s) of a result, one branch per [ScanContent] subtype (artboards s15 to s25). */
 @Composable
 internal fun TypeContent(state: ResultUiState, record: ScanRecord, onEvent: (ResultEvent) -> Unit) {
     when (val content = record.content) {
-        is ScanContent.Website -> WebsiteContent(content, state.safety)
+        is ScanContent.Website -> WebsiteContent(content)
         is ScanContent.Text -> TextContent(content, record)
         is ScanContent.Contact -> ContactContent(content, onEvent)
         is ScanContent.Phone -> PhoneContent(content)
@@ -59,7 +62,8 @@ internal fun TypeContent(state: ResultUiState, record: ScanRecord, onEvent: (Res
         is ScanContent.Sms -> SmsContent(content)
         is ScanContent.Location -> LocationContent(content)
         is ScanContent.Event -> EventContent(content)
-        is ScanContent.Wifi -> WifiContent(content, onEvent)
+        is ScanContent.Wifi ->
+            if (state.fromHistory && record.source == ScanSource.CREATED) CreatedWifiContent(content) else WifiContent(content, onEvent)
         is ScanContent.Product -> ProductContent(content, record)
         is ScanContent.Unknown -> UnknownContent(content)
     }
@@ -68,7 +72,7 @@ internal fun TypeContent(state: ResultUiState, record: ScanRecord, onEvent: (Res
 // ---- s15 / s74 Website ----------------------------------------------------------------------------------------
 
 @Composable
-internal fun WebsiteContent(content: ScanContent.Website, safety: LinkSafetyResult?) {
+internal fun WebsiteContent(content: ScanContent.Website) {
     val parts = remember(content.url) { UrlDisplay.split(content.url) }
     val secure = LinkRiskReasons.isSecure(content.url)
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -77,7 +81,7 @@ internal fun WebsiteContent(content: ScanContent.Website, safety: LinkSafetyResu
             SelectionContainer {
                 Text(
                     parts.host,
-                    style = AppTheme.type.display.copy(fontSize = 26.sp, lineHeight = 32.sp),
+                    style = AppTheme.type.headline.copy(fontSize = 26.sp, lineHeight = 32.sp, fontWeight = FontWeight.ExtraBold),
                     color = AppTheme.colors.ink,
                     modifier = Modifier.padding(top = 4.dp),
                 )
@@ -102,12 +106,10 @@ internal fun WebsiteContent(content: ScanContent.Website, safety: LinkSafetyResu
                 )
             }
         }
-        if (safety != null && !safety.isSafe) {
-            TitledBanner(
-                title = stringResource(R.string.result_website_check_title),
-                body = stringResource(R.string.result_website_check_body),
-            )
-        }
+        TitledBanner(
+            title = stringResource(R.string.result_website_check_title),
+            body = stringResource(R.string.result_website_check_body),
+        )
         DetailsCard(
             listOf(
                 DetailLine(stringResource(R.string.result_label_type), stringResource(R.string.result_website_type_value)),
@@ -169,13 +171,29 @@ internal fun ContactContent(content: ScanContent.Contact, onEvent: (ResultEvent)
     CardGroup {
         rows.forEachIndexed { index, row ->
             if (index > 0) AppDivider()
-            ListRow(
-                title = row.value,
-                subtitle = row.label,
-                leading = { IconTile(row.icon) },
-                onClick = row.onClick,
-                titleMaxLines = row.maxLines,
-            )
+            ContactRowView(row)
+        }
+    }
+}
+
+/** s17 row: the small label sits above the value (ListRow has them the other way round). */
+@Composable
+private fun ContactRowView(row: ContactRow) {
+    val c = AppTheme.colors
+    val click = row.onClick?.let { Modifier.clickable(role = Role.Button, onClick = it) } ?: Modifier
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .heightIn(min = 64.dp)
+            .then(click)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = if (row.maxLines > 1) Alignment.Top else Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        IconTile(row.icon)
+        Column(Modifier.weight(1f)) {
+            Text(row.label, style = AppTheme.type.caption, color = c.inkSecondary)
+            Text(row.value, style = AppTheme.type.title, color = c.ink, maxLines = row.maxLines, overflow = TextOverflow.Ellipsis)
         }
     }
 }
@@ -211,14 +229,14 @@ private const val ADDRESS_LINES = 4
 internal fun PhoneContent(content: ScanContent.Phone) {
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         AppCard(Modifier.fillMaxWidth(), contentPadding = PaddingValues(horizontal = 16.dp, vertical = 28.dp)) {
-            OverlineLabel(stringResource(R.string.result_phone_label), Modifier.fillMaxWidth())
+            OverlineLabel(stringResource(R.string.result_phone_label), Modifier.fillMaxWidth(), TextAlign.Center)
             SelectionContainer {
                 Text(
                     content.number,
                     style = AppTheme.type.display.copy(fontSize = 30.sp, lineHeight = 38.sp),
                     color = AppTheme.colors.ink,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(top = 8.dp),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
             }
         }
@@ -263,16 +281,12 @@ internal fun SmsContent(content: ScanContent.Sms) {
 internal fun LocationContent(content: ScanContent.Location) {
     val latitude = remember(content.latitude) { ExternalActions.formatCoordinate(content.latitude) }
     val longitude = remember(content.longitude) { ExternalActions.formatCoordinate(content.longitude) }
-    val lines =
-        buildList {
-            if (content.label.isNotBlank()) add(DetailLine(stringResource(R.string.result_location_name), content.label))
-            add(DetailLine(stringResource(R.string.result_location_latitude), latitude, mono = true))
-            add(DetailLine(stringResource(R.string.result_location_longitude), longitude, mono = true))
-        }
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        MapPlaceholder()
-        DetailsCard(lines)
-    }
+    DetailsCard(
+        listOf(
+            DetailLine(stringResource(R.string.result_location_latitude), latitude, mono = true),
+            DetailLine(stringResource(R.string.result_location_longitude), longitude, mono = true),
+        ),
+    )
 }
 
 // ---- s25 Unknown ----------------------------------------------------------------------------------------------

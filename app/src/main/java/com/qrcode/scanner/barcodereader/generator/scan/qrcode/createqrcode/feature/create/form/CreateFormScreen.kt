@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -18,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +50,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.featu
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.titleRes
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.tone
 import java.util.TimeZone
+
+/** The Generate button is 52dp high in the artboards (a little taller than the standard 48dp button). */
+private val GenerateButtonHeight = 52.dp
 
 @Composable
 fun CreateFormRoute(
@@ -112,7 +118,7 @@ fun CreateFormScreen(
                     onClick = { onEvent(CreateFormEvent.Generate) },
                     enabled = state.isValid && !state.generating,
                     leadingIcon = if (spec.type.isBarcode) AppIcons.Barcode else AppIcons.QrCode,
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().heightIn(min = GenerateButtonHeight),
                 )
             }
         },
@@ -124,7 +130,7 @@ fun CreateFormScreen(
                     .fillMaxSize()
                     .padding(padding)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             FormIntro(spec.type)
@@ -137,9 +143,14 @@ fun CreateFormScreen(
 private fun FormIntro(type: CreateType) {
     val intro = type.introRes() ?: return
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-        IconTile(icon = type.icon(), tone = type.tone(), size = 56.dp)
+        IconTile(icon = type.icon(), tone = type.tone(), size = 56.dp, iconSize = 32.dp)
         Column(Modifier.weight(1f)) {
-            Text(stringResource(intro.first), style = AppTheme.type.titleLarge, color = AppTheme.colors.ink)
+            Text(
+                stringResource(intro.first),
+                style = AppTheme.type.titleLarge,
+                color = AppTheme.colors.ink,
+                modifier = Modifier.semantics { heading() },
+            )
             Text(stringResource(intro.second), style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary)
         }
     }
@@ -208,6 +219,7 @@ private fun PreviewForm(dark: Boolean, state: CreateFormUiState) {
 }
 
 private val websiteError = previewState(CreateSpec.Website("brewhouse coffee"), setOf(FormField.URL))
+private val websiteEmpty = previewState(CreateSpec.Website(""))
 private val textState = previewState(CreateSpec.Text("Meeting notes: ship v2.4 on Friday.")).copy(density = DensityLevel.LOW)
 private val phoneState = previewState(CreateSpec.Phone("(206) 555-0198"))
 private val contactState =
@@ -219,7 +231,10 @@ private val eventState =
     previewState(
         EventTimes.blankEvent(1_800_000_000_000L, TimeZone.getTimeZone("UTC")).copy(title = "Product Launch Meetup"),
     )
+private val wifiError = previewState(CreateSpec.Wifi(ssid = "", password = ""), setOf(FormField.SSID, FormField.PASSWORD))
 private val socialState = previewState(CreateSpec.Social(handle = "lumen.studio"))
+private val barcodeError =
+    previewState(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "5901234123450"), setOf(FormField.BARCODE_DATA))
 private val barcodeState =
     previewState(CreateSpec.Barcode(CreateType.BARCODE_EAN_13, "590123412345"))
         .copy(barcodeStatus = BarcodeStatus.CheckDigitWillBeAdded(7))
@@ -231,6 +246,14 @@ private fun S32_WebsiteFormError_Light() = PreviewForm(false, websiteError)
 @Preview(name = "S32_WebsiteFormError_Dark", widthDp = 360, heightDp = 800)
 @Composable
 private fun S32_WebsiteFormError_Dark() = PreviewForm(true, websiteError)
+
+@Preview(name = "S32_WebsiteFormEmpty_Light", widthDp = 360, heightDp = 800)
+@Composable
+private fun S32_WebsiteFormEmpty_Light() = PreviewForm(false, websiteEmpty)
+
+@Preview(name = "S32_WebsiteFormEmpty_Dark", widthDp = 360, heightDp = 800)
+@Composable
+private fun S32_WebsiteFormEmpty_Dark() = PreviewForm(true, websiteEmpty)
 
 @Preview(name = "S33_TextForm_Light", widthDp = 360, heightDp = 800)
 @Composable
@@ -264,6 +287,14 @@ private fun S36_WifiForm_Light() = PreviewForm(false, wifiState)
 @Composable
 private fun S36_WifiForm_Dark() = PreviewForm(true, wifiState)
 
+@Preview(name = "S36_WifiFormError_Light", widthDp = 360, heightDp = 800)
+@Composable
+private fun S36_WifiFormError_Light() = PreviewForm(false, wifiError)
+
+@Preview(name = "S36_WifiFormError_Dark", widthDp = 360, heightDp = 800)
+@Composable
+private fun S36_WifiFormError_Dark() = PreviewForm(true, wifiError)
+
 @Preview(name = "S37_EventForm_Light", widthDp = 360, heightDp = 800)
 @Composable
 private fun S37_EventForm_Light() = PreviewForm(false, eventState)
@@ -287,3 +318,11 @@ private fun S39_CustomDataForm_Light() = PreviewForm(false, barcodeState)
 @Preview(name = "S39_CustomDataForm_Dark", widthDp = 360, heightDp = 800)
 @Composable
 private fun S39_CustomDataForm_Dark() = PreviewForm(true, barcodeState)
+
+@Preview(name = "S39_CustomDataFormError_Light", widthDp = 360, heightDp = 800)
+@Composable
+private fun S39_CustomDataFormError_Light() = PreviewForm(false, barcodeError)
+
+@Preview(name = "S39_CustomDataFormError_Dark", widthDp = 360, heightDp = 800)
+@Composable
+private fun S39_CustomDataFormError_Dark() = PreviewForm(true, barcodeError)

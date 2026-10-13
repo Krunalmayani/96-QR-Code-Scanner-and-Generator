@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -28,13 +30,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppChip
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSlider
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSwitch
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ColorSwatch
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.KeyValueRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsSwitchRow
@@ -51,6 +56,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.StyleRules
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.DotShape
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.QrStyle
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.NoticeBanner
 import java.util.Locale
 
 /** Which color a custom-color dialog edits. */
@@ -107,7 +113,7 @@ internal fun ColorControls(
     onCustomColor: (ColorTarget) -> Unit,
     showGradient: Boolean,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Column {
             SectionLabel(stringResource(R.string.create_colors_code))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -152,25 +158,41 @@ internal fun ColorControls(
                 CustomColorTile(onClick = { onCustomColor(ColorTarget.BACKGROUND) })
             }
         }
-        if (showGradient) GradientControls(style.foreground, style.gradientEnd, onEdit)
-        if (reliability != null) ReliabilityMessage(reliability)
+        if (showGradient) GradientControls(style.foreground, style.gradientEnd, onEdit, Modifier.padding(top = 10.dp))
+        if (reliability != null) ReliabilityMessage(reliability, Modifier.padding(top = 6.dp))
     }
 }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun GradientControls(foreground: Long, gradientEnd: Long?, onEdit: (StyleEdit) -> Unit) {
-    Column {
-        CardGroup {
-            SettingsSwitchRow(
-                title = stringResource(R.string.create_colors_gradient),
-                subtitle = stringResource(R.string.create_colors_gradient_hint),
-                checked = gradientEnd != null,
-                onCheckedChange = { on ->
-                    val preset = GradientPreset.match(foreground, gradientEnd) ?: GradientPreset.entries.first()
-                    onEdit(if (on) StyleEdit.Gradient(preset) else StyleEdit.GradientEnd(null))
-                },
-            )
+private fun GradientControls(foreground: Long, gradientEnd: Long?, onEdit: (StyleEdit) -> Unit, modifier: Modifier = Modifier) {
+    val enabled = gradientEnd != null
+    Column(modifier) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 48.dp)
+                    .toggleable(
+                        value = enabled,
+                        role = Role.Switch,
+                        onValueChange = { on ->
+                            val preset = GradientPreset.match(foreground, gradientEnd) ?: GradientPreset.entries.first()
+                            onEdit(if (on) StyleEdit.Gradient(preset) else StyleEdit.GradientEnd(null))
+                        },
+                    ).padding(horizontal = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.create_colors_gradient), style = AppTheme.type.title, color = AppTheme.colors.ink)
+                Text(
+                    stringResource(R.string.create_colors_gradient_hint),
+                    style = AppTheme.type.caption,
+                    color = AppTheme.colors.inkSecondary,
+                )
+            }
+            AppSwitch(checked = enabled, onCheckedChange = null)
         }
         if (gradientEnd != null) {
             SectionLabel(stringResource(R.string.create_colors_gradient_presets), Modifier.padding(top = 8.dp))
@@ -224,24 +246,36 @@ private fun CustomColorTile(onClick: () -> Unit) {
                 .semantics { contentDescription = description },
         contentAlignment = Alignment.Center,
     ) {
-        Icon(AppIcons.Create, contentDescription = null, tint = colors.inkSecondary, modifier = Modifier.size(20.dp))
+        Icon(AppIcons.Create, contentDescription = null, tint = colors.inkSecondary, modifier = Modifier.size(24.dp))
     }
 }
 
-/** "Contrast 7.6:1 · scans reliably" or the "May be hard to scan" warning with its reasons and the ratio row. */
+/**
+ * "Contrast 7.6:1 · scans reliably" or the "May be hard to scan" warning with its reasons and the ratio row.
+ * Both are text, so the state never relies on color; changes are announced to screen readers.
+ */
 @Composable
-internal fun ReliabilityMessage(reliability: ScanReliability) {
+internal fun ReliabilityMessage(reliability: ScanReliability, modifier: Modifier = Modifier) {
     val ratio = String.format(Locale.getDefault(), "%.1f", reliability.contrastRatio)
     if (reliability.isGood) {
-        InfoBanner(
+        NoticeBanner(
             text = stringResource(R.string.create_colors_reliable, ratio),
             tone = Tone.Success,
             icon = AppIcons.Check,
+            modifier = modifier,
+            compact = true,
+            live = true,
         )
         return
     }
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        InfoBanner(text = stringResource(R.string.create_colors_hard_to_scan), tone = Tone.Warning, icon = AppIcons.Warning)
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        NoticeBanner(
+            text = stringResource(R.string.create_colors_hard_to_scan),
+            tone = Tone.Warning,
+            icon = AppIcons.Warning,
+            compact = true,
+            live = true,
+        )
         for (reason in reliability.reasons) {
             Text(
                 stringResource(reason.messageRes()),
@@ -275,6 +309,8 @@ internal fun BarcodeOptions(
     onEdit: (StyleEdit) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val heightLabel = stringResource(R.string.create_barcode_bar_height)
+    val heightText = stringResource(R.string.create_percent, style.barHeightPercent)
     Column(modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         CardGroup {
             SettingsSwitchRow(
@@ -286,13 +322,13 @@ internal fun BarcodeOptions(
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                stringResource(R.string.create_barcode_bar_height),
+                heightLabel,
                 style = AppTheme.type.title,
                 color = AppTheme.colors.ink,
                 modifier = Modifier.weight(1f),
             )
             Text(
-                stringResource(R.string.create_percent, style.barHeightPercent),
+                heightText,
                 style = AppTheme.type.bodyStrong,
                 color = AppTheme.colors.inkSecondary,
             )
@@ -300,6 +336,11 @@ internal fun BarcodeOptions(
         AppSlider(
             value = style.barHeightPercent.toFloat(),
             onValueChange = { onEdit(StyleEdit.BarHeight(it.toInt())) },
+            modifier =
+                Modifier.semantics {
+                    contentDescription = heightLabel
+                    stateDescription = heightText
+                },
             valueRange = StyleRules.BAR_HEIGHT_MIN.toFloat()..StyleRules.BAR_HEIGHT_MAX.toFloat(),
         )
     }
@@ -331,7 +372,14 @@ internal fun DotShapeTile(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         DotShapeSample(shape, ink)
-        Text(label, style = AppTheme.type.captionStrong, color = ink, maxLines = 1)
+        Text(
+            label,
+            style = AppTheme.type.captionStrong,
+            color = ink,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 

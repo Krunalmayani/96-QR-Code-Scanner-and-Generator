@@ -192,9 +192,9 @@
     <string name="result_risk_long">طويل جدًا</string>
     <string name="result_risk_long_detail">طول الرابط %1$s حرفًا</string>
 
-    <string name="result_share_title">مشاركة</string>
-    <string name="result_share_as_text">مشاركة كنص</string>
-    <string name="result_share_as_image">مشاركة كصورة</string>
+    <string name="result_share_title">مشاركة بصيغة</string>
+    <string name="result_share_as_text">نص</string>
+    <string name="result_share_as_image">صورة</string>
     <string name="result_action_share_text">مشاركة</string>
 
     <string name="result_note_label">ملاحظة</string>
@@ -208,4 +208,16 @@
     <string name="result_msg_no_app">لم يُعثر على تطبيق لفتح هذا</string>
     <string name="result_msg_cannot_open">لا يمكن فتح هذا</string>
     <string name="result_msg_still_offline">ما زلت غير متصل. تحقق من اتصالك وحاول مرة أخرى.</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">إضافة إلى المفضلة</string>
+    <string name="result_favorite_remove">إزالة من المفضلة</string>
+    <string name="result_action_search_web">بحث في الويب</string>
+    <string name="result_action_share_qr_image">مشاركة صورة QR</string>
+    <string name="result_action_save_image">حفظ الصورة</string>
+    <string name="result_action_email">بريد إلكتروني</string>
+    <string name="result_share_save">حفظ</string>
+    <string name="result_share_email">بريد إلكتروني</string>
+    <string name="result_share_message">رسالة</string>
+    <string name="result_share_more_apps">المزيد من التطبيقات</string>
 </resources>

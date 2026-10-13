@@ -4,7 +4,8 @@
     <string name="settings_title">Ajustes</string>
     <string name="settings_section_scanning">Escaneo</string>
     <string name="settings_section_appearance">Apariencia</string>
-    <string name="settings_section_privacy">Privacidad y datos</string>
+    <string name="settings_section_privacy">Privacidad y permisos</string>
+    <string name="settings_section_data">Datos</string>
     <string name="settings_section_about">Información y soporte</string>
 
     <string name="settings_vibrate">Vibrar al escanear</string>

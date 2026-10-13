@@ -187,9 +187,9 @@
     <string name="result_risk_long">Sangat panjang</string>
     <string name="result_risk_long_detail">Tautan ini sepanjang %1$s karakter</string>
 
-    <string name="result_share_title">Bagikan</string>
-    <string name="result_share_as_text">Bagikan sebagai teks</string>
-    <string name="result_share_as_image">Bagikan sebagai gambar</string>
+    <string name="result_share_title">Bagikan sebagai</string>
+    <string name="result_share_as_text">Teks</string>
+    <string name="result_share_as_image">Gambar</string>
     <string name="result_action_share_text">Bagikan</string>
 
     <string name="result_note_label">Catatan</string>
@@ -203,4 +203,16 @@
     <string name="result_msg_no_app">Tidak ada aplikasi untuk membukanya</string>
     <string name="result_msg_cannot_open">Ini tidak dapat dibuka</string>
     <string name="result_msg_still_offline">Masih offline. Periksa koneksi Anda lalu coba lagi.</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">Tambahkan ke favorit</string>
+    <string name="result_favorite_remove">Hapus dari favorit</string>
+    <string name="result_action_search_web">Cari di web</string>
+    <string name="result_action_share_qr_image">Bagikan gambar QR</string>
+    <string name="result_action_save_image">Simpan gambar</string>
+    <string name="result_action_email">Email</string>
+    <string name="result_share_save">Simpan</string>
+    <string name="result_share_email">Email</string>
+    <string name="result_share_message">Pesan</string>
+    <string name="result_share_more_apps">Aplikasi lainnya</string>
 </resources>

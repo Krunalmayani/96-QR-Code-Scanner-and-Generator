@@ -1,17 +1,25 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.result
 
+import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -28,7 +36,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ConfirmDialog
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PrimaryButton
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.QuickAction
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
@@ -124,25 +131,58 @@ private fun DangerTextButton(text: String, onClick: () -> Unit, modifier: Modifi
     }
 }
 
-/** s29: choose what to share for a created code. */
+/** s29: "Share as" Image, Text, Save, Email, Message, plus More apps (the system chooser). */
 @Composable
-internal fun ShareSheet(onShareText: () -> Unit, onShareImage: () -> Unit, onDismiss: () -> Unit) {
+internal fun ShareSheet(onEvent: (ResultEvent) -> Unit, onDismiss: () -> Unit) {
     AppBottomSheet(onDismissRequest = onDismiss) {
-        ShareSheetBody(onShareText, onShareImage)
+        ShareSheetBody(onEvent)
     }
 }
 
 @Composable
-internal fun ColumnScope.ShareSheetBody(onShareText: () -> Unit, onShareImage: () -> Unit) {
+internal fun ColumnScope.ShareSheetBody(onEvent: (ResultEvent) -> Unit) {
     Text(
         stringResource(R.string.result_share_title),
         style = AppTheme.type.titleLarge,
         color = AppTheme.colors.ink,
         modifier = Modifier.semantics { heading() },
     )
-    Row(Modifier.fillMaxWidth().padding(top = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-        QuickAction(AppIcons.Text, stringResource(R.string.result_share_as_text), onShareText)
-        QuickAction(AppIcons.Image, stringResource(R.string.result_share_as_image), onShareImage)
+    Row(Modifier.fillMaxWidth().padding(top = 16.dp)) {
+        ShareOption(AppIcons.Image, R.string.result_share_as_image) { onEvent(ResultEvent.ShareAsImage) }
+        ShareOption(AppIcons.Text, R.string.result_share_as_text) { onEvent(ResultEvent.ShareAsText) }
+        ShareOption(AppIcons.Download, R.string.result_share_save) { onEvent(ResultEvent.SaveImageClicked) }
+        ShareOption(AppIcons.Email, R.string.result_share_email) { onEvent(ResultEvent.ShareViaEmail) }
+        ShareOption(AppIcons.Sms, R.string.result_share_message) { onEvent(ResultEvent.ShareViaMessage) }
+    }
+    AppOutlinedButton(
+        stringResource(R.string.result_share_more_apps),
+        { onEvent(ResultEvent.ShareAsText) },
+        Modifier.fillMaxWidth().padding(top = 20.dp),
+    )
+}
+
+/** One round option of the share sheet; five of them share the row equally, labels wrap instead of clipping. */
+@Composable
+private fun RowScope.ShareOption(
+    icon: ImageVector,
+    @StringRes label: Int,
+    onClick: () -> Unit,
+) {
+    val c = AppTheme.colors
+    Column(
+        modifier =
+            Modifier
+                .weight(1f)
+                .clip(AppTheme.shapes.card)
+                .clickable(role = Role.Button, onClick = onClick)
+                .padding(vertical = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Box(Modifier.size(56.dp).clip(AppTheme.shapes.card).background(c.primaryContainer), contentAlignment = Alignment.Center) {
+            Icon(icon, contentDescription = null, tint = c.onPrimaryContainer, modifier = Modifier.size(24.dp))
+        }
+        Text(stringResource(label), style = AppTheme.type.captionStrong, color = c.ink, textAlign = TextAlign.Center, maxLines = 2)
     }
 }
 

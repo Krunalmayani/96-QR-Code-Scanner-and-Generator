@@ -314,14 +314,14 @@ private fun S28_WifiCouldNotConnect_Dark() =
 @Composable
 private fun S29_ShareSheet_Light() =
     ScreenPreview(false, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
-        SheetFrame { ShareSheetBody({}, {}) }
+        SheetFrame { ShareSheetBody {} }
     })
 
 @Preview(name = "S29_ShareSheet_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
 private fun S29_ShareSheet_Dark() =
     ScreenPreview(true, sampleState(wifiContent, ScanSource.CREATED, fromHistory = true), {
-        SheetFrame { ShareSheetBody({}, {}) }
+        SheetFrame { ShareSheetBody {} }
     })
 
 @Preview(name = "S30_ProductSearch_Light", showBackground = true, widthDp = 360, heightDp = 800)
@@ -429,3 +429,19 @@ private fun S74_WebsiteResult_Light() = ScreenPreview(false, sampleState(website
 @Preview(name = "S74_WebsiteResult_Dark", showBackground = true, widthDp = 360, heightDp = 800)
 @Composable
 private fun S74_WebsiteResult_Dark() = ScreenPreview(true, sampleState(websiteContent), null)
+
+@Preview(name = "S15_ResultLoading_Light", showBackground = true, widthDp = 360, heightDp = 800)
+@Composable
+private fun S15_ResultLoading_Light() = ScreenPreview(false, ResultUiState(), null)
+
+@Preview(name = "S15_ResultLoading_Dark", showBackground = true, widthDp = 360, heightDp = 800)
+@Composable
+private fun S15_ResultLoading_Dark() = ScreenPreview(true, ResultUiState(), null)
+
+@Preview(name = "S50_ResultNotFound_Light", showBackground = true, widthDp = 360, heightDp = 800)
+@Composable
+private fun S50_ResultNotFound_Light() = ScreenPreview(false, ResultUiState(phase = ResultPhase.NOT_FOUND, fromHistory = true), null)
+
+@Preview(name = "S50_ResultNotFound_Dark", showBackground = true, widthDp = 360, heightDp = 800)
+@Composable
+private fun S50_ResultNotFound_Dark() = ScreenPreview(true, ResultUiState(phase = ResultPhase.NOT_FOUND, fromHistory = true), null)

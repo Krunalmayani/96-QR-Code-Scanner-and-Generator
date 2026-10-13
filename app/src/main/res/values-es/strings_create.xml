@@ -73,6 +73,8 @@
     <string name="create_helper_phone">Incluye el prefijo del país, como +1 206 555 0198</string>
     <string name="create_phone_valid">Número válido</string>
     <string name="create_field_full_name">Nombre</string>
+    <string name="create_field_first_name">Nombre</string>
+    <string name="create_field_last_name">Apellidos</string>
     <string name="create_field_mobile_phone">Teléfono móvil</string>
     <string name="create_field_email">Correo electrónico</string>
     <string name="create_field_company">Empresa</string>

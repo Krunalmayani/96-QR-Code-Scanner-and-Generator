@@ -7,6 +7,8 @@ import java.math.RoundingMode
 /** Builds the [ExternalAction] behind each button of the result screen. Returns null when there is nothing usable to launch. */
 object ExternalActions {
     private const val COORDINATE_SCALE = 6
+    private const val MAX_SEARCH_LENGTH = 200
+    private const val SEARCH_URL = "https://www.google.com/search?q="
 
     fun dial(number: String): ExternalAction.Dial? =
         if (PhoneNumbers.isDialable(number)) ExternalAction.Dial(PhoneNumbers.telUri(number)) else null
@@ -32,6 +34,25 @@ object ExternalActions {
     fun searchPlace(place: String): ExternalAction.OpenMap? {
         val query = cleanLabel(place)
         return if (query.isEmpty()) null else ExternalAction.OpenMap("geo:0,0?q=" + UriEncoding.encode(query))
+    }
+
+    /** "Share by email": an empty compose window whose body is [text]; the user picks the recipient. */
+    fun shareByEmail(text: String): ExternalAction.ComposeEmail? =
+        if (text.isBlank()) null else ExternalAction.ComposeEmail(uri = "mailto:", address = "", subject = "", body = text)
+
+    /** "Share by message": an empty compose window whose body is [text]; the user picks the recipient. */
+    fun shareBySms(text: String): ExternalAction.ComposeSms? =
+        if (text.isBlank()) null else ExternalAction.ComposeSms(uri = "smsto:", body = text)
+
+    /** Web search page for [query] (whitespace collapsed, at most 200 characters); null when there is nothing to search. */
+    fun webSearchUrl(query: String): String? {
+        val clean =
+            query
+                .trim()
+                .replace(Regex("\\s+"), " ")
+                .take(MAX_SEARCH_LENGTH)
+                .trim()
+        return if (clean.isEmpty()) null else SEARCH_URL + UriEncoding.encode(clean)
     }
 
     fun addToCalendar(event: ScanContent.Event): ExternalAction.AddToCalendar {

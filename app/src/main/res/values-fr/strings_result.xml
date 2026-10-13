@@ -189,9 +189,9 @@
     <string name="result_risk_long">Très long</string>
     <string name="result_risk_long_detail">Le lien fait %1$s caractères</string>
 
-    <string name="result_share_title">Partager</string>
-    <string name="result_share_as_text">Partager en texte</string>
-    <string name="result_share_as_image">Partager en image</string>
+    <string name="result_share_title">Partager en tant que</string>
+    <string name="result_share_as_text">Texte</string>
+    <string name="result_share_as_image">Image</string>
     <string name="result_action_share_text">Partager</string>
 
     <string name="result_note_label">Note</string>
@@ -205,4 +205,16 @@
     <string name="result_msg_no_app">Aucune appli trouvée pour l’ouvrir</string>
     <string name="result_msg_cannot_open">Impossible d’ouvrir ceci</string>
     <string name="result_msg_still_offline">Toujours hors ligne. Vérifiez votre connexion et réessayez.</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">Ajouter aux favoris</string>
+    <string name="result_favorite_remove">Retirer des favoris</string>
+    <string name="result_action_search_web">Rechercher sur le web</string>
+    <string name="result_action_share_qr_image">Partager l\'image du QR</string>
+    <string name="result_action_save_image">Enregistrer l\'image</string>
+    <string name="result_action_email">E-mail</string>
+    <string name="result_share_save">Enregistrer</string>
+    <string name="result_share_email">E-mail</string>
+    <string name="result_share_message">Message</string>
+    <string name="result_share_more_apps">Plus d\'applis</string>
 </resources>

@@ -73,6 +73,8 @@
     <string name="create_helper_phone">Incluez l’indicatif du pays, par ex. +1 206 555 0198</string>
     <string name="create_phone_valid">Numéro valide</string>
     <string name="create_field_full_name">Nom</string>
+    <string name="create_field_first_name">Prénom</string>
+    <string name="create_field_last_name">Nom</string>
     <string name="create_field_mobile_phone">Mobile</string>
     <string name="create_field_email">E-mail</string>
     <string name="create_field_company">Société</string>

@@ -73,6 +73,8 @@
     <string name="create_helper_phone">Sertakan kode negara, misalnya +1 206 555 0198</string>
     <string name="create_phone_valid">Nomor valid</string>
     <string name="create_field_full_name">Nama</string>
+    <string name="create_field_first_name">Nama depan</string>
+    <string name="create_field_last_name">Nama belakang</string>
     <string name="create_field_mobile_phone">Ponsel</string>
     <string name="create_field_email">Email</string>
     <string name="create_field_company">Perusahaan</string>

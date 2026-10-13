@@ -73,6 +73,8 @@
     <string name="create_helper_phone">Mit Ländervorwahl, z. B. +1 206 555 0198</string>
     <string name="create_phone_valid">Gültige Nummer</string>
     <string name="create_field_full_name">Name</string>
+    <string name="create_field_first_name">Vorname</string>
+    <string name="create_field_last_name">Nachname</string>
     <string name="create_field_mobile_phone">Mobiltelefon</string>
     <string name="create_field_email">E-Mail</string>
     <string name="create_field_company">Firma</string>

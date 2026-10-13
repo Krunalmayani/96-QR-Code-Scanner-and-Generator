@@ -14,7 +14,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,8 +34,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.BannerAd
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.ads.isPrivacyOptionsRequired
@@ -40,19 +48,13 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.core.
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppDivider
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppScaffold
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSnackbarHost
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.BottomNavBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.BottomNavBarHeight
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.BottomTab
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.LocalBottomBarInset
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsNavRow
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsSwitchRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.TonalButton
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
@@ -81,7 +83,7 @@ data class SettingsActions(
 
 /**
  * Settings tab root (s54, s55, s56, s77): one scrolling list in four sections, banner ad above the bottom bar.
- * [versionName] is shown on the About row.
+ * [versionName] and [versionCode] are shown in the About header and on the About row.
  */
 @Composable
 fun SettingsScreen(
@@ -92,11 +94,12 @@ fun SettingsScreen(
     versionName: String,
     modifier: Modifier = Modifier,
     scrollState: ScrollState = rememberScrollState(),
+    versionCode: Int = 1,
 ) {
     val bottomInset = LocalBottomBarInset.current
     AppScaffold(
         modifier = modifier,
-        topBar = { AppTopBar(title = stringResource(R.string.settings_title)) },
+        topBar = { SettingsTitleBar(stringResource(R.string.settings_title)) },
         snackbarHost = { AppSnackbarHost(snackbarHostState, Modifier.padding(bottom = bottomInset)) },
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(top = padding.calculateTopPadding())) {
@@ -106,16 +109,12 @@ fun SettingsScreen(
                         .weight(1f)
                         .fillMaxWidth()
                         .verticalScroll(scrollState)
-                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                        .padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 16.dp),
             ) {
                 ScanningSection(state.settings, onEvent)
-                Spacer(Modifier.height(SectionGap))
                 AppearanceSection(state.settings, actions)
-                Spacer(Modifier.height(SectionGap))
                 PrivacySection(state.settings, onEvent, actions)
-                Spacer(Modifier.height(SectionGap))
-                AboutSection(versionName, actions)
-                Spacer(Modifier.height(SectionGap))
+                AboutSection(versionName, versionCode, actions)
             }
             BannerAd(Modifier.fillMaxWidth())
             Spacer(Modifier.height(bottomInset))
@@ -123,34 +122,58 @@ fun SettingsScreen(
     }
 }
 
-private val SectionGap = 16.dp
+/**
+ * Tab-root title bar of the design: 24/32 extra-bold title indented 24dp, 12dp above the content line
+ * (AppTopBar only offers the 20sp title of sub-screens).
+ */
+@Composable
+private fun SettingsTitleBar(title: String) {
+    Row(
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .heightIn(min = 64.dp)
+                .padding(start = 24.dp, end = 8.dp, top = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = title,
+            style = AppTheme.type.topBar.copy(fontSize = 24.sp, lineHeight = 32.sp, fontWeight = FontWeight.ExtraBold),
+            color = AppTheme.colors.ink,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.semantics { heading() },
+        )
+    }
+}
 
 @Composable
 private fun ScanningSection(settings: AppSettings, onEvent: (SettingsEvent) -> Unit) {
-    SectionLabel(stringResource(R.string.settings_section_scanning))
+    SettingsSectionLabel(stringResource(R.string.settings_section_scanning), topPadding = 0.dp)
     CardGroup {
-        SettingsSwitchRow(
-            title = stringResource(R.string.settings_vibrate),
-            checked = settings.vibrate,
-            onCheckedChange = { onEvent(SettingsEvent.SetVibrate(it)) },
-            icon = AppIcons.Vibrate,
-        )
-        AppDivider()
-        SettingsSwitchRow(
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_beep),
             checked = settings.beep,
             onCheckedChange = { onEvent(SettingsEvent.SetBeep(it)) },
             icon = AppIcons.Sound,
         )
         AppDivider()
-        SettingsSwitchRow(
+        SettingsSwitchItem(
+            title = stringResource(R.string.settings_vibrate),
+            checked = settings.vibrate,
+            onCheckedChange = { onEvent(SettingsEvent.SetVibrate(it)) },
+            icon = AppIcons.Vibrate,
+        )
+        AppDivider()
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_flash_on_start),
             checked = settings.flashOnStart,
             onCheckedChange = { onEvent(SettingsEvent.SetFlashOnStart(it)) },
             icon = AppIcons.FlashOn,
         )
         AppDivider()
-        SettingsSwitchRow(
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_auto_open),
             subtitle = stringResource(R.string.settings_auto_open_hint),
             checked = settings.autoOpenLinks,
@@ -158,9 +181,8 @@ private fun ScanningSection(settings: AppSettings, onEvent: (SettingsEvent) -> U
             icon = AppIcons.Link,
         )
         AppDivider()
-        SettingsSwitchRow(
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_continuous),
-            subtitle = stringResource(R.string.settings_continuous_hint),
             checked = settings.continuousScan,
             onCheckedChange = { onEvent(SettingsEvent.SetContinuousScan(it)) },
             icon = AppIcons.Apps,
@@ -180,9 +202,9 @@ private fun ScanAreaRow(scanAreaOnly: Boolean, onChange: (Boolean) -> Unit) {
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            IconTile(AppIcons.Scan)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(stringResource(R.string.settings_scan_area), style = AppTheme.type.title, color = c.ink)
+            SettingsTile(AppIcons.Scan)
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.settings_scan_area), style = settingsTitleStyle(), color = c.ink)
                 Text(stringResource(R.string.settings_scan_area_hint), style = AppTheme.type.caption, color = c.inkSecondary)
             }
         }
@@ -204,9 +226,9 @@ private fun ProductSitesCard(order: List<ProductSite>, onMove: (ProductSite, Boo
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconTile(AppIcons.Product)
-            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                Text(stringResource(R.string.settings_sites_title), style = AppTheme.type.title, color = c.ink)
+            SettingsTile(AppIcons.Product)
+            Column(Modifier.weight(1f)) {
+                Text(stringResource(R.string.settings_sites_title), style = settingsTitleStyle(), color = c.ink)
                 Text(stringResource(R.string.settings_sites_hint), style = AppTheme.type.caption, color = c.inkSecondary)
             }
         }
@@ -232,8 +254,9 @@ private fun ProductSiteRow(
     onMove: (ProductSite, Boolean) -> Unit,
 ) {
     val name = stringResource(siteLabelRes(site))
-    ListRow(
+    SettingsRow(
         title = name,
+        verticalPadding = 4.dp,
         leading = {
             Text(
                 text = position.toString(),
@@ -249,14 +272,12 @@ private fun ProductSiteRow(
                     contentDescription = stringResource(R.string.settings_site_move_up, name),
                     onClick = { onMove(site, true) },
                     enabled = canMoveUp,
-                    size = 40.dp,
                 )
                 IconButtonRounded(
                     icon = AppIcons.ExpandMore,
                     contentDescription = stringResource(R.string.settings_site_move_down, name),
                     onClick = { onMove(site, false) },
                     enabled = canMoveDown,
-                    size = 40.dp,
                 )
             }
         },
@@ -265,16 +286,16 @@ private fun ProductSiteRow(
 
 @Composable
 private fun AppearanceSection(settings: AppSettings, actions: SettingsActions) {
-    SectionLabel(stringResource(R.string.settings_section_appearance))
+    SettingsSectionLabel(stringResource(R.string.settings_section_appearance))
     CardGroup {
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_theme),
             value = stringResource(themeLabelRes(settings.theme)),
             onClick = actions.onTheme,
             icon = AppIcons.Palette,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_language),
             value = languageLabel(settings.languageTag),
             onClick = actions.onLanguage,
@@ -285,7 +306,7 @@ private fun AppearanceSection(settings: AppSettings, actions: SettingsActions) {
 
 @Composable
 private fun PrivacySection(settings: AppSettings, onEvent: (SettingsEvent) -> Unit, actions: SettingsActions) {
-    SectionLabel(stringResource(R.string.settings_section_privacy))
+    SettingsSectionLabel(stringResource(R.string.settings_section_privacy))
     PrivacyBanner()
     Spacer(Modifier.height(8.dp))
     CardGroup {
@@ -304,17 +325,16 @@ private fun PrivacySection(settings: AppSettings, onEvent: (SettingsEvent) -> Un
         modifier = Modifier.fillMaxWidth(),
         leadingIcon = AppIcons.OpenInNew,
     )
-    Spacer(Modifier.height(12.dp))
+    SettingsSectionLabel(stringResource(R.string.settings_section_data))
     CardGroup {
-        SettingsSwitchRow(
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_save_history),
-            subtitle = stringResource(R.string.settings_save_history_hint),
             checked = settings.saveHistory,
             onCheckedChange = { onEvent(SettingsEvent.SetSaveHistory(it)) },
             icon = AppIcons.History,
         )
         AppDivider()
-        SettingsSwitchRow(
+        SettingsSwitchItem(
             title = stringResource(R.string.settings_analytics),
             subtitle = stringResource(R.string.settings_analytics_hint),
             checked = settings.analyticsEnabled,
@@ -322,26 +342,27 @@ private fun PrivacySection(settings: AppSettings, onEvent: (SettingsEvent) -> Un
             icon = AppIcons.Info,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_clear_history),
             onClick = { onEvent(SettingsEvent.ClearHistoryClicked) },
             icon = AppIcons.Delete,
             tone = Tone.Error,
+            titleColor = AppTheme.colors.error,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_export_history),
             onClick = actions.onExport,
             icon = AppIcons.Document,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_privacy_summary),
             onClick = actions.onPrivacySummary,
             icon = AppIcons.Shield,
         )
         AppDivider()
-        ExternalLinkRow(
+        SettingsLinkItem(
             title = stringResource(R.string.settings_privacy_policy_web),
             icon = AppIcons.Lock,
             onClick = actions.onPrivacyPolicyWeb,
@@ -357,7 +378,7 @@ private fun AdPrivacyOptionsRow() {
     val context = LocalContext.current
     if (!isPrivacyOptionsRequired(context)) return
     AppDivider()
-    SettingsNavRow(
+    SettingsNavItem(
         title = stringResource(R.string.ads_privacy_options_title),
         subtitle = stringResource(R.string.ads_privacy_options_summary),
         onClick = { context.findHostActivity()?.let { showPrivacyOptionsForm(it) } },
@@ -372,6 +393,7 @@ private tailrec fun Context.findHostActivity(): Activity? =
         else -> null
     }
 
+/** Teal notice at the top of the privacy section (s55). */
 @Composable
 private fun PrivacyBanner() {
     val c = AppTheme.colors
@@ -379,23 +401,23 @@ private fun PrivacyBanner() {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
-                .background(c.primaryContainer)
+                .clip(AppTheme.shapes.card)
+                .background(c.successContainer)
                 .padding(horizontal = 16.dp, vertical = 14.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.Top,
     ) {
-        Icon(AppIcons.Shield, contentDescription = null, tint = c.onPrimaryContainer)
+        Icon(AppIcons.Shield, contentDescription = null, tint = c.onSuccessContainer)
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(
                 stringResource(R.string.settings_privacy_banner_title),
                 style = AppTheme.type.bodyStrong,
-                color = c.onPrimaryContainer,
+                color = c.onSuccessContainer,
             )
             Text(
                 stringResource(R.string.settings_privacy_banner_text),
                 style = AppTheme.type.bodySmall,
-                color = c.onPrimaryContainer,
+                color = c.onSuccessContainer,
             )
         }
     }
@@ -407,58 +429,43 @@ private fun PermissionRow(
     @StringRes title: Int,
     @StringRes hint: Int,
 ) {
-    ListRow(
+    SettingsRow(
         title = stringResource(title),
         subtitle = stringResource(hint),
-        leading = { IconTile(icon) },
+        leading = { SettingsTile(icon) },
     )
 }
 
 @Composable
-internal fun ExternalLinkRow(
-    title: String,
-    icon: ImageVector,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    ListRow(
-        title = title,
-        leading = { IconTile(icon) },
-        trailing = { Icon(AppIcons.OpenInNew, contentDescription = null, tint = AppTheme.colors.inkSecondary) },
-        onClick = onClick,
-        modifier = modifier,
-    )
-}
-
-@Composable
-private fun AboutSection(versionName: String, actions: SettingsActions) {
-    SectionLabel(stringResource(R.string.settings_section_about))
+private fun AboutSection(versionName: String, versionCode: Int, actions: SettingsActions) {
+    AppIdentity(versionName, versionCode)
+    SettingsSectionLabel(stringResource(R.string.settings_section_about), topPadding = 0.dp)
     CardGroup {
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_help),
             onClick = actions.onHelp,
             icon = AppIcons.Help,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_feedback),
             onClick = actions.onFeedback,
             icon = AppIcons.Email,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_rate),
             onClick = actions.onRate,
             icon = AppIcons.Star,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_share_app),
             onClick = actions.onShareApp,
             icon = AppIcons.Share,
         )
         AppDivider()
-        SettingsNavRow(
+        SettingsNavItem(
             title = stringResource(R.string.settings_about),
             value = versionName,
             onClick = actions.onAbout,
@@ -467,12 +474,59 @@ private fun AboutSection(versionName: String, actions: SettingsActions) {
         val gallery = actions.onGallery
         if (gallery != null) {
             AppDivider()
-            SettingsNavRow(
+            SettingsNavItem(
                 title = stringResource(R.string.settings_debug_gallery),
                 onClick = gallery,
                 icon = AppIcons.Brush,
             )
         }
+    }
+    Disclaimer()
+}
+
+/** App mark, name and version above the About rows (s56). */
+@Composable
+private fun AppIdentity(versionName: String, versionCode: Int) {
+    val c = AppTheme.colors
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp, top = 22.dp, bottom = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier.size(64.dp).clip(RoundedCornerShape(20.dp)).background(SettingsBrand.heroBrush),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(AppIcons.Scan, contentDescription = null, tint = SettingsBrand.onHero, modifier = Modifier.size(32.dp))
+        }
+        Column(Modifier.weight(1f)) {
+            Text(stringResource(R.string.app_name), style = AppTheme.type.title, color = c.ink)
+            Text(
+                stringResource(R.string.settings_about_version, versionName, versionCode),
+                style = AppTheme.type.caption,
+                color = c.inkSecondary,
+            )
+        }
+    }
+}
+
+/** Neutral notice that the app offers no payment or financial services (end of the list in s56). */
+@Composable
+private fun Disclaimer() {
+    val c = AppTheme.colors
+    Row(
+        modifier =
+            Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth()
+                .clip(AppTheme.shapes.card)
+                .background(c.surfaceVariant)
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.Top,
+    ) {
+        Icon(AppIcons.Info, contentDescription = null, tint = c.inkSecondary)
+        Text(stringResource(R.string.settings_about_disclaimer), style = AppTheme.type.bodySmall, color = c.inkSecondary)
     }
 }
 
@@ -518,11 +572,11 @@ private fun S54_ScanAndAppearance_Dark() = SettingsPreview(dark = true, scroll =
 
 @Preview(name = "S55_PrivacyAndData_Light", widthDp = 360, heightDp = 800)
 @Composable
-private fun S55_PrivacyAndData_Light() = SettingsPreview(dark = false, scroll = 2200)
+private fun S55_PrivacyAndData_Light() = SettingsPreview(dark = false, scroll = 830)
 
 @Preview(name = "S55_PrivacyAndData_Dark", widthDp = 360, heightDp = 800)
 @Composable
-private fun S55_PrivacyAndData_Dark() = SettingsPreview(dark = true, scroll = 2200)
+private fun S55_PrivacyAndData_Dark() = SettingsPreview(dark = true, scroll = 830)
 
 @Preview(name = "S56_AboutRow_Light", widthDp = 360, heightDp = 800)
 @Composable
@@ -535,12 +589,12 @@ private fun S56_AboutRow_Dark() = SettingsPreview(dark = true, scroll = 100_000)
 @Preview(name = "S68_ClearHistory_Light", widthDp = 360, heightDp = 800)
 @Composable
 private fun S68_ClearHistory_Light() =
-    SettingsPreview(dark = false, scroll = 2200, clearDialog = ClearDialogState(scanned = 124, created = 18))
+    SettingsPreview(dark = false, scroll = 1100, clearDialog = ClearDialogState(scanned = 124, created = 18))
 
 @Preview(name = "S68_ClearHistory_Dark", widthDp = 360, heightDp = 800)
 @Composable
 private fun S68_ClearHistory_Dark() =
-    SettingsPreview(dark = true, scroll = 2200, clearDialog = ClearDialogState(scanned = 124, created = 18))
+    SettingsPreview(dark = true, scroll = 1100, clearDialog = ClearDialogState(scanned = 124, created = 18))
 
 @Preview(name = "S77_Settings_Light", widthDp = 360, heightDp = 800)
 @Composable

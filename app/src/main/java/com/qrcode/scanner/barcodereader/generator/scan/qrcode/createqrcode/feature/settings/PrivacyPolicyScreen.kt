@@ -1,11 +1,14 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -15,11 +18,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
@@ -31,10 +37,9 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSnackbarHost
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
 import kotlinx.coroutines.launch
 
 @Composable
@@ -87,23 +92,11 @@ fun PrivacyPolicyScreen(
         ) {
             PrivacyHero()
             CardGroup {
-                ListRow(
-                    title = stringResource(R.string.settings_perm_camera),
-                    subtitle = stringResource(R.string.settings_privacy_camera),
-                    leading = { IconTile(AppIcons.Camera) },
-                )
+                PrivacyRow(AppIcons.Scan, R.string.settings_perm_camera, R.string.settings_privacy_camera)
                 AppDivider()
-                ListRow(
-                    title = stringResource(R.string.settings_perm_photos),
-                    subtitle = stringResource(R.string.settings_privacy_photos),
-                    leading = { IconTile(AppIcons.Image) },
-                )
+                PrivacyRow(AppIcons.Image, R.string.settings_perm_photos, R.string.settings_privacy_photos)
                 AppDivider()
-                ListRow(
-                    title = stringResource(R.string.settings_privacy_history_title),
-                    subtitle = stringResource(R.string.settings_privacy_history),
-                    leading = { IconTile(AppIcons.Lock) },
-                )
+                PrivacyRow(AppIcons.Lock, R.string.settings_privacy_history_title, R.string.settings_privacy_history)
             }
             AppCard {
                 Text(
@@ -117,20 +110,48 @@ fun PrivacyPolicyScreen(
 }
 
 @Composable
+private fun PrivacyRow(
+    icon: ImageVector,
+    @StringRes title: Int,
+    @StringRes hint: Int,
+) {
+    SettingsRow(
+        title = stringResource(title),
+        subtitle = stringResource(hint),
+        minHeight = 60.dp,
+        leading = { SettingsTile(icon, tone = Tone.Success, size = 32.dp, cornerRadius = 10.dp) },
+    )
+}
+
+/** Brand-gradient card at the top (`.hero`); identical in light and dark. */
+@Composable
 private fun PrivacyHero() {
-    val c = AppTheme.colors
     Column(
         modifier =
             Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(20.dp))
-                .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer)))
+                .clip(AppTheme.shapes.card)
+                .background(SettingsBrand.heroBrush)
                 .padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Icon(AppIcons.Shield, contentDescription = null, tint = c.onPrimary)
-        Text(stringResource(R.string.settings_privacy_hero_title), style = AppTheme.type.titleLarge, color = c.onPrimary)
-        Text(stringResource(R.string.settings_privacy_hero_text), style = AppTheme.type.body, color = c.onPrimary)
+        Box(
+            modifier = Modifier.size(56.dp).clip(RoundedCornerShape(20.dp)).background(SettingsBrand.heroTile),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(AppIcons.Shield, contentDescription = null, tint = SettingsBrand.onHero, modifier = Modifier.size(32.dp))
+        }
+        Text(
+            stringResource(R.string.settings_privacy_hero_title),
+            style = AppTheme.type.titleLarge,
+            color = SettingsBrand.onHero,
+            modifier = Modifier.padding(top = 12.dp).semantics { heading() },
+        )
+        Text(
+            stringResource(R.string.settings_privacy_hero_text),
+            style = AppTheme.type.body,
+            color = SettingsBrand.onHeroMuted,
+            modifier = Modifier.padding(top = 4.dp),
+        )
     }
 }
 

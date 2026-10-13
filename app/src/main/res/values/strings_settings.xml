@@ -9,7 +9,8 @@
     <string name="settings_title">Settings</string>
     <string name="settings_section_scanning">Scanning</string>
     <string name="settings_section_appearance">Appearance</string>
-    <string name="settings_section_privacy">Privacy and data</string>
+    <string name="settings_section_privacy">Privacy and permissions</string>
+    <string name="settings_section_data">Data</string>
     <string name="settings_section_about">About and support</string>
 
     <string name="settings_vibrate">Vibrate on scan</string>

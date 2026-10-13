@@ -4,7 +4,8 @@
     <string name="settings_title">الإعدادات</string>
     <string name="settings_section_scanning">المسح</string>
     <string name="settings_section_appearance">المظهر</string>
-    <string name="settings_section_privacy">الخصوصية والبيانات</string>
+    <string name="settings_section_privacy">الخصوصية والأذونات</string>
+    <string name="settings_section_data">البيانات</string>
     <string name="settings_section_about">حول التطبيق والدعم</string>
 
     <string name="settings_vibrate">اهتزاز عند المسح</string>

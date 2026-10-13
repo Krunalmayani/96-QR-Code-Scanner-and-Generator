@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.CodeFormat
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ContentType
 
@@ -37,10 +38,18 @@ internal fun scanTypeIcon(type: ContentType): ImageVector =
         ContentType.EMAIL -> AppIcons.Email
         ContentType.SMS -> AppIcons.Sms
         ContentType.LOCATION -> AppIcons.Location
-        ContentType.EVENT -> AppIcons.Event
+        ContentType.EVENT -> AppIcons.Calendar
         ContentType.WIFI -> AppIcons.Wifi
         ContentType.PRODUCT -> AppIcons.Product
         ContentType.UNKNOWN -> AppIcons.Barcode
+    }
+
+/** Tile colour per type, the same mapping as history rows and result headers: teal places and networks, amber text and products. */
+internal fun scanTypeTone(type: ContentType): Tone =
+    when (type) {
+        ContentType.WIFI, ContentType.LOCATION -> Tone.Success
+        ContentType.TEXT, ContentType.PRODUCT -> Tone.Warning
+        else -> Tone.Primary
     }
 
 /** "Product · EAN-13": type label plus the symbology name (a data name, not translated). */

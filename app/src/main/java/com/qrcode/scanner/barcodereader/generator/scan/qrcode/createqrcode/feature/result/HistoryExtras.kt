@@ -47,4 +47,5 @@ internal fun NoteField(note: String, onEvent: (ResultEvent) -> Unit, modifier: M
     }
 }
 
-private val PREVIEW_WIDTH = 240.dp
+/** 192dp of code plus the 12dp paper margin on each side (s50). */
+private val PREVIEW_WIDTH = 216.dp

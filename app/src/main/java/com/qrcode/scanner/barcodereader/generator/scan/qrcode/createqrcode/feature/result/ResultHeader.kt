@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,6 +32,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanContent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanRecord
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ScanSource
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.ExternalActions
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.Initials
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.safety.LinkSafetyResult
 
@@ -41,6 +42,7 @@ internal fun ResultHeader(record: ScanRecord, safety: LinkSafetyResult?, modifie
     when (val content = record.content) {
         is ScanContent.Contact -> ContactHeader(content, record, modifier)
         is ScanContent.Event -> EventHeader(content, record, modifier)
+        is ScanContent.Location -> LocationHeader(content, record, modifier)
         else -> StandardHeader(record, safety, modifier)
     }
 }
@@ -123,6 +125,23 @@ private fun EventHeader(content: ScanContent.Event, record: ScanRecord, modifier
     }
 }
 
+/** s23: a small tile, the badge and the place name (or the coordinates) as the title; the map sits above this row. */
+@Composable
+private fun LocationHeader(content: ScanContent.Location, record: ScanRecord, modifier: Modifier) {
+    val title =
+        content.label.ifBlank {
+            "${ExternalActions.formatCoordinate(content.latitude)}, ${ExternalActions.formatCoordinate(content.longitude)}"
+        }
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        IconTile(AppIcons.Location, tone = Tone.Primary)
+        Column(Modifier.weight(1f)) {
+            BadgeRow(record, stringResource(R.string.result_badge_location), Tone.Primary)
+            Text(title, style = AppTheme.type.title, color = AppTheme.colors.ink, modifier = Modifier.padding(top = 4.dp))
+            Caption(headerCaption(record))
+        }
+    }
+}
+
 @Composable
 private fun DateTile(month: String, day: String) {
     val c = AppTheme.colors
@@ -130,7 +149,7 @@ private fun DateTile(month: String, day: String) {
     Column(
         Modifier
             .width(64.dp)
-            .height(72.dp)
+            .heightIn(min = 72.dp)
             .clip(shape)
             .background(c.surface)
             .border(1.dp, c.outline, shape),

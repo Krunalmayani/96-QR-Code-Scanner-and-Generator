@@ -4,7 +4,8 @@
     <string name="settings_title">सेटिंग</string>
     <string name="settings_section_scanning">स्कैनिंग</string>
     <string name="settings_section_appearance">दिखावट</string>
-    <string name="settings_section_privacy">गोपनीयता और डेटा</string>
+    <string name="settings_section_privacy">गोपनीयता और अनुमतियाँ</string>
+    <string name="settings_section_data">डेटा</string>
     <string name="settings_section_about">जानकारी और सहायता</string>
 
     <string name="settings_vibrate">स्कैन पर वाइब्रेट करें</string>

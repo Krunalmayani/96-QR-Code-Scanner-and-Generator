@@ -188,9 +188,9 @@
     <string name="result_risk_long">बहुत लंबा</string>
     <string name="result_risk_long_detail">लिंक %1$s अक्षरों का है</string>
 
-    <string name="result_share_title">शेयर करें</string>
-    <string name="result_share_as_text">टेक्स्ट के रूप में शेयर करें</string>
-    <string name="result_share_as_image">इमेज के रूप में शेयर करें</string>
+    <string name="result_share_title">इस रूप में शेयर करें</string>
+    <string name="result_share_as_text">टेक्स्ट</string>
+    <string name="result_share_as_image">इमेज</string>
     <string name="result_action_share_text">शेयर करें</string>
 
     <string name="result_note_label">नोट</string>
@@ -204,4 +204,16 @@
     <string name="result_msg_no_app">इसे खोलने के लिए कोई ऐप नहीं मिला</string>
     <string name="result_msg_cannot_open">इसे खोला नहीं जा सकता</string>
     <string name="result_msg_still_offline">अब भी ऑफ़लाइन हैं। अपना कनेक्शन जांचें और फिर कोशिश करें।</string>
+
+    <!-- Design parity additions -->
+    <string name="result_favorite_add">पसंदीदा में जोड़ें</string>
+    <string name="result_favorite_remove">पसंदीदा से हटाएं</string>
+    <string name="result_action_search_web">वेब पर खोजें</string>
+    <string name="result_action_share_qr_image">QR इमेज शेयर करें</string>
+    <string name="result_action_save_image">इमेज सहेजें</string>
+    <string name="result_action_email">ईमेल</string>
+    <string name="result_share_save">सहेजें</string>
+    <string name="result_share_email">ईमेल</string>
+    <string name="result_share_message">संदेश</string>
+    <string name="result_share_more_apps">और ऐप्स</string>
 </resources>

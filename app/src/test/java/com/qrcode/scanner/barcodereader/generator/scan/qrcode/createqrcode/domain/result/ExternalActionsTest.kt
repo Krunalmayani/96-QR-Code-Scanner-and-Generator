@@ -128,4 +128,28 @@ class ExternalActionsTest {
         assertEquals(ContactInsertData(email = "a@b.c"), ExternalActions.addEmailToContacts("a@b.c").contact)
         assertNotNull(ExternalActions.addNumberToContacts("1"))
     }
+
+    @Test
+    fun `sharing by email or message only fills the body`() {
+        val email = ExternalActions.shareByEmail("WIFI:T:WPA;S:Cafe;;")
+        assertEquals("mailto:", email?.uri)
+        assertEquals("", email?.address)
+        assertEquals("WIFI:T:WPA;S:Cafe;;", email?.body)
+        val sms = ExternalActions.shareBySms("hello")
+        assertEquals("smsto:", sms?.uri)
+        assertEquals("hello", sms?.body)
+        assertNull(ExternalActions.shareByEmail("  "))
+        assertNull(ExternalActions.shareBySms(""))
+    }
+
+    @Test
+    fun `web search url encodes the query, collapses whitespace and caps the length`() {
+        assertEquals(
+            "https://www.google.com/search?q=ship%20v2.4%20on%20Friday",
+            ExternalActions.webSearchUrl("  ship v2.4\n on   Friday "),
+        )
+        assertNull(ExternalActions.webSearchUrl("   "))
+        val long = ExternalActions.webSearchUrl("a".repeat(500))
+        assertEquals("https://www.google.com/search?q=".length + 200, long?.length)
+    }
 }

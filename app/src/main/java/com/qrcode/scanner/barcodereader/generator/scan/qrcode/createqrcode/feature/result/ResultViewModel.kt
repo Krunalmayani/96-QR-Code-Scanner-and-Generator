@@ -19,6 +19,7 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.ExternalAction
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.ExternalActions
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.LinkRiskReasons
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.UrlDisplay
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.WifiConnectEvent
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.WifiConnectMachine
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.result.WifiConnectOutcome
@@ -125,6 +126,10 @@ class ResultViewModel internal constructor(
             ResultEvent.ShareClicked -> onShare()
             ResultEvent.ShareAsText -> onShareAsText()
             ResultEvent.ShareAsImage -> onShareAsImage()
+            ResultEvent.ShareViaEmail -> onShareVia { ExternalActions.shareByEmail(it) }
+            ResultEvent.ShareViaMessage -> onShareVia { ExternalActions.shareBySms(it) }
+            ResultEvent.SaveImageClicked -> onSaveImage()
+            ResultEvent.SearchWebClicked -> onSearchWeb()
             ResultEvent.ShareSheetDismissed -> _state.update { it.copy(shareSheetVisible = false) }
             ResultEvent.FavoriteClicked -> onFavorite()
             is ResultEvent.DialClicked -> launchAction(ExternalActions.dial(event.number))
@@ -311,6 +316,31 @@ class ResultViewModel internal constructor(
         _state.update { it.copy(shareSheetVisible = false) }
         log(Events.SHARE_TAP, "image")
         send(ResultEffect.OpenGenerated(recordId))
+    }
+
+    private fun onShareVia(build: (String) -> ExternalAction?) {
+        _state.update { it.copy(shareSheetVisible = false) }
+        val record = currentRecord() ?: return
+        log(Events.SHARE_TAP, "app")
+        launchAction(build(record.content.shareText()))
+    }
+
+    private fun onSaveImage() {
+        _state.update { it.copy(shareSheetVisible = false) }
+        log(Events.SHARE_TAP, "save")
+        send(ResultEffect.OpenGenerated(recordId))
+    }
+
+    private fun onSearchWeb() {
+        val query =
+            when (val content = currentRecord()?.content) {
+                is ScanContent.Website -> UrlDisplay.split(content.url).host
+                is ScanContent.Text -> content.rawValue
+                is ScanContent.Unknown -> content.rawValue
+                else -> return
+            }
+        val url = ExternalActions.webSearchUrl(query)
+        if (url == null) send(ResultEffect.ShowMessage(ResultMessage.CANNOT_OPEN)) else openUrl(url, "search")
     }
 
     private fun onFavorite() {

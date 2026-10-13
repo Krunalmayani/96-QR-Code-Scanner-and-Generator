@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -20,6 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
@@ -33,10 +36,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -46,7 +58,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTextField
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ConfirmDialog
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SectionLabel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SmallButton
@@ -64,12 +75,18 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domai
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.ExportFormat
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.EyeShape
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.QrStyle
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.NoticeBanner
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.CodeCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.preview.rememberLogoBitmap
 import kotlin.math.roundToInt
 
-private const val SHEET_HEIGHT_FRACTION = 0.56f
-private val PreviewMaxWidth = 320.dp
+/** 428dp of the 800dp artboard: the sheet starts 372dp from the top. */
+private const val SHEET_HEIGHT_FRACTION = 0.535f
+
+/** 216dp code + 2 x 12dp padding (design s41). */
+private val PreviewMaxWidth = 240.dp
+private val HandleWidth = 32.dp
+private val HandleHeight = 4.dp
 
 @StringRes
 private fun EditorTab.labelRes(): Int =
@@ -148,7 +165,7 @@ private fun EditorTopBar(onClose: () -> Unit, onDone: () -> Unit) {
             Modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
-                .height(64.dp)
+                .heightIn(min = 64.dp)
                 .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -181,8 +198,16 @@ private fun EditorSheet(
                 .fillMaxHeight(SHEET_HEIGHT_FRACTION)
                 .clip(AppTheme.shapes.sheet)
                 .background(AppTheme.colors.surface)
-                .padding(start = 20.dp, end = 20.dp, top = 12.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 8.dp),
     ) {
+        Box(
+            Modifier
+                .align(Alignment.CenterHorizontally)
+                .size(width = HandleWidth, height = HandleHeight)
+                .clip(RoundedCornerShape(HandleHeight / 2))
+                .background(AppTheme.colors.inkSecondary.copy(alpha = 0.4f)),
+        )
+        Spacer(Modifier.height(12.dp))
         SegmentedControl(
             options = tabs.map { stringResource(it.labelRes()) },
             selectedIndex = tabs.indexOf(tab),
@@ -195,8 +220,8 @@ private fun EditorSheet(
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
                     .navigationBarsPadding()
-                    .padding(top = 16.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                    .padding(top = 8.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             when (tab) {
                 EditorTab.COLORS ->
@@ -221,14 +246,17 @@ private fun EditorSheet(
 
 // ---- shapes ----
 
+/** The pattern tiles in the artboard's order (square, dots, rounded) followed by the one it does not show. */
+private val PatternOrder = listOf(DotShape.SQUARE, DotShape.DOTS, DotShape.ROUNDED, DotShape.CLASSY)
+
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ShapesTab(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Column {
             SectionLabel(stringResource(R.string.create_shapes_pattern))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                for (shape in DotShape.entries) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                for (shape in PatternOrder) {
                     DotShapeTile(
                         shape = shape,
                         label = stringResource(shape.labelRes()),
@@ -248,17 +276,27 @@ private fun ShapesTab(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
             }
         }
         if (StyleAdvice.needsStrongerCorrection(style)) {
-            InfoBanner(stringResource(R.string.create_shapes_correction_hint), tone = Tone.Warning, icon = AppIcons.Shield)
+            NoticeBanner(
+                stringResource(R.string.create_shapes_correction_hint),
+                tone = Tone.Warning,
+                icon = AppIcons.Shield,
+                modifier = Modifier.padding(top = BannerGap),
+                compact = true,
+                live = true,
+            )
         }
     }
 }
+
+/** Space above a status banner on top of the 8dp column gap: 14dp in the artboards. */
+private val BannerGap = 6.dp
 
 // ---- extras ----
 
 @Composable
 private fun QrExtras(style: QrStyle, onEdit: (StyleEdit) -> Unit, onPickLogo: () -> Unit, onRemoveLogo: () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        LogoRow(style.logoUri, onPickLogo, onRemoveLogo)
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LogoRow(style.logoUri, onPickLogo, onRemoveLogo, Modifier.padding(top = 8.dp))
         FrameControls(style.frameText, onEdit)
         CorrectionControls(style, onEdit)
         ExportControls(style, onEdit)
@@ -267,19 +305,23 @@ private fun QrExtras(style: QrStyle, onEdit: (StyleEdit) -> Unit, onPickLogo: ()
 
 @Composable
 private fun BarcodeExtras(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-        BarcodeOptions(style, onEdit)
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        BarcodeOptions(style, onEdit, Modifier.padding(top = 8.dp))
         ExportControls(style, onEdit)
     }
 }
 
 @Composable
-private fun LogoRow(logoUri: String?, onPickLogo: () -> Unit, onRemoveLogo: () -> Unit) {
+private fun LogoRow(logoUri: String?, onPickLogo: () -> Unit, onRemoveLogo: () -> Unit, modifier: Modifier = Modifier) {
     val colors = AppTheme.colors
     val logo = rememberLogoBitmap(logoUri)
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Box(
-            Modifier.size(56.dp).clip(AppTheme.shapes.card).background(colors.surfaceVariant),
+            Modifier
+                .size(56.dp)
+                .clip(AppTheme.shapes.card)
+                .background(colors.surfaceVariant)
+                .then(if (logo == null) Modifier.dashedBorder(colors.inkSecondary) else Modifier),
             contentAlignment = Alignment.Center,
         ) {
             if (logo != null) {
@@ -299,6 +341,20 @@ private fun LogoRow(logoUri: String?, onPickLogo: () -> Unit, onRemoveLogo: () -
         }
     }
 }
+
+/** 1dp dashed outline inside a 20dp-rounded box: the empty logo slot of the artboard. */
+private fun Modifier.dashedBorder(color: Color): Modifier =
+    drawBehind {
+        val stroke = 1.dp.toPx()
+        val dash = 4.dp.toPx()
+        drawRoundRect(
+            color = color,
+            topLeft = Offset(stroke / 2f, stroke / 2f),
+            size = Size(size.width - stroke, size.height - stroke),
+            cornerRadius = CornerRadius(20.dp.toPx()),
+            style = Stroke(width = stroke, pathEffect = PathEffect.dashPathEffect(floatArrayOf(dash, dash))),
+        )
+    }
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -351,7 +407,7 @@ private fun CustomFrameField(initial: String, onEdit: (StyleEdit) -> Unit) {
 @Composable
 private fun CorrectionControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
     val effective = QrVectorBuilder.effectiveErrorCorrection(style)
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+    Column {
         SectionLabel(stringResource(R.string.create_extras_correction))
         SegmentedControl(
             options = ErrorCorrection.entries.map { it.name },
@@ -362,14 +418,14 @@ private fun CorrectionControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
             text = stringResource(R.string.create_ec_caption, stringResource(effective.labelRes()), StyleAdvice.recoveryPercent(effective)),
             style = AppTheme.type.caption,
             color = AppTheme.colors.inkSecondary,
-            modifier = Modifier.padding(horizontal = 4.dp),
+            modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 6.dp),
         )
         if (style.logoUri != null) {
             Text(
                 text = stringResource(R.string.create_ec_logo_hint),
                 style = AppTheme.type.caption,
                 color = AppTheme.colors.inkSecondary,
-                modifier = Modifier.padding(horizontal = 4.dp),
+                modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp),
             )
         }
     }
@@ -377,18 +433,20 @@ private fun CorrectionControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ExportControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
+private fun ExportControls(style: QrStyle, onEdit: (StyleEdit) -> Unit, modifier: Modifier = Modifier) {
     val points = ExportSizes.points
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    val sizeLabel = stringResource(R.string.create_extras_export_size)
+    val sizeText = stringResource(R.string.create_px, style.exportSizePx)
+    Column(modifier.padding(top = BannerGap), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                stringResource(R.string.create_extras_export_size),
+                sizeLabel,
                 style = AppTheme.type.title,
                 color = AppTheme.colors.ink,
                 modifier = Modifier.weight(1f),
             )
             Text(
-                stringResource(R.string.create_px, style.exportSizePx),
+                sizeText,
                 style = AppTheme.type.bodyStrong,
                 color = AppTheme.colors.inkSecondary,
             )
@@ -396,6 +454,11 @@ private fun ExportControls(style: QrStyle, onEdit: (StyleEdit) -> Unit) {
         AppSlider(
             value = ExportSizes.indexOf(style.exportSizePx).toFloat(),
             onValueChange = { onEdit(StyleEdit.Size(ExportSizes.at(it.roundToInt()))) },
+            modifier =
+                Modifier.semantics {
+                    contentDescription = sizeLabel
+                    stateDescription = sizeText
+                },
             valueRange = 0f..points.lastIndex.toFloat(),
             steps = points.size - 2,
         )

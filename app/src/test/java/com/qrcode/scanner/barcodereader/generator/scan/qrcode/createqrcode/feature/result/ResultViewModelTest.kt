@@ -324,6 +324,46 @@ class ResultViewModelTest {
         }
 
     @Test
+    fun `share sheet email and message open a compose window with the share text, save opens the generated screen`() =
+        runTest {
+            val record = seed(Fixtures.text("hello"), ScanSource.CREATED)
+            val vm = viewModel(record.id, fromHistory = true)
+            vm.effects.test {
+                vm.onEvent(ResultEvent.ShareClicked)
+                vm.onEvent(ResultEvent.ShareViaEmail)
+                assertEquals(ResultEffect.Launch(ExternalAction.ComposeEmail("mailto:", "", "", "hello")), awaitItem())
+                assertFalse(vm.uiState.value.shareSheetVisible)
+                vm.onEvent(ResultEvent.ShareClicked)
+                vm.onEvent(ResultEvent.ShareViaMessage)
+                assertEquals(ResultEffect.Launch(ExternalAction.ComposeSms("smsto:", "hello")), awaitItem())
+                vm.onEvent(ResultEvent.ShareClicked)
+                vm.onEvent(ResultEvent.SaveImageClicked)
+                assertEquals(ResultEffect.OpenGenerated(record.id), awaitItem())
+                assertFalse(vm.uiState.value.shareSheetVisible)
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
+    fun `search web opens a search page for the text, the link host or the raw data in a custom tab`() =
+        runTest {
+            val text = seed(Fixtures.text("ship v2.4 on Friday"))
+            val textVm = viewModel(text.id)
+            textVm.effects.test {
+                textVm.onEvent(ResultEvent.SearchWebClicked)
+                assertEquals(ResultEffect.OpenUrl("https://www.google.com/search?q=ship%20v2.4%20on%20Friday"), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+            val site = seed(Fixtures.website("https://www.brewhouse-coffee.com/menu?table=12"))
+            val siteVm = viewModel(site.id)
+            siteVm.effects.test {
+                siteVm.onEvent(ResultEvent.SearchWebClicked)
+                assertEquals(ResultEffect.OpenUrl("https://www.google.com/search?q=brewhouse-coffee.com"), awaitItem())
+                cancelAndIgnoreRemainingEvents()
+            }
+        }
+
+    @Test
     fun `favorite toggles the stored flag and the state follows`() =
         runTest {
             val record = seed(Fixtures.text("hello"))

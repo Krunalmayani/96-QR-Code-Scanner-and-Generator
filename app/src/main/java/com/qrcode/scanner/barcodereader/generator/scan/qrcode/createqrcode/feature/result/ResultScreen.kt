@@ -55,7 +55,17 @@ fun ResultScreen(
     val actionBar: @Composable () -> Unit = { if (record != null) ResultActionBar(state, record, onEvent) }
     AppScaffold(
         modifier = modifier,
-        topBar = { AppTopBar(title = screenTitle(state), onBack = back) },
+        topBar = {
+            AppTopBar(
+                title = screenTitle(state),
+                onBack = back,
+                actions = {
+                    if (record != null && showsFavoriteStar(state)) {
+                        FavoriteTopAction(record.isFavorite, { onEvent(ResultEvent.FavoriteClicked) })
+                    }
+                },
+            )
+        },
         bottomBar = if (record != null && hasActionBar(state)) actionBar else null,
         snackbarHost = { AppSnackbarHost(snackbarHostState) },
     ) { padding ->
@@ -66,11 +76,16 @@ fun ResultScreen(
     ResultOverlays(state, record, onEvent)
 }
 
+/** s15 and s50 have the star in the top bar; the Wi-Fi flow (s26 to s28) and the product search (s30, s70) do not. */
+private fun showsFavoriteStar(state: ResultUiState): Boolean =
+    state.phase == ResultPhase.READY && !state.wifi.flowVisible && !state.product.searchOpen
+
+/** s30 is titled "Search product", its offline variant s70 just "Product". */
 @Composable
 private fun screenTitle(state: ResultUiState): String {
     val record = state.record ?: return ""
     return when {
-        state.product.searchOpen -> stringResource(R.string.result_title_product_search)
+        state.product.searchOpen && state.product.online -> stringResource(R.string.result_title_product_search)
         else -> stringResource(record.type.titleRes())
     }
 }
@@ -100,9 +115,11 @@ private fun NotFound(onBack: () -> Unit) {
 @Composable
 private fun ResultScroll(state: ResultUiState, record: ScanRecord, onEvent: (ResultEvent) -> Unit) {
     Column(
-        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp),
+        Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(start = 16.dp, top = 8.dp, end = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
+        // s23 puts the map above the header row.
+        if (record.content is ScanContent.Location) MapPlaceholder()
         ResultHeader(record, state.safety)
         if (state.fromHistory && record.source == ScanSource.CREATED) CreatedPreviewCard(record)
         TypeContent(state, record, onEvent)
@@ -125,11 +142,7 @@ private fun ResultOverlays(state: ResultUiState, record: ScanRecord?, onEvent: (
         )
     }
     if (state.shareSheetVisible) {
-        ShareSheet(
-            onShareText = { onEvent(ResultEvent.ShareAsText) },
-            onShareImage = { onEvent(ResultEvent.ShareAsImage) },
-            onDismiss = { onEvent(ResultEvent.ShareSheetDismissed) },
-        )
+        ShareSheet(onEvent = onEvent, onDismiss = { onEvent(ResultEvent.ShareSheetDismissed) })
     }
     if (state.deleteDialogVisible && record != null) {
         DeleteDialog(

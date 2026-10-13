@@ -1,5 +1,6 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.scan
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -21,8 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -38,8 +43,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.scan.ScanMode
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.scan.ZoomMath
 
-/** Text colour on the teal "detected" pill (design token `#06312B`). */
-private val OnHitColor = Color(0xFF06312B)
 private val HintBackground = Color(0x66000000)
 private val PillShape = RoundedCornerShape(18.dp)
 
@@ -71,7 +74,7 @@ internal fun ScanTopBar(
             text = stringResource(R.string.scan_title),
             style = AppTheme.type.topBar,
             color = Color.White,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center).semantics { heading() },
         )
         IconButtonRounded(
             icon = AppIcons.Settings,
@@ -104,13 +107,13 @@ internal fun BatchTopBar(onEvent: (ScanEvent) -> Unit, modifier: Modifier = Modi
             text = stringResource(R.string.scan_batch_title),
             style = AppTheme.type.topBar,
             color = Color.White,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center).semantics { heading() },
         )
         Box(
             modifier =
                 Modifier
                     .align(Alignment.CenterEnd)
-                    .height(48.dp)
+                    .heightIn(min = 48.dp)
                     .clip(PillShape)
                     .clickable(role = Role.Button) { onEvent(ScanEvent.BatchDoneClicked) }
                     .padding(horizontal = 16.dp),
@@ -138,35 +141,33 @@ internal fun ScanHint(mode: ScanMode, modifier: Modifier = Modifier) {
     val text = stringResource(if (mode.wideFrame) R.string.scan_hint_barcode else R.string.scan_hint_qr)
     Box(
         modifier
-            .height(36.dp)
+            .heightIn(min = 36.dp)
             .clip(PillShape)
             .background(HintBackground)
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
-        Text(text, style = AppTheme.type.chip, color = Color.White, textAlign = TextAlign.Center, maxLines = 1)
+        Text(text, style = AppTheme.type.chip, color = Color.White, textAlign = TextAlign.Center, maxLines = 2)
     }
 }
 
 /** Teal "N codes scanned" pill shown under the viewfinder in batch mode. */
 @Composable
 internal fun BatchCountPill(count: Int, modifier: Modifier = Modifier) {
+    val description = pluralStringResource(R.plurals.scan_batch_count, count, count)
     Row(
         modifier
-            .height(36.dp)
+            .heightIn(min = 36.dp)
             .clip(PillShape)
             .background(CameraColors.hit)
+            .animateContentSize()
+            .semantics { liveRegion = LiveRegionMode.Polite }
             .padding(start = 12.dp, end = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(AppIcons.Check, contentDescription = null, tint = OnHitColor, modifier = Modifier.size(18.dp))
-        Text(
-            text = pluralStringResource(R.plurals.scan_batch_count, count, count),
-            style = AppTheme.type.captionStrong,
-            color = OnHitColor,
-            maxLines = 1,
-        )
+        Icon(AppIcons.Check, contentDescription = null, tint = CameraColors.onHit, modifier = Modifier.size(18.dp))
+        Text(text = description, style = AppTheme.type.chipStrong, color = CameraColors.onHit, maxLines = 1)
     }
 }
 
@@ -201,8 +202,8 @@ internal fun ZoomRow(
 ) {
     val description = stringResource(R.string.scan_zoom)
     Row(
-        modifier.fillMaxWidth().height(48.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        modifier.fillMaxWidth().heightIn(min = 48.dp).padding(horizontal = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(stringResource(R.string.scan_zoom_min), style = AppTheme.type.captionStrong, color = Color.White)
@@ -227,15 +228,15 @@ internal fun GlassButton(text: String, onClick: () -> Unit, modifier: Modifier =
     Row(
         modifier =
             modifier
-                .height(48.dp)
+                .heightIn(min = 48.dp)
                 .clip(RoundedCornerShape(24.dp))
-                .background(CameraColors.glass)
+                .background(CameraColors.onGlass.copy(alpha = 0.16f))
                 .clickable(role = Role.Button, onClick = onClick)
                 .padding(horizontal = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(AppIcons.Gallery, contentDescription = null, tint = CameraColors.onGlass, modifier = Modifier.size(20.dp))
+        Icon(AppIcons.Image, contentDescription = null, tint = CameraColors.onGlass, modifier = Modifier.size(20.dp))
         Text(text, style = AppTheme.type.button, color = CameraColors.onGlass, maxLines = 1)
     }
 }

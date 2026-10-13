@@ -1,27 +1,33 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.selected
-import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +43,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ChipItem
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ChipRow
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PrimaryButton
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
@@ -97,9 +102,8 @@ fun FeedbackScreen(
                 PrimaryButton(
                     text = stringResource(R.string.settings_feedback_send),
                     onClick = onSend,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).heightIn(min = 52.dp),
                     enabled = state.canSend,
-                    leadingIcon = AppIcons.Send,
                 )
             }
         },
@@ -143,25 +147,38 @@ fun FeedbackScreen(
 @Composable
 private fun RatingCard(rating: Int, onRate: (Int) -> Unit) {
     AppCard(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(R.string.settings_feedback_rating_label),
-            style = AppTheme.type.title,
-            color = AppTheme.colors.ink,
-        )
-        Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        CardLabel(stringResource(R.string.settings_feedback_rating_label))
+        Row {
             for (star in 1..FeedbackMail.MAX_STARS) {
-                val filled = star <= rating
-                IconButtonRounded(
-                    icon = if (filled) AppIcons.Star else AppIcons.StarOutline,
-                    contentDescription = stringResource(R.string.settings_feedback_star, star),
-                    onClick = { onRate(star) },
-                    modifier = Modifier.semantics { selected = filled },
-                    tint = if (filled) AppTheme.colors.primary else AppTheme.colors.inkSecondary,
-                )
+                StarButton(star = star, filled = star <= rating, onClick = { onRate(star) })
             }
         }
     }
 }
+
+/** 32dp star in a 48dp touch target; the filled state is also exposed as `selected` for screen readers. */
+@Composable
+private fun StarButton(star: Int, filled: Boolean, onClick: () -> Unit) {
+    val c = AppTheme.colors
+    val label = stringResource(R.string.settings_feedback_star, star)
+    Box(
+        modifier =
+            Modifier
+                .size(48.dp)
+                .clip(CircleShape)
+                .selectable(selected = filled, role = Role.Button, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            imageVector = if (filled) AppIcons.Star else AppIcons.StarOutline,
+            contentDescription = label,
+            tint = if (filled) c.primary else c.inkSecondary,
+            modifier = Modifier.size(32.dp),
+        )
+    }
+}
+
+// Previews --------------------------------------------------------------------------------------------------------
 
 private val PreviewState =
     FeedbackUiState(

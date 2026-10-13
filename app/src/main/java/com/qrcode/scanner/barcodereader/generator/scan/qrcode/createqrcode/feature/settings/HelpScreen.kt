@@ -1,6 +1,7 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +35,6 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppScaffold
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSnackbarHost
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.settings.FaqAccordion
@@ -115,9 +116,9 @@ fun HelpScreen(
 private fun FaqItem(topic: FaqTopic, expanded: Boolean, onClick: () -> Unit) {
     val state = stringResource(if (expanded) R.string.settings_faq_expanded else R.string.settings_faq_collapsed)
     AppCard(contentPadding = PaddingValues(0.dp), modifier = Modifier.animateContentSize()) {
-        ListRow(
+        SettingsRow(
             title = stringResource(faqQuestionRes(topic)),
-            titleMaxLines = 3,
+            minHeight = 64.dp,
             trailing = {
                 Icon(
                     imageVector = if (expanded) AppIcons.ExpandLess else AppIcons.ExpandMore,
@@ -125,8 +126,10 @@ private fun FaqItem(topic: FaqTopic, expanded: Boolean, onClick: () -> Unit) {
                     tint = AppTheme.colors.inkSecondary,
                 )
             },
-            onClick = onClick,
-            modifier = Modifier.semantics { stateDescription = state },
+            modifier =
+                Modifier
+                    .clickable(role = Role.Button, onClick = onClick)
+                    .semantics { stateDescription = state },
         )
         if (expanded) {
             Text(

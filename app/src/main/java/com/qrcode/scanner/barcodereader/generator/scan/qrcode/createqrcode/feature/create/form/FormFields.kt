@@ -24,23 +24,25 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.R
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppBadge
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppCard
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonRounded
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconButtonStyle
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.IconTile
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.PasswordVisibilityToggle
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SegmentedControl
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.ListRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsSwitchRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.ContactName
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.CreateSpec
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.DensityLevel
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.FormField
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.create.Limits
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.domain.model.WifiSecurity
+import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.create.NoticeBanner
 
-private val FieldSpacing = 12.dp
+/** Gap between stacked fields: the artboards use 10dp between plain fields and 16dp between grouped blocks. */
+private val FieldSpacing = 10.dp
 
 /** Website (design s32): one URL field and a tip. */
 @Composable
@@ -56,7 +58,7 @@ internal fun WebsiteFields(spec: CreateSpec.Website, host: FormFieldHost, onSpec
             keyboardType = KeyboardType.Uri,
             last = true,
         )
-        InfoBanner(stringResource(R.string.create_website_tip), tone = Tone.Primary, icon = AppIcons.Info)
+        NoticeBanner(stringResource(R.string.create_website_tip), tone = Tone.Primary, icon = AppIcons.Info)
     }
 }
 
@@ -103,15 +105,13 @@ private fun DensityCard(density: DensityLevel) {
             DensityLevel.MEDIUM -> Triple(R.string.create_density_medium, R.string.create_density_good, Tone.Success)
             DensityLevel.HIGH -> Triple(R.string.create_density_high, R.string.create_density_dense, Tone.Warning)
         }
-    AppCard {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            IconTile(AppIcons.QrCode)
-            Column(Modifier.weight(1f)) {
-                Text(stringResource(R.string.create_density_title), style = AppTheme.type.title, color = AppTheme.colors.ink)
-                Text(stringResource(detail), style = AppTheme.type.caption, color = AppTheme.colors.inkSecondary)
-            }
-            AppBadge(stringResource(badge), tone = tone)
-        }
+    CardGroup {
+        ListRow(
+            title = stringResource(R.string.create_density_title),
+            subtitle = stringResource(detail),
+            leading = { IconTile(AppIcons.QrCode) },
+            trailing = { AppBadge(stringResource(badge), tone = tone) },
+        )
     }
 }
 
@@ -133,7 +133,7 @@ internal fun PhoneFields(spec: CreateSpec.Phone, host: FormFieldHost, onSpec: (C
     }
 }
 
-/** Green check with a short confirmation. */
+/** Teal check with a short confirmation (the strong teal text color of the design, readable on both backgrounds). */
 @Composable
 internal fun ValidLine(text: String, modifier: Modifier = Modifier) {
     Row(
@@ -144,10 +144,10 @@ internal fun ValidLine(text: String, modifier: Modifier = Modifier) {
         Icon(
             AppIcons.Check,
             contentDescription = null,
-            tint = AppTheme.colors.success,
+            tint = AppTheme.colors.onSuccessContainer,
             modifier = Modifier.size(16.dp),
         )
-        Text(text, style = AppTheme.type.caption, color = AppTheme.colors.success)
+        Text(text, style = AppTheme.type.caption, color = AppTheme.colors.onSuccessContainer)
     }
 }
 
@@ -155,14 +155,7 @@ internal fun ValidLine(text: String, modifier: Modifier = Modifier) {
 @Composable
 internal fun ContactFields(spec: CreateSpec.Contact, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(FieldSpacing)) {
-        FormTextField(
-            host,
-            FormField.NAME,
-            spec.name,
-            { onSpec(spec.copy(name = it)) },
-            stringResource(R.string.create_field_full_name),
-            capitalization = KeyboardCapitalization.Words,
-        )
+        NameFields(spec, host, onSpec)
         FormTextField(
             host,
             FormField.PHONE,
@@ -233,6 +226,43 @@ internal fun ContactFields(spec: CreateSpec.Contact, host: FormFieldHost, onSpec
     }
 }
 
+/**
+ * First and last name side by side (design s35). The domain keeps one name: the two parts are joined with a space,
+ * and an existing name is split at its first space. A name error is shown under the first field only.
+ */
+@Composable
+private fun NameFields(spec: CreateSpec.Contact, host: FormFieldHost, onSpec: (CreateSpec) -> Unit) {
+    var first by rememberSaveable { mutableStateOf(ContactName.firstOf(spec.name)) }
+    var last by rememberSaveable { mutableStateOf(ContactName.lastOf(spec.name)) }
+    val lastHost = FormFieldHost(host.errors - FormField.NAME, host.invalid, host.onBlur, host.onSubmit)
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FormTextField(
+            host,
+            FormField.NAME,
+            first,
+            {
+                first = it
+                onSpec(spec.copy(name = ContactName.join(first, last)))
+            },
+            stringResource(R.string.create_field_first_name),
+            modifier = Modifier.weight(1f),
+            capitalization = KeyboardCapitalization.Words,
+        )
+        FormTextField(
+            lastHost,
+            FormField.NAME,
+            last,
+            {
+                last = it
+                onSpec(spec.copy(name = ContactName.join(first, last)))
+            },
+            stringResource(R.string.create_field_last_name),
+            modifier = Modifier.weight(1f),
+            capitalization = KeyboardCapitalization.Words,
+        )
+    }
+}
+
 private val WifiSecurities = listOf(WifiSecurity.NONE, WifiSecurity.WEP, WifiSecurity.WPA)
 
 /** Wi-Fi (design s36): SSID, password with show/hide, security, hidden switch. */
@@ -249,31 +279,20 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
             last = spec.security == WifiSecurity.NONE,
         )
         if (spec.security != WifiSecurity.NONE) {
-            FormTextField(
-                host,
-                FormField.PASSWORD,
-                spec.password,
-                { onSpec(spec.copy(password = it)) },
-                stringResource(R.string.create_field_password),
-                keyboardType = KeyboardType.Password,
-                last = true,
-                trailing = { PasswordVisibilityToggle(visible = passwordVisible, onToggle = { passwordVisible = !passwordVisible }) },
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            PasswordRow(
+                host = host,
+                value = spec.password,
+                onValueChange = { onSpec(spec.copy(password = it)) },
+                visible = passwordVisible,
+                onToggle = { passwordVisible = !passwordVisible },
             )
         }
-        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(
-                stringResource(R.string.create_field_security),
-                style = AppTheme.type.label,
-                color = AppTheme.colors.inkSecondary,
-                modifier = Modifier.padding(horizontal = 4.dp),
-            )
-            SegmentedControl(
-                options = WifiSecurities.map { stringResource(it.labelRes()) },
-                selectedIndex = WifiSecurities.indexOf(spec.security),
-                onSelect = { onSpec(spec.copy(security = WifiSecurities[it])) },
-            )
-        }
+        SelectField(
+            label = stringResource(R.string.create_field_security),
+            options = WifiSecurities.map { stringResource(it.labelRes()) },
+            selectedIndex = WifiSecurities.indexOf(spec.security),
+            onSelect = { onSpec(spec.copy(security = WifiSecurities[it])) },
+        )
         CardGroup {
             SettingsSwitchRow(
                 title = stringResource(R.string.create_wifi_hidden),
@@ -282,9 +301,43 @@ internal fun WifiFields(spec: CreateSpec.Wifi, host: FormFieldHost, onSpec: (Cre
                 onCheckedChange = { onSpec(spec.copy(hidden = it)) },
             )
         }
-        InfoBanner(stringResource(R.string.create_wifi_warning), tone = Tone.Warning, icon = AppIcons.Info)
+        NoticeBanner(stringResource(R.string.create_wifi_warning), tone = Tone.Warning, icon = AppIcons.Info)
     }
 }
+
+/** Password field with the show / hide button beside it (a 48dp target; design s36). */
+@Composable
+private fun PasswordRow(
+    host: FormFieldHost,
+    value: String,
+    onValueChange: (String) -> Unit,
+    visible: Boolean,
+    onToggle: () -> Unit,
+) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FormTextField(
+            host,
+            FormField.PASSWORD,
+            value,
+            onValueChange,
+            stringResource(R.string.create_field_password),
+            modifier = Modifier.weight(1f),
+            keyboardType = KeyboardType.Password,
+            last = true,
+            visualTransformation = if (visible) VisualTransformation.None else PasswordVisualTransformation(),
+        )
+        IconButtonRounded(
+            icon = if (visible) AppIcons.Hidden else AppIcons.Visible,
+            contentDescription = stringResource(if (visible) R.string.common_hide_password else R.string.common_show_password),
+            onClick = onToggle,
+            modifier = Modifier.padding(top = PasswordButtonInset),
+            style = IconButtonStyle.Filled,
+        )
+    }
+}
+
+/** (56dp field - 48dp button) / 2: centers the button on the field box, not on an error line below it. */
+private val PasswordButtonInset = 4.dp
 
 @StringRes
 private fun WifiSecurity.labelRes(): Int =

@@ -1,6 +1,7 @@
 package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.feature.settings
 
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,8 +21,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,11 +34,8 @@ import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.desig
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppSnackbarHost
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.AppTopBar
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.CardGroup
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.InfoBanner
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.components.SettingsNavRow
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.icons.AppIcons
 import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.AppTheme
-import com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.designsystem.theme.Tone
 import kotlinx.coroutines.launch
 
 @Composable
@@ -108,7 +105,7 @@ fun AboutScreen(
                     .fillMaxSize()
                     .padding(padding)
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                    .padding(start = 16.dp, end = 16.dp, top = 24.dp, bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
@@ -126,42 +123,35 @@ fun AboutScreen(
                     color = c.inkSecondary,
                 )
             }
-            CardGroup {
-                SettingsNavRow(title = stringResource(R.string.settings_rate), onClick = actions.onRate, icon = AppIcons.Star)
+            CardGroup(Modifier.fillMaxWidth()) {
+                SettingsActionItem(title = stringResource(R.string.settings_rate), onClick = actions.onRate, icon = AppIcons.Star)
                 AppDivider()
-                SettingsNavRow(title = stringResource(R.string.settings_share_app), onClick = actions.onShare, icon = AppIcons.Share)
+                SettingsActionItem(title = stringResource(R.string.settings_share_app), onClick = actions.onShare, icon = AppIcons.Share)
                 AppDivider()
-                SettingsNavRow(
+                SettingsActionItem(
                     title = stringResource(R.string.settings_about_licenses),
                     onClick = actions.onLicenses,
                     icon = AppIcons.Document,
                 )
                 AppDivider()
-                SettingsNavRow(title = stringResource(R.string.settings_about_terms), onClick = actions.onTerms, icon = AppIcons.Info)
+                SettingsActionItem(title = stringResource(R.string.settings_about_terms), onClick = actions.onTerms, icon = AppIcons.Info)
             }
-            InfoBanner(
-                text = stringResource(R.string.settings_about_disclaimer),
-                modifier = Modifier.fillMaxWidth(),
-                tone = Tone.Primary,
-                icon = AppIcons.Info,
-            )
             Text(stringResource(R.string.settings_made_by), style = AppTheme.type.caption, color = c.inkSecondary)
         }
     }
 }
 
+/** The launcher mark on its brand gradient (the same in light and dark, as in the design). */
 @Composable
 private fun AppMark() {
-    val c = AppTheme.colors
     Box(
-        modifier =
-            Modifier
-                .size(96.dp)
-                .clip(RoundedCornerShape(24.dp))
-                .background(Brush.linearGradient(listOf(c.primary, c.onPrimaryContainer))),
-        contentAlignment = Alignment.Center,
+        modifier = Modifier.size(96.dp).clip(RoundedCornerShape(24.dp)).background(SettingsBrand.logoBrush),
     ) {
-        Icon(AppIcons.Scan, contentDescription = null, tint = c.onPrimary, modifier = Modifier.size(48.dp))
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+        )
     }
 }
 

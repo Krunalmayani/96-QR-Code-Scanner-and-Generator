@@ -78,4 +78,11 @@
     <string name="hist_empty_filter_action">Tampilkan semua</string>
     <string name="hist_empty_search_title">Tidak ada hasil</string>
     <string name="hist_empty_search_message">Tidak ada yang cocok dengan “%1$s”. Coba kata lain.</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">Favorit</string>
+    <string name="hist_action_delete_count">Hapus %1$d</string>
+    <string name="hist_section_starred">Berbintang</string>
+    <string name="hist_favorites_hint">Ketuk bintang untuk menghapus item dari favorit.</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s, %3$s</string>
 </resources>

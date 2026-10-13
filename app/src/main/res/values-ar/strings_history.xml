@@ -103,4 +103,11 @@
     <string name="hist_empty_filter_action">عرض الكل</string>
     <string name="hist_empty_search_title">لا نتائج</string>
     <string name="hist_empty_search_message">لا شيء يطابق “%1$s”. جرّب كلمة مختلفة.</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">مفضلة</string>
+    <string name="hist_action_delete_count">حذف %1$d</string>
+    <string name="hist_section_starred">المميّزة بنجمة</string>
+    <string name="hist_favorites_hint">اضغط على النجمة لإزالة عنصر من المفضلة.</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s، %3$s</string>
 </resources>

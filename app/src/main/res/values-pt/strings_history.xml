@@ -88,4 +88,11 @@
     <string name="hist_empty_filter_action">Mostrar tudo</string>
     <string name="hist_empty_search_title">Nenhum resultado</string>
     <string name="hist_empty_search_message">Nada corresponde a “%1$s”. Tente outra palavra.</string>
+
+    <!-- Design parity: multi-select action bar, favorites view, dated subtitles -->
+    <string name="hist_action_favorite">Favoritar</string>
+    <string name="hist_action_delete_count">Excluir %1$d</string>
+    <string name="hist_section_starred">Com estrela</string>
+    <string name="hist_favorites_hint">Toque na estrela para remover um item dos favoritos.</string>
+    <string name="hist_row_subtitle_dated">%1$s · %2$s, %3$s</string>
 </resources>
