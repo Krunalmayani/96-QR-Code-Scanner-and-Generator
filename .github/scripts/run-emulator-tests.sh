@@ -17,9 +17,10 @@ shot() {
 adb devices -l | tee "$OUT/adb-devices.txt"
 # The default AVD screen is only 320x640 dp, which pushes buttons below the fold and clips toolbars.
 # Use a normal phone size (1080x2400 at 420 dpi = ~411x914 dp) for the tests and the screenshots.
-adb shell wm size 1080x2400
-adb shell wm density 420
+adb shell wm size 1080x2400 2>&1 | tee -a "$OUT/wm.txt" || true
+adb shell wm density 420 2>&1 | tee -a "$OUT/wm.txt" || true
 sleep 2
+adb shell wm size 2>&1 | tee -a "$OUT/wm.txt" || true
 adb shell getprop ro.build.version.sdk | tee "$OUT/device-sdk.txt"
 
 echo "== Instrumentation tests"
@@ -32,7 +33,11 @@ adb logcat -c || true
 adb shell monkey -p "$APP_ID" -c android.intent.category.LAUNCHER 1 > "$OUT/launch.log" 2>&1 || true
 sleep 8
 shot 01-launch
-adb shell input tap 540 2170 || true
+# Tap the onboarding "Next" button: horizontally centered, ~92% down the real screen height.
+SIZE=$(adb shell wm size | tail -1 | grep -oE '[0-9]+x[0-9]+' | tail -1)
+W=${SIZE%x*}
+H=${SIZE#*x}
+adb shell input tap $((W / 2)) $((H * 92 / 100)) || true
 sleep 3
 shot 02-after-tap
 adb logcat -d -t 2000 > "$OUT/logcat.txt" 2>&1 || true
