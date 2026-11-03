@@ -1,4 +1,11 @@
 pluginManagement {
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "com.google.android.gms.oss-licenses-plugin") {
+                useModule("com.google.android.gms:oss-licenses-plugin:${requested.version}")
+            }
+        }
+    }
     repositories {
         google()
         mavenCentral()
@@ -12,6 +19,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
+ 
 rootProject.name = "QR Code Scanner and Generator"
 include(":app")
