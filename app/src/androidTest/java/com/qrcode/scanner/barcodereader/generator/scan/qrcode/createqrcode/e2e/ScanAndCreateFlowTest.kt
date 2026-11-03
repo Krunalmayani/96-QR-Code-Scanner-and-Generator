@@ -144,7 +144,11 @@ class ScanAndCreateFlowTest {
         assertEquals(url, (created.content as ScanContent.Website).url)
         assertEquals(1, settings.value.completedActions)
 
+        // Back from the generated screen lands on the website form (no bottom bar); a second Back reaches the hub.
         composeRule.onNodeWithContentDescription(Res.string(R.string.common_back)).performClick()
+        awaitText(Res.string(R.string.create_generate_qr))
+        composeRule.onNodeWithContentDescription(Res.string(R.string.common_back)).performClick()
+        await(hasText(Res.string(R.string.common_nav_history)) and hasClickAction())
         tab(R.string.common_nav_history).performClick()
         composeRule.onNode(hasText(Res.string(R.string.hist_tab_created)) and hasClickAction()).performClick()
         awaitText(created.displayTitle)

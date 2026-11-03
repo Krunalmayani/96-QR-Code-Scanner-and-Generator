@@ -4,8 +4,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.longClick
-import androidx.compose.ui.test.onAllNodesWithContentDescription
-import androidx.compose.ui.test.onFirst
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -183,8 +181,8 @@ class HistoryScreenTest : ThemedComposeTest() {
         composeRule.onNodeWithText(Res.plural(R.plurals.hist_selected_count, 1, 1)).assertIsDisplayed()
 
         composeRule.onNodeWithContentDescription(Res.string(R.string.hist_cd_select_all)).performClick()
-        composeRule.onNodeWithContentDescription(Res.string(R.string.hist_cd_favorite_selected)).performClick()
-        composeRule.onAllNodesWithContentDescription(Res.string(R.string.common_delete)).onFirst().performClick()
+        composeRule.onNodeWithText(Res.string(R.string.hist_action_favorite)).performClick()
+        composeRule.onNodeWithText(Res.string(R.string.hist_action_delete_count, 1)).performClick()
         composeRule.onNodeWithContentDescription(Res.string(R.string.hist_cd_exit_selection)).performClick()
 
         assertEquals(

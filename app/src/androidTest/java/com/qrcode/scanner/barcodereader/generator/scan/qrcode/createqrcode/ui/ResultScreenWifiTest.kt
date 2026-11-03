@@ -2,7 +2,9 @@ package com.qrcode.scanner.barcodereader.generator.scan.qrcode.createqrcode.ui
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onAllNodesWithContentDescription
+import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onFirst
+import androidx.compose.ui.test.onLast
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -137,7 +139,8 @@ class ResultScreenWifiTest : ThemedComposeTest() {
     fun locationRationaleSheetContinueAndNotNow() {
         show(ResultStates.wifi(locationRationaleVisible = true))
 
-        composeRule.onNodeWithText(Res.string(R.string.perm_location_title)).assertIsDisplayed()
+        // The sheet title and the "Why Location?" link behind it share the same text; the sheet is the last node.
+        composeRule.onAllNodesWithText(Res.string(R.string.perm_location_title)).onLast().assertIsDisplayed()
         composeRule.onNodeWithText(Res.string(R.string.perm_continue)).performClick()
         composeRule.onNodeWithText(Res.string(R.string.perm_not_now)).performClick()
 
